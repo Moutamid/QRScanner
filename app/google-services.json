@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:506655192414:android:162a2f024adf4474cecbcf",
         "android_client_info": {
-          "package_name": "free.qr.code.scanner.generator"
+          "package_name": "com.moutamid.qr.scanner.generator"
         }
       },
       "oauth_client": [

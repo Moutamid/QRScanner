@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="free.qr.code.scanner.generator.Activities.SmsGenActivity">
+    tools:context="com.moutamid.qr.scanner.generator.Activities.SmsGenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_history"

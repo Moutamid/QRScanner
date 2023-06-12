@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="free.qr.code.scanner.generator">
+    package="com.moutamid.qr.scanner.generator">
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -31,7 +31,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
-        android:name=".QRApp"
+        android:name="com.moutamid.qr.scanner.generator.QRApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -39,26 +39,26 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.QRScanner">
-        <activity android:name=".Activities.MainActivity"/>
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.MainActivity"/>
         <activity
-            android:name=".Activities.SettingsActivity"
+            android:name="com.moutamid.qr.scanner.generator.Activities.SettingsActivity"
             android:label="@string/title_activity_settings">
 
         </activity>
-        <activity android:name=".Activities.ScanResultActivity" />
-        <activity android:name=".Activities.UrlGenActivity" />
-        <activity android:name=".Activities.TextGenActivity" />
-        <activity android:name=".Activities.WifiGenActivity" />
-        <activity android:name=".Activities.EmailGenActivity" />
-        <activity android:name=".Activities.ContactGenActivity" />
-        <activity android:name=".Activities.LocationActivity" />
-        <activity android:name=".Activities.SmsGenActivity" />
-        <activity android:name=".Activities.YouTubeActivity" />
-        <activity android:name=".Activities.PhoneActivity" />
-        <activity android:name=".Activities.EventActivity" />
-        <activity android:name=".Activities.HistoryActivity" />
-        <activity android:name=".Activities.BarCodeActivity" />
-        <activity android:name=".Activities.SplashActivity"
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.ScanResultActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.UrlGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.TextGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.WifiGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.EmailGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.ContactGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.LocationActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.SmsGenActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.YouTubeActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.PhoneActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.EventActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.HistoryActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.BarCodeActivity" />
+        <activity android:name="com.moutamid.qr.scanner.generator.Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

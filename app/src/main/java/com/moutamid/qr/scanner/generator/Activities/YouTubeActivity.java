@@ -1,0 +1,88 @@
+package com.moutamid.qr.scanner.generator.Activities;
+
+
+import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
+import com.consoliads.mediation.ConsoliAds;
+import com.consoliads.mediation.bannerads.CAMediatedBannerView;
+import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.qrscanner.History;
+import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+import com.moutamid.qr.scanner.generator.utils.formates.Social;
+public class YouTubeActivity extends AppCompatActivity {
+
+    private  EditText link;
+    private HistoryVM historyVM;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_you_tube);
+
+        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        if (!getPurchaseSharedPreference()) {
+            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, YouTubeActivity.this, mediatedBannerView);
+            ConsoliAds.Instance().LoadInterstitial();
+        }
+        link=findViewById(R.id.youtube_link);
+        historyVM = new ViewModelProvider(YouTubeActivity.this).get(HistoryVM.class);
+    }
+
+    public void youtubeGenerate(View view) {
+
+
+        String urlValue = "https://" + link.getText().toString();
+        if (link.getText().toString().equals("")) {
+            link.setError("PLease Enter Link");
+        } else {
+            try {
+                final Social social = new Social();
+                social.setUrl(urlValue);
+                History urlHistory = new History(social.generateString(), "social");
+                historyVM.insertHistory(urlHistory);
+                Intent intent = new Intent(this, ScanResultActivity.class);
+                intent.putExtra("type", "Social");
+                intent.putExtra("social", social);
+                startActivity(intent);
+                if (!getPurchaseSharedPreference()) {
+                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                }
+                finish();
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                        PackageManager.PERMISSION_GRANTED) {
+                    try {
+                        link.setText(null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(YouTubeActivity.this, new String[]{
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void backYoutube(View view) {
+        if (!getPurchaseSharedPreference()) {
+            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+        }
+        finish();
+    }
+    public boolean getPurchaseSharedPreference(){
+        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+}
