@@ -1,0 +1,35 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="beep"
+            app:title="Beep/Sound"
+            app:defaultValue="true"
+            app:allowDividerBelow="true"/>
+    <SwitchPreferenceCompat
+        app:key="vibrate"
+        app:iconSpaceReserved="false"
+        app:defaultValue="true"
+        app:title="Vibrate"
+        app:allowDividerAbove="true"
+        />
+    <Preference
+        app:title="More Apps"
+        app:key="more_apps"
+        app:iconSpaceReserved="false"
+        app:allowDividerBelow="true">
+
+    </Preference>
+    <Preference
+        app:title="Share"
+        app:key="share"
+        app:singleLineTitle="true"
+        app:iconSpaceReserved="false"
+        app:allowDividerAbove="true"
+        >
+
+    </Preference>
+
+
+</PreferenceScreen>

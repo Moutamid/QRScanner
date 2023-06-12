@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/history_recyclerview"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+       <ImageView
+           android:id="@+id/all_delete_history"
+           android:layout_width="70dp"
+           android:layout_height="70dp"
+           android:layout_alignParentEnd="true"
+           android:layout_margin="10dp"
+           android:onClick="deleteAllHistory"
+           android:src="@drawable/big_delete"
+           android:layout_alignParentBottom="true"
+           android:contentDescription="@string/delete_history" />
+
+       <TextView
+           android:id="@+id/tv_is_empty"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textSize="18sp"
+           android:textStyle="bold"
+           android:text="@string/history_is_empty"
+           android:layout_centerVertical="true"
+           android:layout_centerHorizontal="true"
+           android:visibility="gone"
+           />
+
+
+</RelativeLayout>

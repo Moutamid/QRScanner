@@ -1,0 +1,117 @@
+plugins {
+    id 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+android {
+    compileSdkVersion 32
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "free.qr.code.scanner.generator"
+        minSdkVersion 19
+        targetSdkVersion 32
+        versionCode 2
+        versionName "1.2"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    def lottieVersion = "3.5.0"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.navigation:navigation-fragment:2.3.2'
+    implementation 'androidx.navigation:navigation-ui:2.3.2'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'me.dm7.barcodescanner:zxing:1.9.13'
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
+    implementation 'net.glxn:qrgen:1.4'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'com.karumi:dexter:6.2.1'
+    implementation 'com.github.kenglxn.QRGen:android:2.6.0'
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //Room DB
+    def room_version = "2.2.6"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    //LifeCycle component
+    def lifecycle_version = "2.2.0"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+
+    // to import sdk  consoli ads
+    implementation(name: 'consoliadsmediation', ext: 'aar')
+    implementation(name: 'consoliads-mediation', ext: 'aar')
+    implementation(name: 'consoliadsplugin', ext: 'aar')
+    implementation(name: 'loaderlibrary', ext: 'aar')
+    implementation(name: 'ca-nativeads', ext: 'aar')
+
+    // dependencies for consoli ads
+    implementation 'com.google.android.gms:play-services-basement:17.5.0'
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    implementation 'com.android.volley:volley:1.1.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+
+    implementation(name:'admob-mediation', ext: 'aar')
+    implementation 'com.google.android.gms:play-services-ads:19.7.0'
+
+    implementation(name:'AudienceNetwork_v6.2.0', ext:'aar')
+    implementation(name:'facebook-mediation', ext:'aar')
+
+    implementation(name:'unityads-mediation', ext:'aar')
+    implementation(name:'unity-ads_v3.5.1', ext:'aar')
+
+
+    // ads subscription dependencies
+    def billing_version = "3.0.2"
+
+    implementation "com.android.billingclient:billing:$billing_version"
+
+    implementation platform('com.google.firebase:firebase-bom:26.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+    implementation 'com.android.support:multidex:1.0.3'
+
+
+}

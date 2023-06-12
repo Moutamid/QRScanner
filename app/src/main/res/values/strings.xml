@@ -1,0 +1,116 @@
+<resources>
+    <string name="our_email_id">rawdev4@gmail.com</string>
+    <string name="email_subject">I don\'t like it.</string>
+    <string name="email_body">Make some appropriate changes!</string>
+
+    <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>
+
+    <string name="Signature_ads">4034a75ca5bbb9e42c0a013d8518a53f</string>
+
+    <string name="per_month_subscription">free.qr.code.scanner.generator.plan1</string>
+    <string name="_4_39_month">$1.99 / Month</string>
+    <string name="per_year_subscription">free.qr.code.scanner.generator.plan2</string>
+    <string name="_13_99_year">$16.99 / Year ($ 1.4 / Month)\n7 days free trial</string>
+    <string name="one_time_purchase">free.qr.code.scanner.generator.plan3</string>
+    <string name="_42_99_one_time_purchase">$42.99 / One-Time Purchase</string>
+
+    <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
+    <string name="app_name">QR Scanner</string>
+    <string name="title_activity_history">HistoryActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+    <string name="if_you_appreciate_it_please_give_up_5_star">If you appreciate it,please give up 5 star</string>
+    <!-- Messages Preferences -->
+    <string name="signature_title">Remove All ads</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="qr_code_reader">QR Code Reader</string>
+    <string name="youtube">Youtube</string>
+    <string name="barcode">Barcode</string>
+    <string name="url">Url</string>
+    <string name="text">Text</string>
+    <string name="wifi">WiFi</string>
+    <string name="contact">Contacts</string>
+    <string name="location">Location</string>
+    <string name="sms">SMS</string>
+
+    <string name="event">Calender</string>
+    <string name="clipboard">Clipboard</string>
+    <string name="facebook">Facebook</string>
+    <string name="whatsapp">Whatsapp</string>
+    <string name="card">My Card</string>
+    <string name="calender">Calender</string>
+    <string name="paypal">PayPal</string>
+    <string name="insta">Instagram</string>
+    <string name="viber">Viber</string>
+    <string name="twitter">Twitter</string>
+    <string name="spotify">Spotify</string>
+    <string name="remove_ad">remove ad</string>
+    <string name="flash">flash</string>
+    <string name="scan_qr">Scan Qr</string>
+    <string name="generate_qr">Generate QR</string>
+    <string name="history">History</string>
+    <string name="setting">Setting</string>
+    <string name="back_button">back button</string>
+    <string name="delete_history">delete history</string>
+    <string name="enter_text_here">Enter text here</string>
+    <string name="generate">Generate</string>
+    <string name="texthint">Text...</string>
+    <string name="urlhint">Url...</string>
+    <string name="ssid_network_name">SSID/Network Name</string>
+    <string name="password">Password</string>
+    <string name="subject">Subject</string>
+    <string name="body">Body</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="organization">Organization</string>
+    <string name="address">Address</string>
+    <string name="enter_latitude_here">Enter Latitude here...</string>
+    <string name="enter_longitude">Enter Longitude</string>
+    <string name="location_name_here">Location Name here</string>
+    <string name="text_message_here">Text Message here...</string>
+    <string name="phone_number">Phone Number...</string>
+    <string name="youtube_link_here">Social link here...</string>
+    <string name="event_name">Event Name</string>
+    <string name="select_date">Select date</string>
+    <string name="end_date_time">End Date/Time</string>
+    <string name="select_time">Select time</string>
+    <string name="start_date_time">Start Date/Time</string>
+    <string name="zoom_image">zoom image</string>
+    <string name="gallery_image">gallery image</string>
+    <string name="result_pic">result pic</string>
+    <string name="qr_image">QR image</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="email">E-mail</string>
+    <string name="dial">Dial</string>
+    <string name="delete">Delete</string>
+    <string name="scannerlogo">scannerlogo</string>
+    <string name="exit">Exit</string>
+    <string name="cancel_image">cancel image</string>
+    <string name="signature">98df6424f2d2a30084659bb55aa10a84</string>
+    <string name="history_is_empty">History is empty!</string>
+    <string name="continue2">Continue</string>
+    <string name="subscription_policy">Payment will be charged to your Google play Account at confirmation of purchase. Subscription auto-renew before the end of the current period.unless canceled 24-hours in advance, and the cancellation takes effect at the end of the current period. You may manage your subscription and turned off auto renewal from your Google Play store account setting subscription canceled during the trial will not be charged. Privacy Policy </string>
+    <string name="enjoying_qr_scanner">Enjoying QR Scanner</string>
+    <string name="adsubscribed">AdSubscribed</string>
+</resources>
