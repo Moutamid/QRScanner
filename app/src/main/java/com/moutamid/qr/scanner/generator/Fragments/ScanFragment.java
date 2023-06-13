@@ -23,6 +23,7 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.adapter.HistoryAdapter;
+import com.moutamid.qr.scanner.generator.adapter.ScanHistoryAdapter;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -41,7 +42,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
 
     private HistoryVM historyVM;
     private RecyclerView historyRecyclerView;
-    private HistoryAdapter adapter;
+    private ScanHistoryAdapter adapter;
     private TextView tvIsEmpty;
     private boolean isEmpty = false;
 
@@ -63,7 +64,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 tvIsEmpty.setVisibility(View.VISIBLE);
                 isEmpty = true;
             }
-            adapter = new HistoryAdapter(histories, this);
+            adapter = new ScanHistoryAdapter(histories, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mLayoutManager.setReverseLayout(true);

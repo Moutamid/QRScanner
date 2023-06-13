@@ -5,11 +5,11 @@
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-            tools:ignore="ScopedStorage" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -21,13 +21,11 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
@@ -39,26 +37,84 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.QRScanner">
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.MainActivity"/>
         <activity
-            android:name="com.moutamid.qr.scanner.generator.Activities.SettingsActivity"
-            android:label="@string/title_activity_settings">
-
+            android:name=".Activities.ClipboardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.ScanResultActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.UrlGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.TextGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.WifiGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.EmailGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.ContactGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.LocationActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.SmsGenActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.YouTubeActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.PhoneActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.EventActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.HistoryActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.BarCodeActivity" />
-        <activity android:name="com.moutamid.qr.scanner.generator.Activities.SplashActivity"
+        <activity
+            android:name=".Activities.FacebookActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.SpotifyActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.VCardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.PayPalActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.TwitterActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.ViberActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.InstagramActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activities.WhatsAppActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.ScanResultActivity" />
+        <activity android:name=".Activities.UrlGenActivity" />
+        <activity android:name=".Activities.TextGenActivity" />
+        <activity android:name=".Activities.WifiGenActivity" />
+        <activity android:name=".Activities.EmailGenActivity" />
+        <activity android:name=".Activities.ContactGenActivity" />
+        <activity android:name=".Activities.LocationActivity" />
+        <activity android:name=".Activities.SmsGenActivity" />
+        <activity android:name=".Activities.YouTubeActivity" />
+        <activity android:name=".Activities.PhoneActivity" />
+        <activity android:name=".Activities.EventActivity" />
+        <activity android:name=".Activities.BarCodeActivity" />
+        <activity
+            android:name=".Activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,10 +132,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_path" />
         </provider>
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/admob_id"/>
-
+            android:value="@string/admob_id" />
     </application>
 
 </manifest>

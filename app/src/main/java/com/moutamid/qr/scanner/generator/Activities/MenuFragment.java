@@ -131,6 +131,63 @@ public class MenuFragment extends Fragment {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
         });
+        twitterBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),TwitterActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+
+        facebook.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),FacebookActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        viberBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),ViberActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        clipBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),ClipboardActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        instaBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),InstagramActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        whatsappBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),WhatsAppActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        spotifyBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),SpotifyActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
+        paypalBt.setOnClickListener(v -> {
+            Intent intent=new Intent(getActivity(),PayPalActivity.class);
+            startActivity(intent);
+            if (!getPurchaseSharedPreference()) {
+                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            }
+        });
         return  view;
     }
 

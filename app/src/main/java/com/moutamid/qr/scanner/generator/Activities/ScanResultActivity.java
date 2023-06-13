@@ -45,6 +45,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
 import com.moutamid.qr.scanner.generator.utils.formates.SMS;
 import com.moutamid.qr.scanner.generator.utils.formates.Social;
+import com.moutamid.qr.scanner.generator.utils.formates.Spotify;
 import com.moutamid.qr.scanner.generator.utils.formates.Telephone;
 import com.moutamid.qr.scanner.generator.utils.formates.Url;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
@@ -70,6 +71,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
     private Bitmap bmp;
     private Wifi wifi;
 
+    @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +116,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 bmp = QRCode.from(vCard.toString()).bitmap();
                 imageView.setImageBitmap(bmp);
-                icon.setImageResource(R.drawable.ic_contact);
+                icon.setImageResource(R.drawable.contact);
                 tvHead.setText(R.string.contact);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
@@ -141,7 +143,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(eMail.getMailBody() == null)) {
                     resultdatalist.add(eMail.getMailBody());
                 }
-                icon.setImageResource(R.drawable.ic_email);
+                icon.setImageResource(R.drawable.email);
                 tvHead.setText(R.string.email);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
@@ -165,7 +167,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(wifi.getAuthentication() == null)) {
                     resultdatalist.add(wifi.getAuthentication());
                 }
-                icon.setImageResource(R.drawable.ic_wifi);
+                icon.setImageResource(R.drawable.wifi);
                 tvHead.setText(R.string.wifi);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
@@ -183,10 +185,70 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(telephone.getTelephone() == null)) {
                     resultdatalist.add(telephone.getTelephone());
                 }
-                icon.setImageResource(R.drawable.ic_phone);
+                icon.setImageResource(R.drawable.phone);
                 tvHead.setText(R.string.phone);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.phoneColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.phoneColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactNumber = telephone.getTelephone();
+                break;
+            }
+            case "spotify": {
+                Spotify telephone = (Spotify) getIntent().getSerializableExtra("spotify");
+                bmp = QRCode.from(telephone.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(telephone.getName() == null)) {
+                    resultdatalist.add(telephone.getName());
+                }
+                if (!(telephone.getSong() == null)) {
+                    resultdatalist.add(telephone.getSong());
+                }
+                icon.setImageResource(R.drawable.spotify);
+                tvHead.setText(R.string.spotify);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactNumber = telephone.getName();
+                break;
+            }
+            case "whatsapp": {
+                Telephone telephone = (Telephone) getIntent().getSerializableExtra("phone");
+                bmp = QRCode.from(telephone.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(telephone.getTelephone() == null)) {
+                    resultdatalist.add(telephone.getTelephone());
+                }
+                icon.setImageResource(R.drawable.whatsapp);
+                tvHead.setText(R.string.whatsapp);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
+                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactNumber = telephone.getTelephone();
+                break;
+            }
+            case "viber": {
+                Telephone telephone = (Telephone) getIntent().getSerializableExtra("phone");
+                bmp = QRCode.from(telephone.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(telephone.getTelephone() == null)) {
+                    resultdatalist.add(telephone.getTelephone());
+                }
+                icon.setImageResource(R.drawable.viber);
+                tvHead.setText(R.string.viber);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
                 buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
                 buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
                 buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
@@ -203,7 +265,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(url.getUrl() == null)) {
                     resultdatalist.add(url.getUrl());
                 }
-                icon.setImageResource(R.drawable.ic_url);
+                icon.setImageResource(R.drawable.url);
                 tvHead.setText(R.string.url);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.urlColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.urlColor));
@@ -213,7 +275,7 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 buttonResultdatalist.add(new ButtonModel("Delete", "#FFF9EC"));
                 break;
             }
-            case "Social": {
+            case "youtube": {
 
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
@@ -221,10 +283,83 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.ic_social_01);
+                icon.setImageResource(R.drawable.youtube);
                 tvHead.setText(R.string.youtube);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.youTubeColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.youTubeColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                break;
+            }
+            case "insta": {
+
+                Social social = (Social) getIntent().getSerializableExtra("social");
+                bmp = QRCode.from(social.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(social.getUrl() == null)) {
+                    resultdatalist.add(social.getUrl());
+                }
+                icon.setImageResource(R.drawable.instagram);
+                tvHead.setText(R.string.insta);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                break;
+            }
+            case "twitter": {
+
+                Social social = (Social) getIntent().getSerializableExtra("social");
+                bmp = QRCode.from(social.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(social.getUrl() == null)) {
+                    resultdatalist.add(social.getUrl());
+                }
+                icon.setImageResource(R.drawable.twitter);
+                tvHead.setText(R.string.twitter);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                break;
+            }
+            case "facebook": {
+
+                Social social = (Social) getIntent().getSerializableExtra("social");
+                bmp = QRCode.from(social.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(social.getUrl() == null)) {
+                    resultdatalist.add(social.getUrl());
+                }
+                icon.setImageResource(R.drawable.facebook);
+                tvHead.setText(R.string.facebook);
+                tvHead.setTextColor(R.color.white);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.facebookColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.facebookColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                break;
+            }
+            case "paypal": {
+
+                Social social = (Social) getIntent().getSerializableExtra("social");
+                bmp = QRCode.from(social.toString()).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (!(social.getUrl() == null)) {
+                    resultdatalist.add(social.getUrl());
+                }
+                icon.setImageResource(R.drawable.paypal);
+                tvHead.setText(R.string.paypal);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
                 buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
                 buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
                 buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
@@ -288,6 +423,24 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 tvHead.setText(R.string.text);
                 constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.textColor));
                 constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.textColor));
+                buttonResultdatalist.add(new ButtonModel("Save", "#EDFFF6"));
+                buttonResultdatalist.add(new ButtonModel("Share", "#EDFFF6"));
+                buttonResultdatalist.add(new ButtonModel("Email", "#EDFFF6"));
+                buttonResultdatalist.add(new ButtonModel("Delete", "#EDFFF6"));
+                break;
+            }
+            case "clipboard": {
+
+                String text = getIntent().getStringExtra("text");
+                bmp = QRCode.from(text).bitmap();
+                imageView.setImageBitmap(bmp);
+                if (null != text) {
+                    resultdatalist.add(text);
+                }
+                icon.setImageResource(R.drawable.clipboard);
+                tvHead.setText(R.string.clipboard);
+                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
+                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
                 buttonResultdatalist.add(new ButtonModel("Save", "#EDFFF6"));
                 buttonResultdatalist.add(new ButtonModel("Share", "#EDFFF6"));
                 buttonResultdatalist.add(new ButtonModel("Email", "#EDFFF6"));

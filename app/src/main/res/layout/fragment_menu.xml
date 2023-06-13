@@ -62,9 +62,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/barcode"
-                        android:src="@drawable/barcode"
+                        android:src="@drawable/ic_barcode_01"
                         android:padding="15dp"
-                        android:backgroundTint="@color/purple_700"
+                        android:backgroundTint="@color/barcodeColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView
@@ -115,8 +115,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/text"
-                        android:src="@drawable/text"                        android:padding="15dp"
-                        android:backgroundTint="@color/barcodeColor"
+                        android:src="@drawable/ic_text"                        android:padding="15dp"
+                        android:backgroundTint="@color/textColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView
@@ -149,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/email"
                         android:src="@drawable/email"                        android:padding="15dp"
-                        android:backgroundTint="@color/emailColor"
+                        android:backgroundTint="@color/wifiColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView
@@ -401,7 +401,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/insta"
                         android:src="@drawable/instagram"                        android:padding="15dp"
-                        android:backgroundTint="@color/barcodeColor"
+                        android:backgroundTint="@color/wifiColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView
@@ -477,6 +477,31 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:id="@+id/fb_icon"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/facebook"
+                        android:src="@drawable/facebook"                        android:padding="15dp"
+                        android:backgroundTint="#0000ff"
+                        android:background="@drawable/barcode_icon_back"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:text="@string/facebook"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:id="@+id/paypal_icon"
                     android:orientation="vertical">
 
@@ -502,6 +527,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:id="@+id/card_icon"
                     android:orientation="vertical">
 
@@ -510,7 +536,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/card"
                         android:src="@drawable/card"                        android:padding="15dp"
-                        android:backgroundTint="@color/urlColor"
+                        android:backgroundTint="@color/contactColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView
@@ -562,31 +588,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:id="@+id/fb_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/facebook"
-                        android:src="@drawable/facebook"                        android:padding="15dp"
-                        android:backgroundTint="#0000ff"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/facebook"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
                     android:id="@+id/clip_icon"
                     android:orientation="vertical">
 
@@ -608,6 +609,10 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"></View>
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"

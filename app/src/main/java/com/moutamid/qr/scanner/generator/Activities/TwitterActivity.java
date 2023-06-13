@@ -1,5 +1,9 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -9,10 +13,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -20,26 +21,26 @@ import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.Social;
-public class YouTubeActivity extends AppCompatActivity {
 
-    private  EditText link;
+public class TwitterActivity extends AppCompatActivity {
+
+    private EditText link;
     private HistoryVM historyVM;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_you_tube);
-
+        setContentView(R.layout.activity_twitter);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, YouTubeActivity.this, mediatedBannerView);
+            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, TwitterActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
-        link=findViewById(R.id.youtube_link);
-        historyVM = new ViewModelProvider(YouTubeActivity.this).get(HistoryVM.class);
+        link=findViewById(R.id.facebook_link);
+        historyVM = new ViewModelProvider(TwitterActivity.this).get(HistoryVM.class);
     }
-
-    public void youtubeGenerate(View view) {
+    public void twitterGenerate(View view) {
 
 
         String urlValue = "https://" + link.getText().toString();
@@ -49,10 +50,10 @@ public class YouTubeActivity extends AppCompatActivity {
             try {
                 final Social social = new Social();
                 social.setUrl(urlValue);
-                History urlHistory = new History(social.generateString(), "youtube");
+                History urlHistory = new History(social.generateString(), "twitter");
                 historyVM.insertHistory(urlHistory);
                 Intent intent = new Intent(this, ScanResultActivity.class);
-                intent.putExtra("type", "youtube");
+                intent.putExtra("type", "twitter");
                 intent.putExtra("social", social);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
@@ -67,7 +68,7 @@ public class YouTubeActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    ActivityCompat.requestPermissions(YouTubeActivity.this, new String[]{
+                    ActivityCompat.requestPermissions(TwitterActivity.this, new String[]{
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                 }
             } catch (Exception e) {
@@ -76,7 +77,7 @@ public class YouTubeActivity extends AppCompatActivity {
         }
     }
 
-    public void backYoutube(View view) {
+    public void backTwitter(View view) {
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
         }

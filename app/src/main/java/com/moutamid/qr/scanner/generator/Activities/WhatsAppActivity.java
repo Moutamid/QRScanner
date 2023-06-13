@@ -1,74 +1,79 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
-import com.moutamid.qr.scanner.generator.utils.formates.Social;
-public class YouTubeActivity extends AppCompatActivity {
+import com.moutamid.qr.scanner.generator.utils.formates.Telephone;
 
-    private  EditText link;
+public class WhatsAppActivity extends AppCompatActivity {
+
+    private EditText phonenumber;
     private HistoryVM historyVM;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_you_tube);
+        setContentView(R.layout.activity_whats_app);
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, YouTubeActivity.this, mediatedBannerView);
+            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, WhatsAppActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
-        link=findViewById(R.id.youtube_link);
-        historyVM = new ViewModelProvider(YouTubeActivity.this).get(HistoryVM.class);
+        phonenumber=findViewById(R.id.edit_phone);
+        historyVM = new ViewModelProvider(WhatsAppActivity.this).get(HistoryVM.class);
     }
 
-    public void youtubeGenerate(View view) {
+    public void whatsappGenerate(View view) {
 
+        String data = phonenumber.getText().toString();
 
-        String urlValue = "https://" + link.getText().toString();
-        if (link.getText().toString().equals("")) {
-            link.setError("PLease Enter Link");
+        if (data.equals("")) {
+            phonenumber.setError("Please enter Number");
         } else {
+
             try {
-                final Social social = new Social();
-                social.setUrl(urlValue);
-                History urlHistory = new History(social.generateString(), "youtube");
-                historyVM.insertHistory(urlHistory);
+                final Telephone telephone = new Telephone();
+                telephone.setTelephone(data);
+                History phoneHistory = new History(telephone.generateString(), "whatsapp");
+                historyVM.insertHistory(phoneHistory);
+
                 Intent intent = new Intent(this, ScanResultActivity.class);
-                intent.putExtra("type", "youtube");
-                intent.putExtra("social", social);
+                intent.putExtra("type", "whatsapp");
+                intent.putExtra("phone", telephone);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                        PackageManager.PERMISSION_GRANTED) {
+
+                if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        link.setText(null);
+                        phonenumber.setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
-                    ActivityCompat.requestPermissions(YouTubeActivity.this, new String[]{
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                    ActivityCompat.requestPermissions(WhatsAppActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -76,7 +81,8 @@ public class YouTubeActivity extends AppCompatActivity {
         }
     }
 
-    public void backYoutube(View view) {
+
+    public void backWhatsapp(View view) {
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
         }

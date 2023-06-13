@@ -19,6 +19,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
 import com.moutamid.qr.scanner.generator.utils.formates.SMS;
 import com.moutamid.qr.scanner.generator.utils.formates.Social;
+import com.moutamid.qr.scanner.generator.utils.formates.Spotify;
 import com.moutamid.qr.scanner.generator.utils.formates.Telephone;
 import com.moutamid.qr.scanner.generator.utils.formates.Url;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
@@ -153,6 +154,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 holder.icon.setImageResource(R.drawable.phone);
                 break;
             }
+
             case "sms": {
                 SMS sms = new SMS();
                 sms.parseSchema(history);
@@ -167,9 +169,49 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 holder.icon.setImageResource(R.drawable.sms);
                 break;
             }
+            case "whatsapp": {
+                Telephone telephone = new Telephone();
+                telephone.parseSchema(history);
+                String data = "";
+                if (telephone.getTelephone() != null) {
+                    data = telephone.getTelephone();
+                }
+                holder.tv1.setText(data);
+                holder.icon.setImageResource(R.drawable.whatsapp);
+                break;
+            }
+            case "spotify": {
+                Spotify telephone = new Spotify();
+                telephone.parseSchema(history);
+                String data = "";
+                if (telephone.getName() != null) {
+                    data = telephone.getName();
+                }
+                if (telephone.getSong() != null) {
+                    data = telephone.getSong();
+                }
+                holder.tv1.setText(data);
+                holder.icon.setImageResource(R.drawable.spotify);
+                break;
+            }
+            case "viber": {
+                Telephone telephone = new Telephone();
+                telephone.parseSchema(history);
+                String data = "";
+                if (telephone.getTelephone() != null) {
+                    data = telephone.getTelephone();
+                }
+                holder.tv1.setText(data);
+                holder.icon.setImageResource(R.drawable.viber);
+                break;
+            }
             case "text":
                 holder.tv1.setText(history);
                 holder.icon.setImageResource(R.drawable.text);
+                break;
+            case "clipboard":
+                holder.tv1.setText(history);
+                holder.icon.setImageResource(R.drawable.clipboard);
                 break;
             case "url": {
                 Url url = new Url();
@@ -199,7 +241,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 holder.icon.setImageResource(R.drawable.wifi);
                 break;
             }
-            case "social":
+            case "youtube":
                 Social social = new Social();
                 if (!history.isEmpty()) {
 
@@ -213,14 +255,63 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     holder.icon.setImageResource(R.drawable.youtube);
                 }
                 break;
-            case "barcode":
-                holder.tv1.setText(history);
-                holder.icon.setImageResource(R.drawable.barcode);
-                break;
             case "instagram":
-                holder.tv1.setText(history);
-                holder.icon.setImageResource(R.drawable.instagram);
+                Social social1 = new Social();
+                if (!history.isEmpty()) {
+
+
+                    social1.parseSchema(history);
+                    String data = "";
+                    if (social1.getUrl() != null) {
+                        data = social1.getUrl();
+                    }
+                    holder.tv1.setText(data);
+                    holder.icon.setImageResource(R.drawable.instagram);
+                }
                 break;
+            case "paypal":
+                Social social2 = new Social();
+                if (!history.isEmpty()) {
+
+
+                    social2.parseSchema(history);
+                    String data = "";
+                    if (social2.getUrl() != null) {
+                        data = social2.getUrl();
+                    }
+                    holder.tv1.setText(data);
+                    holder.icon.setImageResource(R.drawable.paypal);
+                }
+                break;
+            case "facebook":
+                Social social3 = new Social();
+                if (!history.isEmpty()) {
+
+
+                    social3.parseSchema(history);
+                    String data = "";
+                    if (social3.getUrl() != null) {
+                        data = social3.getUrl();
+                    }
+                    holder.tv1.setText(data);
+                    holder.icon.setImageResource(R.drawable.facebook);
+                }
+                break;
+            case "twitter":
+                Social social4 = new Social();
+                if (!history.isEmpty()) {
+
+
+                    social4.parseSchema(history);
+                    String data = "";
+                    if (social4.getUrl() != null) {
+                        data = social4.getUrl();
+                    }
+                    holder.tv1.setText(data);
+                    holder.icon.setImageResource(R.drawable.facebook);
+                }
+                break;
+
         }
 
         holder.cardView.setOnClickListener((View v) -> {

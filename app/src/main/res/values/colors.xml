@@ -18,6 +18,7 @@
     <color name="youTubeColor">#FFF1F0</color>
     <color name="phoneColor"> #FFFCE0</color>
     <color name="eventColor"> #F3F0FF</color>
+    <color name="facebookColor"> #0000FF</color>
     <color name="locationColor">#FFF9EC</color>
     <color name="emailColor">#F2FAFF</color>
     <color name="barcodeColor">#F7F5FF</color>

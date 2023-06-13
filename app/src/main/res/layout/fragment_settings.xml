@@ -92,11 +92,11 @@
                             android:layout_marginLeft="15dp"/>
 
                         <Switch
+                            android:id="@+id/switch1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/switch1"
-                            android:layout_centerInParent="true"
-                            android:layout_alignParentRight="true"/>
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -124,11 +124,11 @@
 
 
                         <Switch
+                            android:id="@+id/switch2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/switch1"
-                            android:layout_centerInParent="true"
-                            android:layout_alignParentRight="true"/>
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -156,11 +156,11 @@
                             android:layout_marginLeft="15dp"/>
 
                         <Switch
+                            android:id="@+id/switch3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/switch1"
-                            android:layout_centerInParent="true"
-                            android:layout_alignParentRight="true"/>
+                            android:layout_alignParentRight="true"
+                            android:layout_centerInParent="true" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -187,12 +187,14 @@
                             android:layout_marginLeft="15dp"/>
 
                         <TextView
+                            android:id="@+id/search"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="15dp"
                             android:text="Google"
+                            android:textColor="@color/teal_200"
                             android:textSize="14sp" />
 
                     </RelativeLayout>
@@ -200,7 +202,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="20dp">
+                        android:padding="20dp"
+                        android:id="@+id/language">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -208,7 +211,7 @@
                             android:id="@+id/image1"
                             android:layout_centerVertical="true"
                             android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_music_note_24"/>
+                            android:src="@drawable/ic_baseline_language_24"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -246,7 +249,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="20dp">
+                        android:padding="20dp"
+                        android:id="@+id/feedback">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -271,7 +275,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="20dp">
+                        android:padding="20dp"
+                        android:id="@+id/policy">
 
                         <ImageView
                             android:layout_width="wrap_content"
