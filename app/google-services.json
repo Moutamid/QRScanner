@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "506655192414",
-    "project_id": "qr-code-scanner-5fb63",
-    "storage_bucket": "qr-code-scanner-5fb63.appspot.com"
+    "project_number": "890062472575",
+    "firebase_url": "https://sweet-nutrition-default-rtdb.firebaseio.com",
+    "project_id": "sweet-nutrition",
+    "storage_bucket": "sweet-nutrition.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:506655192414:android:162a2f024adf4474cecbcf",
+        "mobilesdk_app_id": "1:890062472575:android:c92f2abc0a0172e004464a",
         "android_client_info": {
           "package_name": "com.moutamid.qr.scanner.generator"
         }
       },
       "oauth_client": [
         {
-          "client_id": "506655192414-tgs03vu11luc4ccl39jgh35ja5i5e5uf.apps.googleusercontent.com",
+          "client_id": "890062472575-05ue90j9694eg6eorj1lhjoknkj3oqja.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCwN-4Q74DbB02niIVYt5HEH_MSOgnC7GI"
+          "current_key": "AIzaSyAyGSYphpIh40M7fze_LUKzkSi4dDG8OQY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "506655192414-tgs03vu11luc4ccl39jgh35ja5i5e5uf.apps.googleusercontent.com",
+              "client_id": "890062472575-05ue90j9694eg6eorj1lhjoknkj3oqja.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "890062472575-n82emgghjp5pqgv9hijtnabvrp5btuco.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.torashare.ToraShare"
+              }
             }
           ]
         }

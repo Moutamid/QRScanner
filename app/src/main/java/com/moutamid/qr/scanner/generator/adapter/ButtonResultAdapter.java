@@ -40,7 +40,7 @@ public class ButtonResultAdapter extends RecyclerView.Adapter<ButtonResultAdapte
         ButtonModel resultData = resultList.get(position);
 
         holder.tvButtonResult.setText(resultData.getBt_name());
-        holder.buttonCard.setBackgroundColor(Color.parseColor(resultData.getColor()));
+        holder.buttonCard.setCardBackgroundColor(Color.parseColor(resultData.getColor()));
 
         holder.buttonCard.setOnClickListener(v -> mListner.clickedItemButton(v,holder.getAdapterPosition(),resultData.getBt_name()));
     }

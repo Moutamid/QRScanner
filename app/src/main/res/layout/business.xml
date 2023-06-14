@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="170dp"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="8dp">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="170dp"
+        android:layout_height="100dp"
+        android:id="@+id/cardView"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardCornerRadius="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_card_geo_2"/>
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:id="@+id/edit"
+            android:textSize="9sp"
+            android:padding="4dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            android:backgroundTint="@android:color/darker_gray"
+            android:background="@drawable/button_background" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

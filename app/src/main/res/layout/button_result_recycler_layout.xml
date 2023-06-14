@@ -5,36 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginBottom="8dp">
+    android:layout_margin="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bt_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
         android:background="@drawable/contact_icon_back"
         app:cardBackgroundColor="@color/contactColor"
         app:cardElevation="5dp"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/bt_dial"
-        app:layout_constraintDimensionRatio="H,3:5"
-        app:layout_constraintEnd_toStartOf="@+id/bt_share"
-        app:layout_constraintHeight_percent=".4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardCornerRadius="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/tv_button_result"
-            android:text="Add\nContact"
-            android:padding="10dp"
+            android:text="Add Contact"
+            android:padding="20dp"
+            android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

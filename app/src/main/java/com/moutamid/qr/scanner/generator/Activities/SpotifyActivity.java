@@ -42,7 +42,7 @@ public class SpotifyActivity extends AppCompatActivity {
         historyVM = new ViewModelProvider(SpotifyActivity.this).get(HistoryVM.class);
     }
 
-    public void emailGenerate(View view) {
+    public void spotifyGenerate(View view) {
         if (name.getText().toString().equals("")) {
             name.setError("Please enter Artist Name");
         } else if (song.getText().toString().equals("")) {
@@ -80,7 +80,7 @@ public class SpotifyActivity extends AppCompatActivity {
         }
     }
 
-    public void backEmail(View view) {
+    public void backSpotify(View view) {
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
         }

@@ -4,14 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
@@ -25,17 +29,27 @@ public class ClipboardActivity extends AppCompatActivity {
     private EditText textedit;
     private HistoryVM historyVM;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor edit;
+    private boolean copied =false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clipboard);
         textedit=findViewById(R.id.text_edit);
+        prefs = PreferenceManager.getDefaultSharedPreferences(ClipboardActivity.this);
+        edit = prefs.edit();
+        copied = prefs.getBoolean("copy",false);
         historyVM = new ViewModelProvider(ClipboardActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ClipboardActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+
+
+
     }
 
     public void clipGenerate(View view) {
@@ -53,6 +67,12 @@ public class ClipboardActivity extends AppCompatActivity {
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+            }
+
+            if (copied){
+                ClipboardManager manager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                manager.setPrimaryClip(ClipData.newPlainText("COUPON",data));
+                Toast.makeText(this, manager.getPrimaryClip().getItemAt(0).getText().toString(), Toast.LENGTH_SHORT).show();
             }
             finish();
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {

@@ -205,6 +205,10 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 holder.icon.setImageResource(R.drawable.viber);
                 break;
             }
+            case "barcode":
+                holder.tv1.setText(history);
+                holder.icon.setImageResource(R.drawable.barcode);
+                break;
             case "text":
                 holder.tv1.setText(history);
                 holder.icon.setImageResource(R.drawable.text);
@@ -244,8 +248,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
             case "youtube":
                 Social social = new Social();
                 if (!history.isEmpty()) {
-
-
                     social.parseSchema(history);
                     String data = "";
                     if (social.getUrl() != null) {
@@ -255,11 +257,9 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     holder.icon.setImageResource(R.drawable.youtube);
                 }
                 break;
-            case "instagram":
+            case "insta":
                 Social social1 = new Social();
                 if (!history.isEmpty()) {
-
-
                     social1.parseSchema(history);
                     String data = "";
                     if (social1.getUrl() != null) {
@@ -308,7 +308,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                         data = social4.getUrl();
                     }
                     holder.tv1.setText(data);
-                    holder.icon.setImageResource(R.drawable.facebook);
+                    holder.icon.setImageResource(R.drawable.twitter);
                 }
                 break;
 

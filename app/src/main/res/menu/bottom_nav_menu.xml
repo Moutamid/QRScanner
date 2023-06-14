@@ -3,22 +3,22 @@
     <item
         android:id="@+id/scan"
         android:title="Scan"
-        android:icon="@drawable/ic_scan_qr_01"/>
+        android:icon="@drawable/barcode"/>
     <item
         android:id="@+id/generate_qr"
         android:title="Generate QR"
-        android:icon="@drawable/ic_generate_qr_01"/>
+        android:icon="@drawable/uic_main_genrate_btn"/>
     <item
         android:id="@+id/history"
         android:title="History"
-        android:icon="@drawable/ic_history_01_01"/>
+        android:icon="@drawable/ic_history"/>
     <item
         android:id="@+id/business"
         android:title="Business"
-        android:icon="@drawable/ic_baseline_card_giftcard_24"/>
+        android:icon="@drawable/uic_main_business_card"/>
 
     <item
         android:id="@+id/settings"
         android:title="Settings"
-        android:icon="@drawable/ic_setting_01"/>
+        android:icon="@drawable/ic_setting"/>
 </menu>

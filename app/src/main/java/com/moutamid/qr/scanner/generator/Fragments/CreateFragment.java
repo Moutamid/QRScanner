@@ -36,6 +36,9 @@ import com.moutamid.qr.scanner.generator.utils.formates.Url;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateFragment extends Fragment implements HistoryItemClickListner {
 
     private HistoryVM historyVM;
@@ -55,13 +58,20 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
         getHistoryData();
         return view;
     }
+    List<History> historyList = new ArrayList<>();
     private void getHistoryData() {
         historyVM.getHistoryData().observe(getActivity(), histories -> {
             if (histories.size() == 0){
                 tvIsEmpty.setVisibility(View.VISIBLE);
                 isEmpty = true;
             }
-            adapter = new HistoryAdapter(histories, this);
+            for (History model: histories){
+                if (!model.getType().equals("barcode")){
+                    historyList.add(model);
+                }
+            }
+
+            adapter = new HistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mLayoutManager.setReverseLayout(true);

@@ -44,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ import com.consoliads.mediation.nativeads.CAMediaView;
 import com.consoliads.mediation.nativeads.CANativeAdView;
 import com.consoliads.mediation.nativeads.ConsoliAdsNativeListener;
 import com.consoliads.mediation.nativeads.MediatedNativeAd;
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.interfaces.ZoomChangeListener;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -103,18 +105,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 public class MainActivity extends AppCompatActivity {
 
-    private ConstraintLayout cardViewHide;
+//    private RelativeLayout cardViewHide;
     static Uri picUri;
     private HistoryVM historyVM;
     static String contents;
-    private boolean isFlash = false;
-    //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
-    private ImageView flashon, zoom, zoomactive;
-    private SeekBar seekBar;
     private BottomSheetDialog bottomSheetDialog;
-    private ZoomChangeListener listener;
+
     private List<String> skuList;
     private BottomSheetDialog bottomSheetSubscription;
     private int selectSubscription=1;
@@ -125,20 +125,20 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private CAMediatedBannerView mediatedBannerView;
 
-    @SuppressLint({"ResourceAsColor", "MissingInflatedId"})
+
+    @SuppressLint({"ResourceAsColor", "MissingInflatedId", "WrongViewCast"})
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        seekBar = findViewById(R.id.seekBar);
+
+
         imgRemoveAd = findViewById(R.id.img_ad);
         //RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
-        cardViewHide = findViewById(R.id.cardView_seekbar);
+        //cardViewHide = findViewById(R.id.cardView_seekbar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        zoom = findViewById(R.id.zoom_button);
-        zoomactive = findViewById(R.id.zoom_button_active);
-        flashon = findViewById(R.id.imageView4);
+
         bottomSheetSubscription = new BottomSheetDialog(this);
         bottomSheetSubscription.setContentView(R.layout.subscription_layout);
         radioGroup=bottomSheetSubscription.findViewById(R.id.rgRight);
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                             ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
                                     MainActivity.this);
                         }
-                        loadSettingsFragment();
+                        loadBusinessFragment();
                         break;
                     case R.id.settings:
                         if (!getPurchaseSharedPreference()) {
@@ -217,28 +217,9 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .check();
 
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                listener.onZoomChangeListener(progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
 
     }
 
-    public void setOnZoomChangeListener(ZoomChangeListener listener) {
-        this.listener = listener;
-    }
 
     public void loadQRfragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -246,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_frame, fragment);
         transaction.commit();
-        cardViewHide.setVisibility(View.VISIBLE);
+      //  cardViewHide.setVisibility(View.VISIBLE);
 
     }
 
@@ -256,7 +237,17 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_frame, fragment);
         transaction.commit();
-        cardViewHide.setVisibility(View.GONE);
+        //cardViewHide.setVisibility(View.GONE);
+
+    }
+
+    public void loadBusinessFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        BusinessFragment fragment = new BusinessFragment();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_frame, fragment);
+        transaction.commit();
+        //cardViewHide.setVisibility(View.GONE);
 
     }
 
@@ -266,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_frame, fragment);
         transaction.commit();
-        cardViewHide.setVisibility(View.GONE);
+        //cardViewHide.setVisibility(View.GONE);
     }
 
     public void loadHistoryFragment() {
@@ -275,69 +266,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_frame, fragment);
         transaction.commit();
-        cardViewHide.setVisibility(View.GONE);
-    }
-
-
-    public void flashButton(View view) {
-        if (!isFlash) {
-            QRScanFragment.setFlashLight(true);
-            flashon.setVisibility(View.VISIBLE);
-            isFlash = true;
-        } else {
-            QRScanFragment.setFlashLight(false);
-            flashon.setVisibility(View.INVISIBLE);
-            isFlash = false;
-        }
-    }
-    public void btnGallery(View view) {
-        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(pickPhoto, 2);
-    }
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-
-            try {
-                assert data != null;
-                final Uri imageUri = data.getData();
-                picUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                try {
-                    Bitmap bMap = selectedImage;
-                    contents = null;
-                    int[] intArray = new int[bMap.getWidth() * bMap.getHeight()];
-                    bMap.getPixels(intArray, 0, bMap.getWidth(), 0, 0, bMap.getWidth(), bMap.getHeight());
-                    LuminanceSource source = new RGBLuminanceSource(bMap.getWidth(), bMap.getHeight(), intArray);
-                    BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-                    Reader reader = new MultiFormatReader();
-                    Result result = reader.decode(bitmap);
-                    if (!result.getText().isEmpty()) {
-                        BarcodeFormat barcodeFormat = result.getBarcodeFormat();
-                        if (barcodeFormat.equals(BarcodeFormat.QR_CODE)) {
-                            processRawResult(result.getText());
-                        } else {
-                            processResultBarcode(result.getText());
-                        }
-                    } else {
-                        Toast.makeText(this, "Not supported", Toast.LENGTH_SHORT).show();
-                    }
-                    contents = result.getText();
-
-                } catch (FormatException | ChecksumException | NotFoundException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-        } else {
-            Toast.makeText(getApplicationContext(), "You have not picked any Image", Toast.LENGTH_SHORT).show();
-        }
+        //cardViewHide.setVisibility(View.GONE);
     }
 
     public void processResultBarcode(String text) {
@@ -656,17 +585,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-    public void zoomCamera(View view) {
-        zoomactive.setVisibility(View.VISIBLE);
-        zoom.setVisibility(View.INVISIBLE);
-        seekBar.setVisibility(View.VISIBLE);
-    }
-
-    public void zoomCameraActive(View view) {
-        zoom.setVisibility(View.VISIBLE);
-        zoomactive.setVisibility(View.INVISIBLE);
-        seekBar.setVisibility(View.INVISIBLE);
     }
 
     public void exitApp(View view) {

@@ -161,6 +161,23 @@
             tools:ignore="TextFields" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:onClick="locationGenerate"
+        android:text="@string/generate"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/locationColor"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout15"/>
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/location_card"
         android:layout_width="200dp"
@@ -169,6 +186,7 @@
         app:cardBackgroundColor="@color/locationColor"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp"
+        android:visibility="gone"
         android:onClick="locationGenerate"
         app:layout_constraintDimensionRatio="H,1:3"
         app:layout_constraintEnd_toEndOf="parent"

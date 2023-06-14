@@ -485,7 +485,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/facebook"
                         android:src="@drawable/facebook"                        android:padding="15dp"
-                        android:backgroundTint="#0000ff"
+                        android:backgroundTint="@color/contactColor"
                         android:background="@drawable/barcode_icon_back"/>
 
                     <TextView

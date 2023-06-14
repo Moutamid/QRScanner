@@ -1,6 +1,7 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
@@ -64,29 +65,80 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import static java.io.File.separator;
 
-public class ScanResultActivity extends AppCompatActivity implements ButtonItemClickListener {
+public class ScanResultActivity extends AppCompatActivity {
     private final ArrayList<String> resultdatalist = new ArrayList<>();
-    private final ArrayList<ButtonModel> buttonResultdatalist = new ArrayList<>();
+   // private final ArrayList<ButtonModel> buttonResultdatalist = new ArrayList<>();
     private String contactNumber;
     private Bitmap bmp;
     private Wifi wifi;
+    private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
-    @SuppressLint("ResourceAsColor")
+    @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_result);
         ImageView imageView = findViewById(R.id.imageView4);
         ImageView icon = findViewById(R.id.imageView);
-        ConstraintLayout constraintResult = findViewById(R.id.constraintLayout_result);
-        ConstraintLayout constraintHead = findViewById(R.id.constraintLayout_head);
+    //    ConstraintLayout constraintResult = findViewById(R.id.constraintLayout_result);
+     //   ConstraintLayout constraintHead = findViewById(R.id.constraintLayout_head);
         TextView tvHead = findViewById(R.id.tv_head);
-        RecyclerView recyclerView = findViewById(R.id.recycler_result);
-        RecyclerView recyclerViewButtons = findViewById(R.id.recycler_button);
+        TextView tvTitle = findViewById(R.id.tv_title);
+        saveBtn = findViewById(R.id.save);
+        shareBtn = findViewById(R.id.share);
+        deleteBtn = findViewById(R.id.delete);
+        dialBtn = findViewById(R.id.dial);
+        emailBtn = findViewById(R.id.email);
+        contactBtn = findViewById(R.id.add_contact);
+      //  RecyclerView recyclerView = findViewById(R.id.recycler_result);
+       // RecyclerView recyclerViewButtons = findViewById(R.id.recycler_button);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ScanResultActivity.this, mediatedBannerView);
         }
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveContent();
+            }
+        });
+
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shareContent();
+            }
+        });
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteContent();
+            }
+        });
+
+        dialBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialContent();
+            }
+        });
+
+        emailBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                emailContent();
+            }
+        });
+
+        contactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contactContent();
+
+            }
+        });
+
         switch (getIntent().getStringExtra("type")) {
             case "VCard": {
                 VCard vCard = (VCard) getIntent().getSerializableExtra("vCard");
@@ -118,15 +170,11 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 imageView.setImageBitmap(bmp);
                 icon.setImageResource(R.drawable.contact);
                 tvHead.setText(R.string.contact);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+                tvTitle.setText(vCard.getName());
+      //          constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+        //        constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
                 contactNumber = vCard.getPhoneNumber();
-                buttonResultdatalist.add(new ButtonModel("Save", "#EBFCFF"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#EBFCFF"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#EBFCFF"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#EBFCFF"));
-                buttonResultdatalist.add(new ButtonModel("Dial", "#EBFCFF"));
-                buttonResultdatalist.add(new ButtonModel("Add\nContact", "#EBFCFF"));
+                contactBtn.setVisibility(View.VISIBLE);
                 break;
             }
             case "EMail": {
@@ -145,12 +193,9 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.email);
                 tvHead.setText(R.string.email);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#F2FAFF"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#F2FAFF"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#F2FAFF"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#F2FAFF"));
+                tvTitle.setText(eMail.getEmail());
+                contactBtn.setVisibility(View.GONE);
+
                 break;
             }
             case "wifi": {
@@ -169,13 +214,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.wifi);
                 tvHead.setText(R.string.wifi);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FDF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FDF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FDF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FDF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Connect", "#FDF1F0"));
+                tvTitle.setText(wifi.getSsid());
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
                 break;
             }
             case "telephone": {
@@ -187,14 +229,11 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.phone);
                 tvHead.setText(R.string.phone);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.phoneColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.phoneColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.VISIBLE);
                 contactNumber = telephone.getTelephone();
+                tvTitle.setText(contactNumber);
                 break;
             }
             case "spotify": {
@@ -209,14 +248,11 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.spotify);
                 tvHead.setText(R.string.spotify);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
                 contactNumber = telephone.getName();
+                tvTitle.setText(contactNumber);
                 break;
             }
             case "whatsapp": {
@@ -228,14 +264,11 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.whatsapp);
                 tvHead.setText(R.string.whatsapp);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.VISIBLE);
                 contactNumber = telephone.getTelephone();
+                tvTitle.setText(contactNumber);
                 break;
             }
             case "viber": {
@@ -247,14 +280,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.viber);
                 tvHead.setText(R.string.viber);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.emailColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFFCE0"));
-                buttonResultdatalist.add(new ButtonModel("Dial", "#FFFCE0"));
+                contactBtn.setVisibility(View.GONE);
+                dialBtn.setVisibility(View.VISIBLE);
                 contactNumber = telephone.getTelephone();
+                tvTitle.setText(contactNumber);
                 break;
             }
             case "url": {
@@ -267,12 +296,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.url);
                 tvHead.setText(R.string.url);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.urlColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.urlColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF9EC"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(url.getUrl());
                 break;
             }
             case "youtube": {
@@ -285,12 +312,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.youtube);
                 tvHead.setText(R.string.youtube);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.youTubeColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.youTubeColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+
+                contactBtn.setVisibility(View.GONE);
+                tvTitle.setText(social.getUrl());
+                dialBtn.setVisibility(View.GONE);
                 break;
             }
             case "insta": {
@@ -303,12 +328,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.instagram);
                 tvHead.setText(R.string.insta);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(social.getUrl());
                 break;
             }
             case "twitter": {
@@ -321,12 +344,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.twitter);
                 tvHead.setText(R.string.twitter);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(social.getUrl());
                 break;
             }
             case "facebook": {
@@ -340,12 +361,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 icon.setImageResource(R.drawable.facebook);
                 tvHead.setText(R.string.facebook);
                 tvHead.setTextColor(R.color.white);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.facebookColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.facebookColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(social.getUrl());
                 break;
             }
             case "paypal": {
@@ -358,12 +377,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.paypal);
                 tvHead.setText(R.string.paypal);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF1F0"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF1F0"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(social.getUrl());
                 break;
             }
             case "GeoInfo": {
@@ -382,12 +399,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.ic_location);
                 tvHead.setText(R.string.location);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.locationColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.locationColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#FFF9EC"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#FFF9EC"));
+                tvTitle.setText(""+geoInfo.getPoints());
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
                 break;
             }
             case "Sms": {
@@ -403,12 +418,9 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.ic_sms_01_01);
                 tvHead.setText(R.string.sms);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.smsColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#E8FFEC"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#E8FFEC"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#E8FFEC"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#E8FFEC"));
+                contactBtn.setVisibility(View.GONE);
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(sms.getNumber());
                 break;
             }
             case "Text": {
@@ -421,12 +433,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.ic_text);
                 tvHead.setText(R.string.text);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.textColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.textColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#EDFFF6"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(text);
                 break;
             }
             case "clipboard": {
@@ -439,14 +449,13 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.clipboard);
                 tvHead.setText(R.string.clipboard);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.wifiColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#EDFFF6"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#EDFFF6"));
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
+                tvTitle.setText(text);
                 break;
             }
+
             case "Barcode": {
 
                 String textBarcode = getIntent().getStringExtra("barcode");
@@ -475,12 +484,10 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 }
                 icon.setImageResource(R.drawable.ic_barcode);
                 tvHead.setText(R.string.barcode);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.barcodeColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.barcodeColor));
-                buttonResultdatalist.add(new ButtonModel("Save", "#F7F5FF"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#F7F5FF"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#F7F5FF"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#F7F5FF"));
+                tvTitle.setText(textBarcode);
+                contactBtn.setVisibility(View.GONE);
+
+                dialBtn.setVisibility(View.GONE);
 
                 break;
             }
@@ -507,14 +514,13 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
                 if (!(iEvent.getOrganizer() == null)) {
                     resultdatalist.add(iEvent.getOrganizer());
                 }
-                buttonResultdatalist.add(new ButtonModel("Save", "#F3F0FF"));
-                buttonResultdatalist.add(new ButtonModel("Share", "#F3F0FF"));
-                buttonResultdatalist.add(new ButtonModel("Email", "#F3F0FF"));
-                buttonResultdatalist.add(new ButtonModel("Delete", "#F3F0FF"));
+                contactBtn.setVisibility(View.GONE);
+                dialBtn.setVisibility(View.GONE);
                 icon.setImageResource(R.drawable.ic_event);
                 tvHead.setText(R.string.event);
-                constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
-                constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
+                tvTitle.setText(iEvent.getOrganizer());
+            //    constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
+              //  constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
                 break;
             }
 
@@ -524,113 +530,106 @@ public class ScanResultActivity extends AppCompatActivity implements ButtonItemC
         }
 
 
-        ResultAdapter messageAdapter = new ResultAdapter(resultdatalist);
-        recyclerView.setAdapter(messageAdapter);
+       // ResultAdapter messageAdapter = new ResultAdapter(resultdatalist);
+       // recyclerView.setAdapter(messageAdapter);
 
-        ButtonResultAdapter buttonResultAdapter = new ButtonResultAdapter(this, buttonResultdatalist);
-        recyclerViewButtons.setAdapter(buttonResultAdapter);
+        //ButtonResultAdapter buttonResultAdapter = new ButtonResultAdapter(this, buttonResultdatalist);
+        //recyclerViewButtons.setAdapter(buttonResultAdapter);
 
-
-    }
-
-    @SuppressLint({"SetWorldReadable", "IntentReset"})
-    @Override
-    public void clickedItem(View view, int position) {
 
     }
 
-    @SuppressLint({"SetWorldReadable", "IntentReset"})
-    @Override
-    public void clickedItemButton(View view, int position, String type) {
-        if (position == 0) {
-            // MediaStore.Images.Media.insertImage(getContentResolver(), bmp, "QR Code", null);
-            saveToGallery();
+    private void contactContent() {
+        @SuppressLint("IntentReset") Intent intent = new Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI);
+        intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
+        if (resultdatalist.size() >= 1) {
+            intent.putExtra(ContactsContract.Intents.Insert.NAME, resultdatalist.get(0));
+        }
+        if (resultdatalist.size() >= 2) {
+            intent.putExtra(ContactsContract.Intents.Insert.EMAIL, resultdatalist.get(1));
+        }
+        if (resultdatalist.size() >= 4) {
+            intent.putExtra(ContactsContract.Intents.Insert.COMPANY, resultdatalist.get(3));
+        }
+        if (resultdatalist.size() >= 6) {
+            intent.putExtra(ContactsContract.Intents.Insert.NOTES, resultdatalist.get(5));
+        }
+        if (resultdatalist.size() >= 5) {
+            intent.putExtra(ContactsContract.Intents.Insert.POSTAL, resultdatalist.get(4));
+        }
+        if (resultdatalist.size() >= 7) {
+            intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, resultdatalist.get(6));
+        }
+        intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE,
+                ContactsContract.CommonDataKinds.Email.TYPE_WORK);
+        if (resultdatalist.size() >= 3) {
+            intent.putExtra(ContactsContract.Intents.Insert.PHONE, resultdatalist.get(2));
+        }
+        intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
+                ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
 
-        } else if (position == 1) {
+        startActivity(intent);
 
-            try {
-                File file = new File(getApplicationContext().getExternalCacheDir(), separator + "image.png");
-                FileOutputStream fOut = new FileOutputStream(file);
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                fOut.flush();
-                fOut.close();
-                file.setReadable(true, false);
-                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
-                intent.putExtra(Intent.EXTRA_STREAM, photoURI);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setType("image/PNG");
+    }
 
-                startActivity(Intent.createChooser(intent, "Share image via"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (position == 2) {
+    private void emailContent() {
+        try {
+            File file = new File(getApplicationContext().getExternalCacheDir(), separator + "image.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
 
-            try {
-                File file = new File(getApplicationContext().getExternalCacheDir(), separator + "image.png");
-                FileOutputStream fOut = new FileOutputStream(file);
-                bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-                fOut.flush();
-                fOut.close();
-                file.setReadable(true, false);
-                final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+            intent.putExtra(Intent.EXTRA_STREAM, photoURI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/PNG");
 
-                intent.putExtra(Intent.EXTRA_STREAM, photoURI);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setType("image/PNG");
+            startActivity(Intent.createChooser(intent, "Share image via Email"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-                startActivity(Intent.createChooser(intent, "Share image via Email"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (position == 3) {
-            finish();
-        } else if (position == 4) {
-            if (type.equals("Connect")) {
-                connectToWiFi(wifi.getSsid(), wifi.getPsk());
-//                startActivity(new Intent(WifiManager.ACTION_PICK_WIFI_NETWORK));
-            } else {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + contactNumber));
-                startActivity(intent);
-            }
-        } else if (position == 5) {
+    }
 
-            @SuppressLint("IntentReset") Intent intent = new Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI);
-            intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-            if (resultdatalist.size() >= 1) {
-                intent.putExtra(ContactsContract.Intents.Insert.NAME, resultdatalist.get(0));
-            }
-            if (resultdatalist.size() >= 2) {
-                intent.putExtra(ContactsContract.Intents.Insert.EMAIL, resultdatalist.get(1));
-            }
-            if (resultdatalist.size() >= 4) {
-                intent.putExtra(ContactsContract.Intents.Insert.COMPANY, resultdatalist.get(3));
-            }
-            if (resultdatalist.size() >= 6) {
-                intent.putExtra(ContactsContract.Intents.Insert.NOTES, resultdatalist.get(5));
-            }
-            if (resultdatalist.size() >= 5) {
-                intent.putExtra(ContactsContract.Intents.Insert.POSTAL, resultdatalist.get(4));
-            }
-            if (resultdatalist.size() >= 7) {
-                intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, resultdatalist.get(6));
-            }
-            intent.putExtra(ContactsContract.Intents.Insert.EMAIL_TYPE,
-                    ContactsContract.CommonDataKinds.Email.TYPE_WORK);
-            if (resultdatalist.size() >= 3) {
-                intent.putExtra(ContactsContract.Intents.Insert.PHONE, resultdatalist.get(2));
-            }
-            intent.putExtra(ContactsContract.Intents.Insert.PHONE_TYPE,
-                    ContactsContract.CommonDataKinds.Phone.TYPE_WORK);
+    private void dialContent() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + contactNumber));
+        startActivity(intent);
+    }
 
-            startActivity(intent);
+    private void deleteContent() {
+        finish();
+    }
+
+    private void shareContent() {
+        try {
+            File file = new File(getApplicationContext().getExternalCacheDir(), separator + "image.png");
+            FileOutputStream fOut = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            file.setReadable(true, false);
+            final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+            intent.putExtra(Intent.EXTRA_STREAM, photoURI);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setType("image/PNG");
+
+            startActivity(Intent.createChooser(intent, "Share image via"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+    private void saveContent() {
+        saveToGallery();
+    }
+
 
     private void connectToWiFi(String ssid, String password) {
 
