@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/imageView"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_card_geo_2"/>
+            android:src="@drawable/ic_card_contact_1"/>
 
         <TextView
             android:layout_width="40dp"

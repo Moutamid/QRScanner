@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -74,6 +75,7 @@ public class QRScanFragment extends Fragment implements ZXingScannerView.ResultH
     //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
     private ImageView flashon,zoom_minus,zoom_plus,switchBtn, galleryBtn,modeBtn;
     private SeekBar seekBar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {

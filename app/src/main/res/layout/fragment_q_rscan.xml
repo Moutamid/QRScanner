@@ -21,7 +21,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:visibility="visible"
             />
+
+
+       <!-- <fragment
+            android:id="@+id/scan_view_id"
+            android:name="com.google.android.gms.vision.barcode.BarcodeDetector"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:gvb_auto_focus="true"
+            app:gvb_code_format="all_format"
+            app:gvb_flash="false"
+            app:gvb_multiple="false"
+            app:gvb_rect_colors="@array/rect_color"
+            tools:ignore="Instantiatable" />
+
+        <info.androidhive.barcode.ScannerOverlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#54000000"
+            app:line_color="@android:color/holo_red_light"
+            app:line_speed="6"
+            app:line_width="4"
+            app:square_height="280"
+            app:square_width="280" />-->
 
 
       <!--  <com.airbnb.lottie.LottieAnimationView
