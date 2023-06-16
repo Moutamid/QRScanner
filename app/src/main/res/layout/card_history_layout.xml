@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginTop="5dp"
+    android:id="@+id/cardView_history"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/icon_image_history"
+            app:srcCompat="@drawable/uic_business_card_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:contentDescription="@string/phone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/icon_image_history"
+            android:layout_marginStart="10dp"
+            android:id="@+id/linear"
+            android:layout_toLeftOf="@+id/btn_delete_item"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Title"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/tv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="Content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:visibility="gone"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:text="12/24 24:67"/>
+
+
+        <ImageView
+            android:id="@+id/btn_delete_item"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/delete"
+            android:src="@drawable/delete" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

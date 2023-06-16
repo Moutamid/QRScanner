@@ -42,6 +42,7 @@ public class HistoryActivity extends Fragment {
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout.addTab(tabLayout.newTab().setText("SCAN"));
         tabLayout.addTab(tabLayout.newTab().setText("CREATE"));
+        tabLayout.addTab(tabLayout.newTab().setText("CARDS"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final HistoryTabAdapter adapter = new HistoryTabAdapter(getActivity(),getFragmentManager(),
                 tabLayout.getTabCount());

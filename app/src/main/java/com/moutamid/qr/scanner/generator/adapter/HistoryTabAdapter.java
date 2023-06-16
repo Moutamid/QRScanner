@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.moutamid.qr.scanner.generator.Fragments.CardsFragment;
 import com.moutamid.qr.scanner.generator.Fragments.CreateFragment;
 import com.moutamid.qr.scanner.generator.Fragments.ScanFragment;
 
@@ -26,6 +27,10 @@ public class HistoryTabAdapter extends FragmentPagerAdapter {
             case 1:
                 CreateFragment createFragment = new CreateFragment();
                 return createFragment;
+
+            case 2:
+                CardsFragment cardsFragment = new CardsFragment();
+                return cardsFragment;
             default:
                 return null;
         }

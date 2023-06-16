@@ -21,10 +21,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:visibility="visible"
+            android:visibility="gone"
             />
 
+        <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+
+            <com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay
+                android:id="@+id/graphicOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview>
        <!-- <fragment
             android:id="@+id/scan_view_id"
             android:name="com.google.android.gms.vision.barcode.BarcodeDetector"
@@ -62,16 +74,17 @@
             android:layout_marginBottom="20dp"
             android:id="@+id/cardView_seekbar">
             <LinearLayout android:orientation="horizontal"
-                android:backgroundTint="@color/teal_200" android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_200"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="250dp" android:layout_height="wrap_content"
                 android:weightSum="4"
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="16dp"
                 android:padding="8dp"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/linear_round"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="15dp"
                 android:id="@+id/options">
                 <ImageView android:id="@+id/mode_check"
                     android:onClick="btnMode" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>

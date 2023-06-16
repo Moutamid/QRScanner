@@ -15,14 +15,14 @@
 
        <ImageView
            android:id="@+id/all_delete_history"
-           android:layout_width="70dp"
-           android:layout_height="70dp"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
            android:layout_alignParentEnd="true"
-           android:layout_margin="10dp"
-           android:onClick="deleteAllHistory"
-           android:src="@drawable/big_delete"
            android:layout_alignParentBottom="true"
-           android:contentDescription="@string/delete_history" />
+           android:layout_margin="20dp"
+           android:contentDescription="@string/delete_history"
+           android:onClick="deleteAllHistory"
+           android:src="@drawable/delete" />
 
        <TextView
            android:id="@+id/tv_is_empty"

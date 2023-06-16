@@ -68,7 +68,6 @@ import com.consoliads.mediation.nativeads.CAMediaView;
 import com.consoliads.mediation.nativeads.CANativeAdView;
 import com.consoliads.mediation.nativeads.ConsoliAdsNativeListener;
 import com.consoliads.mediation.nativeads.MediatedNativeAd;
-import com.google.zxing.integration.android.IntentIntegrator;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.interfaces.ZoomChangeListener;
 import com.moutamid.qr.scanner.generator.qrscanner.History;

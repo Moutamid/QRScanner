@@ -19,10 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
-
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.R;
-import com.moutamid.qr.scanner.generator.adapter.HistoryAdapter;
+import com.moutamid.qr.scanner.generator.adapter.CardHistoryAdapter;
+import com.moutamid.qr.scanner.generator.adapter.ScanHistoryAdapter;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -39,19 +39,20 @@ import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateFragment extends Fragment implements HistoryItemClickListner {
+
+public class CardsFragment extends Fragment implements HistoryItemClickListner {
 
     private HistoryVM historyVM;
     private RecyclerView historyRecyclerView;
-    private HistoryAdapter adapter;
+    private CardHistoryAdapter adapter;
     private TextView tvIsEmpty;
     private boolean isEmpty = false;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.create_fragment, container, false);
-        historyVM = new ViewModelProvider(CreateFragment.this).get(HistoryVM.class);
+        View view= inflater.inflate(R.layout.card_fragment, container, false);
+        historyVM = new ViewModelProvider(CardsFragment.this).get(HistoryVM.class);
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
         historyRecyclerView.setHasFixedSize(true);
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
@@ -65,13 +66,13 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
                 tvIsEmpty.setVisibility(View.VISIBLE);
                 isEmpty = true;
             }
+
             for (History model: histories){
-                if (!model.getType().equals("barcode") && !model.getType().equals("card")){
+                if (model.getType().equals("card")){
                     historyList.add(model);
                 }
             }
-
-            adapter = new HistoryAdapter(historyList, this);
+            adapter = new CardHistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mLayoutManager.setReverseLayout(true);

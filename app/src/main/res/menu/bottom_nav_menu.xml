@@ -6,7 +6,7 @@
         android:icon="@drawable/barcode"/>
     <item
         android:id="@+id/generate_qr"
-        android:title="Generate QR"
+        android:title="Create"
         android:icon="@drawable/uic_main_genrate_btn"/>
     <item
         android:id="@+id/history"

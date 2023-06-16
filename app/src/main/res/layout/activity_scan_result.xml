@@ -11,10 +11,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?actionBarSize"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,7 +37,6 @@
         android:id="@+id/constraintLayout_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,16 +56,15 @@
 
         <TextView
             android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:text="@string/contact"
-            android:textSize="18sp"
+            android:gravity="center"
+            android:text="Hello EveryOne, Hope you are doing well"
+            android:textSize="14sp"
             android:textStyle="bold"
-            android:layout_marginLeft="6dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
         <TextView
@@ -80,10 +77,10 @@
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title"/>
+            app:layout_constraintStart_toEndOf="@+id/imageView"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,7 +88,7 @@
         android:id="@+id/imageView4"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/imageqr"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintDimensionRatio="H,1:1"

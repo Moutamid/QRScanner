@@ -3,6 +3,7 @@ package com.moutamid.qr.scanner.generator.Activities;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -28,6 +29,9 @@ import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.qrscanner.History;
+import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,6 +49,7 @@ public class CardTelActivity extends AppCompatActivity {
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private Switch bold, shadow;
+    private HistoryVM historyVM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class CardTelActivity extends AppCompatActivity {
         shadow = findViewById(R.id.shadow);
         logo = findViewById(R.id.logo);
         colorSeekBar = findViewById(R.id.color_seek_bar);
+        historyVM = new ViewModelProvider(CardTelActivity.this).get(HistoryVM.class);
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,11 +188,24 @@ public class CardTelActivity extends AppCompatActivity {
     }
 
     public void SaveTxt(View view) {
-        Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
-        intent.putExtra("image1", savedBitmapFromViewToFile());
-        intent.putExtra("image2", savedBitmapFromViewToFile2());
-        startActivity(intent);
+
+        try {
+            BusinessCard businessCard = new BusinessCard();
+            businessCard.setTitle(text1.getText().toString());
+            businessCard.setContent(text2.getText().toString());
+            businessCard.setTimestamp(System.currentTimeMillis());
+            History urlHistory = new History(businessCard.generateString(), "card");
+            historyVM.insertHistory(urlHistory);
+
+            Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
+            intent.putExtra("image1", savedBitmapFromViewToFile());
+            intent.putExtra("image2", savedBitmapFromViewToFile2());
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
     private byte[] savedBitmapFromViewToFile2() {
         //inflate layout
 

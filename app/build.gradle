@@ -44,24 +44,25 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(path: ':zxing')
+//    implementation project(path: ':zxing')
 
     def lottieVersion = "3.5.0"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    //implementation 'androidx.constraintlayout:constraintlaout:2.0.4'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'info.androidhive:barcode-reader:1.1.5'
     implementation 'com.google.android.gms:play-services-vision:20.1.3'
-
+    implementation 'xyz.belvi.mobilevision:barcodescanner:2.0.3'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.navigation:navigation-fragment:2.3.2'
     implementation 'androidx.navigation:navigation-ui:2.3.2'
+
     implementation 'androidx.preference:preference:1.1.1'
-    implementation 'com.google.android.gms:play-services-vision:20.1.3'
+  //  implementation 'com.google.android.gms:play-services-vision:20.1.3'
     implementation 'com.divyanshu.colorseekbar:colorseekbar:1.0.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
+    //implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
