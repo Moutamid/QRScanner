@@ -5,10 +5,13 @@ import static java.io.File.separator;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +28,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import androidmads.library.qrgenearator.BuildConfig;
 
@@ -34,6 +38,7 @@ public class CardGeneratedResult extends AppCompatActivity {
     private AppCompatButton saveBtn,shareBtn;
     private Bitmap bmp;
     private byte[] imageByte,imageByte1;
+    private SharedPreferences prefs;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,6 +49,7 @@ public class CardGeneratedResult extends AppCompatActivity {
         imageView1 = findViewById(R.id.imageView2);
         saveBtn = findViewById(R.id.save);
         shareBtn = findViewById(R.id.share);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         imageByte = getIntent().getByteArrayExtra("image1");
         imageByte1 = getIntent().getByteArrayExtra("image2");
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
@@ -63,6 +69,25 @@ public class CardGeneratedResult extends AppCompatActivity {
                 shareContent();
             }
         });
+        getLocale();
+    }
+
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
     }
 
     private void shareContent() {

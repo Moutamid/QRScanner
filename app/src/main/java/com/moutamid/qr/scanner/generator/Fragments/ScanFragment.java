@@ -2,6 +2,7 @@ package com.moutamid.qr.scanner.generator.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +41,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ScanFragment extends Fragment implements HistoryItemClickListner {
@@ -48,6 +51,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
     private ScanHistoryAdapter adapter;
     private TextView tvIsEmpty;
     private boolean isEmpty = false;
+    private SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -56,9 +60,31 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
         historyVM = new ViewModelProvider(ScanFragment.this).get(HistoryVM.class);
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
         historyRecyclerView.setHasFixedSize(true);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
+        getLocale();
         getHistoryData();
         return view;
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
     List<History> historyList = new ArrayList<>();
     private void getHistoryData() {

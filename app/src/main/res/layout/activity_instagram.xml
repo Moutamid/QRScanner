@@ -87,7 +87,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="8dp"
             android:padding="10dp"
-            android:hint="Enter Instagram url here!"
+            android:hint="@string/insta_url"
             android:inputType="text"
             android:textColor="@color/headingColour"
             android:textColorHint="@color/headingColour"

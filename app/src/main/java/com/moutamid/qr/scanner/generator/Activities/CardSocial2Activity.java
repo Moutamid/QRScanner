@@ -4,9 +4,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
@@ -36,6 +40,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Locale;
 
 public class CardSocial2Activity extends AppCompatActivity {
 
@@ -50,6 +55,7 @@ public class CardSocial2Activity extends AppCompatActivity {
     private ColorSeekBar colorSeekBar;
     private Switch bold, shadow;
     private HistoryVM historyVM;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,7 @@ public class CardSocial2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_card_social2);
         text1 = findViewById(R.id.username);
         text2 = findViewById(R.id.url);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         edittext = findViewById(R.id.edittext);
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
@@ -158,6 +164,27 @@ public class CardSocial2Activity extends AppCompatActivity {
                 startActivityForResult(pickPhoto, 2);
             }
         });
+        getLocale();
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
 
     public void ClearTxt(View view) {

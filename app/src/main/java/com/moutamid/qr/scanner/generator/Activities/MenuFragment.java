@@ -3,8 +3,11 @@ package com.moutamid.qr.scanner.generator.Activities;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +17,13 @@ import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.moutamid.qr.scanner.generator.R;
 
+import java.util.Locale;
+
 public class MenuFragment extends Fragment {
 
     LinearLayout barcodeBt,urlBt,textBt,wifiBt,emailBt,contactBt,locationBt,smsBt,facebook,
             youtubeBt,phoneBt,eventBt,whatsappBt,twitterBt,viberBt,spotifyBt,instaBt,paypalBt,cardBt,clipBt;
+    private SharedPreferences prefs;
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,6 +33,7 @@ public class MenuFragment extends Fragment {
         barcodeBt=view.findViewById(R.id.barcodeIcon);
         urlBt=view.findViewById(R.id.urlIcon);
         textBt=view.findViewById(R.id.textIcon);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         wifiBt=view.findViewById(R.id.wfiIcon);
         emailBt=view.findViewById(R.id.email_icon);
         contactBt=view.findViewById(R.id.contatc_icon);
@@ -188,7 +195,29 @@ public class MenuFragment extends Fragment {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
         });
+        getLocale();
         return  view;
+    }
+
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
 
     public boolean getPurchaseSharedPreference(){

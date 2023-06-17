@@ -24,7 +24,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Edit B-Card"
+            android:text="@string/edit_title"
             android:textColor="@color/black"
             android:textSize="18sp"/>
 
@@ -63,7 +63,7 @@
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                android:text="EVENT NAME" />
+                android:text="@string/event_name" />
             <TextView
                 android:id="@+id/event_date"
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_below="@+id/event_name"
                 android:layout_marginLeft="20dp"
                 android:textSize="14sp"
-                android:text="02 March To 13 March" />
+                android:text="@string/event_date" />
 
             <TextView
                 android:id="@+id/event_city"
@@ -79,8 +79,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_date"
                 android:layout_marginLeft="60dp"
+                android:layout_marginTop="20dp"
                 android:textSize="12sp"
-                android:text="City address,street\nhome location goes here" />
+                android:text="@string/event_city" />
 
         </RelativeLayout>
 
@@ -126,7 +127,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TEXT"
+                    android:text="@string/text"
                     android:id="@+id/textView"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/teal_200"
@@ -154,7 +155,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginLeft="20dp"
                     android:padding="8dp"
-                    android:text="Bold"
+                    android:text="@string/bold_txt"
                     android:id="@+id/bold"/>
 
                 <Switch
@@ -165,7 +166,7 @@
                     android:layout_marginRight="20dp"
                     android:padding="8dp"
                     android:layout_below="@+id/color_seek_bar"
-                    android:text="Shadow"
+                    android:text="@string/shadow_tx"
                     android:id="@+id/shadow"/>
 
             </RelativeLayout>
@@ -201,8 +202,6 @@
                     android:layout_toLeftOf="@+id/save_text"
                     android:layout_toRightOf="@+id/clear_text"
                     android:background="@null"
-                    android:layout_centerVertical="true"
-                    android:hint="text"
                     android:padding="8dp" />
 
                 <ImageView

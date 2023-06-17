@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,10 +24,13 @@ import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.Social;
 
+import java.util.Locale;
+
 public class PayPalActivity extends AppCompatActivity {
 
     private EditText link;
     private HistoryVM historyVM;
+    private SharedPreferences prefs;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -37,8 +42,30 @@ public class PayPalActivity extends AppCompatActivity {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, PayPalActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         link=findViewById(R.id.facebook_link);
         historyVM = new ViewModelProvider(PayPalActivity.this).get(HistoryVM.class);
+        getLocale();
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
     public void paypalGenerate(View view) {
 

@@ -5,12 +5,15 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -63,6 +66,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Locale;
+
 import static java.io.File.separator;
 
 public class ScanResultActivity extends AppCompatActivity {
@@ -71,6 +76,7 @@ public class ScanResultActivity extends AppCompatActivity {
     private String contactNumber;
     private Bitmap bmp;
     private Wifi wifi;
+    private SharedPreferences prefs;
     private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
     @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
@@ -90,6 +96,7 @@ public class ScanResultActivity extends AppCompatActivity {
         dialBtn = findViewById(R.id.dial);
         emailBtn = findViewById(R.id.email);
         contactBtn = findViewById(R.id.add_contact);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
       //  RecyclerView recyclerView = findViewById(R.id.recycler_result);
        // RecyclerView recyclerViewButtons = findViewById(R.id.recycler_button);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
@@ -535,8 +542,25 @@ public class ScanResultActivity extends AppCompatActivity {
 
         //ButtonResultAdapter buttonResultAdapter = new ButtonResultAdapter(this, buttonResultdatalist);
         //recyclerViewButtons.setAdapter(buttonResultAdapter);
+        getLocale();
+    }
 
 
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
     }
 
     private void contactContent() {

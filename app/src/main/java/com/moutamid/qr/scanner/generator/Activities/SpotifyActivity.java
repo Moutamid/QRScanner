@@ -4,11 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -22,11 +24,13 @@ import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.EMail;
 import com.moutamid.qr.scanner.generator.utils.formates.Spotify;
 
+import java.util.Locale;
+
 public class SpotifyActivity extends AppCompatActivity {
 
     private EditText name,song;
     private HistoryVM historyVM;
-
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,34 @@ public class SpotifyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_spotify);
         name=findViewById(R.id.artist_name);
         song=findViewById(R.id.song);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, SpotifyActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
         historyVM = new ViewModelProvider(SpotifyActivity.this).get(HistoryVM.class);
+        getLocale();
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
 
     public void spotifyGenerate(View view) {

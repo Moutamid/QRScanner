@@ -12,6 +12,7 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -23,6 +24,8 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+
+import java.util.Locale;
 
 public class ClipboardActivity extends AppCompatActivity {
 
@@ -47,8 +50,28 @@ public class ClipboardActivity extends AppCompatActivity {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ClipboardActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+        getLocale();
+
+    }
 
 
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
 
     }
 

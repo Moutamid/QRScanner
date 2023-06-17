@@ -2,23 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/scan"
-        android:title="Scan"
+        android:title="@string/scan"
         android:icon="@drawable/barcode"/>
     <item
         android:id="@+id/generate_qr"
-        android:title="Create"
+        android:title="@string/create"
         android:icon="@drawable/uic_main_genrate_btn"/>
     <item
         android:id="@+id/history"
-        android:title="History"
+        android:title="@string/history"
         android:icon="@drawable/ic_history"/>
     <item
         android:id="@+id/business"
-        android:title="Business"
+        android:title="@string/business"
         android:icon="@drawable/uic_main_business_card"/>
 
     <item
         android:id="@+id/settings"
-        android:title="Settings"
+        android:title="@string/setting"
         android:icon="@drawable/ic_setting"/>
 </menu>

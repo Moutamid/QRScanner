@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -86,10 +87,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
-public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.BarcodeUpdateListener {
+public class QRScanFragment extends Fragment {
 
   //  private static ZXingScannerView mScannerView;
     private Context context;
@@ -97,12 +99,10 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
     private HistoryVM historyVM;
 
     private int zoomProgress = 5;
+    private SharedPreferences prefs;
     static String contents;
     static Uri picUri;
 
-    private boolean barcodeFormatUpdate = false, pause = false;
-    private Detector<Barcode> customBarcodeDetector;
-    private BarcodeDetector barcodeDetector;
     private Camera.Parameters parameters;
     private final int REQUEST_CODE_PERMISSIONS = 101;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
@@ -114,7 +114,7 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
     private SeekBar seekBar;
     private boolean shouldShowText, multipleScan, showDrawRect, touchAsCallback, shouldFocus, showFlash = false;
 
-    private boolean autoFocus = false;
+    private boolean autoFocus = true;
     private boolean useFlash = false;
 
     private Integer[] rectColors;
@@ -179,26 +179,18 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
         if (barcodeCapture != null) {
             barcodeCapture.setRetrieval(QRScanFragment.this);
         }*/
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mPreview = (CameraSourcePreview) view.findViewById(R.id.preview);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) view.findViewById(R.id.graphicOverlay);
         mGraphicOverlay.setShowText(isShouldShowText());
         mGraphicOverlay.setRectColors(getRectColors());
         mGraphicOverlay.setDrawRect(isShowDrawRect());
+        //barcodeGraphic = new com.moutamid.qr.scanner.generator.Activities.BarcodeGraphic(mGraphicOverlay);
+        //BarcodeGraphicTracker tracker = new BarcodeGraphicTracker(mGraphicOverlay,barcodeGraphic,getActivity());
 
         // read parameters from the intent used to launch the activity.
 
 
-        gestureDetector = new GestureDetector(getContext(), new CaptureGestureListener());
-        scaleGestureDetector = new ScaleGestureDetector(getContext(), new ScaleListener());
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent e) {
-                boolean b = scaleGestureDetector.onTouchEvent(e);
-
-                boolean c = gestureDetector.onTouchEvent(e);
-                return b || c || view.onTouchEvent(e);
-            }
-        });
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
         if (cameraPermissionGranted()) {
             createCameraSource(autoFocus,useFlash,cameraId);
@@ -308,6 +300,24 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
         this.barcodeFormat = barcodeFormat;
         return this;
     }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getActivity().getResources().updateConfiguration(configuration,getActivity().getResources().getDisplayMetrics());
+    }
+
 
     public boolean isShouldShowText() {
         return this.shouldShowText;
@@ -722,38 +732,6 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
 
 
 
-    protected BarcodeRetriever barcodeRetriever;
-
-    public void setRetrieval(BarcodeRetriever retrieval) {
-        barcodeRetriever = retrieval;
-    }
-
-    protected QRScanFragment setBarcodeFormatUpdate(boolean barcodeFormatUpdate) {
-        this.barcodeFormatUpdate = barcodeFormatUpdate;
-        return this;
-    }
-
-    public boolean isBarcodeFormatUpdate() {
-        return barcodeFormatUpdate;
-    }
-
-    public void stopScanning() {
-    }
-
-    public QRScanFragment setCustomDetector(Detector<Barcode> customDetector) {
-        this.customBarcodeDetector = customDetector;
-        return this;
-    }
-
-
-    public Detector<Barcode> getCustomBarcodeDetector() {
-        if (barcodeDetector == null)
-            barcodeDetector = new BarcodeDetector.Builder(getContext())
-                    .setBarcodeFormats(getBarcodeFormat())
-                    .build();
-        return customBarcodeDetector == null ? barcodeDetector : customBarcodeDetector;
-    }
-
 
     private boolean checkSoundPreferences() {
 
@@ -776,25 +754,46 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
     private void createCameraSource(boolean autoFocus, boolean useFlash, int cameraId) {
         Context context = getActivity();
 
-        // A barcode detector is created to track barcodes.  An associated multi-processor instance
-        // is set to receive the barcode detection results, track the barcodes, and maintain
-        // graphics for each barcode on screen.  The factory is used by the multi-processor to
-        // create a separate tracker instance for each barcode.
-        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
+/*        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
         BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, context);
         barcodeDetector.setProcessor(
                 new MultiProcessor.Builder<>(barcodeFactory).build());
 
+
+
         if (!barcodeDetector.isOperational()) {
           //  IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
-           /* boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
+            boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
 
             if (hasLowStorage) {
               //  Toast.makeText(this, R.string.low_storage_error, Toast.LENGTH_LONG).show();
                 Log.w("TAG", getString(R.string.low_storage_error));
-            }*/
-        }
+            }
+            runOnUiThread(() -> {
+                mPreview.stop();
+                if (checkSoundPreferences()) {
+                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                }
+                if (checkVibratePreferences()) {
+                    if (Build.VERSION.SDK_INT >= 26) {
 
+                        Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+
+                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+
+                        Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                        v.vibrate(100);
+                    }
+                }
+
+            });
+        }*/
+        BarcodeDetector barcodeDetector =
+                new BarcodeDetector.Builder(getActivity())
+                        .setBarcodeFormats(Barcode.ALL_FORMATS)//QR_CODE)
+                        .build();
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
         // to other detection examples to enable the barcode detector to detect small barcodes
         // at long distances.
@@ -812,6 +811,41 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
         mCameraSource = builder
                 .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
                 .build();
+        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+            @Override
+            public void release() {
+                Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                if (barcodes.size() != 0) {
+                    runOnUiThread(() -> {
+                        mPreview.stop();
+                        if (checkSoundPreferences()) {
+                            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                        }
+                        if (checkVibratePreferences()) {
+                            if (Build.VERSION.SDK_INT >= 26) {
+
+                                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+
+                                v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                            } else {
+
+                                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                                v.vibrate(100);
+                            }
+                        }
+                        String rawData = barcodes.valueAt(0).rawValue;
+                        processResultBarcode(rawData);
+                    });
+                }
+            }
+        });
+
         startCameraSource();
     }
     /**
@@ -829,15 +863,6 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
         }
 
 
-    }
-
-    public void refresh() {
-        mGraphicOverlay.setDrawRect(isShowDrawRect());
-        mGraphicOverlay.setRectColors(getRectColors());
-        mGraphicOverlay.setShowText(isShouldShowText());
-        mCameraSource.setFocusMode(isAutoFocus() ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
-        mCameraSource.setFlashMode(
-                isShowFlash() ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
     }
 
     /**
@@ -898,137 +923,4 @@ public class QRScanFragment extends Fragment implements BarcodeGraphicTracker.Ba
         }
     }
 
-    /**
-     * onTap returns the tapped barcode result to the calling Activity.
-     *
-     * @param rawX - the raw position of the tap
-     * @param rawY - the raw position of the tap.
-     * @return true if the activity is ending.
-     */
-    private boolean onTap(float rawX, float rawY) {
-        // Find tap point in preview frame coordinates.
-        int[] location = new int[2];
-        mGraphicOverlay.getLocationOnScreen(location);
-        float x = (rawX - location[0]) / mGraphicOverlay.getWidthScaleFactor();
-        float y = (rawY - location[1]) / mGraphicOverlay.getHeightScaleFactor();
-
-        // Find the barcode whose center is closest to the tapped point.
-        Barcode best = null;
-        float bestDistance = Float.MAX_VALUE;
-        ArrayList<Barcode> allRetrieved = new ArrayList<>();
-        for (BarcodeGraphic graphic : mGraphicOverlay.getGraphics()) {
-            Barcode barcode = graphic.getBarcode();
-            allRetrieved.add(barcode);
-            if (barcode.getBoundingBox().contains((int) x, (int) y)) {
-                // Exact hit, no need to keep looking.
-                best = barcode;
-                break;
-            }
-            float dx = x - barcode.getBoundingBox().centerX();
-            float dy = y - barcode.getBoundingBox().centerY();
-            float distance = (dx * dx) + (dy * dy); // actually squared distance
-            if (distance < bestDistance) {
-                best = barcode;
-                bestDistance = distance;
-            }
-        }
-
-        if (best != null) {
-            if (barcodeRetriever != null)
-                if (supportMultipleScan()) {
-                    barcodeRetriever.onRetrievedMultiple(best, mGraphicOverlay.getGraphics());
-                } else {
-                    barcodeRetriever.onRetrieved(best);
-                }
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void onBarcodeDetected(Barcode barcode) {
-        runOnUiThread(() -> {
-            mPreview.stop();
-            if (checkSoundPreferences()) {
-                ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-            }
-            if (checkVibratePreferences()) {
-                if (Build.VERSION.SDK_INT >= 26) {
-
-                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-
-                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-
-                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                    v.vibrate(100);
-                }
-            }
-            String rawData = barcode.rawValue;
-            int i = barcode.format;
-            processResultBarcode(rawData);
-        });
-    }
-
-    private class CaptureGestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            return onTap(e.getRawX(), e.getRawY()) || super.onSingleTapConfirmed(e);
-        }
-    }
-
-    private class ScaleListener implements ScaleGestureDetector.OnScaleGestureListener {
-
-        /**
-         * Responds to scaling events for a gesture in progress.
-         * Reported by pointer motion.
-         *
-         * @param detector The detector reporting the event - use this to
-         *                 retrieve extended info about event state.
-         * @return Whether or not the detector should consider this event
-         * as handled. If an event was not handled, the detector
-         * will continue to accumulate movement until an event is
-         * handled. This can be useful if an application, for example,
-         * only wants to update scaling factors if the change is
-         * greater than 0.01.
-         */
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            return false;
-        }
-
-        /**
-         * Responds to the beginning of a scaling gesture. Reported by
-         * new pointers going down.
-         *
-         * @param detector The detector reporting the event - use this to
-         *                 retrieve extended info about event state.
-         * @return Whether or not the detector should continue recognizing
-         * this gesture. For example, if a gesture is beginning
-         * with a focal point outside of a region where it makes
-         * sense, onScaleBegin() may return false to ignore the
-         * rest of the gesture.
-         */
-        @Override
-        public boolean onScaleBegin(ScaleGestureDetector detector) {
-            return true;
-        }
-
-        /**
-         * Responds to the end of a scale gesture. Reported by existing
-         * pointers going up.
-         * <p/>
-         * Once a scale has ended, {@link ScaleGestureDetector#getFocusX()}
-         * and {@link ScaleGestureDetector#getFocusY()} will return focal point
-         * of the pointers remaining on the screen.
-         *
-         * @param detector The detector reporting the event - use this to
-         *                 retrieve extended info about event state.
-         */
-        @Override
-        public void onScaleEnd(ScaleGestureDetector detector) {
-            mCameraSource.doZoom(detector.getScaleFactor());
-        }
-    }
 }

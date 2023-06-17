@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -106,6 +107,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -126,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
     private RadioGroup radioGroup;
     private BottomNavigationView bottomNavigationView;
     private CAMediatedBannerView mediatedBannerView;
-
-
+    private SharedPreferences prefs;
     @SuppressLint({"ResourceAsColor", "MissingInflatedId", "WrongViewCast"})
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         //RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
         //cardViewHide = findViewById(R.id.cardView_seekbar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         bottomSheetSubscription = new BottomSheetDialog(this);
         bottomSheetSubscription.setContentView(R.layout.subscription_layout);
         radioGroup=bottomSheetSubscription.findViewById(R.id.rgRight);
@@ -219,9 +220,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .check();
-
-
+        getLocale();
     }
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+    }
+
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {

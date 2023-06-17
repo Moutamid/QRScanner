@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/tv_button_result"
-            android:text="Add Contact"
+            android:text="@string/add_contact"
             android:padding="20dp"
             android:textColor="@color/black"
             android:textAlignment="center"

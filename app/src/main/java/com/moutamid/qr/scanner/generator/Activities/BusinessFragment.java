@@ -2,6 +2,8 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.moutamid.qr.scanner.generator.R;
@@ -18,11 +21,13 @@ import com.moutamid.qr.scanner.generator.interfaces.ButtonItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class BusinessFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Integer> cardList;
+    private SharedPreferences prefs;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -30,10 +35,30 @@ public class BusinessFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.business_fragment, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cardList = new ArrayList<>();
         loadData();
+        getLocale();
         return view;
     }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getActivity().getResources().updateConfiguration(configuration,getActivity().getResources().getDisplayMetrics());
+    }
+
 
     private void loadData() {
         cardList.add(R.drawable.ic_card_calender_1);

@@ -135,7 +135,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
+                android:text="@string/save"
                 android:id="@+id/save"
                 android:backgroundTint="@color/teal_200"
                 android:textColor="@color/white"
@@ -144,7 +144,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="SHARE"
+                android:text="@string/share"
                 android:id="@+id/share"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/save"
@@ -155,7 +155,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="DELETE"
+                android:text="@string/delete"
                 android:id="@+id/delete"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/save"
@@ -166,7 +166,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="EMAIL"
+                android:text="@string/email"
                 android:id="@+id/email"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
@@ -184,7 +184,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
-                android:text="DIAL"
+                android:text="@string/dial"
                 android:textColor="@color/white" />
 
 
@@ -198,7 +198,7 @@
                 android:layout_toRightOf="@+id/dial"
                 android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
-                android:text="ADD CONTACT"
+                android:text="@string/add_contact"
                 android:textColor="@color/white" />
 
 

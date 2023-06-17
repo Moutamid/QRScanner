@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -20,15 +23,18 @@ import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 
+import java.util.Locale;
+
 public class ContactGenActivity extends AppCompatActivity {
     private EditText name,phone,email,org,address;
     private HistoryVM historyVM;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_gen);
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         historyVM = new ViewModelProvider(ContactGenActivity.this).get(HistoryVM.class);
         name=findViewById(R.id.contact_name);
         phone=findViewById(R.id.contact_phone);
@@ -40,6 +46,27 @@ public class ContactGenActivity extends AppCompatActivity {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ContactGenActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+        getLocale();
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
     }
 
     public void contactGenerate(View view) {

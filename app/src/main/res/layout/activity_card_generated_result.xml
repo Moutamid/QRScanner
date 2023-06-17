@@ -40,7 +40,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
+                android:text="@string/save"
                 android:id="@+id/save"
                 android:backgroundTint="@color/teal_200"
                 android:textColor="@color/white"
@@ -49,7 +49,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="SHARE"
+                android:text="@string/share"
                 android:id="@+id/share"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/save"

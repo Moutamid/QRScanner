@@ -5,6 +5,7 @@ import static android.content.Context.VIBRATOR_SERVICE;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -29,18 +30,21 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 
 import com.moutamid.qr.scanner.generator.R;
 
+import java.util.Locale;
+
 public class MySettingsFragment extends Fragment {
 
     public static String PACKAGE_NAME;
     private Switch beep,vibrate,copy;
-    private TextView searchTxt;
-    private RelativeLayout languageBtn,policyBtn,feedbackBtn;
+    private TextView searchTxt,languageTxt;
+    private RelativeLayout policyBtn,feedbackBtn;
     private boolean beepSound = false;
     private boolean vibration = false;
     private boolean copied =false;
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
     private String engine ="";
+    //private RelativeLayout languageTxt;
 
     @SuppressLint("MissingInflatedId")
     @Nullable
@@ -63,13 +67,15 @@ public class MySettingsFragment extends Fragment {
         vibrate = view.findViewById(R.id.switch2);
         copy = view.findViewById(R.id.switch3);
         searchTxt = view.findViewById(R.id.search);
-        languageBtn = view.findViewById(R.id.language);
+        languageTxt = view.findViewById(R.id.language);
+        languageTxt.setText("English");
         policyBtn = view.findViewById(R.id.policy);
         feedbackBtn = view.findViewById(R.id.feedback);
         beep.setChecked(beepSound);
         vibrate.setChecked(vibration);
         copy.setChecked(copied);
         searchTxt.setText(engine);
+        getLocale();
         beep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -117,7 +123,7 @@ public class MySettingsFragment extends Fragment {
                 showSearchEngineDialogBox();
             }
         });
-        languageBtn.setOnClickListener(new View.OnClickListener() {
+        languageTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 languageOptionsDialog();
@@ -136,67 +142,65 @@ public class MySettingsFragment extends Fragment {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i==0){
 
-                    edit.putString("lang","Default English (USA)");
-                    edit.apply();
+                    languageTxt.setText("Default English (USA)");
+                    setLocale("en","Default English (USA)");
+                    getActivity().recreate();
+
                 }
                 else if (i == 1){
-
-                    edit.putString("lang","English (USA)");
-                    edit.apply();
+                    languageTxt.setText("English (USA)");
+                    setLocale("en","English (USA)");
+                    getActivity().recreate();
 
                 }else if (i == 2){
-
-                    edit.putString("lang","Arabic");
-                    edit.apply();
-
+                    languageTxt.setText("Arabic");
+                    setLocale("ar","Arabic");
+                    getActivity().recreate();
                 }
                 else if (i == 3){
-
-                    edit.putString("lang","Chinese");
-                    edit.apply();
+                    languageTxt.setText("Chinese");
+                    setLocale("zh","Chinese");
+                    getActivity().recreate();
 
                 }
                 else if (i == 4){
-
-                    edit.putString("lang","French");
-                    edit.apply();
-
+                    languageTxt.setText("French");
+                    setLocale("fr","French");
+                    getActivity().recreate();
                 }
                 else if (i == 5){
-
-                    edit.putString("lang","Germany");
-                    edit.apply();
+                    languageTxt.setText("Germany");
+                    setLocale("de","Germany");
+                    getActivity().recreate();
 
                 }
                 else if (i == 6){
-
-                    edit.putString("lang","Hindi");
-                    edit.apply();
+                    languageTxt.setText("Hindi");
+                    setLocale("hi","Hindi");
+                    getActivity().recreate();
 
                 }
                 else if (i == 7){
-
-                    edit.putString("lang","Italian");
-                    edit.apply();
+                    languageTxt.setText("Italian");
+                    setLocale("it","Italian");
+                    getActivity().recreate();
 
                 }
                 else if (i == 8){
-
-                    edit.putString("lang","Malaysian");
-                    edit.apply();
+                    languageTxt.setText("Malaysian");
+                    setLocale("ms","Malaysian");
+                    getActivity().recreate();
 
                 }
                 else if (i == 9){
-
-                    edit.putString("lang","Turkish");
-                    edit.apply();
-
+                    languageTxt.setText("Turkish");
+                    setLocale("tr","Turkish");
+                    getActivity().recreate();
                 }
                 else if (i == 10){
-
-                    edit.putString("lang","Urdu");
-                    edit.apply();
-
+                    languageTxt.setText("Urdu");
+                    setLocale("ur","Urdu");
+                    getActivity().recreate();
                 }
                 dialogInterface.dismiss();
             }
@@ -204,6 +208,30 @@ public class MySettingsFragment extends Fragment {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getActivity().getResources().updateConfiguration(configuration,getActivity().getResources().getDisplayMetrics());
+        edit.putString("lang",lng);
+        edit.putString("lang_name",name);
+        edit.apply();
+        languageTxt.setText(name);
+    }
+
+
 
     private void showSearchEngineDialogBox() {
         String[] listItems = {"Google","Bing","Yahoo","DuckDuckGo","Ecosia","Yandex"};

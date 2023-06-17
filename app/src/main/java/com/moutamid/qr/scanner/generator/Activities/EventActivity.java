@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -23,12 +26,14 @@ import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class EventActivity extends AppCompatActivity {
 
     private EditText eventname,subject;
     private  TextView startdate,starttime,enddate,endtime;
     private HistoryVM historyVM;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +46,33 @@ public class EventActivity extends AppCompatActivity {
         starttime=findViewById(R.id.tv_start_time);
         enddate=findViewById(R.id.tv_end_date);
         endtime=findViewById(R.id.tv_end_time);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EventActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
         historyVM = new ViewModelProvider(EventActivity.this).get(HistoryVM.class);
+        getLocale();
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
 
     }
 

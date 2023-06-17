@@ -4,9 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -51,6 +54,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class CardCalendarActivity extends AppCompatActivity {
 
@@ -61,6 +65,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     private boolean isEventLogoSelected = false;
     TextView eventName,eventDate,eventCity;
     private EditText edittext;
+    private SharedPreferences prefs;
     private RelativeLayout imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
@@ -74,6 +79,7 @@ public class CardCalendarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_card_calendar);
         eventCity = findViewById(R.id.event_city);
         eventName = findViewById(R.id.event_name);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         eventDate = findViewById(R.id.event_date);
         edittext = findViewById(R.id.edittext);
         imageLayout = findViewById(R.id.image_layout1);
@@ -82,6 +88,7 @@ public class CardCalendarActivity extends AppCompatActivity {
         bold = findViewById(R.id.bold);
         shadow = findViewById(R.id.shadow);
         logo = findViewById(R.id.logo);
+        getLocale();
         colorSeekBar = findViewById(R.id.color_seek_bar);
         historyVM = new ViewModelProvider(CardCalendarActivity.this).get(HistoryVM.class);
         eventName.setOnClickListener(new View.OnClickListener() {
@@ -198,6 +205,23 @@ public class CardCalendarActivity extends AppCompatActivity {
                 startActivityForResult(pickPhoto, 2);
             }
         });
+    }
+
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        setLocale(lang);
+    }
+
+    private void setLocale(String lng) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
     }
 
     public void ClearTxt(View view) {

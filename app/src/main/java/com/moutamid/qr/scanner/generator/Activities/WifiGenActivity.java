@@ -5,6 +5,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -20,11 +23,14 @@ import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
+import java.util.Locale;
+
 
 public class    WifiGenActivity extends AppCompatActivity {
 
     private EditText wifiname,wifipassword;
     private HistoryVM historyVM;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +38,35 @@ public class    WifiGenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_wifi_gen);
         wifiname=findViewById(R.id.wifi_name);
         wifipassword=findViewById(R.id.wfi_password);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
         historyVM = new ViewModelProvider(WifiGenActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, WifiGenActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+        getLocale();
     }
 
+
+    private void getLocale(){
+
+        String lang = prefs.getString("lang","");
+        String name = prefs.getString("lang_name","");
+        //   languageTxt.setText(name);
+        setLocale(lang,name);
+    }
+
+    private void setLocale(String lng,String name) {
+
+        Locale locale = new Locale(lng);
+        Locale.setDefault(locale);
+
+        Configuration configuration = new Configuration();
+        configuration.locale = locale;
+        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+
+    }
     public void wifiGenerate(View view) {
 
         String data1 = wifiname.getText().toString();
