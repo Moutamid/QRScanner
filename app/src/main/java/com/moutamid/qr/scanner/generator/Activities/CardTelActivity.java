@@ -2,11 +2,13 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -81,6 +83,9 @@ public class CardTelActivity extends AppCompatActivity {
                 isText2Selected = false;
                 isEventLogoSelected = false;
                 edittext.setText(text1.getText().toString());
+                text1.setBackgroundResource(R.drawable.text_input);
+                text2.setBackgroundResource(0);
+                text3.setBackgroundResource(0);
             }
         });
         text2.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +96,9 @@ public class CardTelActivity extends AppCompatActivity {
                 isText2Selected = false;
                 isEventLogoSelected = false;
                 edittext.setText(text2.getText().toString());
+                text2.setBackgroundResource(R.drawable.text_input);
+                text1.setBackgroundResource(0);
+                text3.setBackgroundResource(0);
             }
         });
         text3.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +109,9 @@ public class CardTelActivity extends AppCompatActivity {
                 isText1Selected = false;
                 isEventLogoSelected = false;
                 edittext.setText(text3.getText().toString());
+                text3.setBackgroundResource(R.drawable.text_input);
+                text1.setBackgroundResource(0);
+                text2.setBackgroundResource(0);
             }
         });
 
@@ -223,7 +234,8 @@ public class CardTelActivity extends AppCompatActivity {
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card");
             historyVM.insertHistory(urlHistory);
-
+            text1.setBackgroundResource(0);
+            text2.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
             intent.putExtra("image1", savedBitmapFromViewToFile());
             intent.putExtra("image2", savedBitmapFromViewToFile2());
@@ -306,4 +318,38 @@ public class CardTelActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You have not picked any Image", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        exitActivity();
+    }
+
+    private void exitActivity(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // Setting Alert Dialog Title
+        alertDialogBuilder.setTitle(R.string.dialog_title);
+        // Icon Of Alert Dialog
+        // Setting Alert Dialog Message
+        alertDialogBuilder.setMessage(R.string.dialog_message);
+        alertDialogBuilder.setCancelable(false);
+
+        alertDialogBuilder.setPositiveButton(R.string.yes_dialog, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(R.string.no_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }

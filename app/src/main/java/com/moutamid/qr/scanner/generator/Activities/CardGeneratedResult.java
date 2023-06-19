@@ -2,6 +2,7 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import static java.io.File.separator;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
@@ -9,6 +10,7 @@ import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -178,5 +180,13 @@ public class CardGeneratedResult extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(CardGeneratedResult.this,MainActivity.class));
+        finish();
     }
 }

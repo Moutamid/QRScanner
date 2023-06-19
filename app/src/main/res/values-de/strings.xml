@@ -19,15 +19,11 @@
     <string name="business">Geschäft</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
     <string name="app_name">QR Scanner</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="dialog_message">Sind Sie sicher, dass Sie Ihre Änderungen verwerfen möchten?</string>
+    <string name="dialog_title">Änderungen verwerfen</string>
+    <string name="yes_dialog">Ja</string>
+    <string name="no_dialog">Nein</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,street\nhome location goes here</string>
@@ -58,6 +54,15 @@
     <string name="if_you_appreciate_it_please_give_up_5_star">If you appreciate it,please give up 5 star</string>
     <string name="signature_title">Remove All ads</string>
     <string name="reply_title">Default reply action</string>
+
+    <string name="feedback_title">Teilen Sie uns das Problem mit, auf das Sie gestoßen sind</string>
+    <string name="feedback_type">Typ</string>
+    <string name="type1">Scannen funktioniert nicht</string>
+    <string name="type2">Zu viele Anzeigen</string>
+    <string name="type3">Nach dem Scannen sind weitere Informationen erforderlich</string>
+    <string name="type4">Andere</string>
+
+    <string name="feedback_details">Bitte teilen Sie uns weitere Details mit, damit wir Ihr Problem schneller lokalisieren und lösen können (mindestens 6 Zeichen)</string>
 
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>

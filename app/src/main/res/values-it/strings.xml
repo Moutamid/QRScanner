@@ -19,15 +19,11 @@
     <string name="business">Attività commerciale</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
     <string name="app_name">QR Scanner</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="dialog_message">Sei sicuro di voler annullare le modifiche?</string>
+    <string name="dialog_title">Non salvare le modifiche</string>
+    <string name="yes_dialog">SÌ</string>
+    <string name="no_dialog">No</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,street\nhome location goes here</string>
@@ -46,6 +42,16 @@
     <string name="title_url">www.website.com</string>
     <string name="type">Tipo:</string>
     <string name="ssid">SSID:</string>
+
+    <string name="feedback_title">Raccontaci il problema che hai riscontrato</string>
+    <string name="feedback_type">Tipa</string>
+    <string name="type1">Scansione non funzionante</string>
+    <string name="type2">Troppi annunci</string>
+    <string name="type3">Hai bisogno di più informazioni dopo la scansione</string>
+    <string name="type4">Altre</string>
+
+    <string name="feedback_details">Forniscici maggiori dettagli in modo che possiamo individuare e risolvere il tuo problema più velocemente (almeno 6 caratteri)</string>
+
     <string name="artist_name">Nome dell\'artista</string>
     <string name="artist_song">Canzone d\'artista</string>
     <string name="add_contact">AGGIUNGI CONTATTO</string>

@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
+        getLocale();
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
         /*mainDataList.add(new ButtonMainModel("Scan", R.drawable.ic_qrscan2));
         mainDataList.add(new ButtonMainModel("Generate QR", R.drawable.ic_generate_qr_01));
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .check();
-        getLocale();
+
     }
 
     private void getLocale(){
@@ -237,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        invalidateOptionsMenu();
     }
 
 

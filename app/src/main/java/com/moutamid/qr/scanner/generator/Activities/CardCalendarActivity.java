@@ -2,11 +2,13 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -94,6 +96,9 @@ public class CardCalendarActivity extends AppCompatActivity {
         eventName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                eventName.setBackgroundResource(R.drawable.text_input);
+                eventCity.setBackgroundResource(0);
+                eventDate.setBackgroundResource(0);
                 isEventNameSelected = true;
                 isEventDateSelected = false;
                 isEventCitySelected = false;
@@ -108,6 +113,9 @@ public class CardCalendarActivity extends AppCompatActivity {
                 isEventNameSelected = false;
                 isEventCitySelected = false;
                 isEventLogoSelected = false;
+                eventDate.setBackgroundResource(R.drawable.text_input);
+                eventName.setBackgroundResource(0);
+                eventCity.setBackgroundResource(0);
                 edittext.setText(eventDate.getText().toString());
             }
         });
@@ -118,6 +126,9 @@ public class CardCalendarActivity extends AppCompatActivity {
                 isEventNameSelected = false;
                 isEventDateSelected = false;
                 isEventLogoSelected = false;
+                eventCity.setBackgroundResource(R.drawable.text_input);
+                eventDate.setBackgroundResource(0);
+                eventName.setBackgroundResource(0);
                 edittext.setText(eventCity.getText().toString());
             }
         });
@@ -238,7 +249,9 @@ public class CardCalendarActivity extends AppCompatActivity {
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card");
             historyVM.insertHistory(urlHistory);
-
+            eventName.setBackgroundResource(0);
+            eventCity.setBackgroundResource(0);
+            eventDate.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
             intent.putExtra("image1", savedBitmapFromViewToFile());
             intent.putExtra("image2", savedBitmapFromViewToFile2());
@@ -319,6 +332,39 @@ public class CardCalendarActivity extends AppCompatActivity {
         } else {
             Toast.makeText(CardCalendarActivity.this, "You have not picked any Image", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitActivity();
+    }
+
+    private void exitActivity(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // Setting Alert Dialog Title
+        alertDialogBuilder.setTitle(R.string.dialog_title);
+        // Icon Of Alert Dialog
+        // Setting Alert Dialog Message
+        alertDialogBuilder.setMessage(R.string.dialog_message);
+        alertDialogBuilder.setCancelable(false);
+
+        alertDialogBuilder.setPositiveButton(R.string.yes_dialog, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(R.string.no_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

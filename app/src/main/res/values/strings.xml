@@ -19,15 +19,20 @@
     <string name="business">Business</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
     <string name="app_name">QR Scanner</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="dialog_message">Are you sure you want to discard your changes?</string>
+    <string name="dialog_title">Discard Changes</string>
+    <string name="yes_dialog">Yes</string>
+    <string name="no_dialog">No</string>
+
+    <string name="feedback_title">Tell us the problem you encountered</string>
+    <string name="feedback_type">Type</string>
+    <string name="type1">Scanning not working</string>
+    <string name="type2">Too many ads</string>
+    <string name="type3">Need more information after scanning</string>
+    <string name="type4">Others</string>
+
+    <string name="feedback_details">Please tell us more details so that we can locate and solve your problem faster (atleast 6 characters)</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,street\nhome location goes here</string>

@@ -4,13 +4,16 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ImageFormat;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -23,7 +26,6 @@ import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourc
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview;
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import android.net.Uri;
@@ -37,19 +39,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
+import android.os.Environment;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -82,26 +87,26 @@ import static android.content.Context.VIBRATOR_SERVICE;
 
 import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-
-import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
 public class QRScanFragment extends Fragment {
 
   //  private static ZXingScannerView mScannerView;
     private Context context;
-    private int cameraId = CameraSource.CAMERA_FACING_BACK;
+
     private HistoryVM historyVM;
 
     private int zoomProgress = 5;
     private SharedPreferences prefs;
     static String contents;
     static Uri picUri;
+    private RelativeLayout imageLayout,cardLayout;
 
     private Camera.Parameters parameters;
     private final int REQUEST_CODE_PERMISSIONS = 101;
@@ -112,11 +117,12 @@ public class QRScanFragment extends Fragment {
     //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
     private ImageView flashon,zoom_minus,zoom_plus,switchBtn, galleryBtn,modeBtn;
     private SeekBar seekBar;
+    private TextView modeTxt;
     private boolean shouldShowText, multipleScan, showDrawRect, touchAsCallback, shouldFocus, showFlash = false;
-
+    CameraSource.Builder builder;
     private boolean autoFocus = true;
     private boolean useFlash = false;
-
+    private byte[] imgByte = null;
     private Integer[] rectColors;
 
     private int barcodeFormat, cameraFacing;
@@ -128,6 +134,7 @@ public class QRScanFragment extends Fragment {
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
+    BarcodeDetector barcodeDetector;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -172,9 +179,12 @@ public class QRScanFragment extends Fragment {
         zoom_plus = view.findViewById(R.id.plus_img);
         flashon = view.findViewById(R.id.flash_check);
         modeBtn = view.findViewById(R.id.mode_check);
+        modeTxt = view.findViewById(R.id.mode_status);
         switchBtn = view.findViewById(R.id.camera_switch);
         galleryBtn = view.findViewById(R.id.beep_check);
         seekBar = view.findViewById(R.id.zoom_sb);
+        imageLayout = view.findViewById(R.id.card);
+        cardLayout = view.findViewById(R.id.cardView_seekbar);
         /*barcodeCapture = (BarcodeCapture) getActivity().getSupportFragmentManager().findFragmentById(R.id.scan_view_id);
         if (barcodeCapture != null) {
             barcodeCapture.setRetrieval(QRScanFragment.this);
@@ -193,7 +203,7 @@ public class QRScanFragment extends Fragment {
 
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
         if (cameraPermissionGranted()) {
-            createCameraSource(autoFocus,useFlash,cameraId);
+            createCameraSource(autoFocus,useFlash,false);
 
         } else {
             ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
@@ -234,23 +244,6 @@ public class QRScanFragment extends Fragment {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                /*if (barcodeCapture != null) {
-                    zoomProgress = progress;
-                    Camera retrieveCamera = barcodeCapture.retrieveCamera();
-                    if (retrieveCamera != null) {
-                        try {
-                            parameters = retrieveCamera.getParameters();
-                            int maxZoom = parameters.getMaxZoom();
-                            seekBar.setMax(maxZoom);
-                            if (parameters.isZoomSupported() && zoomProgress >= 0 && zoomProgress < maxZoom) {
-                                parameters.setZoom(zoomProgress);
-                            }
-                            retrieveCamera.setParameters(parameters);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }*/
                 zoomProgress = progress;
                 mCameraSource.doZoom(zoomProgress);
                 seekBar.setProgress(zoomProgress);
@@ -409,7 +402,7 @@ public class QRScanFragment extends Fragment {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (cameraPermissionGranted()) {
                // barcodeCapture.setSupportMultipleScan(false).setShowDrawRect(true).shouldAutoFocus(true);
-                createCameraSource(autoFocus, useFlash, cameraId);
+                createCameraSource(autoFocus, useFlash, false);
 
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
@@ -456,23 +449,52 @@ public class QRScanFragment extends Fragment {
         startActivityForResult(pickPhoto, 2);
     }
 
+    private int mode = 0;
     private void btnMode() {
+        if (checkSoundPreferences()) {
+            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+        }
+        if (checkVibratePreferences()) {
+            if (Build.VERSION.SDK_INT >= 26) {
+
+                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+
+                v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+
+                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                v.vibrate(100);
+            }
+        }
+        if (mode == 0) {
+            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            modeTxt.setText("Scan Mode: Batch Scanning");
+            mode = 1;
+        } else if (mode == 1){
+            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
+            mode = 2;
+            modeTxt.setText("Scan Mode: Manual Scanning");
+        }else {
+            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+            mode = 0;
+            modeTxt.setText("Scan Mode: Normal Scanning");
+        }
     }
 
 
     private boolean isSwitch = false;
     @SuppressLint("WrongConstant")
     private void btnSwitch() {
+        mPreview.stop();
 
         if (isSwitch) {
-            mCameraSource.setCameraFacing(CameraSource.CAMERA_FACING_BACK);
+            createCameraSource(true,false,false);
             isSwitch = false;
         }else {
-
-            mCameraSource.setCameraFacing(CameraSource.CAMERA_FACING_FRONT);
+            createCameraSource(true,false,true);
             isSwitch = true;
         }
-
     }
 
 
@@ -573,6 +595,7 @@ public class QRScanFragment extends Fragment {
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcode", text);
+            //intent.putExtra("image", savedBitmapFromViewToFile());
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
@@ -583,6 +606,38 @@ public class QRScanFragment extends Fragment {
             t.printStackTrace();
         }
     }
+    private byte[] savedBitmapFromViewToFile() {
+        //inflate layout
+
+        //reference View with image
+        /*imageLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        Bitmap bitmap = Bitmap.createBitmap(imageLayout.getMeasuredWidth(), imageLayout.getMeasuredHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        imageLayout.layout(0, 0, imageLayout.getMeasuredWidth(), imageLayout.getMeasuredHeight());
+        imageLayout.draw(canvas);*/
+
+        cardLayout.setVisibility(View.GONE);
+        Bitmap bitmap = Bitmap.createBitmap(imageLayout.getWidth(), imageLayout.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bitmap);
+        imageLayout.draw(c);
+        //save to File
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+
+        String nameFile = "qr.jpg";
+        File f = new File(Environment.getExternalStorageDirectory() + File.separator + nameFile);
+        FileOutputStream fo = null;
+        try {
+            fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (Exception e) {
+            Log.d("Error File:", "" + e);
+        }
+        return bytes.toByteArray();
+    }
+
     public  void processRawResult(String text) {
 
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
@@ -751,7 +806,7 @@ public class QRScanFragment extends Fragment {
 
 
     @SuppressLint("InlinedApi")
-    private void createCameraSource(boolean autoFocus, boolean useFlash, int cameraId) {
+    private void createCameraSource(boolean autoFocus, boolean useFlash, boolean b) {
         Context context = getActivity();
 
 /*        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
@@ -790,17 +845,26 @@ public class QRScanFragment extends Fragment {
 
             });
         }*/
-        BarcodeDetector barcodeDetector =
-                new BarcodeDetector.Builder(getActivity())
+        barcodeDetector =
+                new BarcodeDetector.Builder(context)
                         .setBarcodeFormats(Barcode.ALL_FORMATS)//QR_CODE)
                         .build();
-        // Creates and starts the camera.  Note that this uses a higher resolution in comparison
-        // to other detection examples to enable the barcode detector to detect small barcodes
-        // at long distances.
-        CameraSource.Builder builder = new CameraSource.Builder(getActivity(), barcodeDetector)
-                .setFacing(cameraId)
-                .setRequestedPreviewSize(1600, 1024)
-                .setRequestedFps(15.0f);
+
+
+        if (b){
+
+            builder = new CameraSource.Builder(getActivity(), barcodeDetector)
+                    .setFacing(CameraSource.CAMERA_FACING_FRONT)
+                    .setRequestedPreviewSize(1600, 1024)
+                    .setRequestedFps(15.0f);
+        }else {
+            builder = new CameraSource.Builder(getActivity(), barcodeDetector)
+                    .setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedPreviewSize(1600, 1024)
+                    .setRequestedFps(15.0f);
+        }
+
+
 
         // make sure that auto focus is an available option
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
@@ -840,6 +904,7 @@ public class QRScanFragment extends Fragment {
                             }
                         }
                         String rawData = barcodes.valueAt(0).rawValue;
+
                         processResultBarcode(rawData);
                     });
                 }

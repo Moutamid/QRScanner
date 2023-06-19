@@ -18,7 +18,6 @@
            android:layout_height="50dp"
            android:layout_alignParentEnd="true"
            android:layout_margin="20dp"
-           android:onClick="deleteAllHistory"
            android:src="@drawable/delete"
            android:layout_alignParentBottom="true"
            android:contentDescription="@string/delete_history" />

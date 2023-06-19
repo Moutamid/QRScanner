@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -77,6 +78,7 @@ public class ScanResultActivity extends AppCompatActivity {
     private Bitmap bmp;
     private Wifi wifi;
     private SharedPreferences prefs;
+    private Bitmap bitmap;
     private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
     @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
@@ -97,6 +99,8 @@ public class ScanResultActivity extends AppCompatActivity {
         emailBtn = findViewById(R.id.email);
         contactBtn = findViewById(R.id.add_contact);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+       // byte[] image = getIntent().getByteArrayExtra("image");
+       // bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
       //  RecyclerView recyclerView = findViewById(R.id.recycler_result);
        // RecyclerView recyclerViewButtons = findViewById(R.id.recycler_button);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
@@ -467,7 +471,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 String textBarcode = getIntent().getStringExtra("barcode");
 
-                try {
+         /*       try {
                     Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
                     hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
                     Writer codeWriter;
@@ -481,14 +485,20 @@ public class ScanResultActivity extends AppCompatActivity {
                             bmp.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
                         }
                     }
-
-                    imageView.setImageBitmap(bmp);
+                    if (image != null){
+                        imageView.setImageBitmap(bitmap);
+                    }else {
+                        imageView.setImageBitmap(bmp);
+                    }
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                }*/
                 if (textBarcode != null) {
                     resultdatalist.add(textBarcode);
                 }
+
+                bmp = QRCode.from(textBarcode).bitmap();
+                imageView.setImageBitmap(bmp);
                 icon.setImageResource(R.drawable.ic_barcode);
                 tvHead.setText(R.string.barcode);
                 tvTitle.setText(textBarcode);

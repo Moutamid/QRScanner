@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
     private TextView tvIsEmpty;
     private boolean isEmpty = false;
     private SharedPreferences prefs;
+    private ImageView deleteImg;
 
     @Nullable
     @Override
@@ -60,6 +62,13 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
         historyVM = new ViewModelProvider(ScanFragment.this).get(HistoryVM.class);
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
         historyRecyclerView.setHasFixedSize(true);
+        deleteImg = view.findViewById(R.id.all_delete_history);
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllHistory();
+            }
+        });
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
         getLocale();
@@ -247,7 +256,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
 
     }
 
-    public void deleteAllHistory(View view) {
+    public void deleteAllHistory() {
 
         if (isEmpty){
             Toast.makeText(getActivity(), "Nothing to delete!", Toast.LENGTH_SHORT).show();

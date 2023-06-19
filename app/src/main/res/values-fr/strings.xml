@@ -19,15 +19,11 @@
     <string name="business">Entreprise</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
     <string name="app_name">QR Scanner</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="dialog_message">Voulez-vous vraiment annuler vos modifications ?</string>
+    <string name="dialog_title">Annuler les modifications</string>
+    <string name="yes_dialog">Oui</string>
+    <string name="no_dialog">Non</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,streetnhome location goes here</string>
@@ -58,6 +54,16 @@
     <string name="if_you_appreciate_it_please_give_up_5_star">If you appreciate it,please give up 5 star</string>
     <string name="signature_title">Remove All ads</string>
     <string name="reply_title">Default reply action</string>
+
+    <string name="feedback_title">Dites-nous le problème que vous avez rencontré</string>
+    <string name="feedback_type">Taper</string>
+    <string name="type1">La numérisation ne fonctionne pas</string>
+    <string name="type2">Trop de publicités</string>
+    <string name="type3">Besoin de plus d\'informations après la numérisation</string>
+    <string name="type4">Autres</string>
+
+    <string name="feedback_details">Veuillez nous donner plus de détails afin que nous puissions localiser et résoudre votre problème plus rapidement (au moins 6 caractères)</string>
+
 
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>

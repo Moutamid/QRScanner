@@ -19,15 +19,11 @@
     <string name="business">İşletme</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
     <string name="app_name">QR Scanner</string>
-    <string name="title_activity_history">HistoryActivity</string>
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="dialog_message">Değişikliklerinizi silmek istediğinizden emin misiniz?</string>
+    <string name="dialog_title">Değişiklikleri gözardı et</string>
+    <string name="yes_dialog">Evet</string>
+    <string name="no_dialog">HAYIR</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,street\nhome location goes here</string>
@@ -103,6 +99,16 @@
     <string name="body">Vücut</string>
     <string name="name">İsim</string>
     <string name="create_title">QR Kod Oluşturucu</string>
+
+    <string name="feedback_title">Karşılaştığınız sorunu bize bildirin</string>
+    <string name="feedback_type">Tip</string>
+    <string name="type1">Tarama çalışmıyor</string>
+    <string name="type2">çok fazla reklam</string>
+    <string name="type3">Taramadan sonra daha fazla bilgiye ihtiyacınız var</string>
+    <string name="type4">Diğerleri</string>
+
+    <string name="feedback_details">Sorununuzu daha hızlı bulup çözebilmemiz için lütfen bize daha fazla ayrıntı verin (en az 6 karakter)</string>
+
 
     <string name="beep">bip sesi</string>
     <string name="beep_msg">Tarama başarılı\nis olduğunda bip sesi</string>

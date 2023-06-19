@@ -42,6 +42,13 @@
         tools:ignore="AllowBackup,LockedOrientationActivity,RtlEnabled"
         tools:replace="android:icon">
         <activity
+            android:name=".Activities.FeedbackActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activities.CardUrl2Activity"
             android:exported="false">
             <meta-data
@@ -154,13 +161,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".Activities.VCardActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".Activities.PayPalActivity"
             android:exported="false">
             <meta-data
@@ -195,7 +195,8 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".Activities.MainActivity" />
+        <activity android:name=".Activities.MainActivity"
+            android:configChanges="locale"/>
         <activity android:name=".Activities.ScanResultActivity" />
         <activity android:name=".Activities.UrlGenActivity" />
         <activity android:name=".Activities.TextGenActivity" />

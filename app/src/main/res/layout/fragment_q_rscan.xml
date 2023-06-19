@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:id="@+id/card"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -73,6 +74,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:id="@+id/cardView_seekbar">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/mode_status"
+                android:text="Scan Mode: Normal Scanning"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"></TextView>
             <LinearLayout android:orientation="horizontal"
                 android:backgroundTint="@color/teal_200"
                 android:paddingTop="5dp"
@@ -87,7 +98,11 @@
                 android:layout_marginBottom="15dp"
                 android:id="@+id/options">
                 <ImageView android:id="@+id/mode_check"
-                    android:onClick="btnMode" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>
+                    android:onClick="btnMode"
+                    android:padding="10dp" android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/scan"/>
                 <ImageView android:id="@+id/flash_check"
                     android:onClick="flashButton" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_flash_off_24"/>
                 <ImageView

@@ -4,10 +4,12 @@ import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
@@ -130,12 +132,33 @@ public class MySettingsFragment extends Fragment {
             }
         });
 
+        feedbackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),FeedbackActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        policyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri webpage = Uri.parse("https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html");
+                Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+                try {
+                    startActivity(webIntent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         return view;
     }
 
     private void languageOptionsDialog() {
-        String[] listItems = {"Default English (USA)","English (USA)","Arabic",
-                "Chinese","French","Germany","Hindi","Italian","Malaysian","Turkish","Urdu"};
+        String[] listItems = {"Default English (USA)","English (USA)",
+                "Chinese","French","Germany","Hindi","Italian","Malaysian","Turkish"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
@@ -152,54 +175,45 @@ public class MySettingsFragment extends Fragment {
                     setLocale("en","English (USA)");
                     getActivity().recreate();
 
-                }else if (i == 2){
-                    languageTxt.setText("Arabic");
-                    setLocale("ar","Arabic");
-                    getActivity().recreate();
                 }
-                else if (i == 3){
+                else if (i == 2){
                     languageTxt.setText("Chinese");
                     setLocale("zh","Chinese");
                     getActivity().recreate();
 
                 }
-                else if (i == 4){
+                else if (i == 3){
                     languageTxt.setText("French");
                     setLocale("fr","French");
                     getActivity().recreate();
                 }
-                else if (i == 5){
+                else if (i == 4){
                     languageTxt.setText("Germany");
                     setLocale("de","Germany");
                     getActivity().recreate();
 
                 }
-                else if (i == 6){
+                else if (i == 5){
                     languageTxt.setText("Hindi");
                     setLocale("hi","Hindi");
                     getActivity().recreate();
 
                 }
-                else if (i == 7){
+                else if (i == 6){
                     languageTxt.setText("Italian");
                     setLocale("it","Italian");
                     getActivity().recreate();
 
                 }
-                else if (i == 8){
+                else if (i == 7){
                     languageTxt.setText("Malaysian");
                     setLocale("ms","Malaysian");
                     getActivity().recreate();
 
                 }
-                else if (i == 9){
+                else if (i == 8){
                     languageTxt.setText("Turkish");
                     setLocale("tr","Turkish");
-                    getActivity().recreate();
-                }
-                else if (i == 10){
-                    languageTxt.setText("Urdu");
-                    setLocale("ur","Urdu");
                     getActivity().recreate();
                 }
                 dialogInterface.dismiss();

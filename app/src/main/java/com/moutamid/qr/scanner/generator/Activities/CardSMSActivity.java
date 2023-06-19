@@ -2,11 +2,13 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -81,6 +83,11 @@ public class CardSMSActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isText1Selected = true;
+                text1.setBackgroundResource(R.drawable.text_input);
+                text2.setBackgroundResource(0);
+                text3.setBackgroundResource(0);
+                text4.setBackgroundResource(0);
+
                 isText2Selected = false;
                 isText3Selected = false;
                 isText4Selected = false;
@@ -94,6 +101,10 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText1Selected = false;
                 isText2Selected = true;
                 isText3Selected = false;
+                text2.setBackgroundResource(R.drawable.text_input);
+                text4.setBackgroundResource(0);
+                text1.setBackgroundResource(0);
+                text3.setBackgroundResource(0);
                 isText4Selected = false;
                 isEventLogoSelected = false;
                 edittext.setText(text2.getText().toString());
@@ -106,6 +117,11 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText3Selected = true;
                 isText2Selected = false;
                 isText1Selected = false;
+                text3.setBackgroundResource(R.drawable.text_input);
+                text4.setBackgroundResource(0);
+                text1.setBackgroundResource(0);
+                text2.setBackgroundResource(0);
+
                 isText4Selected = false;
                 isEventLogoSelected = false;
                 edittext.setText(text3.getText().toString());
@@ -118,6 +134,10 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText4Selected = true;
                 isText3Selected = false;
                 isText2Selected = false;
+                text4.setBackgroundResource(R.drawable.text_input);
+                text2.setBackgroundResource(0);
+                text1.setBackgroundResource(0);
+                text2.setBackgroundResource(0);
                 isEventLogoSelected = false;
                 edittext.setText(text4.getText().toString());
             }
@@ -252,7 +272,10 @@ public class CardSMSActivity extends AppCompatActivity {
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card");
             historyVM.insertHistory(urlHistory);
-
+            text1.setBackgroundResource(0);
+            text2.setBackgroundResource(0);
+            text3.setBackgroundResource(0);
+            text4.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
             intent.putExtra("image1", savedBitmapFromViewToFile());
             intent.putExtra("image2", savedBitmapFromViewToFile2());
@@ -336,4 +359,38 @@ public class CardSMSActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "You have not picked any Image", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        exitActivity();
+    }
+
+    private void exitActivity(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        // Setting Alert Dialog Title
+        alertDialogBuilder.setTitle(R.string.dialog_title);
+        // Icon Of Alert Dialog
+        // Setting Alert Dialog Message
+        alertDialogBuilder.setMessage(R.string.dialog_message);
+        alertDialogBuilder.setCancelable(false);
+
+        alertDialogBuilder.setPositiveButton(R.string.yes_dialog, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+            }
+        });
+
+        alertDialogBuilder.setNegativeButton(R.string.no_dialog, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }

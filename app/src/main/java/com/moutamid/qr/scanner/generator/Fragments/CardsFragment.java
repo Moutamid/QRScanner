@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
     private TextView tvIsEmpty;
     private boolean isEmpty = false;
     private SharedPreferences prefs;
+    private ImageView deleteImg;
 
     @Nullable
     @Override
@@ -60,6 +62,13 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
         historyRecyclerView.setHasFixedSize(true);
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
+        deleteImg = view.findViewById(R.id.all_delete_history);
+        deleteImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteAllHistory();
+            }
+        });
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         getHistoryData();
         getLocale();
@@ -246,7 +255,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
 
     }
 
-    public void deleteAllHistory(View view) {
+    public void deleteAllHistory() {
 
         if (isEmpty){
             Toast.makeText(getActivity(), "Nothing to delete!", Toast.LENGTH_SHORT).show();
