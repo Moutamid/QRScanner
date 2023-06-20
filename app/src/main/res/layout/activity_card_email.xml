@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".Activities.CardEmailActivity">
 
 
@@ -119,7 +120,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="#E5E4E2"
+            app:cardBackgroundColor="@color/card_background_color"
             android:layout_above="@+id/bottom">
 
             <RelativeLayout
@@ -158,12 +159,13 @@
                     android:layout_marginLeft="20dp"
                     android:padding="8dp"
                     android:text="@string/bold_txt"
+                    android:textColor="@color/black"
                     android:id="@+id/bold"/>
 
                 <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:textColor="@color/black"
                     android:layout_alignParentEnd="true"
                     android:layout_marginRight="20dp"
                     android:padding="8dp"
@@ -178,7 +180,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/bottom"
-            app:cardBackgroundColor="#E5E4E2"
+            app:cardBackgroundColor="@color/card_background_color"
             android:layout_alignParentBottom="true">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -193,6 +195,7 @@
                     android:id="@+id/clear_text"
                     android:layout_alignParentStart="true"
                     android:onClick="ClearTxt"
+                    android:tint="@color/black"
                     android:layout_centerVertical="true"
                     android:src="@drawable/abc_ic_clear_material"/>
 
@@ -204,6 +207,7 @@
                     android:layout_toLeftOf="@+id/save_text"
                     android:layout_toRightOf="@+id/clear_text"
                     android:background="@null"
+                    android:textColor="@color/black"
                     android:padding="8dp" />
 
                 <ImageView
@@ -213,6 +217,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:onClick="SaveTxt"
+                    android:tint="@color/black"
                     android:src="@drawable/ic_mtrl_chip_checked_black"/>
 
 

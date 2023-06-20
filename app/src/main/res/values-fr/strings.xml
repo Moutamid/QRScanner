@@ -99,7 +99,6 @@
     <string name="history">Histoire</string>
     <string name="setting">Paramètres</string>
     <string name="back_button">back button</string>
-    <string name="delete_history">delete history</string>
     <string name="enter_text_here">Entrez le texte ici</string>
     <string name="generate">Générer</string>
     <string name="texthint">Entrez le texte ici</string>
@@ -111,9 +110,9 @@
     <string name="name">Nom</string>
     <string name="create_title">Créateur de codes QR</string>
 
-    <string name="beep">Bip</string>
-    <string name="beep_msg">Bip lorsque l\'analyseest réussie</string>
-    <string name="auto_clipboard">Copié automatiquementdans le presse-papiers</string>
+    <string name="beep">Son</string>
+    <string name="beep_msg">Activer/désactiver le son mobile</string>
+    <string name="auto_clipboard">Copies automatiques dans le presse-papiers</string>
     <string name="vibrate">Vibration</string>
     <string name="search">Moteur de recherche</string>
     <string name="language">Opzioni lingua</string>
@@ -154,4 +153,46 @@
     <string name="subscription_policy">Le paiement sera débité de votre compte Google Play lors de la confirmation de l\'achat. L\'abonnement se renouvelle automatiquement avant la fin de la période en cours, sauf annulation 24 heures à l\'avance, et l\'annulation prend effet à la fin de la période en cours. Vous pouvez gérer votre abonnement et désactiver le renouvellement automatique depuis votre compte Google Play Store. L\'abonnement annulé pendant la période d\'essai ne sera pas facturé. politique de confidentialité</string>
     <string name="enjoying_qr_scanner">Profiter du scanner QR</string>
     <string name="adsubscribed">AnnonceInscrit</string>
+
+
+    <string name="auto_clipboard_txt">Activer/désactiver la copie automatique dans le presse-papiers</string>
+    <string name="vibrate_txt">Activer/désactiver les vibrations mobiles</string>
+    <string name="delete_history">Effacer l\'historique</string>
+    <string name="policy_txt">Lisez attentivement notre politique de confidentialité</string>
+    <string name="share_txt">Partagez l\'application QR avec vos amis</string>
+    <string name="rate_us_txt">Faites-nous savoir sur l\'application QR</string>
+    <string name="rate_us">Évaluez nous</string>
+
+    <string name="delete_txt">Supprimer tout l\'historique précédent</string>
+
+    <string name="product">détails du produit</string>
+    <string name="product_txt">Afficher les informations sur le produit</string>
+
+    <string name="save_history">Enregistrer l\'historique</string>
+    <string name="save_history_txt">Activer/désactiver l\'historique de sauvegarde</string>
+
+    <string name="web_search">Recherche Web automatique</string>
+    <string name="web_search_txt">Activer/désactiver la recherche Web</string>
+
+    <string name="mode1">Numérisation par lots</string>
+    <string name="mode1_txt">Activer/désactiver la numérisation par lots</string>
+    <string name="mode2">Balayage manuel</string>
+    <string name="mode2_txt">Activer/désactiver l\'analyse manuelle</string>
+
+    <string name="duplicate">Dupliquer QR/code-barres</string>
+    <string name="duplicate_txt">Enregistrer le QR/code-barres en double</string>
+
+    <string name="camera">Caméra</string>
+    <string name="camera_txt1">Caméra arrière 1 - Recommandé</string>
+    <string name="camera_txt2">Caméra avant 2</string>
+
+    <string name="display_settings">Paramètres d\'affichage</string>
+
+
+    <string name="theme">Change le thème</string>
+    <string name="theme1">Thème sombre</string>
+    <string name="theme2">Thème Lumière</string>
+    <string name="select_lang">Choisir la langue</string>
+    <string name="mode3">Normal Scanning</string>
+
 </resources>

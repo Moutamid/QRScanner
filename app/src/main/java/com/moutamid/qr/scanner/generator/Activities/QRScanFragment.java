@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -123,6 +124,8 @@ public class QRScanFragment extends Fragment {
     private boolean autoFocus = true;
     private boolean useFlash = false;
     private byte[] imgByte = null;
+    private boolean cameraSwitch = false;
+
     private Integer[] rectColors;
 
     private int barcodeFormat, cameraFacing;
@@ -135,12 +138,32 @@ public class QRScanFragment extends Fragment {
     private ScaleGestureDetector scaleGestureDetector;
     private GestureDetector gestureDetector;
     BarcodeDetector barcodeDetector;
+    private String cameraMode;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
@@ -185,12 +208,15 @@ public class QRScanFragment extends Fragment {
         seekBar = view.findViewById(R.id.zoom_sb);
         imageLayout = view.findViewById(R.id.card);
         cardLayout = view.findViewById(R.id.cardView_seekbar);
+
         /*barcodeCapture = (BarcodeCapture) getActivity().getSupportFragmentManager().findFragmentById(R.id.scan_view_id);
         if (barcodeCapture != null) {
             barcodeCapture.setRetrieval(QRScanFragment.this);
         }*/
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mPreview = (CameraSourcePreview) view.findViewById(R.id.preview);
+        cameraMode = prefs.getString("cameraMode","normal");
+        cameraSwitch = prefs.getBoolean("camera",Boolean.FALSE);
         mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) view.findViewById(R.id.graphicOverlay);
         mGraphicOverlay.setShowText(isShouldShowText());
         mGraphicOverlay.setRectColors(getRectColors());
@@ -203,7 +229,7 @@ public class QRScanFragment extends Fragment {
 
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
         if (cameraPermissionGranted()) {
-            createCameraSource(autoFocus,useFlash,false);
+            createCameraSource(autoFocus,useFlash,cameraSwitch);
 
         } else {
             ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
@@ -402,7 +428,7 @@ public class QRScanFragment extends Fragment {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (cameraPermissionGranted()) {
                // barcodeCapture.setSupportMultipleScan(false).setShowDrawRect(true).shouldAutoFocus(true);
-                createCameraSource(autoFocus, useFlash, false);
+                createCameraSource(autoFocus, useFlash, cameraSwitch);
 
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
@@ -449,7 +475,6 @@ public class QRScanFragment extends Fragment {
         startActivityForResult(pickPhoto, 2);
     }
 
-    private int mode = 0;
     private void btnMode() {
         if (checkSoundPreferences()) {
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
@@ -467,33 +492,32 @@ public class QRScanFragment extends Fragment {
                 v.vibrate(100);
             }
         }
-        if (mode == 0) {
+        if (cameraMode.equals("normal")) {
             mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            modeTxt.setText("Scan Mode: Batch Scanning");
-            mode = 1;
-        } else if (mode == 1){
+            modeTxt.setText(R.string.mode1);
+            cameraMode = "batch";
+        } else if (cameraMode.equals("batch")){
             mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
-            mode = 2;
-            modeTxt.setText("Scan Mode: Manual Scanning");
+            cameraMode = "manual";
+            modeTxt.setText(R.string.mode2);
         }else {
-            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
-            mode = 0;
-            modeTxt.setText("Scan Mode: Normal Scanning");
+            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            cameraMode = "normal";
+            modeTxt.setText(R.string.mode3);
         }
     }
 
 
-    private boolean isSwitch = false;
     @SuppressLint("WrongConstant")
     private void btnSwitch() {
         mPreview.stop();
 
-        if (isSwitch) {
+        if (cameraSwitch) {
             createCameraSource(true,false,false);
-            isSwitch = false;
+            cameraSwitch = false;
         }else {
             createCameraSource(true,false,true);
-            isSwitch = true;
+            cameraSwitch = true;
         }
     }
 
@@ -805,46 +829,39 @@ public class QRScanFragment extends Fragment {
     }
 
 
+    /**
+     * Restarts the camera.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+
+
+        if (cameraPermissionGranted()) {
+            startCameraSource();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
+        }
+
+
+    }
+
+    /**
+     * Stops the camera.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mPreview != null) {
+            mPreview.stop();
+        }
+    }
+
+
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash, boolean b) {
         Context context = getActivity();
 
-/*        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(context).build();
-        BarcodeTrackerFactory barcodeFactory = new BarcodeTrackerFactory(mGraphicOverlay, context);
-        barcodeDetector.setProcessor(
-                new MultiProcessor.Builder<>(barcodeFactory).build());
-
-
-
-        if (!barcodeDetector.isOperational()) {
-          //  IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
-            boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
-
-            if (hasLowStorage) {
-              //  Toast.makeText(this, R.string.low_storage_error, Toast.LENGTH_LONG).show();
-                Log.w("TAG", getString(R.string.low_storage_error));
-            }
-            runOnUiThread(() -> {
-                mPreview.stop();
-                if (checkSoundPreferences()) {
-                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                }
-                if (checkVibratePreferences()) {
-                    if (Build.VERSION.SDK_INT >= 26) {
-
-                        Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-
-                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                    } else {
-
-                        Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                        v.vibrate(100);
-                    }
-                }
-
-            });
-        }*/
         barcodeDetector =
                 new BarcodeDetector.Builder(context)
                         .setBarcodeFormats(Barcode.ALL_FORMATS)//QR_CODE)
@@ -868,8 +885,19 @@ public class QRScanFragment extends Fragment {
 
         // make sure that auto focus is an available option
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            builder = builder.setFocusMode(
-                    autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
+            if (cameraMode.equals("batch")) {
+                builder = builder.setFocusMode(
+                        autoFocus ? Camera.Parameters.FOCUS_MODE_FIXED : null);
+                modeTxt.setText(R.string.mode1);
+            }else if (cameraMode.equals("manual")) {
+                builder = builder.setFocusMode(
+                        autoFocus ? Camera.Parameters.FOCUS_MODE_AUTO : null);
+                modeTxt.setText(R.string.mode2);
+            }else {
+                builder = builder.setFocusMode(
+                        autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
+                modeTxt.setText(R.string.mode3);
+            }
         }
 
         mCameraSource = builder
@@ -913,56 +941,6 @@ public class QRScanFragment extends Fragment {
 
         startCameraSource();
     }
-    /**
-     * Restarts the camera.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-        if (cameraPermissionGranted()) {
-            startCameraSource();
-        } else {
-            ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
-        }
-
-
-    }
-
-    /**
-     * Stops the camera.
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mPreview != null) {
-            mPreview.stop();
-        }
-    }
-
-    /**
-     * Releases the resources associated with the camera source, the associated detectors, and the
-     * rest of the processing pipeline.
-     */
-
-    /**
-     * Callback for the result from requesting permissions. This method
-     * is invoked for every call on {@link #requestPermissions(String[], int)}.
-     * <p>
-     * <strong>Note:</strong> It is possible that the permissions request interaction
-     * with the user is interrupted. In this case you will receive empty permissions
-     * and results arrays which should be treated as a cancellationt
-     * </p>
-     *
-     * @param requestCode  The request code passed in {@link #requestPermissions(String[], int)}.
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *                     which is either {@link PackageManager#PERMISSION_GRANTED}
-     *                     or {@link PackageManager#PERMISSION_DENIED}. Never null.
-     * @see #requestPermissions(String[], int)
-     */
-
 
     /**
      * Starts or restarts the camera source, if it exists.  If the camera source doesn't exist yet

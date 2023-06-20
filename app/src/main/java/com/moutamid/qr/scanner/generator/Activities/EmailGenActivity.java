@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -35,6 +36,21 @@ public class EmailGenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_email_gen);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         email=findViewById(R.id.email);
         body=findViewById(R.id.email_body);
         subject=findViewById(R.id.email_subject);

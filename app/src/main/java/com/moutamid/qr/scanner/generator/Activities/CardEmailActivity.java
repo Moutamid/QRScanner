@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -66,6 +67,21 @@ public class CardEmailActivity extends AppCompatActivity {
         text2 = findViewById(R.id.subject);
         edittext = findViewById(R.id.edittext);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         //    text3 = findViewById(R.id.event_city);

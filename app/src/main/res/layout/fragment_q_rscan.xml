@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.QRScanFragment">
 
     <RelativeLayout
@@ -115,7 +116,7 @@
                     app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>
                 <ImageView android:id="@+id/beep_check" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/image_icon"
                     android:onClick="btnGallery"
-                    android:tint="@color/white"/>
+                    android:tint="#fff"/>
             </LinearLayout>
 
             <RelativeLayout

@@ -99,7 +99,6 @@
     <string name="history">इतिहास</string>
     <string name="setting">समायोजन</string>
     <string name="back_button">back button</string>
-    <string name="delete_history">delete history</string>
     <string name="enter_text_here">पाठ यहां लिखें</string>
     <string name="generate">बनाना</string>
     <string name="texthint">पाठ यहां लिखें</string>
@@ -111,9 +110,9 @@
     <string name="name">नाम</string>
     <string name="create_title">क्यूआर कोड निर्माता</string>
 
-    <string name="beep">भोंपू</string>
-    <string name="beep_msg">स्कैन सफल होने पर बीप करें</string>
-    <string name="auto_clipboard">क्लिपबोर्ड पर\स्वतः कॉपी किया गया</string>
+    <string name="beep">आवाज़</string>
+    <string name="beep_msg">समोबाइल ध्वनि चालू/बंद करें</string>
+    <string name="auto_clipboard">क्लिपबोर्ड पर स्वतः प्रतियाँ</string>
     <string name="vibrate">कंपन</string>
     <string name="search">खोज इंजन</string>
     <string name="language">भाषा विकल्प</string>
@@ -154,4 +153,45 @@
     <string name="subscription_policy">खरीद की पुष्टि पर आपके Google Play खाते से भुगतान लिया जाएगा। सदस्यता वर्तमान अवधि के अंत से पहले स्वत: नवीनीकृत हो जाती है, जब तक कि 24 घंटे पहले रद्द नहीं किया जाता है, और रद्दीकरण वर्तमान अवधि के अंत में प्रभावी होता है। आप अपनी सदस्यता का प्रबंधन कर सकते हैं और परीक्षण के दौरान रद्द की गई सदस्यता से आपके Google Play स्टोर खाते की सेटिंग से स्वत: नवीनीकरण बंद कर दिया जाएगा, शुल्क नहीं लिया जाएगा। गोपनीयता नीति</string>
     <string name="enjoying_qr_scanner">क्यूआर स्कैनर का आनंद ले रहे हैं</string>
     <string name="adsubscribed">सदस्यता छोड़ दी गई</string>
+
+
+    <string name="auto_clipboard_txt">क्लिपबोर्ड पर ऑटो कॉपी चालू/बंद करें</string>
+    <string name="vibrate_txt">मोबाइल कंपन चालू/बंद करें</string>
+    <string name="delete_history">हिस्ट्री हटाएं</string>
+    <string name="policy_txt">हमारी गोपनीयता नीति को ध्यान से पढ़ें</string>
+    <string name="share_txt">अपने दोस्तों के साथ क्यूआर ऐप साझा करें</string>
+    <string name="rate_us_txt">आइए जानते हैं क्यूआर एप के बारे में</string>
+    <string name="rate_us">हमें रेटिंग दें</string>
+
+    <string name="delete_txt">पिछले सभी इतिहास को मिटा दें</string>
+
+    <string name="product">उत्पाद विवरण</string>
+    <string name="product_txt">उत्पाद जानकारी दिखाएं</string>
+
+    <string name="save_history">इतिहास सहेजें</string>
+    <string name="save_history_txt">सेव हिस्ट्री को ऑन/ऑफ करें</string>
+
+    <string name="web_search">ऑटो वेब खोज</string>
+    <string name="web_search_txt">वेब खोज चालू/बंद करें</string>
+
+    <string name="mode1">बैच स्कैनिंग</string>
+    <string name="mode1_txt">बैच स्कैनिंग चालू/बंद करें</string>
+    <string name="mode2">मैनुअल स्कैनिंग</string>
+    <string name="mode2_txt">मैन्युअल स्कैनिंग चालू/बंद करें</string>
+
+    <string name="duplicate">डुप्लीकेट क्यूआर/बारकोड</string>
+    <string name="duplicate_txt">डुप्लीकेट क्यूआर/बारकोड सेव करें</string>
+
+    <string name="camera">कैमरा</string>
+    <string name="camera_txt1">पिछला कैमरा 1 - अनुशंसित</string>
+    <string name="camera_txt2">फ्रंट कैमरा 2</string>
+
+    <string name="display_settings">प्रदर्शन सेटिंग्स</string>
+
+
+    <string name="theme">विषय को परिवर्तित करें</string>
+    <string name="theme1">डार्क थीम</string>
+    <string name="theme2">लाइट थीम</string>
+    <string name="select_lang">भाषा चुने</string>
+    <string name="mode3">Normal Scanning</string>
 </resources>

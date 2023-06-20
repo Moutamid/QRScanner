@@ -1,6 +1,7 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -39,6 +40,21 @@ public class SpotifyActivity extends AppCompatActivity {
         name=findViewById(R.id.artist_name);
         song=findViewById(R.id.song);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, SpotifyActivity.this, mediatedBannerView);

@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -67,6 +68,21 @@ public class CardSMSActivity extends AppCompatActivity {
         text1 = findViewById(R.id.username);
         text2 = findViewById(R.id.msg);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         text3 = findViewById(R.id.name);
         text4 = findViewById(R.id.phone);
 

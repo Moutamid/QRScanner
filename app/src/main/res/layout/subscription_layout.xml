@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:background="@color/white">
 
     <RadioGroup
         android:id="@+id/rgRight"
@@ -28,6 +29,7 @@
             android:checked="false"
             android:buttonTint="#5ED9EF"
             android:layoutDirection="rtl"
+            android:textColor="@color/black"
             android:text="@string/_4_39_month"
             android:textSize="14sp"
             android:onClick="checkButton"
@@ -39,6 +41,7 @@
             android:height="40dp"
             android:button="@drawable/custom_radio_button"
             android:checked="true"
+            android:textColor="@color/black"
             android:onClick="checkButton"
             android:layoutDirection="rtl"
             android:buttonTint="#5ED9EF"
@@ -53,6 +56,7 @@
             android:height="40dp"
             android:button="@drawable/custom_radio_button"
             android:checked="false"
+            android:textColor="@color/black"
             android:onClick="checkButton"
             android:layoutDirection="rtl"
             android:text="@string/_42_99_one_time_purchase"

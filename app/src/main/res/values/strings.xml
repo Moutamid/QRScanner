@@ -98,7 +98,6 @@
     <string name="history">History</string>
     <string name="setting">Settings</string>
     <string name="back_button">back button</string>
-    <string name="delete_history">delete history</string>
     <string name="enter_text_here">Enter text here</string>
     <string name="generate">Generate</string>
     <string name="texthint">Enter text here\!</string>
@@ -110,17 +109,58 @@
     <string name="name">Name</string>
     <string name="create_title">QR Code Creator</string>
 
-    <string name="beep">Beep</string>
-    <string name="beep_msg">Beep when the scan\nis successful</string>
-    <string name="auto_clipboard">Auto-copies\nto clipboard</string>
+    <string name="beep">Sound</string>
+    <string name="beep_msg">Turn on/off mobile sound</string>
+    <string name="auto_clipboard">Auto-copies to clipboard</string>
+
     <string name="vibrate">Vibration</string>
-    <string name="search">Search Engine</string>
+
+    <string name="search">Search Engines</string>
     <string name="language">Language Options</string>
     <string name="feedback">Feedback</string>
     <string name="policy">Privacy Policy</string>
+
+    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
+    <string name="vibrate_txt">Turn on/off mobile vibration</string>
+    <string name="delete_history">Delete History</string>
+    <string name="policy_txt">Read our Privacy Policy carefully</string>
+    <string name="share_txt">Share QR app with your friends</string>
+    <string name="rate_us_txt">Let us know about QR app</string>
+    <string name="rate_us">Rate Us</string>
+
+    <string name="delete_txt">Delete all previous history</string>
+
+    <string name="product">Product Details</string>
+    <string name="product_txt">Show product information</string>
+
+    <string name="save_history">Save History</string>
+    <string name="save_history_txt">Turn on/off save history</string>
+
+    <string name="web_search">Auto Web Search</string>
+    <string name="web_search_txt">Turn on/off save history</string>
+
+    <string name="mode1">Batch Scanning</string>
+    <string name="mode1_txt">Turn on/off batch scanning</string>
+    <string name="mode2">Manual Scanning</string>
+    <string name="mode2_txt">Turn on/off manual scanning</string>
+    <string name="mode3">Normal Scanning</string>
+    <string name="duplicate">Duplicate QR/Barcode</string>
+    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+
+    <string name="camera">Camera</string>
+    <string name="camera_txt1">Back Camera 1 - Recommended </string>
+    <string name="camera_txt2">Front Camera 2</string>
+
+    <string name="display_settings">Display Settings</string>
+    <string name="g_settings">General</string>
+    <string name="help">App Settings</string>
+
+    <string name="theme">Change Theme</string>
+    <string name="theme1">Dark Theme</string>
+    <string name="theme2">Light Theme</string>
+
+
     <string name="edit">Edit</string>
-    <string name="g_settings">General Settings</string>
-    <string name="help">Help</string>
     <string name="phone">Phone</string>
     <string name="organization">Organization</string>
     <string name="address">Address</string>
@@ -153,4 +193,6 @@
     <string name="subscription_policy">Payment will be charged to your Google play Account at confirmation of purchase. Subscription auto-renew before the end of the current period.unless canceled 24-hours in advance, and the cancellation takes effect at the end of the current period. You may manage your subscription and turned off auto renewal from your Google Play store account setting subscription canceled during the trial will not be charged. Privacy Policy </string>
     <string name="enjoying_qr_scanner">Enjoying QR Scanner</string>
     <string name="adsubscribed">AdSubscribed</string>
+    <string name="select_lang">Select Language</string>
+
 </resources>

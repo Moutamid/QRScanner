@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.TextGenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +27,7 @@
             android:contentDescription="@string/back_button"
             android:src="@drawable/ic_baseline_arrow_back_24"
             android:onClick="backText"
+            app:tint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -90,8 +92,8 @@
             android:lines="1"
             android:maxLines="8"
             android:background="@drawable/input"
-            android:textColor="@color/headingColour"
-            android:textColorHint="@color/headingColour"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

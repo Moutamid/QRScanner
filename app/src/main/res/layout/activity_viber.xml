@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.ViberActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,8 +89,8 @@
             android:padding="10dp"
             android:hint="@string/phone_number"
             android:inputType="numberDecimal"
-            android:textColor="@color/headingColour"
-            android:textColorHint="@color/headingColour"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

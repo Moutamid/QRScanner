@@ -2,13 +2,16 @@ package com.moutamid.qr.scanner.generator.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.moutamid.qr.scanner.generator.interfaces.ButtonItemClickListener;
@@ -18,13 +21,16 @@ import com.moutamid.qr.scanner.generator.R;
 import java.util.List;
 
 public class ButtonMainAdapter extends  RecyclerView.Adapter<ButtonMainAdapter.ButtonMainViewHolder>{
-    private final List<ButtonMainModel> btMainList;
-    private final ButtonItemClickListener mListner;
-    private int select_position = 0;
+    private String[] listItem;
+    private Integer[] images;
+    private ButtonItemClickListener buttonItemClickListener;
+    private Context context;
 
-    public ButtonMainAdapter(List<ButtonMainModel> btMainList, Context context) {
-        this.btMainList = btMainList;
-        mListner = (ButtonItemClickListener) context;
+    public ButtonMainAdapter(Context context,Integer[] images,String[] listItem) {
+
+        this.context = context;
+        this.images = images;
+        this.listItem = listItem;
     }
 
     @NonNull
@@ -32,60 +38,50 @@ public class ButtonMainAdapter extends  RecyclerView.Adapter<ButtonMainAdapter.B
     public ButtonMainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.
-                from(parent.getContext()).inflate(R.layout.row_main_btn, parent,false);
+                from(parent.getContext()).inflate(R.layout.custom_language, parent,false);
         return new ButtonMainAdapter.ButtonMainViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ButtonMainViewHolder holder, int position) {
-        ButtonMainModel tvData = btMainList.get(position);
 
-        holder.tvMain.setText(tvData.getBtName());
-        holder.imageView.setImageResource(tvData.getImg());
-        if (position == 2 || position == 3) {
-            position=select_position;
-            holder.tvMain.setTextColor(Color.parseColor("#000000"));
-        } else {
-            if (select_position == position) {
-                holder.tvMain.setTextColor(Color.parseColor("#00ABFF"));
-            }
-        else{
-                holder.tvMain.setTextColor(Color.parseColor("#000000"));
-        }
-    }
+
+        holder.tvMain.setText(listItem[position]);
+        holder.imageView.setImageResource(images[position]);
+
     }
 
     @Override
     public int getItemCount() {
-        return btMainList.size();
+        return images.length;
     }
 
     public class ButtonMainViewHolder extends RecyclerView.ViewHolder{
 
-        private final TextView tvMain;
-        private final ImageView imageView;
+        private TextView tvMain;
+        private ImageView imageView;
+        private RadioButton radioButton;
 
         @SuppressLint("CutPasteId")
         public ButtonMainViewHolder(@NonNull View v) {
             super(v);
 
-            tvMain= v.findViewById(R.id.tv_main);
-            imageView= v.findViewById(R.id.img_main);
-
-
-                v.setOnClickListener(v1 -> {
-                    if (select_position != getAdapterPosition()) {
-                        mListner.clickedItem(v1, getAdapterPosition());
-                        if (getAdapterPosition() == 2 || getAdapterPosition() == 3) {
-
-                        } else {
-                            select_position = getAdapterPosition();
-                        }
-                        notifyDataSetChanged();
+            tvMain= v.findViewById(R.id.name);
+            imageView= v.findViewById(R.id.flag);
+            radioButton= v.findViewById(R.id.radio);
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (buttonItemClickListener != null){
+                        buttonItemClickListener.clickedItem(view,getAdapterPosition());
                     }
-                });
-
+                }
+            });
 
         }
+    }
+
+    public void setButtonItemClickListener(ButtonItemClickListener itemClickListener){
+        this.buttonItemClickListener = itemClickListener;
     }
 }

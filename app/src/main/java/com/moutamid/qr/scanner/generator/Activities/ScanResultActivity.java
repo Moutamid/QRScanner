@@ -1,6 +1,7 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -99,6 +100,21 @@ public class ScanResultActivity extends AppCompatActivity {
         emailBtn = findViewById(R.id.email);
         contactBtn = findViewById(R.id.add_contact);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
        // byte[] image = getIntent().getByteArrayExtra("image");
        // bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
       //  RecyclerView recyclerView = findViewById(R.id.recycler_result);

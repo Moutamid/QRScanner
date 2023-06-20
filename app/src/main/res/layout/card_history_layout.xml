@@ -9,6 +9,7 @@
     android:layout_marginTop="5dp"
     android:id="@+id/cardView_history"
     app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/white"
     app:cardElevation="10dp">
 
     <RelativeLayout
@@ -46,7 +47,8 @@
                 android:id="@+id/tv2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"/>
+                android:textSize="12sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 
@@ -56,6 +58,7 @@
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:visibility="gone"
+            android:textColor="@color/black"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:text="12/24 24:67"/>

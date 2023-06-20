@@ -1,6 +1,7 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
@@ -42,6 +43,21 @@ public class ClipboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_clipboard);
         textedit=findViewById(R.id.text_edit);
         prefs = PreferenceManager.getDefaultSharedPreferences(ClipboardActivity.this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         edit = prefs.edit();
         copied = prefs.getBoolean("copy",false);
         historyVM = new ViewModelProvider(ClipboardActivity.this).get(HistoryVM.class);

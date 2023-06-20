@@ -1,319 +1,668 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/toolbar">
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FCFCFC"
-            android:text="@string/setting"
-            android:padding="8dp"
-            android:textColor="#000"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <TextView
+    android:background="@color/white">
+    <ScrollView android:orientation="vertical" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+        <RelativeLayout android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
+            <TextView android:textSize="18sp"
+                android:id="@+id/display_txt"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/g_settings"
-                android:layout_margin="10dp"
-                android:textColor="@color/teal_200"/>
-
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/display_settings"
+                android:textColor="@color/black"
+                android:paddingStart="25dp"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp"
+                android:layout_below="@+id/display_txt"
+                android:id="@+id/display_layout"
                 app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_music_note_24"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/beep"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/beep_msg"
-                            android:textSize="14sp"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_below="@+id/text1"
-                            android:layout_marginLeft="15dp"/>
-
-                        <Switch
-                            android:id="@+id/switch1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:id="@+id/image1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_file_copy_24"
-                            android:tint="@color/black"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/auto_clipboard"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
-
-
-                        <Switch
-                            android:id="@+id/switch2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true" />
-                    </RelativeLayout>
+                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
 
                     <RelativeLayout
+                        android:id="@+id/general_about"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
+                        android:layout_height="60dp"
+                        android:padding="8dp"
+                        android:visibility="visible">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
+                            android:id="@+id/general_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_vibration_24"/>
+                            app:srcCompat="@drawable/ic_baseline_language_24" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/vibrate"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
-
-                        <Switch
-                            android:id="@+id/switch3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true" />
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
+                            android:layout_toEndOf="@+id/general_image"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_search_24"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:text="@string/search"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
-
-                        <TextView
-                            android:id="@+id/search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginLeft="15dp"
-                            android:text="Google"
-                            android:textColor="@color/teal_200"
-                            android:textSize="14sp" />
-
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_language_24"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:paddingStart="10dp"
+                            android:id="@+id/language"
                             android:textColor="@color/black"
                             android:text="@string/language"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerInParent="true"
-                            android:text="English"
-                            android:id="@+id/language"
+                            android:text="Default"
+                            android:layout_centerVertical="true"
                             android:textColor="@color/teal_200"
-                            android:textSize="14sp" />
+                            android:layout_alignParentRight="true"
+                            android:id="@+id/languageTxt"
+                            android:paddingStart="10dp"
+                            />
+
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/theme_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/general_image_2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/mode" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/general_image_2"
+                            android:paddingStart="10dp"
+                            android:id="@+id/theme"
+                            android:textColor="@color/black"
+                            android:text="@string/theme"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/theme"
+                            android:layout_toEndOf="@+id/general_image_2"
+                            android:text="@string/theme2"
+                            android:id="@+id/mode"
+                            android:textColor="@color/black"
+                            android:paddingStart="10dp"
+                            />
 
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help"
-                android:layout_margin="10dp"
-                android:textColor="@color/teal_200"/>
-
+            <TextView android:textSize="18sp" android:id="@+id/app_setting_txt" android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="@string/help"
+                android:textColor="@color/black" android:paddingStart="25dp"
+                android:layout_below="@+id/display_layout"/>
             <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="15dp"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <RelativeLayout
+                app:cardBackgroundColor="@color/white"
+                android:id="@+id/app_setting_card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@+id/app_setting_txt">
+                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+                    <RelativeLayout android:padding="8dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:id="@+id/feedback">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
-                            android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_feedback_24"/>
+                        android:layout_height="70dp"
+                        android:id="@+id/search_engine">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_baseline_language_24"/>
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:id="@+id/vibrate"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:text="@string/search"
                             android:textColor="@color/black"
-                            android:text="@string/feedback"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
+                            android:textSize="16sp" />
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:id="@+id/search"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:id="@+id/camera_status">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_baseline_camera_alt_24"/>
+
+                        <TextView
+                            android:id="@+id/vibrate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:text="@string/camera"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:id="@+id/camera_mode"
+                            android:textColor="@color/black"
+                            android:text="@string/camera_txt1" />
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/scanning"/>
+
+                        <TextView
+                            android:id="@+id/vibrate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:text="@string/mode1"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/batch_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:text="@string/mode1_txt" />
+                        <Switch android:id="@+id/batch_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+                    <RelativeLayout android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/duplication"/>
+
+                        <TextView
+                            android:id="@+id/vibrate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:text="@string/mode2"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/manual_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:text="@string/mode2_txt" />
+                        <Switch android:id="@+id/manual_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+                    <RelativeLayout android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/duplication"/>
+
+                        <TextView
+                            android:id="@+id/vibrate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:text="@string/duplicate"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/duplicate_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:text="@string/duplicate_txt" />
+                        <Switch android:id="@+id/duplicate_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+
+                    <RelativeLayout android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp">
+                        <ImageView android:id="@+id/item_image"
+                            android:background="@drawable/icon_border"
+                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_vibration_setting"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:id="@+id/vibrate"
+                            android:text="@string/vibrate"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/vibrate"
+                            android:layout_toStartOf="@+id/vibration_switch"
+                            android:layout_toEndOf="@+id/item_image"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:text="@string/vibrate_txt" />
+                        <Switch android:id="@+id/vibration_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+                    <RelativeLayout android:padding="8dp" android:layout_width="match_parent" android:layout_height="70dp">
+                        <ImageView
+                            android:background="@drawable/icon_border"
+                            android:id="@+id/item_image_2" android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_sound_setting"/>
+
+                        <TextView
+                            android:id="@+id/soundTxt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/sound_switch"
+                            android:layout_toEndOf="@+id/item_image_2"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:text="@string/beep"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/soundTxt"
+                            android:layout_toStartOf="@+id/sound_switch"
+                            android:layout_toEndOf="@+id/item_image_2"
+                            android:text="@string/beep_msg"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+                        <Switch android:id="@+id/sound_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image_3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_auto_copy_setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/copy_switch"
+                            android:layout_toEndOf="@+id/item_image_3"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            android:id="@+id/clipboard"
+                            android:text="@string/auto_clipboard"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/clipboard"
+                            android:layout_toStartOf="@+id/copy_switch"
+                            android:layout_toEndOf="@+id/item_image_3"
+                            android:text="@string/auto_clipboard_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                        <Switch
+                            android:id="@+id/copy_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:switchMinWidth="55dp" />
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image_4"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_auto_web_search" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/web_switch"
+                            android:layout_toEndOf="@+id/item_image_4"
+                            android:paddingStart="10dp"
+                            android:id="@+id/search"
+                            android:textColor="@color/black"
+                            android:text="@string/web_search"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/search"
+                            android:layout_toStartOf="@+id/web_switch"
+                            android:layout_toEndOf="@+id/item_image_4"
+                            android:text="@string/web_search_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                        <Switch
+                            android:id="@+id/web_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:switchMinWidth="55dp" />
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image_5"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_history_erase_setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/save_history_switch"
+                            android:layout_toEndOf="@+id/item_image_5"
+                            android:paddingStart="10dp"
+                            android:id="@+id/save_history"
+                            android:textColor="@color/black"
+                            android:text="@string/save_history"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/save_history"
+                            android:layout_toStartOf="@+id/save_history_switch"
+                            android:layout_toEndOf="@+id/item_image_5"
+                            android:text="@string/save_history_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                        <Switch
+                            android:id="@+id/save_history_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="20dp"
-                        android:id="@+id/policy">
+                        android:layout_height="70dp"
+                        android:padding="8dp">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/image1"
+                            android:id="@+id/item_image_5"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
                             android:layout_centerVertical="true"
-                            android:layout_toRightOf="@+id/image1"
-                            android:src="@drawable/ic_baseline_remove_red_eye_24"/>
+                            app:srcCompat="@drawable/box" />
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/save_history_switch"
+                            android:layout_toEndOf="@+id/item_image_5"
+                            android:paddingStart="10dp"
+                            android:id="@+id/product"
+                            android:textColor="@color/black"
+                            android:text="@string/product"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/product"
+                            android:layout_toStartOf="@+id/product_switch"
+                            android:layout_toEndOf="@+id/item_image_5"
+                            android:text="@string/product_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                        <Switch
+                            android:id="@+id/product_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:switchMinWidth="55dp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <TextView android:textSize="18sp" android:id="@+id/general_txt" android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="@string/g_settings"
+                android:textColor="@color/black" android:layout_below="@+id/app_setting_card" android:paddingStart="25dp"/>
+            <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="40dp" android:layout_below="@+id/general_txt">
+                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:id="@+id/general_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/general_image"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_rate_us" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/general_image"
+                            android:paddingStart="10dp"
+                            android:id="@+id/rateUs"
+                            android:textColor="@color/black"
+                            android:text="@string/rate_us"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/rateUs"
+                            android:layout_toEndOf="@+id/general_image"
+                            android:text="@string/rate_us_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/general_policy"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/general_image_2"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_privacy__setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/general_image_2"
+                            android:paddingStart="10dp"
+                            android:id="@+id/policy"
                             android:textColor="@color/black"
                             android:text="@string/policy"
-                            android:textSize="18sp"
-                            android:id="@+id/text1"
-                            android:layout_toRightOf="@+id/image1"
-                            android:layout_marginLeft="15dp"/>
-                    </RelativeLayout>
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/policy"
+                            android:layout_toEndOf="@+id/general_image_2"
+                            android:text="@string/policy_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
 
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/general_tell"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/general_image_3"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_share_setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/general_image_3"
+                            android:paddingStart="10dp"
+                            android:id="@+id/share"
+                            android:textColor="@color/black"
+                            android:text="@string/share"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/share"
+                            android:layout_toEndOf="@+id/general_image_3"
+                            android:text="@string/share_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+
+                    </RelativeLayout>
+                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <RelativeLayout
+                        android:id="@+id/general_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/general_image_4"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/icon_border"
+                            android:layout_centerVertical="true"
+                            app:srcCompat="@drawable/ic_delete_history_setting" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/general_image_4"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
+                            android:id="@+id/delete"
+                            android:textColor="@color/black"
+                            android:text="@string/delete_history"
+                            android:textSize="16sp" />
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/delete"
+                            android:layout_toEndOf="@+id/general_image_4"
+                            android:text="@string/delete_txt"
+                            android:paddingStart="10dp"
+                            android:textColor="@color/black"
+                            />
+
+                    </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
-
-        </LinearLayout>
-
+        </RelativeLayout>
     </ScrollView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

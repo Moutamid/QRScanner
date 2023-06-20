@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.SmsGenActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_history"
@@ -27,7 +28,8 @@
             android:onClick="backSms"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -89,8 +91,8 @@
             android:hint="@string/phone_number"
             android:padding="10dp"
             android:inputType="numberDecimal"
-            android:textColor="@color/headingColour"
-            android:textColorHint="@color/headingColour"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -119,8 +121,8 @@
             android:layout_marginEnd="8dp"
             android:padding="10dp"
             android:hint="@string/text_message_here"
-            android:textColor="@color/headingColour"
-            android:textColorHint="@color/headingColour"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             android:textStyle="italic"
             android:gravity="start"
             android:inputType="textMultiLine"

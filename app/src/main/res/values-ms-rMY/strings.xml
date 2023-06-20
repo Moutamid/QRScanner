@@ -99,7 +99,6 @@
     <string name="history">Sejarah</string>
     <string name="setting">Tetapan</string>
     <string name="back_button">back button</string>
-    <string name="delete_history">delete history</string>
     <string name="enter_text_here">Masukkan teks di sini</string>
     <string name="generate">Menjana</string>
     <string name="texthint">Masukkan teks di sini\!</string>
@@ -154,4 +153,44 @@
     <string name="subscription_policy">Pembayaran akan dicaj ke Akaun Google play anda pada pengesahan pembelian. Langganan dibaharui secara automatik sebelum tamat tempoh semasa.melainkan dibatalkan 24 jam lebih awal dan pembatalan berkuat kuasa pada penghujung tempoh semasa. Anda boleh mengurus langganan anda dan mematikan pembaharuan automatik daripada tetapan akaun gedung Google Play anda yang dibatalkan semasa percubaan tidak akan dikenakan bayaran. Dasar Privasi</string>
     <string name="enjoying_qr_scanner">Menikmati Pengimbas QR</string>
     <string name="adsubscribed">Dilanggan Iklan</string>
+
+    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
+    <string name="vibrate_txt">Turn on/off mobile vibration</string>
+    <string name="delete_history">Delete History</string>
+    <string name="policy_txt">Read our Privacy Policy carefully</string>
+    <string name="share_txt">Share QR app with your friends</string>
+    <string name="rate_us_txt">Let us know about QR app</string>
+    <string name="rate_us">Rate Us</string>
+
+    <string name="delete_txt">Delete all previous history</string>
+
+    <string name="product">Product Details</string>
+    <string name="product_txt">Show product information</string>
+
+    <string name="save_history">Save History</string>
+    <string name="save_history_txt">Turn on/off save history</string>
+
+    <string name="web_search">Auto Web Search</string>
+    <string name="web_search_txt">Turn on/off save history</string>
+
+    <string name="mode1">Batch Scanning</string>
+    <string name="mode1_txt">Turn on/off batch scanning</string>
+    <string name="mode2">Manual Scanning</string>
+    <string name="mode2_txt">Turn on/off manual scanning</string>
+
+    <string name="duplicate">Duplicate QR/Barcode</string>
+    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+
+    <string name="camera">Camera</string>
+    <string name="camera_txt1">Back Camera 1 - Recommended </string>
+    <string name="camera_txt2">Front Camera 2</string>
+
+    <string name="display_settings">Display Settings</string>
+
+
+    <string name="theme">Change Theme</string>
+    <string name="theme1">Dark Theme</string>
+    <string name="theme2">Light Theme</string>
+    <string name="select_lang"></string>
+    <string name="mode3">Normal Scanning</string>
 </resources>

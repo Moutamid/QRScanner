@@ -4,6 +4,7 @@ import static java.io.File.separator;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
 import androidx.preference.PreferenceManager;
@@ -52,6 +53,21 @@ public class CardGeneratedResult extends AppCompatActivity {
         saveBtn = findViewById(R.id.save);
         shareBtn = findViewById(R.id.share);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean theme = prefs.getBoolean("theme",false);
+        if (theme){
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_YES);
+
+        }else {
+
+            AppCompatDelegate
+                    .setDefaultNightMode(
+                            AppCompatDelegate
+                                    .MODE_NIGHT_NO);
+
+        }
         imageByte = getIntent().getByteArrayExtra("image1");
         imageByte1 = getIntent().getByteArrayExtra("image2");
         Bitmap bitmap = BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);

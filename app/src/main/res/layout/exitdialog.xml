@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="ExtraText"
     android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:background="@color/white">
 
     <ImageButton
         android:id="@+id/cancelexit"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black"
                     android:textSize="15sp" />
 
                 <TextView
@@ -67,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/black"
                     android:textSize="12sp" />
 
             </LinearLayout>
@@ -111,7 +112,7 @@
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:lines="2"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/black"
                     android:textSize="12sp" />
 
                 <TextView
@@ -120,7 +121,7 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:lines="1"
-                    android:textColor="@android:color/darker_gray"
+                    android:textColor="@color/black"
                     android:textSize="12sp" />
 
             </LinearLayout>
