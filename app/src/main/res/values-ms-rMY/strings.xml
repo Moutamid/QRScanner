@@ -154,43 +154,43 @@
     <string name="enjoying_qr_scanner">Menikmati Pengimbas QR</string>
     <string name="adsubscribed">Dilanggan Iklan</string>
 
-    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
-    <string name="vibrate_txt">Turn on/off mobile vibration</string>
-    <string name="delete_history">Delete History</string>
-    <string name="policy_txt">Read our Privacy Policy carefully</string>
-    <string name="share_txt">Share QR app with your friends</string>
-    <string name="rate_us_txt">Let us know about QR app</string>
-    <string name="rate_us">Rate Us</string>
+    <string name="auto_clipboard_txt">Hidupkan/matikan salinan automatik ke papan keratan</string>
+    <string name="vibrate_txt">Hidupkan/matikan getaran mudah alih</string>
+    <string name="delete_history">Padamkan Sejarah</string>
+    <string name="policy_txt">Baca Dasar Privasi kami dengan teliti</string>
+    <string name="share_txt">Kongsi apl QR dengan rakan anda</string>
+    <string name="rate_us_txt">Beritahu kami tentang aplikasi QR</string>
+    <string name="rate_us">Nilaikan Kami</string>
 
-    <string name="delete_txt">Delete all previous history</string>
+    <string name="delete_txt">Padamkan semua sejarah sebelumnya</string>
 
-    <string name="product">Product Details</string>
-    <string name="product_txt">Show product information</string>
+    <string name="product">Maklumat produk</string>
+    <string name="product_txt">Tunjukkan maklumat produk</string>
 
-    <string name="save_history">Save History</string>
-    <string name="save_history_txt">Turn on/off save history</string>
+    <string name="save_history">Simpan Sejarah</string>
+    <string name="save_history_txt">Hidupkan/matikan simpan sejarah</string>
 
-    <string name="web_search">Auto Web Search</string>
-    <string name="web_search_txt">Turn on/off save history</string>
+    <string name="web_search">Carian Web Auto</string>
+    <string name="web_search_txt">Hidupkan/matikan simpan sejarah</string>
 
-    <string name="mode1">Batch Scanning</string>
-    <string name="mode1_txt">Turn on/off batch scanning</string>
-    <string name="mode2">Manual Scanning</string>
-    <string name="mode2_txt">Turn on/off manual scanning</string>
+    <string name="mode1">Pengimbasan Kelompok</string>
+    <string name="mode1_txt">Hidupkan/matikan pengimbasan kelompok</string>
+    <string name="mode2">Pengimbasan Manual</string>
+    <string name="mode2_txt">Hidupkan/matikan pengimbasan manual</string>
 
-    <string name="duplicate">Duplicate QR/Barcode</string>
-    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+    <string name="duplicate">Pendua QR/Kod Bar</string>
+    <string name="duplicate_txt">Simpan pendua QR/Kod Bar</string>
 
-    <string name="camera">Camera</string>
-    <string name="camera_txt1">Back Camera 1 - Recommended </string>
-    <string name="camera_txt2">Front Camera 2</string>
+    <string name="camera">Kamera</string>
+    <string name="camera_txt1">Kamera Belakang 1 - Disyorkan </string>
+    <string name="camera_txt2">Kamera Depan 2</string>
 
-    <string name="display_settings">Display Settings</string>
+    <string name="display_settings">Tetapan Paparan</string>
 
 
-    <string name="theme">Change Theme</string>
-    <string name="theme1">Dark Theme</string>
-    <string name="theme2">Light Theme</string>
-    <string name="select_lang"></string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="theme">Tukar tema</string>
+    <string name="theme1">Tema gelap</string>
+    <string name="theme2">Tema Cahaya</string>
+    <string name="select_lang">Pilih Bahasa</string>
+    <string name="mode3">Pengimbasan Biasa</string>
 </resources>

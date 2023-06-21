@@ -74,6 +74,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     private ColorSeekBar colorSeekBar;
     private Switch bold,shadow;
     private HistoryVM historyVM;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class CardCalendarActivity extends AppCompatActivity {
         eventName = findViewById(R.id.event_name);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(

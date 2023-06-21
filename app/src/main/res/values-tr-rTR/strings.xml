@@ -154,43 +154,43 @@
     <string name="enjoying_qr_scanner">QR Tarayıcının Keyfini Çıkarma</string>
     <string name="adsubscribed">Reklama abone olundu</string>
 
-    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
-    <string name="vibrate_txt">Turn on/off mobile vibration</string>
-    <string name="delete_history">Delete History</string>
-    <string name="policy_txt">Read our Privacy Policy carefully</string>
-    <string name="share_txt">Share QR app with your friends</string>
-    <string name="rate_us_txt">Let us know about QR app</string>
-    <string name="rate_us">Rate Us</string>
+    <string name="auto_clipboard_txt">Panoya otomatik kopyalamayı aç/kapat</string>
+    <string name="vibrate_txt">Mobil titreşimi aç/kapa</string>
+    <string name="delete_history">Geçmişi sil</string>
+    <string name="policy_txt">Gizlilik Politikamızı dikkatlice okuyun</string>
+    <string name="share_txt">QR uygulamasını arkadaşlarınızla paylaşın</string>
+    <string name="rate_us_txt">QR uygulaması hakkında bize bilgi verin</string>
+    <string name="rate_us">Bizi değerlendirin</string>
 
-    <string name="delete_txt">Delete all previous history</string>
+    <string name="delete_txt">Önceki tüm geçmişi sil</string>
 
-    <string name="product">Product Details</string>
-    <string name="product_txt">Show product information</string>
+    <string name="product">Ürün Detayları</string>
+    <string name="product_txt">Ürün bilgilerini göster</string>
 
-    <string name="save_history">Save History</string>
-    <string name="save_history_txt">Turn on/off save history</string>
+    <string name="save_history">Geçmişi Kaydet</string>
+    <string name="save_history_txt">Geçmişi kaydetmeyi aç/kapat</string>
 
-    <string name="web_search">Auto Web Search</string>
-    <string name="web_search_txt">Turn on/off save history</string>
+    <string name="web_search">Otomatik Web Araması</string>
+    <string name="web_search_txt">Geçmişi kaydetmeyi aç/kapat</string>
 
-    <string name="mode1">Batch Scanning</string>
-    <string name="mode1_txt">Turn on/off batch scanning</string>
-    <string name="mode2">Manual Scanning</string>
-    <string name="mode2_txt">Turn on/off manual scanning</string>
+    <string name="mode1">Toplu Tarama</string>
+    <string name="mode1_txt">Toplu taramayı aç/kapa</string>
+    <string name="mode2">Manuel Tarama</string>
+    <string name="mode2_txt">Manuel taramayı aç/kapat</string>
 
-    <string name="duplicate">Duplicate QR/Barcode</string>
-    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+    <string name="duplicate">Yinelenen QR/Barkod</string>
+    <string name="duplicate_txt">Yinelenen QR/Barkodu Kaydet</string>
 
-    <string name="camera">Camera</string>
-    <string name="camera_txt1">Back Camera 1 - Recommended </string>
-    <string name="camera_txt2">Front Camera 2</string>
+    <string name="camera">Kamera</string>
+    <string name="camera_txt1">Arka Kamera 1 - Önerilen</string>
+    <string name="camera_txt2">Ön Kamera 2</string>
 
-    <string name="display_settings">Display Settings</string>
+    <string name="display_settings">Görüntü ayarları</string>
 
 
-    <string name="theme">Change Theme</string>
-    <string name="theme1">Dark Theme</string>
-    <string name="theme2">Light Theme</string>
-    <string name="select_lang"></string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="theme">Temayı değiştir</string>
+    <string name="theme1">Koyu Tema</string>
+    <string name="theme2">Açık Tema</string>
+    <string name="select_lang">Dil Seçin</string>
+    <string name="mode3">Normal Tarama</string>
 </resources>

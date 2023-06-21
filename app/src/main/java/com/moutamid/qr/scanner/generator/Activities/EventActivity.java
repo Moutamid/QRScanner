@@ -35,6 +35,7 @@ public class EventActivity extends AppCompatActivity {
     private  TextView startdate,starttime,enddate,endtime;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class EventActivity extends AppCompatActivity {
         endtime=findViewById(R.id.tv_end_time);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -109,8 +111,10 @@ public class EventActivity extends AppCompatActivity {
                 iEvent.setStart(data3);
                 iEvent.setEnd(data4);
                 iEvent.setStamp(data2);
-                History eventHistory = new History(iEvent.generateString(), "event");
-                historyVM.insertHistory(eventHistory);
+                if (history) {
+                    History eventHistory = new History(iEvent.generateString(), "event");
+                    historyVM.insertHistory(eventHistory);
+                }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "Event");

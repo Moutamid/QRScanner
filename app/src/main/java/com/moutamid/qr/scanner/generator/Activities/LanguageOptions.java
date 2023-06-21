@@ -46,6 +46,7 @@ public class LanguageOptions extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         submitImg = findViewById(R.id.submit);
         boolean theme = prefs.getBoolean("theme",false);
+
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(

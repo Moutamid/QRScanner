@@ -25,6 +25,7 @@ public class BarCodeActivity extends AppCompatActivity {
     private EditText editText;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class BarCodeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bar_code);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         editText=findViewById(R.id.edit_barcode);
+        history = prefs.getBoolean("saveHistory",true);
         boolean theme = prefs.getBoolean("theme",false);
         if (theme){
             AppCompatDelegate
@@ -78,11 +80,14 @@ public class BarCodeActivity extends AppCompatActivity {
         if (barcodeText.equals("")) {
             editText.setError("Please enter text");
         } else {
+            if (history){
+
+                History contactHistory = new History(barcodeText, "barcode");
+                historyVM.insertHistory(contactHistory);
+            }
             Intent intent = new Intent(this, ScanResultActivity.class);
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcode", barcodeText);
-            History contactHistory = new History(barcodeText, "barcode");
-            historyVM.insertHistory(contactHistory);
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);

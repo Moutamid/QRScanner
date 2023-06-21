@@ -32,6 +32,7 @@ public class SpotifyActivity extends AppCompatActivity {
     private EditText name,song;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class SpotifyActivity extends AppCompatActivity {
         song=findViewById(R.id.song);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -93,8 +95,10 @@ public class SpotifyActivity extends AppCompatActivity {
             try {
                 final Spotify spotify = new Spotify();
                 spotify.setName(name.getText().toString());
-                History emailHistory = new History(spotify.generateString(), "spotify");
-                historyVM.insertHistory(emailHistory);
+                if (history) {
+                    History emailHistory = new History(spotify.generateString(), "spotify");
+                    historyVM.insertHistory(emailHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "spotify");
                 intent.putExtra("spotify", spotify);

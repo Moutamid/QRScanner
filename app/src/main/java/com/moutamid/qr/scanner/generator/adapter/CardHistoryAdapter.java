@@ -88,6 +88,7 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
 
             imgDelete.setOnClickListener(v1 -> {
                 mListner.deleteSingleItem(getHistory(getAdapterPosition()), getAdapterPosition());
+                historyDataList.remove(getAdapterPosition());
             });
 
         }

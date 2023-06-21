@@ -193,6 +193,6 @@
     <string name="theme1">Thème sombre</string>
     <string name="theme2">Thème Lumière</string>
     <string name="select_lang">Choisir la langue</string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="mode3">Numérisation normale</string>
 
 </resources>

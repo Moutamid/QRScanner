@@ -155,43 +155,43 @@
     <string name="adsubscribed">Annuncio sottoscritto</string>
 
 
-    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
-    <string name="vibrate_txt">Turn on/off mobile vibration</string>
-    <string name="delete_history">Delete History</string>
-    <string name="policy_txt">Read our Privacy Policy carefully</string>
-    <string name="share_txt">Share QR app with your friends</string>
-    <string name="rate_us_txt">Let us know about QR app</string>
-    <string name="rate_us">Rate Us</string>
+    <string name="auto_clipboard_txt">Attiva/disattiva la copia automatica negli appunti</string>
+    <string name="vibrate_txt">Attiva/disattiva la vibrazione del cellulare</string>
+    <string name="delete_history">Elimina cronologia</string>
+    <string name="policy_txt">Leggi attentamente la nostra Privacy Policy</string>
+    <string name="share_txt">Condividi l\'app QR con i tuoi amici</string>
+    <string name="rate_us_txt">Facci sapere dell\'app QR</string>
+    <string name="rate_us">Valutaci</string>
 
-    <string name="delete_txt">Delete all previous history</string>
+    <string name="delete_txt">Elimina tutta la cronologia precedente</string>
 
-    <string name="product">Product Details</string>
-    <string name="product_txt">Show product information</string>
+    <string name="product">Dettagli del prodotto</string>
+    <string name="product_txt">Mostra informazioni sul prodotto</string>
 
-    <string name="save_history">Save History</string>
-    <string name="save_history_txt">Turn on/off save history</string>
+    <string name="save_history">Salva cronologia</string>
+    <string name="save_history_txt">Attiva/disattiva la cronologia di salvataggio</string>
 
-    <string name="web_search">Auto Web Search</string>
-    <string name="web_search_txt">Turn on/off save history</string>
+    <string name="web_search">Ricerca Web automatica</string>
+    <string name="web_search_txt">Attiva/disattiva la cronologia di salvataggio</string>
 
-    <string name="mode1">Batch Scanning</string>
-    <string name="mode1_txt">Turn on/off batch scanning</string>
-    <string name="mode2">Manual Scanning</string>
-    <string name="mode2_txt">Turn on/off manual scanning</string>
+    <string name="mode1">Scansione batch</string>
+    <string name="mode1_txt">Attiva/disattiva la scansione batch</string>
+    <string name="mode2">Scansione manuale</string>
+    <string name="mode2_txt">Attiva/disattiva la scansione manuale</string>
 
-    <string name="duplicate">Duplicate QR/Barcode</string>
-    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+    <string name="duplicate">QR/codice a barre duplicato</string>
+    <string name="duplicate_txt">Salva duplicati QR/codici a barre</string>
 
-    <string name="camera">Camera</string>
-    <string name="camera_txt1">Back Camera 1 - Recommended </string>
-    <string name="camera_txt2">Front Camera 2</string>
+    <string name="camera">Telecamera</string>
+    <string name="camera_txt1">Fotocamera posteriore 1 - Consigliata</string>
+    <string name="camera_txt2">Fotocamera frontale 2</string>
 
-    <string name="display_settings">Display Settings</string>
+    <string name="display_settings">Impostazioni di visualizzazione</string>
 
 
-    <string name="theme">Change Theme</string>
-    <string name="theme1">Dark Theme</string>
-    <string name="theme2">Light Theme</string>
-    <string name="select_lang"></string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="theme">Cambia tema</string>
+    <string name="theme1">Tema scuro</string>
+    <string name="theme2">Tema chiaro</string>
+    <string name="select_lang">Seleziona la lingua</string>
+    <string name="mode3">Scansione normale</string>
 </resources>

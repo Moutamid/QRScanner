@@ -31,6 +31,7 @@ public class WhatsAppActivity extends AppCompatActivity {
     private EditText phonenumber;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class WhatsAppActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -94,9 +96,10 @@ public class WhatsAppActivity extends AppCompatActivity {
             try {
                 final Telephone telephone = new Telephone();
                 telephone.setTelephone(data);
-                History phoneHistory = new History(telephone.generateString(), "whatsapp");
-                historyVM.insertHistory(phoneHistory);
-
+                if (history) {
+                    History phoneHistory = new History(telephone.generateString(), "whatsapp");
+                    historyVM.insertHistory(phoneHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "whatsapp");
                 intent.putExtra("phone", telephone);

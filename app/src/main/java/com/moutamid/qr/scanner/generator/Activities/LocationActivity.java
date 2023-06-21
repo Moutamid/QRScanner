@@ -30,6 +30,7 @@ public class LocationActivity extends AppCompatActivity {
     private EditText latitude,longitude,locationname;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class LocationActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -103,8 +105,10 @@ public class LocationActivity extends AppCompatActivity {
                 arrayList.add(longitude.getText().toString());
                 final GeoInfo location = new GeoInfo();
                 location.setPoints(arrayList);
-                History locHistory = new History(location.generateString(), "location");
-                historyVM.insertHistory(locHistory);
+                if (history) {
+                    History locHistory = new History(location.generateString(), "location");
+                    historyVM.insertHistory(locHistory);
+                }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "GeoInfo");

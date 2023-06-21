@@ -30,6 +30,7 @@ public class ContactGenActivity extends AppCompatActivity {
     private EditText name,phone,email,org,address;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ContactGenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_contact_gen);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -109,9 +111,10 @@ public class ContactGenActivity extends AppCompatActivity {
                         .setAddress(address.getText().toString())
                         .setCompany(org.getText().toString())
                         .setPhoneNumber(phone.getText().toString());
+                if (history){
                 History contactHistory = new History(vCard.generateString(), "contact");
                 historyVM.insertHistory(contactHistory);
-
+                }
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)

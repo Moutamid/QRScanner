@@ -108,9 +108,9 @@ public class MySettingsFragment extends Fragment {
         copied = prefs.getBoolean("copy",false);
         engine = prefs.getString("search","Google");
         cameraMode = prefs.getString("cameraMode","normal");
-        productDetails = prefs.getBoolean("product",false);
-        saveHistory = prefs.getBoolean("saveHistory",false);
-        saveQR = prefs.getBoolean("saveQR",false);
+        productDetails = prefs.getBoolean("product",true);
+        saveHistory = prefs.getBoolean("saveHistory",true);
+        saveQR = prefs.getBoolean("saveQR",true);
         beep = view.findViewById(R.id.sound_switch);
         vibrate = view.findViewById(R.id.vibration_switch);
         copy = view.findViewById(R.id.copy_switch);
@@ -353,15 +353,15 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-                adb.setTitle("Do you want to delete?");
-                adb.setIcon(android.R.drawable.ic_dialog_alert);
-                adb.setPositiveButton("OK", (dialog, which) -> {
+                adb.setTitle("Delete History");
+                adb.setMessage("Are you sure you want to delete all the previous history?");
+                adb.setPositiveButton("Yes", (dialog, which) -> {
                     historyVM.deleteAllHistory();
                     if (!getPurchaseSharedPreference()) {
                         ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                     }
                 });
-                adb.setNegativeButton("Cancel", (dialog, which) -> {
+                adb.setNegativeButton("No", (dialog, which) -> {
                 });
                 adb.show();
             }
@@ -541,36 +541,36 @@ public class MySettingsFragment extends Fragment {
 
 
     private void showSearchEngineDialogBox() {
-        String[] listItems = {"Google","Bing","Yahoo","DuckDuckGo","Ecosia","Yandex"};
+        String[] listItems = {"Default","Google","Bing","Yahoo","DuckDuckGo","Yandex","Qwant"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Search Engines");
         builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i==0){
+                    searchTxt.setText("Default");
+                    edit.putString("search","Default");
+                    edit.apply();
+                }
+                if (i==1){
                     searchTxt.setText("Google");
                     edit.putString("search","Google");
                     edit.apply();
                 }
-                else if (i == 1){
+                else if (i == 2){
                     searchTxt.setText("Bing");
                     edit.putString("search","Bing");
                     edit.apply();
 
-                }else if (i == 2){
+                }else if (i == 3){
                     searchTxt.setText("Yahoo");
                     edit.putString("search","Yahoo");
                     edit.apply();
 
                 }
-                else if (i == 3){
+                else if (i == 4){
                     searchTxt.setText("DuckDuckGo");
                     edit.putString("search","DuckDuckGo");
-                    edit.apply();
-
-                }
-                else if (i == 4){
-                    searchTxt.setText("Ecosia");
-                    edit.putString("search","Ecosia");
                     edit.apply();
 
                 }
@@ -581,6 +581,12 @@ public class MySettingsFragment extends Fragment {
 
                 }
 
+                else if (i == 6){
+                    searchTxt.setText("Qwant");
+                    edit.putString("search","Qwant");
+                    edit.apply();
+
+                }
                 dialogInterface.dismiss();
             }
         });

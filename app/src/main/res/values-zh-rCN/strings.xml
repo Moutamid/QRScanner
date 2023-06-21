@@ -154,44 +154,44 @@
     <string name="enjoying_qr_scanner">享受二维码扫描器</string>
     <string name="adsubscribed">广告订阅</string>
 
-    <string name="auto_clipboard_txt">Turn on/off auto copy to clipboard</string>
-    <string name="vibrate_txt">Turn on/off mobile vibration</string>
-    <string name="delete_history">Delete History</string>
-    <string name="policy_txt">Read our Privacy Policy carefully</string>
-    <string name="share_txt">Share QR app with your friends</string>
-    <string name="rate_us_txt">Let us know about QR app</string>
-    <string name="rate_us">Rate Us</string>
+    <string name="auto_clipboard_txt">打开/关闭自动复制到剪贴板</string>
+    <string name="vibrate_txt">打开/关闭手机振动</string>
+    <string name="delete_history">删除历史记录</string>
+    <string name="policy_txt">仔细阅读我们的隐私政策</string>
+    <string name="share_txt">与您的朋友分享二维码应用程序</string>
+    <string name="rate_us_txt">让我们了解 QR 应用程序</string>
+    <string name="rate_us">评价我们</string>
 
-    <string name="delete_txt">Delete all previous history</string>
+    <string name="delete_txt">删除所有以前的历史记录</string>
 
-    <string name="product">Product Details</string>
-    <string name="product_txt">Show product information</string>
+    <string name="product">产品详情</string>
+    <string name="product_txt">显示产品信息</string>
 
-    <string name="save_history">Save History</string>
-    <string name="save_history_txt">Turn on/off save history</string>
+    <string name="save_history">保存历史</string>
+    <string name="save_history_txt">打开/关闭保存历史记录</string>
 
-    <string name="web_search">Auto Web Search</string>
-    <string name="web_search_txt">Turn on/off save history</string>
+    <string name="web_search">自动网页搜索</string>
+    <string name="web_search_txt">打开/关闭保存历史记录</string>
 
-    <string name="mode1">Batch Scanning</string>
-    <string name="mode1_txt">Turn on/off batch scanning</string>
-    <string name="mode2">Manual Scanning</string>
-    <string name="mode2_txt">Turn on/off manual scanning</string>
+    <string name="mode1">批量扫描</string>
+    <string name="mode1_txt">打开/关闭批量扫描</string>
+    <string name="mode2">手动扫描</string>
+    <string name="mode2_txt">打开/关闭手动扫描</string>
 
-    <string name="duplicate">Duplicate QR/Barcode</string>
-    <string name="duplicate_txt">Save duplicate QR/Barcode </string>
+    <string name="duplicate">重复的二维码/条形码</string>
+    <string name="duplicate_txt">保存重复的二维码/条形码</string>
 
-    <string name="camera">Camera</string>
-    <string name="camera_txt1">Back Camera 1 - Recommended </string>
-    <string name="camera_txt2">Front Camera 2</string>
+    <string name="camera">相机</string>
+    <string name="camera_txt1">后置摄像头 1 - 推荐</string>
+    <string name="camera_txt2">前置摄像头2</string>
 
-    <string name="display_settings">Display Settings</string>
+    <string name="display_settings">显示设置</string>
 
 
-    <string name="theme">Change Theme</string>
-    <string name="theme1">Dark Theme</string>
-    <string name="theme2">Light Theme</string>
-    <string name="select_lang"></string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="theme">改变主题</string>
+    <string name="theme1">黑暗主题</string>
+    <string name="theme2">浅色主题</string>
+    <string name="select_lang">择语言</string>
+    <string name="mode3">正常扫描</string>
 
 </resources>

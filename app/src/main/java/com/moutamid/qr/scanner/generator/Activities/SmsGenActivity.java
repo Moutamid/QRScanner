@@ -30,6 +30,7 @@ public class SmsGenActivity extends AppCompatActivity {
     private EditText number,message;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SmsGenActivity extends AppCompatActivity {
         message=findViewById(R.id.text_message);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -94,9 +96,10 @@ public class SmsGenActivity extends AppCompatActivity {
                 final SMS sms = new SMS();
                 sms.setNumber(number.getText().toString());
                 sms.setSubject(message.getText().toString());
-                History smsHistory = new History(sms.generateString(), "sms");
-                historyVM.insertHistory(smsHistory);
-
+                if (history) {
+                    History smsHistory = new History(sms.generateString(), "sms");
+                    historyVM.insertHistory(smsHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "Sms");
                 intent.putExtra("sms", sms);

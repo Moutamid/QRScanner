@@ -256,16 +256,16 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
     @Override
     public void deleteSingleItem(History history, int i) {
         AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-        adb.setTitle("Do you want to delete?");
-        adb.setIcon(android.R.drawable.ic_dialog_alert);
-        adb.setPositiveButton("OK", (dialog, which) -> {
+        adb.setTitle("Delete History");
+        adb.setMessage("Are you sure you want to delete?");
+        adb.setPositiveButton("Yes", (dialog, which) -> {
             historyVM.deleteSingleItem(history);
             adapter.notifyItemRemoved(i);
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
         });
-        adb.setNegativeButton("Cancel", (dialog, which) -> {
+        adb.setNegativeButton("No", (dialog, which) -> {
         });
         adb.show();
 
@@ -285,15 +285,15 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
         } else{
 
             AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
-            adb.setTitle("Do you want to delete?");
-            adb.setIcon(android.R.drawable.ic_dialog_alert);
-            adb.setPositiveButton("OK", (dialog, which) -> {
+            adb.setTitle("Delete History");
+            adb.setMessage("Are you sure you want to delete all the previous history?");
+            adb.setPositiveButton("Yes", (dialog, which) -> {
                 historyVM.deleteAllHistory();
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                 }
             });
-            adb.setNegativeButton("Cancel", (dialog, which) -> {
+            adb.setNegativeButton("No", (dialog, which) -> {
             });
             adb.show();
         }

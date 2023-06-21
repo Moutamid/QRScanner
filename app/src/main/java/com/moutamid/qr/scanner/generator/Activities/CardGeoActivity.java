@@ -57,6 +57,7 @@ public class CardGeoActivity extends AppCompatActivity {
     private Switch bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,6 +68,7 @@ public class CardGeoActivity extends AppCompatActivity {
         text2 = findViewById(R.id.lng);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -212,12 +214,14 @@ public class CardGeoActivity extends AppCompatActivity {
     public void SaveTxt(View view) {
 
         try {
-            BusinessCard businessCard = new BusinessCard();
-            businessCard.setTitle("Location");
-            businessCard.setContent("Latitude: "+text1.getText().toString()+"\n"+"Longitutde:"+text2.getText().toString());
-            businessCard.setTimestamp(System.currentTimeMillis());
-            History urlHistory = new History(businessCard.generateString(), "card");
-            historyVM.insertHistory(urlHistory);
+            if (history) {
+                BusinessCard businessCard = new BusinessCard();
+                businessCard.setTitle("Location");
+                businessCard.setContent("Latitude: " + text1.getText().toString() + "\n" + "Longitutde:" + text2.getText().toString());
+                businessCard.setTimestamp(System.currentTimeMillis());
+                History urlHistory = new History(businessCard.generateString(), "card");
+                historyVM.insertHistory(urlHistory);
+            }
             text1.setBackgroundResource(0);
             text2.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);

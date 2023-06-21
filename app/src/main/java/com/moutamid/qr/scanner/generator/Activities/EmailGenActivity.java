@@ -30,6 +30,7 @@ public class EmailGenActivity extends AppCompatActivity {
     private EditText email,subject,body;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class EmailGenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_email_gen);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -97,8 +99,10 @@ public class EmailGenActivity extends AppCompatActivity {
                 eMail.setEmail(email.getText().toString());
                 eMail.setMailBody(body.getText().toString());
                 eMail.setMailSubject(subject.getText().toString());
-                History emailHistory = new History(eMail.generateString(), "email");
-                historyVM.insertHistory(emailHistory);
+                if (history) {
+                    History emailHistory = new History(eMail.generateString(), "email");
+                    historyVM.insertHistory(emailHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);

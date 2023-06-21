@@ -343,6 +343,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
             imgDelete.setOnClickListener(v1 -> {
                 mListner.deleteSingleItem(getHistory(getAdapterPosition()), getAdapterPosition());
+                historyDataList.remove(getAdapterPosition());
             });
 
         }

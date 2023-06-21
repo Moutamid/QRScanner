@@ -32,6 +32,7 @@ public class    WifiGenActivity extends AppCompatActivity {
     private EditText wifiname,wifipassword;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class    WifiGenActivity extends AppCompatActivity {
         wifipassword=findViewById(R.id.wfi_password);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -96,9 +98,10 @@ public class    WifiGenActivity extends AppCompatActivity {
                 final Wifi wifi = new Wifi();
                 wifi.setSsid(wifiname.getText().toString());
                 wifi.setPsk(wifipassword.getText().toString());
-                History wifiHistory = new History(wifi.generateString(), "wifi");
-                historyVM.insertHistory(wifiHistory);
-
+                if (history) {
+                    History wifiHistory = new History(wifi.generateString(), "wifi");
+                    historyVM.insertHistory(wifiHistory);
+                }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "wifi");

@@ -40,6 +40,7 @@ import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -170,16 +171,15 @@ public class MainActivity extends AppCompatActivity {
         }
         getLocale();
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
-        /*mainDataList.add(new ButtonMainModel("Scan", R.drawable.ic_qrscan2));
-        mainDataList.add(new ButtonMainModel("Generate QR", R.drawable.ic_generate_qr_01));
-        mainDataList.add(new ButtonMainModel("History", R.drawable.ic_history_01_01));
-        mainDataList.add(new ButtonMainModel("Business", R.drawable.ic_baseline_card_giftcard_24));
-        mainDataList.add(new ButtonMainModel("Setting", R.drawable.ic_setting_02));
-
-        ButtonMainAdapter mainAdapter = new ButtonMainAdapter(mainDataList, this);
-        recyclerViewMain.setAdapter(mainAdapter);*/
         inAppPurchases();
         checkPermissions();
+        Menu menu = bottomNavigationView.getMenu();
+        menu.findItem(R.id.scan).setTitle(R.string.scan);
+        menu.findItem(R.id.generate_qr).setTitle(R.string.create);
+        menu.findItem(R.id.history).setTitle(R.string.history);
+        menu.findItem(R.id.business).setTitle(R.string.business);
+        menu.findItem(R.id.settings).setTitle(R.string.setting);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+        bottomNavigationView.invalidate();
         Dexter.withActivity(this)
                 .withPermission(Manifest.permission.CAMERA)
                 .withListener(new PermissionListener() {

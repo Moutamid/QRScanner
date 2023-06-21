@@ -56,6 +56,7 @@ public class CardEmailActivity extends AppCompatActivity {
     private ColorSeekBar colorSeekBar;
     private Switch bold, shadow;
     private HistoryVM historyVM;
+    private boolean history;
     private SharedPreferences prefs;
 
     @SuppressLint("MissingInflatedId")
@@ -68,6 +69,7 @@ public class CardEmailActivity extends AppCompatActivity {
         edittext = findViewById(R.id.edittext);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(

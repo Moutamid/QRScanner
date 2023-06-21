@@ -31,6 +31,7 @@ public class PhoneActivity extends AppCompatActivity {
     private EditText phonenumber;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class PhoneActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -93,9 +95,10 @@ public class PhoneActivity extends AppCompatActivity {
             try {
                 final Telephone telephone = new Telephone();
                 telephone.setTelephone(data);
-                History phoneHistory = new History(telephone.generateString(), "phone");
-                historyVM.insertHistory(phoneHistory);
-
+                if (history) {
+                    History phoneHistory = new History(telephone.generateString(), "phone");
+                    historyVM.insertHistory(phoneHistory);
+                }
             Intent intent = new Intent(this, ScanResultActivity.class);
             intent.putExtra("type", "telephone");
             intent.putExtra("phone", telephone);

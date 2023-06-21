@@ -29,6 +29,7 @@ public class UrlGenActivity extends AppCompatActivity {
     private EditText urledit;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class UrlGenActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -89,9 +91,10 @@ public class UrlGenActivity extends AppCompatActivity {
             try {
                 final Url url = new Url();
                 url.setUrl(urlValue);
-                History urlHistory = new History(url.generateString(), "url");
-                historyVM.insertHistory(urlHistory);
-
+                if (history) {
+                    History urlHistory = new History(url.generateString(), "url");
+                    historyVM.insertHistory(urlHistory);
+                }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "url");

@@ -59,6 +59,7 @@ public class CardSMSActivity extends AppCompatActivity {
     private Switch bold, shadow;
     private SharedPreferences prefs;
     private HistoryVM historyVM;
+    private boolean history;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -69,6 +70,7 @@ public class CardSMSActivity extends AppCompatActivity {
         text2 = findViewById(R.id.msg);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -282,12 +284,14 @@ public class CardSMSActivity extends AppCompatActivity {
     public void SaveTxt(View view) {
 
         try {
-            BusinessCard businessCard = new BusinessCard();
-            businessCard.setTitle(text1.getText().toString());
-            businessCard.setContent(text2.getText().toString());
-            businessCard.setTimestamp(System.currentTimeMillis());
-            History urlHistory = new History(businessCard.generateString(), "card");
-            historyVM.insertHistory(urlHistory);
+            if (history) {
+                BusinessCard businessCard = new BusinessCard();
+                businessCard.setTitle(text1.getText().toString());
+                businessCard.setContent(text2.getText().toString());
+                businessCard.setTimestamp(System.currentTimeMillis());
+                History urlHistory = new History(businessCard.generateString(), "card");
+                historyVM.insertHistory(urlHistory);
+            }
             text1.setBackgroundResource(0);
             text2.setBackgroundResource(0);
             text3.setBackgroundResource(0);

@@ -30,6 +30,7 @@ public class TextGenActivity extends AppCompatActivity {
     private EditText textedit;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class TextGenActivity extends AppCompatActivity {
         textedit=findViewById(R.id.text_edit);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -88,8 +90,10 @@ public class TextGenActivity extends AppCompatActivity {
         if (data.equals("")) {
             textedit.setError("Please enter Text");
         } else {
-            History textHistory = new History(data, "text");
-            historyVM.insertHistory(textHistory);
+            if (history) {
+                History textHistory = new History(data, "text");
+                historyVM.insertHistory(textHistory);
+            }
             Intent intent = new Intent(TextGenActivity.this, ScanResultActivity.class);
             intent.putExtra("type", "Text");
             intent.putExtra("text", data);

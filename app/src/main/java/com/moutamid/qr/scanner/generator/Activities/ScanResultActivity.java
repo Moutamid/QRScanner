@@ -32,10 +32,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.model.content.Mask;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -80,6 +84,8 @@ public class ScanResultActivity extends AppCompatActivity {
     private Wifi wifi;
     private SharedPreferences prefs;
     private Bitmap bitmap;
+    private String engine;
+    private boolean web;
     private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
     @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
@@ -101,6 +107,8 @@ public class ScanResultActivity extends AppCompatActivity {
         contactBtn = findViewById(R.id.add_contact);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        engine = prefs.getString("search","Google");
+        web = prefs.getBoolean("web",false);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -326,7 +334,10 @@ public class ScanResultActivity extends AppCompatActivity {
                 contactBtn.setVisibility(View.GONE);
 
                 dialBtn.setVisibility(View.GONE);
+
                 tvTitle.setText(url.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(url.getUrl());
                 break;
             }
             case "youtube": {
@@ -342,6 +353,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 contactBtn.setVisibility(View.GONE);
                 tvTitle.setText(social.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(social.getUrl());
                 dialBtn.setVisibility(View.GONE);
                 break;
             }
@@ -359,6 +372,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(social.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(social.getUrl());
                 break;
             }
             case "twitter": {
@@ -375,6 +390,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(social.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(social.getUrl());
                 break;
             }
             case "facebook": {
@@ -392,6 +409,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(social.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(social.getUrl());
                 break;
             }
             case "paypal": {
@@ -408,6 +427,8 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(social.getUrl());
+                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                autoSearch(social.getUrl());
                 break;
             }
             case "GeoInfo": {
@@ -464,6 +485,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(text);
+                checkSearchEngine(text);
                 break;
             }
             case "clipboard": {
@@ -477,7 +499,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 icon.setImageResource(R.drawable.clipboard);
                 tvHead.setText(R.string.clipboard);
                 contactBtn.setVisibility(View.GONE);
-
+                checkSearchEngine(text);
                 dialBtn.setVisibility(View.GONE);
                 tvTitle.setText(text);
                 break;
@@ -518,6 +540,14 @@ public class ScanResultActivity extends AppCompatActivity {
                 icon.setImageResource(R.drawable.ic_barcode);
                 tvHead.setText(R.string.barcode);
                 tvTitle.setText(textBarcode);
+                if (textBarcode.contains("http:") || textBarcode.contains("https:") || textBarcode.contains("www")){
+                    Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                    autoSearch(textBarcode);
+                }
+               // if (textBarcode.contains()){
+                    checkSearchEngine(textBarcode);
+               // }
+
                 contactBtn.setVisibility(View.GONE);
 
                 dialBtn.setVisibility(View.GONE);
@@ -571,6 +601,41 @@ public class ScanResultActivity extends AppCompatActivity {
         getLocale();
     }
 
+    private void autoSearch(String url) {
+        if (web) {
+            Uri webpage = Uri.parse(url);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    String customUrl="";
+    private void checkSearchEngine(String text) {
+        if (engine.equals("Google")){
+            customUrl = "https://www.google.com/search?q="+text;
+        }else if (engine.equals("Bing")){
+            customUrl = "https://www.bing.com/search?q="+text;
+        }else if (engine.equals("Yahoo")){
+            customUrl = "https://search.yahoo.com/search?p="+text;
+        }else if (engine.equals("DuckDuckGo")){
+            customUrl = "https://duckduckgo.com/?q="+text;
+        }else if (engine.equals("Yandex")){
+            customUrl = "https://yandex.com/?q"+text;
+        }else if (engine.equals("Qwant")){
+            customUrl = "https://www.qwant.com/?q="+text;
+        }
+        Uri webpage = Uri.parse(customUrl);
+        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+        try {
+            startActivity(webIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void getLocale(){

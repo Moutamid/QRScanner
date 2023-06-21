@@ -59,6 +59,7 @@ public class CardSocial2Activity extends AppCompatActivity {
     private Switch bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class CardSocial2Activity extends AppCompatActivity {
         text2 = findViewById(R.id.url);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -91,6 +93,7 @@ public class CardSocial2Activity extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         colorSeekBar = findViewById(R.id.color_seek_bar);
         historyVM = new ViewModelProvider(CardSocial2Activity.this).get(HistoryVM.class);
+        history = prefs.getBoolean("saveHistory",true);
         text1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,12 +219,14 @@ public class CardSocial2Activity extends AppCompatActivity {
     public void SaveTxt(View view) {
 
         try {
-            BusinessCard businessCard = new BusinessCard();
-            businessCard.setTitle(text1.getText().toString());
-            businessCard.setContent(text2.getText().toString());
-            businessCard.setTimestamp(System.currentTimeMillis());
-            History urlHistory = new History(businessCard.generateString(), "card");
-            historyVM.insertHistory(urlHistory);
+            if (history) {
+                BusinessCard businessCard = new BusinessCard();
+                businessCard.setTitle(text1.getText().toString());
+                businessCard.setContent(text2.getText().toString());
+                businessCard.setTimestamp(System.currentTimeMillis());
+                History urlHistory = new History(businessCard.generateString(), "card");
+                historyVM.insertHistory(urlHistory);
+            }
             text1.setBackgroundResource(0);
             text2.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);

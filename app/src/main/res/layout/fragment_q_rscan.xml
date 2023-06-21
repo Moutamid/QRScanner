@@ -38,39 +38,27 @@
                 android:layout_height="match_parent" />
 
 
+            <info.androidhive.barcode.ScannerOverlay
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#54000000"
+                app:line_color="@android:color/holo_red_light"
+                app:line_speed="6"
+                app:line_width="4"
+                app:square_height="280"
+                app:square_width="280" />
+
+
         </com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview>
-       <!-- <fragment
-            android:id="@+id/scan_view_id"
-            android:name="com.google.android.gms.vision.barcode.BarcodeDetector"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:gvb_auto_focus="true"
-            app:gvb_code_format="all_format"
-            app:gvb_flash="false"
-            app:gvb_multiple="false"
-            app:gvb_rect_colors="@array/rect_color"
-            tools:ignore="Instantiatable" />
 
-        <info.androidhive.barcode.ScannerOverlay
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#54000000"
-            app:line_color="@android:color/holo_red_light"
-            app:line_speed="6"
-            app:line_width="4"
-            app:square_height="280"
-            app:square_width="280" />-->
-
-
-      <!--  <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:lottie_rawRes="@raw/scanner"
-            app:lottie_autoPlay="true"
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_baseline_arrow_circle_right_24"
+            android:id="@+id/done"
             android:visibility="gone"
-            app:lottie_loop="true"/>-->
-        <RelativeLayout
+            android:layout_centerInParent="true"/>
+         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"

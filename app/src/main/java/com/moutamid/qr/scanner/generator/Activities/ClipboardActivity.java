@@ -36,6 +36,7 @@ public class ClipboardActivity extends AppCompatActivity {
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
     private boolean copied =false;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class ClipboardActivity extends AppCompatActivity {
         textedit=findViewById(R.id.text_edit);
         prefs = PreferenceManager.getDefaultSharedPreferences(ClipboardActivity.this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -98,8 +100,10 @@ public class ClipboardActivity extends AppCompatActivity {
         if (data.equals("")) {
             textedit.setError("Please enter Text");
         } else {
-            History textHistory = new History(data, "clipboard");
-            historyVM.insertHistory(textHistory);
+            if (history) {
+                History textHistory = new History(data, "clipboard");
+                historyVM.insertHistory(textHistory);
+            }
             Intent intent = new Intent(ClipboardActivity.this, ScanResultActivity.class);
             intent.putExtra("type", "clipboard");
             intent.putExtra("text", data);

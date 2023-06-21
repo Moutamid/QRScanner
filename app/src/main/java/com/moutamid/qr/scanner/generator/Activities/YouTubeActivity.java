@@ -32,6 +32,7 @@ public class YouTubeActivity extends AppCompatActivity {
     private  EditText link;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class YouTubeActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -95,8 +97,10 @@ public class YouTubeActivity extends AppCompatActivity {
             try {
                 final Social social = new Social();
                 social.setUrl(urlValue);
-                History urlHistory = new History(social.generateString(), "youtube");
-                historyVM.insertHistory(urlHistory);
+                if (history) {
+                    History urlHistory = new History(social.generateString(), "youtube");
+                    historyVM.insertHistory(urlHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "youtube");
                 intent.putExtra("social", social);

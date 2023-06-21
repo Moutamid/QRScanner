@@ -57,6 +57,7 @@ public class CardEmail2Activity extends AppCompatActivity {
     private Switch bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class CardEmail2Activity extends AppCompatActivity {
         text2 = findViewById(R.id.subject);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(

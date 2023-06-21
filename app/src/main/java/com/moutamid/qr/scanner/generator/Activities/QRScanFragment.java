@@ -26,6 +26,7 @@ import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourc
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview;
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import android.net.Uri;
@@ -130,6 +131,7 @@ public class QRScanFragment extends Fragment {
 
     private int barcodeFormat, cameraFacing;
 
+    private ImageView doneImg;
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
@@ -139,6 +141,7 @@ public class QRScanFragment extends Fragment {
     private GestureDetector gestureDetector;
     BarcodeDetector barcodeDetector;
     private String cameraMode;
+    private String textBarcode = "";
 
 
     @Override
@@ -208,6 +211,7 @@ public class QRScanFragment extends Fragment {
         seekBar = view.findViewById(R.id.zoom_sb);
         imageLayout = view.findViewById(R.id.card);
         cardLayout = view.findViewById(R.id.cardView_seekbar);
+        doneImg = view.findViewById(R.id.done);
 
         /*barcodeCapture = (BarcodeCapture) getActivity().getSupportFragmentManager().findFragmentById(R.id.scan_view_id);
         if (barcodeCapture != null) {
@@ -229,7 +233,7 @@ public class QRScanFragment extends Fragment {
 
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
         if (cameraPermissionGranted()) {
-            createCameraSource(autoFocus,useFlash,cameraSwitch);
+            createCameraSource(autoFocus,useFlash,cameraSwitch,cameraMode);
 
         } else {
             ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
@@ -307,6 +311,13 @@ public class QRScanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 btnMode();
+            }
+        });
+        doneImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                processRawResult(textBarcode);
+                doneImg.setVisibility(View.GONE);
             }
         });
     }
@@ -428,7 +439,7 @@ public class QRScanFragment extends Fragment {
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (cameraPermissionGranted()) {
                // barcodeCapture.setSupportMultipleScan(false).setShowDrawRect(true).shouldAutoFocus(true);
-                createCameraSource(autoFocus, useFlash, cameraSwitch);
+                createCameraSource(autoFocus, useFlash, cameraSwitch,cameraMode);
 
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
@@ -476,6 +487,7 @@ public class QRScanFragment extends Fragment {
     }
 
     private void btnMode() {
+        mPreview.stop();
         if (checkSoundPreferences()) {
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
@@ -493,16 +505,16 @@ public class QRScanFragment extends Fragment {
             }
         }
         if (cameraMode.equals("normal")) {
-            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            modeTxt.setText(R.string.mode1);
             cameraMode = "batch";
+            createCameraSource(true,false,false,cameraMode);
+            modeTxt.setText(R.string.mode1);
         } else if (cameraMode.equals("batch")){
-            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_FIXED);
             cameraMode = "manual";
+            createCameraSource(true,false,false,cameraMode);
             modeTxt.setText(R.string.mode2);
         }else {
-            mCameraSource.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             cameraMode = "normal";
+            createCameraSource(true,false,false,cameraMode);
             modeTxt.setText(R.string.mode3);
         }
     }
@@ -513,10 +525,10 @@ public class QRScanFragment extends Fragment {
         mPreview.stop();
 
         if (cameraSwitch) {
-            createCameraSource(true,false,false);
+            createCameraSource(true,false,false,cameraMode);
             cameraSwitch = false;
         }else {
-            createCameraSource(true,false,true);
+            createCameraSource(true,false,true,cameraMode);
             cameraSwitch = true;
         }
     }
@@ -629,37 +641,6 @@ public class QRScanFragment extends Fragment {
             Toast.makeText(context, "not scan", Toast.LENGTH_SHORT).show();
             t.printStackTrace();
         }
-    }
-    private byte[] savedBitmapFromViewToFile() {
-        //inflate layout
-
-        //reference View with image
-        /*imageLayout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-        Bitmap bitmap = Bitmap.createBitmap(imageLayout.getMeasuredWidth(), imageLayout.getMeasuredHeight(),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        imageLayout.layout(0, 0, imageLayout.getMeasuredWidth(), imageLayout.getMeasuredHeight());
-        imageLayout.draw(canvas);*/
-
-        cardLayout.setVisibility(View.GONE);
-        Bitmap bitmap = Bitmap.createBitmap(imageLayout.getWidth(), imageLayout.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bitmap);
-        imageLayout.draw(c);
-        //save to File
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-
-        String nameFile = "qr.jpg";
-        File f = new File(Environment.getExternalStorageDirectory() + File.separator + nameFile);
-        FileOutputStream fo = null;
-        try {
-            fo = new FileOutputStream(f);
-            fo.write(bytes.toByteArray());
-            fo.close();
-        } catch (Exception e) {
-            Log.d("Error File:", "" + e);
-        }
-        return bytes.toByteArray();
     }
 
     public  void processRawResult(String text) {
@@ -859,12 +840,12 @@ public class QRScanFragment extends Fragment {
 
 
     @SuppressLint("InlinedApi")
-    private void createCameraSource(boolean autoFocus, boolean useFlash, boolean b) {
+    private void createCameraSource(boolean autoFocus, boolean useFlash, boolean b,String mode) {
         Context context = getActivity();
 
         barcodeDetector =
                 new BarcodeDetector.Builder(context)
-                        .setBarcodeFormats(Barcode.ALL_FORMATS)//QR_CODE)
+                        .setBarcodeFormats(Barcode.QR_CODE)//QR_CODE)
                         .build();
 
 
@@ -885,62 +866,163 @@ public class QRScanFragment extends Fragment {
 
         // make sure that auto focus is an available option
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            if (cameraMode.equals("batch")) {
-                builder = builder.setFocusMode(
-                        autoFocus ? Camera.Parameters.FOCUS_MODE_FIXED : null);
-                modeTxt.setText(R.string.mode1);
-            }else if (cameraMode.equals("manual")) {
-                builder = builder.setFocusMode(
-                        autoFocus ? Camera.Parameters.FOCUS_MODE_AUTO : null);
-                modeTxt.setText(R.string.mode2);
-            }else {
-                builder = builder.setFocusMode(
-                        autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
-                modeTxt.setText(R.string.mode3);
-            }
+            builder = builder.setFocusMode(
+                    autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
+            modeTxt.setText(R.string.mode3);
+
         }
 
         mCameraSource = builder
                 .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
                 .build();
-        barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-            @Override
-            public void release() {
-                Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
-            }
+         if (mode.equals("batch")) {
 
-            @Override
-            public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if (barcodes.size() != 0) {
-                    runOnUiThread(() -> {
-                        mPreview.stop();
-                        if (checkSoundPreferences()) {
-                            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+             barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+                 @Override
+                 public void release() {
+
+                     Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                 }
+
+                 @Override
+                 public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
+                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                     if (barcodes.size() != 0) {
+                         runOnUiThread(() -> {
+                             mPreview.stop();
+                             if (checkSoundPreferences()) {
+                                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                             }
+                             if (checkVibratePreferences()) {
+                                 if (Build.VERSION.SDK_INT >= 26) {
+
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+
+                                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                                 } else {
+
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                                     v.vibrate(100);
+                                 }
+                             }
+                             for (int i = 0; i < barcodes.size(); i++){
+
+                                 String rawData = barcodes.valueAt(i).rawValue;
+
+                                 processResultBarcode(rawData);
+                             }
+                         });
+                     }
+                 }
+             });
+                modeTxt.setText(R.string.mode1);
+            }else if (mode.equals("manual")) {
+                modeTxt.setText(R.string.mode2);
+
+             barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+                 @Override
+                 public void release() {
+                     Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                 }
+
+                 @Override
+                 public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
+                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                     if (barcodes.size() != 0) {
+                         runOnUiThread(() -> {
+                             mPreview.stop();
+                             if (checkSoundPreferences()) {
+                                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                             }
+                             if (checkVibratePreferences()) {
+                                 if (Build.VERSION.SDK_INT >= 26) {
+
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+
+                                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                                 } else {
+
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                                     v.vibrate(100);
+                                 }
+                             }
+                             textBarcode = barcodes.valueAt(0).rawValue;
+                             doneImg.setVisibility(View.VISIBLE);
+                             //captureImage();
+                         });
+                     }
+                 }
+             });
+               /* mCameraSource.getCamera().setPreviewCallback(new Camera.PreviewCallback() {
+                    @Override
+                    public void onPreviewFrame(byte[] bytes, Camera camera) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+                        SparseArray<Barcode> sparseArray = barcodeDetector.detect(frame);
+                        for (int i = 0; i < sparseArray.size(); i++){
+
+                            String rawData = sparseArray.valueAt(i).rawValue;
+
+                            processResultBarcode(rawData);
                         }
-                        if (checkVibratePreferences()) {
-                            if (Build.VERSION.SDK_INT >= 26) {
+                        barcodeDetector.release();
+                    }
+                });*/
+            }else {
 
-                                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+             barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
+                 @Override
+                 public void release() {
+                     Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
+                 }
 
-                                v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                            } else {
+                 @Override
+                 public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
+                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
+                     if (barcodes.size() != 0) {
+                         runOnUiThread(() -> {
+                             mPreview.stop();
+                             if (checkSoundPreferences()) {
+                                 ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                             }
+                             if (checkVibratePreferences()) {
+                                 if (Build.VERSION.SDK_INT >= 26) {
 
-                                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                                v.vibrate(100);
-                            }
-                        }
-                        String rawData = barcodes.valueAt(0).rawValue;
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
 
-                        processResultBarcode(rawData);
-                    });
-                }
+                                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                                 } else {
+
+                                     Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                                     v.vibrate(100);
+                                 }
+                             }
+                             String rawData = barcodes.valueAt(0).rawValue;
+
+                             processResultBarcode(rawData);
+                         });
+                     }
+                 }
+             });
+                modeTxt.setText(R.string.mode3);
             }
-        });
 
         startCameraSource();
     }
+    Bitmap bitmap = null;
+    private void captureImage(){
+        mCameraSource.takePicture(null, new CameraSource.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] data) {
+                bitmap = BitmapFactory.decodeByteArray(data,0,data.length);
+                doneImg.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
 
     /**
      * Starts or restarts the camera source, if it exists.  If the camera source doesn't exist yet

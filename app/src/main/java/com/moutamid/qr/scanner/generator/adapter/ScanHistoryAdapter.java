@@ -85,6 +85,7 @@ public class ScanHistoryAdapter extends RecyclerView.Adapter<ScanHistoryAdapter.
 
             imgDelete.setOnClickListener(v1 -> {
                 mListner.deleteSingleItem(getHistory(getAdapterPosition()), getAdapterPosition());
+                historyDataList.remove(getAdapterPosition());
             });
 
         }

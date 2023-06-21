@@ -32,6 +32,7 @@ public class PayPalActivity extends AppCompatActivity {
     private EditText link;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
+    private boolean history;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -45,6 +46,7 @@ public class PayPalActivity extends AppCompatActivity {
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
+        history = prefs.getBoolean("saveHistory",true);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -93,8 +95,10 @@ public class PayPalActivity extends AppCompatActivity {
             try {
                 final Social social = new Social();
                 social.setUrl(urlValue);
-                History urlHistory = new History(social.generateString(), "paypal");
-                historyVM.insertHistory(urlHistory);
+                if (history) {
+                    History urlHistory = new History(social.generateString(), "paypal");
+                    historyVM.insertHistory(urlHistory);
+                }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "paypal");
                 intent.putExtra("social", social);
