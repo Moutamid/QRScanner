@@ -27,7 +27,7 @@
                 <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
 
                     <RelativeLayout
-                        android:id="@+id/general_about"
+                        android:id="@+id/general_lang"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:padding="8dp"
@@ -48,6 +48,7 @@
                             android:layout_centerVertical="true"
                             android:paddingStart="10dp"
                             android:id="@+id/language"
+                            android:layout_toStartOf="@+id/languageTxt"
                             android:textColor="@color/black"
                             android:text="@string/language"
                             android:textSize="16sp" />

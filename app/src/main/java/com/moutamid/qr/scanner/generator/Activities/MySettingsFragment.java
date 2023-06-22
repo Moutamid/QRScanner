@@ -46,7 +46,7 @@ public class MySettingsFragment extends Fragment {
     public static String PACKAGE_NAME;
     private Switch beep,vibrate,copy,batch_scanning,manual_scanning,web_search,product_details,save_history,save_qr;
     private TextView searchTxt,languageTxt,cameraTxt,modeTxt;
-    private RelativeLayout policyBtn,rateBtn,shareBtn,deleteBtn,cameraLayout,searchLayout,modelLayout;
+    private RelativeLayout policyBtn,rateBtn,shareBtn,deleteBtn,cameraLayout,searchLayout,modelLayout,languageLayout;
     private boolean beepSound = false;
     private boolean vibration = false;
     private boolean copied =false;
@@ -119,11 +119,11 @@ public class MySettingsFragment extends Fragment {
         historyVM = new ViewModelProvider(MySettingsFragment.this).get(HistoryVM.class);
         cameraTxt = view.findViewById(R.id.camera_mode);
         modeTxt = view.findViewById(R.id.mode);
-        languageTxt.setText("English");
         policyBtn = view.findViewById(R.id.general_policy);
         shareBtn = view.findViewById(R.id.general_tell);
         deleteBtn = view.findViewById(R.id.general_delete);
         rateBtn = view.findViewById(R.id.general_about);
+        languageLayout = view.findViewById(R.id.general_lang);
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -251,7 +251,7 @@ public class MySettingsFragment extends Fragment {
         save_history.setChecked(saveHistory);
         save_qr.setChecked(saveQR);
         web_search.setChecked(web);
-
+        languageTxt.setText("Default");
         beep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -297,6 +297,14 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showSearchEngineDialogBox();
+            }
+        });
+
+        languageLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  languageOptionsDialog();
+                startActivity(new Intent(getActivity(),LanguageOptions.class));
             }
         });
         languageTxt.setOnClickListener(new View.OnClickListener() {

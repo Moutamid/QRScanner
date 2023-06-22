@@ -85,7 +85,7 @@ public class ScanResultActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private Bitmap bitmap;
     private String engine;
-    private boolean web;
+    private boolean web = false;
     private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
     @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
@@ -615,25 +615,27 @@ public class ScanResultActivity extends AppCompatActivity {
 
     String customUrl="";
     private void checkSearchEngine(String text) {
-        if (engine.equals("Google")){
-            customUrl = "https://www.google.com/search?q="+text;
-        }else if (engine.equals("Bing")){
-            customUrl = "https://www.bing.com/search?q="+text;
-        }else if (engine.equals("Yahoo")){
-            customUrl = "https://search.yahoo.com/search?p="+text;
-        }else if (engine.equals("DuckDuckGo")){
-            customUrl = "https://duckduckgo.com/?q="+text;
-        }else if (engine.equals("Yandex")){
-            customUrl = "https://yandex.com/?q"+text;
-        }else if (engine.equals("Qwant")){
-            customUrl = "https://www.qwant.com/?q="+text;
-        }
-        Uri webpage = Uri.parse(customUrl);
-        Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
-        try {
-            startActivity(webIntent);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (web) {
+            if (engine.equals("Google")) {
+                customUrl = "https://www.google.com/search?q=" + text;
+            } else if (engine.equals("Bing")) {
+                customUrl = "https://www.bing.com/search?q=" + text;
+            } else if (engine.equals("Yahoo")) {
+                customUrl = "https://search.yahoo.com/search?p=" + text;
+            } else if (engine.equals("DuckDuckGo")) {
+                customUrl = "https://duckduckgo.com/?q=" + text;
+            } else if (engine.equals("Yandex")) {
+                customUrl = "https://yandex.com/?q" + text;
+            } else if (engine.equals("Qwant")) {
+                customUrl = "https://www.qwant.com/?q=" + text;
+            }
+            Uri webpage = Uri.parse(customUrl);
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, webpage);
+            try {
+                startActivity(webIntent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

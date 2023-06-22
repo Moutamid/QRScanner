@@ -70,7 +70,7 @@
                 android:id="@+id/mode_status"
                 android:text="Scan Mode: Normal Scanning"
                 android:textSize="16sp"
-                android:textColor="@color/white"
+                android:textColor="#ffffff"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"></TextView>
             <LinearLayout android:orientation="horizontal"
