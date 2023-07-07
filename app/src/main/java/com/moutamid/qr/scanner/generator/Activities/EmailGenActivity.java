@@ -19,6 +19,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -27,7 +28,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.EMail;
 import java.util.Locale;
 
 public class EmailGenActivity extends AppCompatActivity {
-    private EditText email,subject,body;
+    private TextInputLayout email,subject,body;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -87,18 +88,18 @@ public class EmailGenActivity extends AppCompatActivity {
     }
 
     public void emailGenerate(View view) {
-        if (email.getText().toString().equals("")) {
+        if (email.getEditText().getText().toString().equals("")) {
             email.setError("Please enter Email");
-        } else if (subject.getText().toString().equals("")) {
+        } else if (subject.getEditText().getText().toString().equals("")) {
             subject.setError("Please enter Subject");
-        } else if (body.getText().toString().equals("")) {
+        } else if (body.getEditText().getText().toString().equals("")) {
             body.setError("Please enter Body");
         } else {
             try {
                 final EMail eMail = new EMail();
-                eMail.setEmail(email.getText().toString());
-                eMail.setMailBody(body.getText().toString());
-                eMail.setMailSubject(subject.getText().toString());
+                eMail.setEmail(email.getEditText().getText().toString());
+                eMail.setMailBody(body.getEditText().getText().toString());
+                eMail.setMailSubject(subject.getEditText().getText().toString());
                 if (history) {
                     History emailHistory = new History(eMail.generateString(), "email");
                     historyVM.insertHistory(emailHistory);
@@ -115,9 +116,9 @@ public class EmailGenActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        email.setText(null);
-                        body.setText(null);
-                        subject.setText(null);
+                        email.getEditText().setText(null);
+                        body.getEditText().setText(null);
+                        subject.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

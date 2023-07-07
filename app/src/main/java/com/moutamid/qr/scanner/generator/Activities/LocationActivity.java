@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -27,7 +28,7 @@ import java.util.Locale;
 
 public class LocationActivity extends AppCompatActivity {
 
-    private EditText latitude,longitude,locationname;
+    private TextInputLayout latitude,longitude,locationname;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -87,9 +88,9 @@ public class LocationActivity extends AppCompatActivity {
 
     public void locationGenerate(View view) {
 
-        String data1 = locationname.getText().toString();
-        String data2 = longitude.getText().toString();
-        String data3 = latitude.getText().toString();
+        String data1 = locationname.getEditText().getText().toString();
+        String data2 = longitude.getEditText().getText().toString();
+        String data3 = latitude.getEditText().getText().toString();
 
         if (data3.equals("")) {
             latitude.setError("Please enter Latitude");
@@ -100,9 +101,9 @@ public class LocationActivity extends AppCompatActivity {
         } else {
             try {
                 ArrayList<String> arrayList = new ArrayList<>();
-                arrayList.add(locationname.getText().toString());
-                arrayList.add(latitude.getText().toString());
-                arrayList.add(longitude.getText().toString());
+                arrayList.add(locationname.getEditText().getText().toString());
+                arrayList.add(latitude.getEditText().getText().toString());
+                arrayList.add(longitude.getEditText().getText().toString());
                 final GeoInfo location = new GeoInfo();
                 location.setPoints(arrayList);
                 if (history) {
@@ -121,9 +122,9 @@ public class LocationActivity extends AppCompatActivity {
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        locationname.setText(null);
-                        latitude.setText(null);
-                        longitude.setText(null);
+                        locationname.getEditText().setText(null);
+                        latitude.getEditText().setText(null);
+                        longitude.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

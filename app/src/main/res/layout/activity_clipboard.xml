@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.moutamid.qr.scanner.generator.Activities.TextGenActivity">
+    tools:context="com.moutamid.qr.scanner.generator.Activities.ClipboardActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_history"
@@ -32,6 +32,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/clipboard"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,7 +53,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
@@ -59,17 +73,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/clipboard"
-            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:fontFamily="@font/poppins"
+            android:text="Transform your clipboard content into a QR code and share effortlessly!"
+            android:layout_margin="5dp"
             android:textColor="@color/black"/>
 
     </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout13"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -78,28 +93,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_edit"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="start"
-            android:hint="@string/texthint"
-            android:background="@drawable/input"
-            android:inputType="textMultiLine"
-            android:lineSpacingExtra="2dp"
-            android:padding="10dp"
-            android:lines="1"
-            android:maxLines="8"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.110000014" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginEnd="20dp"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="#669900"
+            android:hint="@string/texthint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="100sp"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="2dp"
+                android:fontFamily="@font/poppins"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/clipboard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clipboard"
+            android:layout_margin="6sp"
+            android:padding="12sp"
+            android:textColor="@color/red"
+            android:drawableTint="@color/red"
+            android:fontFamily="@font/poppins"
+            android:gravity="center_vertical"
+            android:drawablePadding="12sp"
+            android:drawableStart="@drawable/baseline_content_copy_24" />
+
+    </LinearLayout>
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -109,6 +137,7 @@
         android:onClick="clipGenerate"
         android:text="@string/generate"
         android:textColor="@color/black"
+        android:fontFamily="@font/poppins"
         android:textSize="18sp"
         android:textStyle="bold"
         android:background="@drawable/button_background"

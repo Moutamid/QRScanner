@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-    <ScrollView android:orientation="vertical" android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
-        <RelativeLayout android:background="@color/white" android:layout_width="match_parent" android:layout_height="match_parent">
-            <TextView android:textSize="18sp"
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <TextView
                 android:id="@+id/display_txt"
-                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/poppins"
+                android:paddingStart="25dp"
                 android:text="@string/display_settings"
                 android:textColor="@color/black"
-                android:paddingStart="25dp"/>
+                android:textSize="18sp"
+                android:visibility="visible" />
+
             <androidx.cardview.widget.CardView
+                android:id="@+id/display_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                app:cardCornerRadius="7sp"
                 android:layout_below="@+id/display_txt"
-                android:id="@+id/display_layout"
-                app:cardBackgroundColor="@color/white">
-                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+                app:cardBackgroundColor="@color/lightGray2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/general_lang"
@@ -35,122 +52,185 @@
 
                         <ImageView
                             android:id="@+id/general_image"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_baseline_language_24" />
 
                         <TextView
+                            android:id="@+id/language"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/general_image"
                             android:layout_centerVertical="true"
-                            android:paddingStart="10dp"
-                            android:id="@+id/language"
                             android:layout_toStartOf="@+id/languageTxt"
-                            android:textColor="@color/black"
+                            android:layout_toEndOf="@+id/general_image"
+                            android:paddingStart="10dp"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/language"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/languageTxt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Default"
-                            android:layout_centerVertical="true"
-                            android:textColor="@color/teal_200"
                             android:layout_alignParentRight="true"
-                            android:id="@+id/languageTxt"
-                            android:paddingStart="10dp"
-                            />
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/poppins"
+                            android:padding="10dp"
+                            android:textSize="13sp"
+                            android:text="Default"/>
 
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:id="@+id/theme_status"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/general_image_2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/mode" />
 
                         <TextView
+                            android:id="@+id/theme"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="10sp"
                             android:layout_toEndOf="@+id/general_image_2"
                             android:paddingStart="10dp"
-                            android:id="@+id/theme"
-                            android:textColor="@color/black"
                             android:text="@string/theme"
+                            android:fontFamily="@font/poppins"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
+
                         <TextView
+                            android:id="@+id/mode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/theme"
+                            android:fontFamily="@font/poppins"
                             android:layout_toEndOf="@+id/general_image_2"
-                            android:text="@string/theme2"
-                            android:id="@+id/mode"
-                            android:textColor="@color/black"
                             android:paddingStart="10dp"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:textSize="13sp"
+                            android:text="@string/theme2"/>
 
                     </RelativeLayout>
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
 
-            <TextView android:textSize="18sp" android:id="@+id/app_setting_txt" android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="@string/help"
-                android:textColor="@color/black" android:paddingStart="25dp"
-                android:layout_below="@+id/display_layout"/>
+            <TextView
+                android:id="@+id/app_setting_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/display_layout"
+                android:paddingStart="25dp"
+                android:text="@string/help"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
             <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="@color/white"
-                android:id="@+id/app_setting_card" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_below="@+id/app_setting_txt">
-                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
-                    <RelativeLayout android:padding="8dp"
+                android:id="@+id/app_setting_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10sp"
+                app:cardCornerRadius="7sp"
+                android:layout_below="@+id/app_setting_txt"
+                app:cardBackgroundColor="@color/lightGray2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/search_engine"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:id="@+id/search_engine">
-                        <ImageView android:id="@+id/item_image"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_baseline_language_24"/>
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/ic_baseline_language_24" />
 
                         <TextView
                             android:id="@+id/vibrate"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
+                            android:layout_marginStart="10sp"
                             android:text="@string/search"
                             android:textColor="@color/black"
+                            android:fontFamily="@font/poppins"
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/search"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/vibrate"
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:id="@+id/search"/>
+                            android:fontFamily="@font/poppins"
+                            android:textSize="13sp"
+                            android:layout_marginStart="10sp"
+                            android:text="Google"/>
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
 
-                    <RelativeLayout android:padding="8dp"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
-                        android:id="@+id/camera_status">
-                        <ImageView android:id="@+id/item_image"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/camera_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="12dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_baseline_camera_alt_24"/>
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
 
                         <TextView
                             android:id="@+id/vibrate"
@@ -160,31 +240,46 @@
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
                             android:text="@string/camera"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/camera_mode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/vibrate"
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:id="@+id/camera_mode"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/camera_txt1" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
 
-                    <RelativeLayout android:padding="8dp"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="70dp">
-                        <ImageView android:id="@+id/item_image"
-                            android:background="@drawable/icon_border"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/scanning"/>
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/scanning" />
 
                         <TextView
                             android:id="@+id/vibrate"
@@ -193,6 +288,8 @@
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/mode1"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
@@ -203,21 +300,42 @@
                             android:layout_below="@+id/vibrate"
                             android:layout_toStartOf="@+id/batch_switch"
                             android:layout_toEndOf="@+id/item_image"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:text="@string/mode1_txt" />
-                        <Switch android:id="@+id/batch_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                            android:text="@string/mode1_txt"
+                            android:textSize="13sp"/>
+
+                        <Switch
+                            android:id="@+id/batch_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
-                    <RelativeLayout android:padding="8dp"
+
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="70dp">
-                        <ImageView android:id="@+id/item_image"
-                            android:background="@drawable/icon_border"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/duplication"/>
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/duplication" />
 
                         <TextView
                             android:id="@+id/vibrate"
@@ -226,6 +344,8 @@
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/mode2"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
@@ -237,20 +357,41 @@
                             android:layout_toStartOf="@+id/manual_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:text="@string/mode2_txt" />
-                        <Switch android:id="@+id/manual_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/mode2_txt"
+                            android:textSize="13sp"/>
+
+                        <Switch
+                            android:id="@+id/manual_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
-                    <RelativeLayout android:padding="8dp"
+
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="70dp">
-                        <ImageView android:id="@+id/item_image"
-                            android:background="@drawable/icon_border"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/duplication"/>
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/duplication" />
 
                         <TextView
                             android:id="@+id/vibrate"
@@ -259,6 +400,8 @@
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/duplicate"
                             android:textColor="@color/black"
                             android:textSize="16sp" />
@@ -270,29 +413,54 @@
                             android:layout_toStartOf="@+id/duplicate_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:text="@string/duplicate_txt" />
-                        <Switch android:id="@+id/duplicate_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/duplicate_txt"
+                            android:textSize="13sp"/>
+
+                        <Switch
+                            android:id="@+id/duplicate_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
 
-
-                    <RelativeLayout android:padding="8dp"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="70dp">
-                        <ImageView android:id="@+id/item_image"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:id="@+id/item_image"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_vibration_setting"/>
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/ic_vibration_setting" />
 
                         <TextView
+                            android:id="@+id/vibrate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:id="@+id/vibrate"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/vibrate"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -302,15 +470,41 @@
                             android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:text="@string/vibrate_txt" />
-                        <Switch android:id="@+id/vibration_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/vibrate_txt"
+                            android:textSize="13sp"/>
+
+                        <Switch
+                            android:id="@+id/vibration_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
-                    <RelativeLayout android:padding="8dp" android:layout_width="match_parent" android:layout_height="70dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp">
+
                         <ImageView
+                            android:id="@+id/item_image_2"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            android:id="@+id/item_image_2" android:layout_width="20dp" android:layout_height="20dp" android:layout_centerVertical="true" app:srcCompat="@drawable/ic_sound_setting"/>
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/ic_sound_setting" />
 
                         <TextView
                             android:id="@+id/soundTxt"
@@ -319,8 +513,10 @@
                             android:layout_toStartOf="@+id/sound_switch"
                             android:layout_toEndOf="@+id/item_image_2"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/beep"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -329,36 +525,54 @@
                             android:layout_below="@+id/soundTxt"
                             android:layout_toStartOf="@+id/sound_switch"
                             android:layout_toEndOf="@+id/item_image_2"
-                            android:text="@string/beep_msg"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
-                        <Switch android:id="@+id/sound_switch" android:layout_width="wrap_content" android:layout_height="match_parent" android:switchMinWidth="55dp" android:layout_alignParentEnd="true"/>
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/beep_msg"
+                            android:textSize="13sp"/>
+
+                        <Switch
+                            android:id="@+id/sound_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/item_image_3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_auto_copy_setting" />
 
                         <TextView
+                            android:id="@+id/clipboard"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/copy_switch"
                             android:layout_toEndOf="@+id/item_image_3"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            android:id="@+id/clipboard"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/auto_clipboard"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -367,85 +581,110 @@
                             android:layout_below="@+id/clipboard"
                             android:layout_toStartOf="@+id/copy_switch"
                             android:layout_toEndOf="@+id/item_image_3"
-                            android:text="@string/auto_clipboard_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/auto_clipboard_txt"
+                            android:textSize="13sp"/>
 
                         <Switch
                             android:id="@+id/copy_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
                             android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/item_image_4"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_auto_web_search" />
 
                         <TextView
+                            android:id="@+id/search"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/web_switch"
                             android:layout_toEndOf="@+id/item_image_4"
                             android:paddingStart="10dp"
-                            android:id="@+id/search"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/web_search"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/search"
                             android:layout_toStartOf="@+id/web_switch"
                             android:layout_toEndOf="@+id/item_image_4"
-                            android:text="@string/web_search_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/web_search_txt"
+                            android:textSize="13sp"/>
 
                         <Switch
                             android:id="@+id/web_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
                             android:switchMinWidth="55dp" />
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/item_image_5"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_history_erase_setting" />
 
                         <TextView
+                            android:id="@+id/save_history"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/save_history_switch"
                             android:layout_toEndOf="@+id/item_image_5"
                             android:paddingStart="10dp"
-                            android:id="@+id/save_history"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/save_history"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -454,40 +693,47 @@
                             android:layout_below="@+id/save_history"
                             android:layout_toStartOf="@+id/save_history_switch"
                             android:layout_toEndOf="@+id/item_image_5"
-                            android:text="@string/save_history_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/save_history_txt"
+                            android:textSize="13sp"/>
 
                         <Switch
                             android:id="@+id/save_history_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
                             android:switchMinWidth="55dp" />
                     </RelativeLayout>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/item_image_5"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/box" />
 
                         <TextView
+                            android:id="@+id/product"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/save_history_switch"
                             android:layout_toEndOf="@+id/item_image_5"
                             android:paddingStart="10dp"
-                            android:id="@+id/product"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/product"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -496,49 +742,79 @@
                             android:layout_below="@+id/product"
                             android:layout_toStartOf="@+id/product_switch"
                             android:layout_toEndOf="@+id/item_image_5"
-                            android:text="@string/product_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/product_txt"
+                            android:textSize="13sp"/>
 
                         <Switch
                             android:id="@+id/product_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
                             android:switchMinWidth="55dp" />
                     </RelativeLayout>
+
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
-            <TextView android:textSize="18sp" android:id="@+id/general_txt" android:visibility="visible" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:layout_marginBottom="15dp" android:text="@string/g_settings"
-                android:textColor="@color/black" android:layout_below="@+id/app_setting_card" android:paddingStart="25dp"/>
+
+            <TextView
+                android:id="@+id/general_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/app_setting_card"
+                android:paddingStart="25dp"
+                android:text="@string/g_settings"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
             <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="@color/white" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="40dp" android:layout_below="@+id/general_txt">
-                <LinearLayout android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/general_txt"
+                android:layout_marginBottom="40dp"
+                android:layout_marginStart="10sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginTop="10sp"
+                app:cardCornerRadius="7sp"
+                app:cardBackgroundColor="@color/lightGray2">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <RelativeLayout
                         android:id="@+id/general_about"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:visibility="visible">
 
                         <ImageView
                             android:id="@+id/general_image"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_rate_us" />
 
                         <TextView
+                            android:id="@+id/rateUs"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/general_image"
                             android:paddingStart="10dp"
-                            android:id="@+id/rateUs"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/rate_us"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -546,120 +822,157 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rateUs"
                             android:layout_toEndOf="@+id/general_image"
-                            android:text="@string/rate_us_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/rate_us_txt"
+                            android:textSize="13sp"/>
 
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:id="@+id/general_policy"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/general_image_2"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_privacy__setting" />
 
                         <TextView
+                            android:id="@+id/policy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/general_image_2"
                             android:paddingStart="10dp"
-                            android:id="@+id/policy"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/policy"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/policy"
                             android:layout_toEndOf="@+id/general_image_2"
-                            android:text="@string/policy_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/policy_txt"
+                            android:textSize="13sp"/>
 
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:id="@+id/general_tell"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/general_image_3"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
                             app:srcCompat="@drawable/ic_share_setting" />
 
                         <TextView
+                            android:id="@+id/share"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/general_image_3"
                             android:paddingStart="10dp"
-                            android:id="@+id/share"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/share"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/share"
                             android:layout_toEndOf="@+id/general_image_3"
-                            android:text="@string/share_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/share_txt"
+                            android:textSize="13sp"/>
 
 
                     </RelativeLayout>
-                    <View android:background="@color/lightGray" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginStart="15dp" android:layout_marginEnd="15dp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="15dp"
+                        android:background="@color/lightGray" />
 
                     <RelativeLayout
                         android:id="@+id/general_delete"
                         android:layout_width="match_parent"
-                        android:layout_height="70dp"
+                        android:layout_height="wrap_content"
                         android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/general_image_4"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/icon_border"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
                             android:layout_centerVertical="true"
-                            app:srcCompat="@drawable/ic_delete_history_setting" />
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/icon_border"
+                            app:tint="@color/teal_200"
+                            app:srcCompat="@drawable/big_delete" />
 
                         <TextView
+                            android:id="@+id/delete"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@+id/general_image_4"
                             android:gravity="center_vertical"
                             android:paddingStart="10dp"
-                            android:id="@+id/delete"
-                            android:textColor="@color/black"
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
                             android:text="@string/delete_history"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/delete"
                             android:layout_toEndOf="@+id/general_image_4"
-                            android:text="@string/delete_txt"
                             android:paddingStart="10dp"
-                            android:textColor="@color/black"
-                            />
+                            android:layout_marginStart="10sp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/delete_txt"
+                            android:textSize="13sp"/>
 
                     </RelativeLayout>
                 </LinearLayout>

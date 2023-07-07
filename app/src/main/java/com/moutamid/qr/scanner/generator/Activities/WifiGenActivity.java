@@ -19,6 +19,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 public class    WifiGenActivity extends AppCompatActivity {
 
-    private EditText wifiname,wifipassword;
+    private TextInputLayout wifiname,wifipassword;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -87,8 +88,8 @@ public class    WifiGenActivity extends AppCompatActivity {
     }
     public void wifiGenerate(View view) {
 
-        String data1 = wifiname.getText().toString();
-        String data2 = wifipassword.getText().toString();
+        String data1 = wifiname.getEditText().getText().toString();
+        String data2 = wifipassword.getEditText().getText().toString();
         if (data1.equals("")) {
             wifiname.setError("Please enter WifiName");
         } else if (data2.equals("")) {
@@ -96,8 +97,8 @@ public class    WifiGenActivity extends AppCompatActivity {
         } else {
             try {
                 final Wifi wifi = new Wifi();
-                wifi.setSsid(wifiname.getText().toString());
-                wifi.setPsk(wifipassword.getText().toString());
+                wifi.setSsid(wifiname.getEditText().getText().toString());
+                wifi.setPsk(wifipassword.getEditText().getText().toString());
                 if (history) {
                     History wifiHistory = new History(wifi.generateString(), "wifi");
                     historyVM.insertHistory(wifiHistory);
@@ -114,8 +115,8 @@ public class    WifiGenActivity extends AppCompatActivity {
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        wifipassword.setText(null);
-                        wifiname.setText(null);
+                        wifipassword.getEditText().setText(null);
+                        wifiname.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 public class PayPalActivity extends AppCompatActivity {
 
-    private EditText link;
+    private TextInputLayout link;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -88,8 +89,8 @@ public class PayPalActivity extends AppCompatActivity {
     public void paypalGenerate(View view) {
 
 
-        String urlValue = "https://" + link.getText().toString();
-        if (link.getText().toString().equals("")) {
+        String urlValue = "https://" + link.getEditText().getText().toString();
+        if (link.getEditText().getText().toString().equals("")) {
             link.setError("PLease Enter Link");
         } else {
             try {
@@ -110,7 +111,7 @@ public class PayPalActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                         PackageManager.PERMISSION_GRANTED) {
                     try {
-                        link.setText(null);
+                        link.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

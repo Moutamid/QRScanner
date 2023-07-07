@@ -32,6 +32,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/phone"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,7 +53,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
@@ -59,19 +73,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/phone"
-            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Convert your phone number into a QR code and connect instantly!"
+            android:layout_margin="5dp"
             android:textColor="@color/black"/>
 
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout13"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:orientation="vertical"
@@ -81,24 +96,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/white"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:padding="10dp"
-            android:hint="@string/phone_number"
-            android:inputType="numberDecimal"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextFields" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginEnd="20dp"
+            app:helperTextEnabled="true"
+            app:helperTextTextColor="@color/black"
+            app:helperText="Use Country code with plus symbol"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="#FEDA2A"
+            android:hint="@string/phone_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:fontFamily="@font/poppins"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="200dp"
@@ -106,6 +126,7 @@
         android:layout_marginTop="32dp"
         android:onClick="phoneGenerate"
         android:text="@string/generate"
+        android:fontFamily="@font/poppins"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

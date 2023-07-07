@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -27,7 +28,7 @@ import java.util.Locale;
 
 public class SmsGenActivity extends AppCompatActivity {
 
-    private EditText number,message;
+    private TextInputLayout number,message;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -85,8 +86,8 @@ public class SmsGenActivity extends AppCompatActivity {
     }
     public void smsGenerate(View view) {
 
-        String data1 = number.getText().toString();
-        String data2 = message.getText().toString();
+        String data1 = number.getEditText().getText().toString();
+        String data2 = message.getEditText().getText().toString();
         if (data1.equals("")) {
             number.setError("Please enter Number");
         } else if (data2.equals("")) {
@@ -94,8 +95,8 @@ public class SmsGenActivity extends AppCompatActivity {
         } else {
             try {
                 final SMS sms = new SMS();
-                sms.setNumber(number.getText().toString());
-                sms.setSubject(message.getText().toString());
+                sms.setNumber(number.getEditText().getText().toString());
+                sms.setSubject(message.getEditText().getText().toString());
                 if (history) {
                     History smsHistory = new History(sms.generateString(), "sms");
                     historyVM.insertHistory(smsHistory);
@@ -113,8 +114,8 @@ public class SmsGenActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        message.setText(null);
-                        number.setText(null);
+                        message.getEditText().setText(null);
+                        number.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

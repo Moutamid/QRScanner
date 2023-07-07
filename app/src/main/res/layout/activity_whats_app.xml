@@ -32,6 +32,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/black" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/whatsapp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,7 +52,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
@@ -59,46 +72,64 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/whatsapp"
-            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Encode your WhatsApp number into a QR code and chat instantly!"
+            android:layout_margin="5dp"
             android:textColor="@color/black"/>
 
     </LinearLayout>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/linearLayout13"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".1"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <EditText
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/cpp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:ccp_showArrow="true"
+            app:ccp_showPhoneCode="true"
+            android:gravity="center"
+            app:ccp_showFlag="false"
+            app:ccp_autoDetectCountry="true"
+            android:backgroundTint="@color/smsColor"
+            android:background="@drawable/button_background"
+            app:ccpDialog_textColor="@color/black"
+            android:layout_marginStart="20sp"
+            app:ccp_showNameCode="true"/>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_phone"
-            android:layout_width="match_parent"
+            android:layout_width="0sp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:padding="10dp"
-            android:hint="@string/phone_number"
-            android:inputType="numberDecimal"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="TextFields" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:boxBackgroundColor="@color/white"
+            android:layout_weight="1"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="20sp"
+            app:hintTextColor="#34B565"
+            app:boxStrokeColor="#34B565"
+            android:hint="@string/phone_number">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="phone"
+                android:fontFamily="@font/poppins"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="200dp"
@@ -106,6 +137,7 @@
         android:layout_marginTop="32dp"
         android:onClick="whatsappGenerate"
         android:text="@string/generate"
+        android:fontFamily="@font/poppins"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"

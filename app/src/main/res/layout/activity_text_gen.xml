@@ -32,6 +32,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/text"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,7 +53,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
@@ -52,17 +66,19 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:contentDescription="@string/text"
-            android:src="@drawable/ic_text"                        android:padding="15dp"
+            android:src="@drawable/ic_text"
+            android:padding="15dp"
             android:backgroundTint="@color/textColor"
             android:background="@drawable/barcode_icon_back"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/text"
-            android:layout_marginTop="5dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="Create your own QR code and share your message with style!"
+            android:layout_margin="5dp"
             android:textColor="@color/black"/>
 
     </LinearLayout>
@@ -71,34 +87,42 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".24"
+        app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="start"
-            android:hint="@string/texthint"
-            android:inputType="textMultiLine"
-            android:lineSpacingExtra="2dp"
-            android:padding="10dp"
-            android:lines="1"
-            android:maxLines="8"
-            android:background="@drawable/input"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/emailColor"
+            app:boxCornerRadiusTopStart="8sp"
+            app:boxCornerRadiusTopEnd="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.110000014" />
+            app:hintTextColor="#34B565"
+            app:boxStrokeColor="#34B565"
+            app:layout_constraintVertical_bias="0.110000014"
+            android:hint="@string/texthint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:lineSpacingExtra="2dp"
+                android:lines="1"
+                android:maxLines="8"
+                android:fontFamily="@font/poppins"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -110,6 +134,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/textColor"
         android:padding="12dp"

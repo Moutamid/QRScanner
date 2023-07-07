@@ -32,6 +32,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/black" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/url"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -39,7 +53,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
@@ -60,18 +74,21 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:text="@string/url"
+            android:textSize="16sp"
+            android:text="Create a QR Code for your Website"
+            android:fontFamily="@font/poppins"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"/>
 
     </LinearLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <RelativeLayout
         android:id="@+id/linearLayout13"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,23 +96,102 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/url_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="8dp"
-            android:hint="@string/urlhint"
-            android:textStyle="italic"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:inputType="text"
-            tools:ignore="TextFields" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:boxBackgroundColor="@color/white"
+            app:counterEnabled="true"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="#FEDA2A"
+            app:counterMaxLength="300"
+            android:hint="@string/urlhint">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="https://"
+                android:fontFamily="@font/poppins"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/url_edit"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/https"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:backgroundTint="@color/eventColor"
+                android:fontFamily="@font/poppins"
+                android:padding="12dp"
+                android:textAllCaps="false"
+                android:text="https://"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/http"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/eventColor"
+                android:fontFamily="@font/poppins"
+                android:padding="12dp"
+                android:text="http://"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/www"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/eventColor"
+                android:fontFamily="@font/poppins"
+                android:padding="12dp"
+                android:text="www."
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/com"
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="5sp"
+                android:layout_marginEnd="5sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/eventColor"
+                android:fontFamily="@font/poppins"
+                android:padding="12dp"
+                android:text=".com"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="200dp"
@@ -106,6 +202,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/poppins"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/urlColor"
         android:padding="12dp"

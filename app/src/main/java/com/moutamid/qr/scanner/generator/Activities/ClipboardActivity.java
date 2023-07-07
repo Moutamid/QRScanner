@@ -10,18 +10,22 @@ import androidx.preference.PreferenceManager;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -30,8 +34,10 @@ import java.util.Locale;
 
 public class ClipboardActivity extends AppCompatActivity {
 
-    private EditText textedit;
+    private TextInputLayout textedit;
     private HistoryVM historyVM;
+    private ClipboardManager clipboardManager;
+    private TextView textView;
 
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
@@ -60,6 +66,23 @@ public class ClipboardActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        textView = findViewById(R.id.clipboard); // Replace with the actual ID of your TextView
+
+        String copiedText = getTextFromClipboard();
+        textView.setText(copiedText);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Perform the desired action when the TextView is clicked
+                textedit.getEditText().setText(copiedText);
+            }
+        });
+        textView.setClickable(true);
+        textView.setFocusable(true);
+        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         edit = prefs.edit();
         copied = prefs.getBoolean("copy",false);
         historyVM = new ViewModelProvider(ClipboardActivity.this).get(HistoryVM.class);
@@ -72,6 +95,19 @@ public class ClipboardActivity extends AppCompatActivity {
 
     }
 
+    private String getTextFromClipboard() {
+        ClipData clipData = clipboardManager.getPrimaryClip();
+        if (clipData != null && clipData.getItemCount() > 0) {
+            ClipData.Item item = clipData.getItemAt(0);
+            if (item != null) {
+                CharSequence text = item.coerceToText(getApplicationContext());
+                if (text != null) {
+                    return text.toString();
+                }
+            }
+        }
+        return "Clipboard is empty" ;
+    }
 
 
     private void getLocale(){
@@ -94,7 +130,7 @@ public class ClipboardActivity extends AppCompatActivity {
     }
 
     public void clipGenerate(View view) {
-        String data = textedit.getText().toString();
+        String data = textedit.getEditText().getText().toString();
 
 
         if (data.equals("")) {
@@ -120,7 +156,7 @@ public class ClipboardActivity extends AppCompatActivity {
             finish();
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 try {
-                    textedit.setText(null);
+                    textedit.getEditText().setText(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

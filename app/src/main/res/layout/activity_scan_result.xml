@@ -33,6 +33,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/black" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins"
+            android:text="Result"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView5"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,8 +75,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Hello EveryOne, Hope you are doing well"
-            android:textSize="14sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
+            android:fontFamily="@font/poppins"
             android:textColor="@color/black"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -79,7 +92,8 @@
             android:gravity="center_vertical"
             android:text="@string/contact"
             android:layout_marginLeft="6dp"
-            android:textSize="14sp"
+            android:textSize="18sp"
+            android:fontFamily="@font/poppins"
             android:textStyle="bold"
             android:textColor="@color/black"
             app:layout_constraintTop_toTopOf="parent"
@@ -108,7 +122,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="16dp"
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -124,68 +137,83 @@
             android:scrollbars="none"
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             app:spanCount="3"
             tools:listitem="@layout/button_result_recycler_layout" />
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:id="@+id/relativeLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_button">
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/save"
                 android:id="@+id/save"
-                android:backgroundTint="@color/teal_200"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/share"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/teal_200"
+                android:fontFamily="@font/poppins"
+                android:text="@string/save"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/share"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/save"
+                android:fontFamily="@font/poppins"
+                android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
+                android:text="@string/share"
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="@string/delete"
                 android:id="@+id/delete"
-                android:layout_marginTop="10dp"
-                android:layout_below="@+id/save"
-                android:backgroundTint="@color/teal_200"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
-
-            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:id="@+id/email"
+                android:layout_below="@+id/save"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_below="@+id/share"
-                android:layout_toRightOf="@+id/delete"
+                android:fontFamily="@font/poppins"
+                android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
-                android:textColor="@color/white"
-                android:background="@drawable/button_background"/>
+                android:text="@string/delete"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/email"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/share"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins"
+                android:layout_toRightOf="@+id/delete"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/teal_200"
+                android:text="@string/email"
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/dial"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/delete"
+                android:fontFamily="@font/poppins"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
@@ -198,14 +226,14 @@
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/email"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_toRightOf="@+id/dial"
+                android:fontFamily="@font/poppins"
                 android:background="@drawable/button_background"
                 android:backgroundTint="@color/teal_200"
                 android:text="@string/add_contact"
                 android:textColor="@color/white" />
-
 
 
         </RelativeLayout>

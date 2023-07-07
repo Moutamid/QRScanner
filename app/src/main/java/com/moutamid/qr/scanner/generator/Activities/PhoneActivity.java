@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -28,7 +29,7 @@ import java.util.Locale;
 
 public class PhoneActivity extends AppCompatActivity {
 
-    private EditText phonenumber;
+    private TextInputLayout phonenumber;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -86,7 +87,7 @@ public class PhoneActivity extends AppCompatActivity {
 
     public void phoneGenerate(View view) {
 
-        String data = phonenumber.getText().toString();
+        String data = phonenumber.getEditText().getText().toString();
 
         if (data.equals("")) {
             phonenumber.setError("Please enter Number");
@@ -111,7 +112,7 @@ public class PhoneActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(getApplicationContext(),
                     Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 try {
-                    phonenumber.setText(null);
+                    phonenumber.getEditText().setText(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

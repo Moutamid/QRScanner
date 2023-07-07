@@ -19,6 +19,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -27,7 +28,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 import java.util.Locale;
 
 public class ContactGenActivity extends AppCompatActivity {
-    private EditText name,phone,email,org,address;
+    private TextInputLayout name,phone,email,org,address;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -88,29 +89,29 @@ public class ContactGenActivity extends AppCompatActivity {
     }
 
     public void contactGenerate(View view) {
-        if (name.getText().toString().equals("")) {
-            name.setError("Please enter Name");
+        if (name.getEditText().getText().toString().equals("")) {
+            name.getEditText().setError("Please enter Name");
         }
-        else if (phone.getText().toString().equals("")) {
-            phone.setError("Please enter Phone");
+        else if (phone.getEditText().getText().toString().equals("")) {
+            phone.getEditText().setError("Please enter Phone");
         }
-        else if (email.getText().toString().equals("")) {
-            email.setError("Please enter Email");
+        else if (email.getEditText().getText().toString().equals("")) {
+            email.getEditText().setError("Please enter Email");
         }
-        else if (org.getText().toString().equals("")) {
-            org.setError("Please enter Organization");
+        else if (org.getEditText().getText().toString().equals("")) {
+            org.getEditText().setError("Please enter Organization");
         }
-        else if (address.getText().toString().equals("")) {
-            address.setError("Please enter Address");
+        else if (address.getEditText().getText().toString().equals("")) {
+            address.getEditText().setError("Please enter Address");
         }
         else {
             try {
                 final VCard vCard = new VCard(
-                        name.getText().toString())
-                        .setEmail(email.getText().toString())
-                        .setAddress(address.getText().toString())
-                        .setCompany(org.getText().toString())
-                        .setPhoneNumber(phone.getText().toString());
+                        name.getEditText().getText().toString())
+                        .setEmail(email.getEditText().getText().toString())
+                        .setAddress(address.getEditText().getText().toString())
+                        .setCompany(org.getEditText().getText().toString())
+                        .setPhoneNumber(phone.getEditText().getText().toString());
                 if (history){
                 History contactHistory = new History(vCard.generateString(), "contact");
                 historyVM.insertHistory(contactHistory);
@@ -120,11 +121,11 @@ public class ContactGenActivity extends AppCompatActivity {
                         Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        address.setText(null);
-                        org.setText(null);
-                        email.setText(null);
-                        name.setText(null);
-                        phone.setText(null);
+                        address.getEditText().setText(null);
+                        org.getEditText().setText(null);
+                        email.getEditText().setText(null);
+                        name.getEditText().setText(null);
+                        phone.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

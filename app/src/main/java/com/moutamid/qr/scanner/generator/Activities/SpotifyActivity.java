@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -29,7 +30,7 @@ import java.util.Locale;
 
 public class SpotifyActivity extends AppCompatActivity {
 
-    private EditText name,song;
+    private TextInputLayout name,song;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -87,14 +88,14 @@ public class SpotifyActivity extends AppCompatActivity {
     }
 
     public void spotifyGenerate(View view) {
-        if (name.getText().toString().equals("")) {
+        if (name.getEditText().getText().toString().equals("")) {
             name.setError("Please enter Artist Name");
-        } else if (song.getText().toString().equals("")) {
+        } else if (song.getEditText().getText().toString().equals("")) {
             song.setError("Please enter Song");
         } else {
             try {
                 final Spotify spotify = new Spotify();
-                spotify.setName(name.getText().toString());
+                spotify.setName(name.getEditText().getText().toString());
                 if (history) {
                     History emailHistory = new History(spotify.generateString(), "spotify");
                     historyVM.insertHistory(emailHistory);
@@ -111,8 +112,8 @@ public class SpotifyActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        name.setText(null);
-                        song.setText(null);
+                        name.getEditText().setText(null);
+                        song.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

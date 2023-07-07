@@ -22,6 +22,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -31,7 +32,7 @@ import java.util.Locale;
 
 public class EventActivity extends AppCompatActivity {
 
-    private EditText eventname,subject;
+    private TextInputLayout eventname,subject;
     private  TextView startdate,starttime,enddate,endtime;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
@@ -95,19 +96,19 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void eventGenerate(View view) {
-        String data2 = subject.getText().toString();
+        String data2 = subject.getEditText().getText().toString();
         String data3 = startdate.getText().toString() + "     " + starttime.getText().toString();
         String data4 = enddate.getText().toString() + "      " + endtime.getText().toString();
-        if (eventname.getText().toString().equals("")) {
+        if (eventname.getEditText().getText().toString().equals("")) {
             eventname.setError("Please enter Name");
-        } else if (subject.getText().toString().equals("")) {
+        } else if (subject.getEditText().getText().toString().equals("")) {
             subject.setError("Please enter Subject");
         }
 
         else {
             try {
                 final IEvent iEvent = new IEvent();
-                iEvent.setUid(eventname.getText().toString());
+                iEvent.setUid(eventname.getEditText().getText().toString());
                 iEvent.setStart(data3);
                 iEvent.setEnd(data4);
                 iEvent.setStamp(data2);
@@ -130,8 +131,8 @@ public class EventActivity extends AppCompatActivity {
                         startdate.setText(null);
                         endtime.setText(null);
                         enddate.setText(null);
-                        subject.setText(null);
-                        eventname.setText(null);
+                        subject.getEditText().setText(null);
+                        eventname.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

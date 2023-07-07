@@ -18,6 +18,7 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -27,7 +28,7 @@ import java.util.Locale;
 public class TextGenActivity extends AppCompatActivity {
 
 
-    private EditText textedit;
+    private TextInputLayout textedit;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -84,7 +85,7 @@ public class TextGenActivity extends AppCompatActivity {
     }
 
     public void textgenerate(View view) {
-        String data = textedit.getText().toString();
+        String data = textedit.getEditText().getText().toString();
 
 
         if (data.equals("")) {
@@ -104,7 +105,7 @@ public class TextGenActivity extends AppCompatActivity {
             finish();
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 try {
-                    textedit.setText(null);
+                    textedit.getEditText().setText(null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

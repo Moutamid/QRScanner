@@ -19,6 +19,8 @@ import android.widget.EditText;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
+import com.hbb20.CountryCodePicker;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -28,7 +30,8 @@ import java.util.Locale;
 
 public class ViberActivity extends AppCompatActivity {
 
-    private EditText phonenumber;
+    private TextInputLayout phonenumber;
+    CountryCodePicker cpp;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -61,6 +64,7 @@ public class ViberActivity extends AppCompatActivity {
 
         }
         phonenumber=findViewById(R.id.edit_phone);
+        cpp=findViewById(R.id.cpp);
         historyVM = new ViewModelProvider(ViberActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -86,10 +90,10 @@ public class ViberActivity extends AppCompatActivity {
     }
     public void viberGenerate(View view) {
 
-        String data = phonenumber.getText().toString();
+        String data = cpp.getSelectedCountryCode() + phonenumber.getEditText().getText().toString();
 
         if (data.equals("")) {
-            phonenumber.setError("Please enter Number");
+            phonenumber.getEditText().setError("Please enter Number");
         } else {
 
             try {
@@ -111,7 +115,7 @@ public class ViberActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                     try {
-                        phonenumber.setText(null);
+                        phonenumber.getEditText().setText(null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

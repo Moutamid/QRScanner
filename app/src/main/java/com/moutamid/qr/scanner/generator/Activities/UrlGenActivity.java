@@ -15,18 +15,23 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.Url;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UrlGenActivity extends AppCompatActivity {
-    private EditText urledit;
+    private TextInputLayout urledit;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -59,6 +64,25 @@ public class UrlGenActivity extends AppCompatActivity {
 
         }
         urledit = findViewById(R.id.url_edit);
+
+        findViewById(R.id.http).setOnClickListener(v -> {
+            urledit.getEditText().setText("http://");
+            urledit.getEditText().setSelection(urledit.getEditText().getText().length());
+        });
+        findViewById(R.id.https).setOnClickListener(v -> {
+            urledit.getEditText().setText("https://");
+            urledit.getEditText().setSelection(urledit.getEditText().getText().length());
+        });
+        findViewById(R.id.www).setOnClickListener(v -> {
+            urledit.getEditText().append( "www.");
+        });
+
+        findViewById(R.id.com).setOnClickListener(v -> {
+           // String s = urledit.getEditText().getText().toString();
+            urledit.getEditText().append(".com");
+        });
+
+
         historyVM = new ViewModelProvider(UrlGenActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -84,41 +108,52 @@ public class UrlGenActivity extends AppCompatActivity {
     }
 
     public void urlGenerate(View view) {
-        String urlValue = "https://" + urledit.getText().toString();
-        if (urledit.getText().toString().equals("")) {
+        String urlValue = urledit.getEditText().getText().toString();
+        if (urledit.getEditText().getText().toString().equals("")) {
             urledit.setError("PLease Enter Url");
         } else {
-            try {
-                final Url url = new Url();
-                url.setUrl(urlValue);
-                if (history) {
-                    History urlHistory = new History(url.generateString(), "url");
-                    historyVM.insertHistory(urlHistory);
-                }
-
-                Intent intent = new Intent(this, ScanResultActivity.class);
-                intent.putExtra("type", "url");
-                intent.putExtra("Url", url);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-                }
-                finish();
-
-                if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    try {
-                        urledit.setText(null);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            String regex = "((http|https)://)(www.)?"
+                    + "[a-zA-Z0-9@:%._\\+~#?&//=]"
+                    + "{2,256}\\.[a-z]"
+                    + "{2,6}\\b([-a-zA-Z0-9@:%"
+                    + "._\\+~#?&//=]*)";
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(urlValue);
+            if (!m.matches()){
+                Toast.makeText(this, "URL Pattern is not valid", Toast.LENGTH_SHORT).show();
+            } else {
+                try {
+                    final Url url = new Url();
+                    url.setUrl(urlValue);
+                    if (history) {
+                        History urlHistory = new History(url.generateString(), "url");
+                        historyVM.insertHistory(urlHistory);
                     }
-                } else {
-                    ActivityCompat.requestPermissions(UrlGenActivity.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+
+                    Intent intent = new Intent(this, ScanResultActivity.class);
+                    intent.putExtra("type", "url");
+                    intent.putExtra("Url", url);
+                    startActivity(intent);
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    }
+                    finish();
+
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        try {
+                            urledit.getEditText().setText(null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        ActivityCompat.requestPermissions(UrlGenActivity.this,
+                                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
         }
