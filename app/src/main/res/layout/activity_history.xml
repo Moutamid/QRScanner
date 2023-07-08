@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -22,6 +21,7 @@
             android:background="@color/white"
             android:text="@string/history"
             android:padding="8dp"
+            android:fontFamily="@font/poppins"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:gravity="center_vertical"
@@ -33,15 +33,20 @@
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
         android:id="@+id/tab_layout"
-        android:background="@color/white"
+        android:background="@drawable/contact_edit_back"
+        android:backgroundTint="@color/lightGray2"
         app:tabInlineLabel="true"
+        app:tabIndicator="@drawable/contact_edit_back"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorGravity="stretch"
         app:tabTextColor="@color/black"
         app:tabIndicatorColor="@color/black"
-        app:tabSelectedTextColor="@color/black"
+        app:tabSelectedTextColor="@color/white"
+        android:layout_margin="10sp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"/>
+        app:tabTextAppearance="@style/CustomTabTexStyle"/>
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="0dp"

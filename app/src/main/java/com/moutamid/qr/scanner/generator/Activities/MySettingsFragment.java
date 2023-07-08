@@ -111,6 +111,9 @@ public class MySettingsFragment extends Fragment {
         productDetails = prefs.getBoolean("product",true);
         saveHistory = prefs.getBoolean("saveHistory",true);
         saveQR = prefs.getBoolean("saveQR",true);
+
+        String lang = prefs.getString("lang_name", "Default English (USA)");
+
         beep = view.findViewById(R.id.sound_switch);
         vibrate = view.findViewById(R.id.vibration_switch);
         copy = view.findViewById(R.id.copy_switch);
@@ -124,6 +127,9 @@ public class MySettingsFragment extends Fragment {
         deleteBtn = view.findViewById(R.id.general_delete);
         rateBtn = view.findViewById(R.id.general_about);
         languageLayout = view.findViewById(R.id.general_lang);
+
+        languageTxt.setText(lang);
+
         if (theme){
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -251,7 +257,6 @@ public class MySettingsFragment extends Fragment {
         save_history.setChecked(saveHistory);
         save_qr.setChecked(saveQR);
         web_search.setChecked(web);
-        languageTxt.setText("Default");
         beep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -543,7 +548,7 @@ public class MySettingsFragment extends Fragment {
         edit.putString("lang",lng);
         edit.putString("lang_name",name);
         edit.apply();
-        languageTxt.setText(name);
+//        languageTxt.setText(name);
     }
 
 

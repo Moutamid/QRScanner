@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -45,9 +46,10 @@ public class ButtonMainAdapter extends  RecyclerView.Adapter<ButtonMainAdapter.B
     @Override
     public void onBindViewHolder(@NonNull ButtonMainViewHolder holder, int position) {
 
-
         holder.tvMain.setText(listItem[position]);
         holder.imageView.setImageResource(images[position]);
+
+        holder.bind(position);
 
     }
 
@@ -63,22 +65,55 @@ public class ButtonMainAdapter extends  RecyclerView.Adapter<ButtonMainAdapter.B
         private RadioButton radioButton;
 
         @SuppressLint("CutPasteId")
-        public ButtonMainViewHolder(@NonNull View v) {
-            super(v);
+        public ButtonMainViewHolder(@NonNull View itemName) {
+            super(itemName);
 
-            tvMain= v.findViewById(R.id.name);
-            imageView= v.findViewById(R.id.flag);
-            radioButton= v.findViewById(R.id.radio);
-            radioButton.setOnClickListener(new View.OnClickListener() {
+            tvMain= itemName.findViewById(R.id.name);
+            imageView= itemName.findViewById(R.id.flag);
+            radioButton= itemName.findViewById(R.id.radio);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
+                    int clickedPosition = getAdapterPosition();
+                    if (clickedPosition != RecyclerView.NO_POSITION) {
+                        // Update the selected position and notify the adapter of the changes
+                        setSelectedPosition(clickedPosition);
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+
+            radioButton.setOnClickListener(v -> {
+                int clickedPosition = getAdapterPosition();
+                if (clickedPosition != RecyclerView.NO_POSITION) {
+                    // Update the selected position and notify the adapter of the changes
+                    setSelectedPosition(clickedPosition);
+                    notifyDataSetChanged();
+                }
+            });
+
+            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (buttonItemClickListener != null){
-                        buttonItemClickListener.clickedItem(view,getAdapterPosition());
+                        buttonItemClickListener.clickedItem(buttonView,getAdapterPosition());
                     }
                 }
             });
 
         }
+
+        void bind(int position) {
+            radioButton.setChecked(position == selectedPosition);
+        }
+
+    }
+
+
+    private int selectedPosition = -1;
+
+    private void setSelectedPosition(int position) {
+        selectedPosition = position;
     }
 
     public void setButtonItemClickListener(ButtonItemClickListener itemClickListener){

@@ -66,13 +66,17 @@
 
         <ImageView
             android:id="@+id/btn_delete_item"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_marginTop="10dp"
+            android:padding="12sp"
+            android:background="@drawable/contact_edit_back"
             android:contentDescription="@string/delete"
+            app:tint="@color/black"
             android:src="@drawable/delete" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

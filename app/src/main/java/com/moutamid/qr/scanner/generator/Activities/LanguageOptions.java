@@ -81,10 +81,8 @@ public class LanguageOptions extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (name.equals("Default English (USA)")){
-
                     setLocale("en","Default English (USA)");
                     recreate();
-
                 }
                 else if (name.equals("English (USA)")){
 

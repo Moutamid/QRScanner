@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="12sp"
+    android:layout_marginStart="12sp"
+    android:layout_marginEnd="12sp"
+    app:cardCornerRadius="12sp"
     app:cardBackgroundColor="@color/white">
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,19 +20,27 @@
             android:id="@+id/flag"
             android:src="@drawable/us"
             android:layout_centerVertical="true"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/flag"
             android:layout_marginLeft="8dp"
+            android:textSize="16sp"
+            android:layout_marginStart="10sp"
             android:layout_centerVertical="true"
             android:textColor="@color/black"
+            android:text="Language"
+            android:fontFamily="@font/poppins"
             android:id="@+id/name"/>
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/radio"
+            android:gravity="center"
+            android:buttonTint="@color/black"
+            android:text=""
             android:layout_alignParentRight="true"/>
     </RelativeLayout>
 

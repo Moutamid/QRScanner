@@ -50,10 +50,13 @@
 
         <ImageView
             android:id="@+id/btn_delete_item"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
+            android:padding="12sp"
+            android:background="@drawable/contact_edit_back"
+            app:tint="@color/black"
             android:src="@drawable/delete"
             android:contentDescription="@string/delete" />
     </LinearLayout>

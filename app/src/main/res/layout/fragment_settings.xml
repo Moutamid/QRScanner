@@ -948,7 +948,7 @@
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
                             app:tint="@color/teal_200"
-                            app:srcCompat="@drawable/big_delete" />
+                            app:srcCompat="@drawable/delete" />
 
                         <TextView
                             android:id="@+id/delete"
