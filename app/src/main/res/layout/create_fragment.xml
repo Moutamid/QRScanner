@@ -26,8 +26,7 @@
            android:layout_marginBottom="20dp"
            android:padding="12sp"
            android:background="@drawable/contact_edit_back"
-           android:backgroundTint="@color/black"
-           app:tint="@color/contactColor"
+           android:backgroundTint="?attr/cardBackgroundColor"
            android:contentDescription="@string/delete_history"
            android:onClick="deleteAllHistory"
            android:src="@drawable/delete" />

@@ -56,6 +56,7 @@
             android:layout_marginStart="8dp"
             android:padding="12sp"
             android:background="@drawable/contact_edit_back"
+            android:backgroundTint="?attr/cardBackgroundColor"
             app:tint="@color/black"
             android:src="@drawable/delete"
             android:contentDescription="@string/delete" />

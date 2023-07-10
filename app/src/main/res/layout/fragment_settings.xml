@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -36,7 +36,7 @@
                 android:layout_margin="10sp"
                 app:cardCornerRadius="7sp"
                 android:layout_below="@+id/display_txt"
-                app:cardBackgroundColor="@color/lightGray2">
+                app:cardBackgroundColor="?attr/cardBackgroundColor">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,7 +159,7 @@
                 android:layout_margin="10sp"
                 app:cardCornerRadius="7sp"
                 android:layout_below="@+id/app_setting_txt"
-                app:cardBackgroundColor="@color/lightGray2">
+                app:cardBackgroundColor="?attr/cardBackgroundColor">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -781,7 +781,7 @@
                 android:layout_marginEnd="10sp"
                 android:layout_marginTop="10sp"
                 app:cardCornerRadius="7sp"
-                app:cardBackgroundColor="@color/lightGray2">
+                app:cardBackgroundColor="?attr/cardBackgroundColor">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -977,6 +977,7 @@
                     </RelativeLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
         </RelativeLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

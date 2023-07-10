@@ -74,6 +74,9 @@ public class CardGeneratedResult extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         Bitmap bitmap1 = BitmapFactory.decodeByteArray(imageByte1, 0, imageByte1.length);
         imageView1.setImageBitmap(bitmap1);
+
+        imageView.setBackgroundColor(getResources().getColor(R.color.lightGray2));
+        imageView1.setBackgroundColor(getResources().getColor(R.color.lightGray2));
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

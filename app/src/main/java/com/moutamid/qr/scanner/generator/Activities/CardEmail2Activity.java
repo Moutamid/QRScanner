@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -54,7 +55,7 @@ public class CardEmail2Activity extends AppCompatActivity {
     private RelativeLayout imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
-    private Switch bold, shadow;
+    private SwitchCompat bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -243,6 +244,7 @@ public class CardEmail2Activity extends AppCompatActivity {
 
         Bitmap bitmap = Bitmap.createBitmap(imageLayout1.getWidth(), imageLayout1.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
+        c.drawARGB(0, 0, 0, 0);
         imageLayout1.draw(c);
         //save to File
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -274,6 +276,7 @@ public class CardEmail2Activity extends AppCompatActivity {
 
         Bitmap bitmap = Bitmap.createBitmap(imageLayout.getWidth(), imageLayout.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(bitmap);
+        c.drawARGB(0, 0, 0, 0);
         imageLayout.draw(c);
         //save to File
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();

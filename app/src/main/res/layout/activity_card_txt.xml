@@ -25,6 +25,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/edit_title"
+            android:fontFamily="@font/poppins"
             android:textColor="@color/black"
             android:textSize="18sp"/>
 
@@ -60,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:fontFamily="@font/poppins"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="14dp"
                 android:layout_marginEnd="14dp"
@@ -116,12 +118,13 @@
                     android:layout_height="wrap_content"
                     android:text="@string/text"
                     android:id="@+id/textView"
+                    android:fontFamily="@font/poppins"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/teal_200"
                     android:layout_gravity="center"/>
 
-                <com.divyanshu.colorseekbar.ColorSeekBar
-                    android:id="@+id/color_seek_bar"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/seekbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/textView"
@@ -129,33 +132,49 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    app:cardCornerRadius="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="12sp">
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/color_seek_bar"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginLeft="20dp"
-                    android:padding="8dp"
-                    android:text="@string/bold_txt"
-                    android:textColor="@color/black"
-                    android:id="@+id/bold"/>
+                        <com.divyanshu.colorseekbar.ColorSeekBar
+                            android:id="@+id/color_seek_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="20dp"
-                    android:padding="8dp"
-                    android:layout_below="@+id/color_seek_bar"
-                    android:text="@string/shadow_tx"
-                    android:id="@+id/shadow"/>
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/color_seek_bar"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginLeft="20dp"
+                            android:padding="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/bold_txt"
+                            android:textColor="@color/black"
+                            android:id="@+id/bold"/>
+
+                        <androidx.appcompat.widget.SwitchCompat
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginRight="20dp"
+                            android:padding="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:layout_below="@+id/color_seek_bar"
+                            android:text="@string/shadow_tx"
+                            android:id="@+id/shadow"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -179,9 +198,10 @@
                     android:id="@+id/clear_text"
                     android:layout_alignParentStart="true"
                     android:onClick="ClearTxt"
-                    android:tint="@color/black"
+                    android:layout_marginEnd="10sp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/abc_ic_clear_material"/>
+                    android:src="@drawable/abc_ic_clear_material"
+                    app:tint="@color/black" />
 
                 <EditText
                     android:id="@+id/edittext"
@@ -190,9 +210,11 @@
                     android:layout_centerInParent="true"
                     android:layout_toLeftOf="@+id/save_text"
                     android:layout_toRightOf="@+id/clear_text"
-                    android:background="@null"
-                    android:textColor="@color/black"
-                    android:padding="8dp" />
+                    android:background="@drawable/contact_edit_back"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/poppins"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
 
                 <ImageView
                     android:layout_width="32dp"
@@ -201,8 +223,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:onClick="SaveTxt"
-                    android:tint="@color/black"
-                    android:src="@drawable/ic_mtrl_chip_checked_black"/>
+                    android:layout_marginStart="10sp"
+                    android:src="@drawable/ic_mtrl_chip_checked_black"
+                    app:tint="@color/black" />
 
 
             </RelativeLayout>

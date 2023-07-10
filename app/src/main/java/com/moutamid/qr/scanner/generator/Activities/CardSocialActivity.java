@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
@@ -55,7 +56,7 @@ public class CardSocialActivity extends AppCompatActivity {
     private RelativeLayout imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
-    private Switch bold, shadow;
+    private SwitchCompat bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;

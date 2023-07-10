@@ -34,7 +34,7 @@
         android:layout_height="?actionBarSize"
         android:id="@+id/tab_layout"
         android:background="@drawable/contact_edit_back"
-        android:backgroundTint="@color/lightGray2"
+        android:backgroundTint="?attr/cardBackgroundColor"
         app:tabInlineLabel="true"
         app:tabIndicator="@drawable/contact_edit_back"
         app:tabIndicatorFullWidth="true"
