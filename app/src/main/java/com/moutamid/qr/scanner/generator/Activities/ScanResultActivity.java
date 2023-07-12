@@ -9,7 +9,10 @@ import androidx.core.content.FileProvider;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -43,9 +46,14 @@ import com.airbnb.lottie.model.content.Mask;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+
 import androidmads.library.qrgenearator.BuildConfig;
+
+import com.google.zxing.datamatrix.DataMatrixWriter;
+import com.google.zxing.oned.EAN13Writer;
 import com.moutamid.qr.scanner.generator.Model.ButtonModel;
 import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.databinding.ActivityScanResultBinding;
 import com.moutamid.qr.scanner.generator.interfaces.ButtonItemClickListener;
 import com.moutamid.qr.scanner.generator.adapter.ButtonResultAdapter;
 import com.moutamid.qr.scanner.generator.adapter.ResultAdapter;
@@ -66,56 +74,50 @@ import com.google.zxing.Writer;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.oned.Code128Writer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Locale;
 
 import static java.io.File.separator;
 
 public class ScanResultActivity extends AppCompatActivity {
+
+    ActivityScanResultBinding binding;
     private final ArrayList<String> resultdatalist = new ArrayList<>();
-   // private final ArrayList<ButtonModel> buttonResultdatalist = new ArrayList<>();
+    // private final ArrayList<ButtonModel> buttonResultdatalist = new ArrayList<>();
     private String contactNumber;
     private Bitmap bmp;
     private Wifi wifi;
     private SharedPreferences prefs;
     private Bitmap bitmap;
     private String engine;
+    String type;
     private boolean web = false;
-    private AppCompatButton saveBtn,shareBtn,dialBtn,emailBtn,contactBtn,deleteBtn;
 
     @SuppressLint({"ResourceAsColor", "ResourceType", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_result);
-        ImageView imageView = findViewById(R.id.imageView4);
-        ImageView icon = findViewById(R.id.imageView);
-    //    ConstraintLayout constraintResult = findViewById(R.id.constraintLayout_result);
-     //   ConstraintLayout constraintHead = findViewById(R.id.constraintLayout_head);
-        TextView tvHead = findViewById(R.id.tv_head);
-        TextView tvTitle = findViewById(R.id.tv_title);
-        saveBtn = findViewById(R.id.save);
-        shareBtn = findViewById(R.id.share);
-        deleteBtn = findViewById(R.id.delete);
-        dialBtn = findViewById(R.id.dial);
-        emailBtn = findViewById(R.id.email);
-        contactBtn = findViewById(R.id.add_contact);
+        binding = ActivityScanResultBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        engine = prefs.getString("search","Google");
-        web = prefs.getBoolean("web",false);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        engine = prefs.getString("search", "Google");
+        web = prefs.getBoolean("web", false);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -123,28 +125,15 @@ public class ScanResultActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-       // byte[] image = getIntent().getByteArrayExtra("image");
-       // bitmap = BitmapFactory.decodeByteArray(image, 0, image.length);
-      //  RecyclerView recyclerView = findViewById(R.id.recycler_result);
-       // RecyclerView recyclerViewButtons = findViewById(R.id.recycler_button);
+
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ScanResultActivity.this, mediatedBannerView);
         }
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveContent();
-            }
-        });
+        binding.save.setOnClickListener(view -> saveToGallery());
 
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                shareContent();
-            }
-        });
+        /*
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,9 +161,10 @@ public class ScanResultActivity extends AppCompatActivity {
                 contactContent();
 
             }
-        });
+        });*/
+        type = getIntent().getStringExtra("type");
 
-        switch (getIntent().getStringExtra("type")) {
+        switch (type) {
             case "VCard": {
                 VCard vCard = (VCard) getIntent().getSerializableExtra("vCard");
                 if (!(vCard.getName() == null)) {
@@ -202,21 +192,24 @@ public class ScanResultActivity extends AppCompatActivity {
                     resultdatalist.add(vCard.getWebsite());
                 }
                 bmp = QRCode.from(vCard.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
-                icon.setImageResource(R.drawable.contact);
-                tvHead.setText(R.string.contact);
-                tvTitle.setText(vCard.getName());
-      //          constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
-        //        constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
-                contactNumber = vCard.getPhoneNumber();
-                contactBtn.setVisibility(View.VISIBLE);
+                binding.imageView4.setImageBitmap(bmp);
+//                icon.setImageResource(R.drawable.contact);
+//                tvHead.setText(R.string.contact);
+//                tvTitle.setText(vCard.getName());
+//                //          constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+//                //        constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.contactColor));
+//                contactNumber = vCard.getPhoneNumber();
+//                contactBtn.setVisibility(View.VISIBLE);
                 break;
             }
+
             case "EMail": {
+
+                binding.emailLayout.setVisibility(View.VISIBLE);
 
                 EMail eMail = (EMail) getIntent().getSerializableExtra("eMail");
                 bmp = QRCode.from(eMail.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(eMail.getEmail() == null)) {
                     resultdatalist.add(eMail.getEmail());
                 }
@@ -226,18 +219,20 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (!(eMail.getMailBody() == null)) {
                     resultdatalist.add(eMail.getMailBody());
                 }
-                icon.setImageResource(R.drawable.email);
-                tvHead.setText(R.string.email);
-                tvTitle.setText(eMail.getEmail());
-                contactBtn.setVisibility(View.GONE);
+                link = eMail.getEmail();
+                binding.email.setText(eMail.getEmail() + "");
+                binding.emailBody.setText(eMail.getMailBody() + "");
+                binding.emailSubject.setText(eMail.getMailSubject() + "");
 
                 break;
             }
             case "wifi": {
 
+                binding.wifiLayout.setVisibility(View.VISIBLE);
+
                 wifi = (Wifi) getIntent().getSerializableExtra("Wifi");
                 bmp = QRCode.from(wifi.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(wifi.getSsid() == null)) {
                     resultdatalist.add(wifi.getSsid());
                 }
@@ -247,195 +242,198 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (!(wifi.getAuthentication() == null)) {
                     resultdatalist.add(wifi.getAuthentication());
                 }
-                icon.setImageResource(R.drawable.wifi);
-                tvHead.setText(R.string.wifi);
-                tvTitle.setText(wifi.getSsid());
-                contactBtn.setVisibility(View.GONE);
 
-                dialBtn.setVisibility(View.GONE);
+                binding.wifiName.setText(wifi.getSsid());
                 break;
             }
             case "telephone": {
+                binding.phoneLayout.setVisibility(View.VISIBLE);
                 Telephone telephone = (Telephone) getIntent().getSerializableExtra("phone");
                 bmp = QRCode.from(telephone.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(telephone.getTelephone() == null)) {
                     resultdatalist.add(telephone.getTelephone());
                 }
-                icon.setImageResource(R.drawable.phone);
-                tvHead.setText(R.string.phone);
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.VISIBLE);
+                link = telephone.getTelephone();
                 contactNumber = telephone.getTelephone();
-                tvTitle.setText(contactNumber);
+                binding.phone.setText(contactNumber);
                 break;
             }
             case "spotify": {
+                binding.spotifyLayout.setVisibility(View.VISIBLE);
                 Spotify telephone = (Spotify) getIntent().getSerializableExtra("spotify");
                 bmp = QRCode.from(telephone.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
-                if (!(telephone.getName() == null)) {
+                binding.imageView4.setImageBitmap(bmp);
+                if (telephone.getName() != null) {
                     resultdatalist.add(telephone.getName());
                 }
-                if (!(telephone.getSong() == null)) {
+                if (telephone.getSong() != null) {
                     resultdatalist.add(telephone.getSong());
                 }
-                icon.setImageResource(R.drawable.spotify);
-                tvHead.setText(R.string.spotify);
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.GONE);
-                contactNumber = telephone.getName();
-                tvTitle.setText(contactNumber);
+                link = telephone.getSong();
+                binding.spotifyName.setText(telephone.getName());
+                binding.spotifySong.setText(telephone.getSong());
                 break;
             }
             case "whatsapp": {
+                binding.phoneLayout.setVisibility(View.VISIBLE);
                 Telephone telephone = (Telephone) getIntent().getSerializableExtra("phone");
                 bmp = QRCode.from(telephone.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(telephone.getTelephone() == null)) {
                     resultdatalist.add(telephone.getTelephone());
                 }
-                icon.setImageResource(R.drawable.whatsapp);
-                tvHead.setText(R.string.whatsapp);
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.VISIBLE);
+                binding.phoneImage.setImageResource(R.drawable.whatsapp);
+                binding.phoneBtnImage.setImageResource(R.drawable.whatsapp);
+                binding.phoneTITLE.setText(R.string.whatsapp);
+                binding.phoneBtn.setText(R.string.whatsapp);
                 contactNumber = telephone.getTelephone();
-                tvTitle.setText(contactNumber);
+                link = contactNumber;
+                binding.phone.setText(contactNumber);
                 break;
             }
             case "viber": {
+                binding.phoneLayout.setVisibility(View.VISIBLE);
                 Telephone telephone = (Telephone) getIntent().getSerializableExtra("phone");
                 bmp = QRCode.from(telephone.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(telephone.getTelephone() == null)) {
                     resultdatalist.add(telephone.getTelephone());
                 }
-                icon.setImageResource(R.drawable.viber);
-                tvHead.setText(R.string.viber);
-                contactBtn.setVisibility(View.GONE);
-                dialBtn.setVisibility(View.VISIBLE);
+                binding.phoneImage.setImageResource(R.drawable.viber);
+                binding.phoneBtnImage.setImageResource(R.drawable.viber);
+                binding.phoneTITLE.setText(R.string.viber);
+                binding.phoneBtn.setText(R.string.viber);
                 contactNumber = telephone.getTelephone();
-                tvTitle.setText(contactNumber);
+                link = contactNumber;
+                binding.phone.setText(contactNumber);
                 break;
             }
             case "url": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Url url = (Url) getIntent().getSerializableExtra("Url");
                 bmp = QRCode.from(url.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(url.getUrl() == null)) {
                     resultdatalist.add(url.getUrl());
                 }
-                icon.setImageResource(R.drawable.url);
-                tvHead.setText(R.string.url);
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.GONE);
-
-                tvTitle.setText(url.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                binding.url.setText(url.getUrl());
+                link = url.getUrl();
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(url.getUrl());
                 break;
             }
             case "youtube": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.youtube);
-                tvHead.setText(R.string.youtube);
+                binding.urlTitleImage.setImageResource(R.drawable.youtube);
+                binding.urlTitle.setText(R.string.youtube);
+                binding.urlImage.setImageResource(R.drawable.youtube);
+                binding.urlTypeName.setText(R.string.youtube);
 
-                contactBtn.setVisibility(View.GONE);
-                tvTitle.setText(social.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                link = social.getUrl();
+                binding.url.setText(social.getUrl());
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
-                dialBtn.setVisibility(View.GONE);
+
+                binding.urlType.setVisibility(View.VISIBLE);
+
                 break;
             }
             case "insta": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.instagram);
-                tvHead.setText(R.string.insta);
-                contactBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.instagram);
+                binding.urlTitle.setText(R.string.insta);
+                binding.urlImage.setImageResource(R.drawable.instagram);
+                binding.urlTypeName.setText(R.string.insta);
 
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(social.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                binding.url.setText(social.getUrl());
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
+
+                link = social.getUrl();
+                binding.urlType.setVisibility(View.VISIBLE);
                 break;
             }
             case "twitter": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.twitter);
-                tvHead.setText(R.string.twitter);
-                contactBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.twitter);
+                binding.urlTitle.setText(R.string.twitter);
+                binding.urlImage.setImageResource(R.drawable.twitter);
+                binding.urlTypeName.setText(R.string.twitter);
 
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(social.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                link = social.getUrl();
+                binding.url.setText(social.getUrl());
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
+
+                binding.urlType.setVisibility(View.VISIBLE);
                 break;
             }
             case "facebook": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.facebook);
-                tvHead.setText(R.string.facebook);
-                tvHead.setTextColor(R.color.white);
-                contactBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.facebook);
+                binding.urlTitle.setText(R.string.facebook);
+                binding.urlImage.setImageResource(R.drawable.facebook);
+                binding.urlTypeName.setText(R.string.facebook);
 
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(social.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                binding.url.setText(social.getUrl());
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
+
+                link = social.getUrl();
+                binding.urlType.setVisibility(View.VISIBLE);
                 break;
             }
             case "paypal": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 Social social = (Social) getIntent().getSerializableExtra("social");
                 bmp = QRCode.from(social.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(social.getUrl() == null)) {
                     resultdatalist.add(social.getUrl());
                 }
-                icon.setImageResource(R.drawable.paypal);
-                tvHead.setText(R.string.paypal);
-                contactBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.paypal);
+                binding.urlTitle.setText(R.string.paypal);
+                binding.urlImage.setImageResource(R.drawable.paypal);
+                binding.urlTypeName.setText(R.string.paypal);
 
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(social.getUrl());
-                Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
+                binding.url.setText(social.getUrl());
+                Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
+
+                link = social.getUrl();
+                binding.urlType.setVisibility(View.VISIBLE);
                 break;
             }
             case "GeoInfo": {
-
+                binding.geoLayout.setVisibility(View.VISIBLE);
                 GeoInfo geoInfo = (GeoInfo) getIntent().getSerializableExtra("geoInfo");
                 bmp = QRCode.from(geoInfo.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(geoInfo.getPoints().get(0) == null)) {
                     resultdatalist.add(geoInfo.getPoints().get(0));
                 }
@@ -445,76 +443,70 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (!(geoInfo.getPoints().get(2) == null)) {
                     resultdatalist.add(geoInfo.getPoints().get(2));
                 }
-                icon.setImageResource(R.drawable.ic_location);
-                tvHead.setText(R.string.location);
-                tvTitle.setText(""+geoInfo.getPoints());
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.GONE);
+                List<String> getPoints = geoInfo.getPoints();
+                binding.longitutde.setText("" + getPoints.get(1));
+                binding.latitude.setText("" + getPoints.get(2));
+                binding.geoName.setText("" + getPoints.get(0));
                 break;
             }
             case "Sms": {
-
+                binding.smsLayout.setVisibility(View.VISIBLE);
                 SMS sms = (SMS) getIntent().getSerializableExtra("sms");
                 bmp = QRCode.from(sms.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(sms.getNumber() == null)) {
                     resultdatalist.add(sms.getNumber());
                 }
                 if (!(sms.getSubject() == null)) {
                     resultdatalist.add(sms.getSubject());
                 }
-                icon.setImageResource(R.drawable.ic_sms_01_01);
-                tvHead.setText(R.string.sms);
-                contactBtn.setVisibility(View.GONE);
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(sms.getNumber());
+
+                link = sms.getNumber();
+                binding.subject.setText(sms.getSubject());
+                binding.number.setText(sms.getNumber());
+
                 break;
             }
             case "Text": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
+                binding.browserBtn.setVisibility(View.GONE);
                 String text = getIntent().getStringExtra("text");
                 bmp = QRCode.from(text).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (null != text) {
                     resultdatalist.add(text);
                 }
-                icon.setImageResource(R.drawable.ic_text);
-                tvHead.setText(R.string.text);
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(text);
+                binding.urlTitleImage.setImageResource(R.drawable.ic_text);
+                binding.urlTitle.setText(R.string.text);
+                binding.url.setText(text);
                 checkSearchEngine(text);
                 break;
             }
             case "clipboard": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
+                binding.browserBtn.setVisibility(View.GONE);
                 String text = getIntent().getStringExtra("text");
                 bmp = QRCode.from(text).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (null != text) {
                     resultdatalist.add(text);
                 }
-                icon.setImageResource(R.drawable.clipboard);
-                tvHead.setText(R.string.clipboard);
-                contactBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.clipboard);
+                binding.urlTitle.setText(R.string.clipboard);
                 checkSearchEngine(text);
-                dialBtn.setVisibility(View.GONE);
-                tvTitle.setText(text);
+                binding.url.setText(text);
                 break;
             }
 
             case "Barcode": {
-
+                binding.urlLayout.setVisibility(View.VISIBLE);
                 String textBarcode = getIntent().getStringExtra("barcode");
 
-         /*       try {
+                try {
                     Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
                     hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-                    Writer codeWriter;
-                    codeWriter = new Code128Writer();
-                    BitMatrix byteMatrix = codeWriter.encode(textBarcode, BarcodeFormat.CODE_128, 400, 200, hintMap);
+                    Writer codeWriter = new EAN13Writer();
+                    BitMatrix byteMatrix = codeWriter.encode(textBarcode, BarcodeFormat.EAN_13, 700, 300, hintMap);
                     int width = byteMatrix.getWidth();
                     int height = byteMatrix.getHeight();
                     bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -523,42 +515,42 @@ public class ScanResultActivity extends AppCompatActivity {
                             bmp.setPixel(i, j, byteMatrix.get(i, j) ? Color.BLACK : Color.WHITE);
                         }
                     }
-                    if (image != null){
-                        imageView.setImageBitmap(bitmap);
-                    }else {
-                        imageView.setImageBitmap(bmp);
-                    }
+                    binding.imageView4.setImageBitmap(bmp);
+//                    if (image != null) {
+//                        binding.imageView4.setImageBitmap(bitmap);
+//                    } else {
+//                        binding.imageView4.setImageBitmap(bmp);
+//                    }
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }*/
+                }
+
                 if (textBarcode != null) {
                     resultdatalist.add(textBarcode);
                 }
-
-                bmp = QRCode.from(textBarcode).bitmap();
-                imageView.setImageBitmap(bmp);
-                icon.setImageResource(R.drawable.ic_barcode);
-                tvHead.setText(R.string.barcode);
-                tvTitle.setText(textBarcode);
-                if (textBarcode.contains("http:") || textBarcode.contains("https:") || textBarcode.contains("www")){
-                    Linkify.addLinks(tvTitle,Linkify.WEB_URLS);
-                    autoSearch(textBarcode);
-                }
-               // if (textBarcode.contains()){
-                    checkSearchEngine(textBarcode);
-               // }
-
-                contactBtn.setVisibility(View.GONE);
-
-                dialBtn.setVisibility(View.GONE);
+                binding.urlTitleImage.setImageResource(R.drawable.barcode);
+                binding.urlTitle.setText(R.string.barcode);
+                binding.url.setText(textBarcode);
+//                bmp = QRCode.from(textBarcode).bitmap();
+//                binding.imageView4.setImageBitmap(bmp);
+//                icon.setImageResource(R.drawable.ic_barcode);
+//                tvHead.setText(R.string.barcode);
+//                tvTitle.setText(textBarcode);
+//                if (textBarcode.contains("http:") || textBarcode.contains("https:") || textBarcode.contains("www")) {
+//                    Linkify.addLinks(tvTitle, Linkify.WEB_URLS);
+//                    autoSearch(textBarcode);
+//                }
+//                // if (textBarcode.contains()){
+//                checkSearchEngine(textBarcode);
+//                // }
 
                 break;
             }
-
             case "Event": {
+                binding.eventLayout.setVisibility(View.VISIBLE);
                 IEvent iEvent = (IEvent) getIntent().getSerializableExtra("event");
                 bmp = QRCode.from(iEvent.toString()).bitmap();
-                imageView.setImageBitmap(bmp);
+                binding.imageView4.setImageBitmap(bmp);
                 if (!(iEvent.getUid() == null)) {
                     resultdatalist.add(iEvent.getUid());
                 }
@@ -577,24 +569,21 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (!(iEvent.getOrganizer() == null)) {
                     resultdatalist.add(iEvent.getOrganizer());
                 }
-                contactBtn.setVisibility(View.GONE);
-                dialBtn.setVisibility(View.GONE);
-                icon.setImageResource(R.drawable.ic_event);
-                tvHead.setText(R.string.event);
-                tvTitle.setText(iEvent.getOrganizer());
-            //    constraintHead.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
-              //  constraintResult.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.eventColor));
+                binding.eventName.setText(iEvent.getUid());
+                binding.eventSubject.setText(iEvent.getStamp());
+                binding.eventStart.setText(iEvent.getStart());
+                binding.eventEnd.setText(iEvent.getEnd());
                 break;
             }
 
             default:
-                Toast.makeText(this, "Not Vilad type", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Not Valid type", Toast.LENGTH_SHORT).show();
                 break;
         }
 
 
-       // ResultAdapter messageAdapter = new ResultAdapter(resultdatalist);
-       // recyclerView.setAdapter(messageAdapter);
+        // ResultAdapter messageAdapter = new ResultAdapter(resultdatalist);
+        // recyclerView.setAdapter(messageAdapter);
 
         //ButtonResultAdapter buttonResultAdapter = new ButtonResultAdapter(this, buttonResultdatalist);
         //recyclerViewButtons.setAdapter(buttonResultAdapter);
@@ -613,7 +602,9 @@ public class ScanResultActivity extends AppCompatActivity {
         }
     }
 
-    String customUrl="";
+    String customUrl = "";
+    String copyClipboard = "";
+
     private void checkSearchEngine(String text) {
         if (web) {
             if (engine.equals("Google")) {
@@ -640,9 +631,9 @@ public class ScanResultActivity extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
+        String lang = prefs.getString("lang", "");
         setLocale(lang);
     }
 
@@ -653,7 +644,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 
     private void contactContent() {
@@ -722,7 +713,93 @@ public class ScanResultActivity extends AppCompatActivity {
         finish();
     }
 
-    private void shareContent() {
+    String link = "";
+
+    public void openBrowser(View view){
+        switch (type) {
+            case "EMail": {
+                String recipientEmail = "recipient@example.com";
+                String subject = "Hello";
+                String body = "This is the body of the email.";
+                Uri uri = Uri.parse("mailto:" + recipientEmail)
+                        .buildUpon()
+                        .appendQueryParameter("subject", subject)
+                        .appendQueryParameter("body", body)
+                        .build();
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                startActivity(Intent.createChooser(emailIntent, "Send email"));
+                break;
+            }
+            case "telephone": {
+                String phoneNumber = link;
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(dialIntent);
+            }
+            case "spotify": {
+                String spotifyUrl = link;
+                Intent spotifyIntent = new Intent(Intent.ACTION_VIEW);
+                spotifyIntent.setData(Uri.parse(spotifyUrl));
+                startActivity(spotifyIntent);
+                break;
+            }
+            case "whatsapp": {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("https://api.whatsapp.com/send?phone=%s&text=%s", link, ""))));
+                break;
+            }
+            case "viber": {
+                try {
+                    String viberContact = link;
+                    Uri viberUri = Uri.parse("tel:" + viberContact);
+                    Intent viberIntent = new Intent("android.intent.action.VIEW");
+                    viberIntent.setClassName("com.viber.voip", "com.viber.voip.WelcomeActivity");
+                    viberIntent.setData(viberUri);
+                    startActivity(viberIntent);
+                } catch (Exception e){
+                    String viberNumber = link;
+                    String viberUrl = "viber://chat?number=" + viberNumber;
+                    Intent viberIntent = new Intent(Intent.ACTION_VIEW);
+                    viberIntent.setData(Uri.parse(viberUrl));
+                    startActivity(viberIntent);
+                }
+                break;
+            }
+            case "url":
+            case "paypal":
+            case "twitter":
+            case "facebook":
+            case "insta":
+            case "youtube": {
+                String url = link;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+                break;
+            }
+
+            case "Sms": {
+                String phoneNumber = link;
+                String message = "";
+                Uri uri = Uri.parse("smsto:" + phoneNumber);
+                Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                smsIntent.putExtra("sms_body", message);
+                startActivity(smsIntent);
+
+                break;
+            }
+
+            default:
+                Toast.makeText(this, "Not Valid type", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
+    public void setCopyClipboard(View view){
+        String str = copyClipboard;
+        ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText("Copied Text", str));
+        Toast.makeText(this, "Copied To Clipboard", Toast.LENGTH_SHORT).show();
+    }
+
+    public void shareContent(View view) {
         try {
             File file = new File(getApplicationContext().getExternalCacheDir(), separator + "image.png");
             FileOutputStream fOut = new FileOutputStream(file);
@@ -742,11 +819,6 @@ public class ScanResultActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    private void saveContent() {
-        saveToGallery();
-    }
-
 
     private void connectToWiFi(String ssid, String password) {
 

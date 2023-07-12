@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context=".Activities.CardCalendarActivity">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
@@ -47,7 +46,7 @@
             android:layout_height="200dp"
             android:id="@+id/image_layout1">
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -61,8 +60,8 @@
                 android:id="@+id/event_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/imageView"
-                android:layout_alignTop="@+id/imageView"
+                android:layout_alignStart="@+id/imageView1"
+                android:layout_alignTop="@+id/imageView1"
                 android:layout_marginStart="9dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="58dp"
@@ -86,7 +85,7 @@
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/event_date"
-                android:layout_alignBottom="@+id/imageView"
+                android:layout_alignBottom="@+id/imageView1"
                 android:layout_marginLeft="60dp"
                 android:layout_marginTop="19dp"
                 android:layout_marginBottom="13dp"

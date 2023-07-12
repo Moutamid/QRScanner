@@ -97,8 +97,8 @@ public class EventActivity extends AppCompatActivity {
 
     public void eventGenerate(View view) {
         String data2 = subject.getEditText().getText().toString();
-        String data3 = startdate.getText().toString() + "     " + starttime.getText().toString();
-        String data4 = enddate.getText().toString() + "      " + endtime.getText().toString();
+        String data3 = startdate.getText().toString() + "\t\t" + starttime.getText().toString();
+        String data4 = enddate.getText().toString() + "\t\t'" + endtime.getText().toString();
         if (eventname.getEditText().getText().toString().equals("")) {
             eventname.setError("Please enter Name");
         } else if (subject.getEditText().getText().toString().equals("")) {

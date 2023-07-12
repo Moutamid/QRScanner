@@ -14,6 +14,7 @@ import android.widget.EditText;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -22,7 +23,7 @@ import java.util.Locale;
 
 public class BarCodeActivity extends AppCompatActivity {
 
-    private EditText editText;
+    private TextInputLayout editText;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -76,9 +77,9 @@ public class BarCodeActivity extends AppCompatActivity {
     }
 
     public void barcodeGenerate(View view) {
-        String barcodeText = editText.getText().toString();
+        String barcodeText = editText.getEditText().getText().toString();
         if (barcodeText.equals("")) {
-            editText.setError("Please enter text");
+            editText.getEditText().setError("Please enter text");
         } else {
             if (history){
 

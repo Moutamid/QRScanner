@@ -194,5 +194,6 @@
     <string name="enjoying_qr_scanner">Enjoying QR Scanner</string>
     <string name="adsubscribed">AdSubscribed</string>
     <string name="select_lang">Select Language</string>
+    <string name="google_link" translatable="false"><u>www.google.com</u></string>
 
 </resources>

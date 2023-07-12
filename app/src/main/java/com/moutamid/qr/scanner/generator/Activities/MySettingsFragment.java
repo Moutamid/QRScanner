@@ -149,7 +149,7 @@ public class MySettingsFragment extends Fragment {
         searchLayout = view.findViewById(R.id.search_engine);
         modelLayout = view.findViewById(R.id.theme_status);
 
-        batch_scanning = view.findViewById(R.id.batch_switch);
+        batch_scanning = view.findViewById(R.id.batch_switch3);
         manual_scanning = view.findViewById(R.id.manual_switch);
         web_search = view.findViewById(R.id.web_switch);
         product_details = view.findViewById(R.id.product_switch);

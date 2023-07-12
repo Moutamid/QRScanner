@@ -558,6 +558,7 @@ public class QRScanFragment extends Fragment {
                     Result result = reader.decode(bitmap);
                     if (!result.getText().isEmpty()) {
                         BarcodeFormat barcodeFormat = result.getBarcodeFormat();
+                        Toast.makeText(context, barcodeFormat.name().toString(), Toast.LENGTH_SHORT).show();
                         if (barcodeFormat.equals(BarcodeFormat.QR_CODE)) {
                             processRawResult(result.getText());
                         } else {
@@ -907,7 +908,11 @@ public class QRScanFragment extends Fragment {
 
                                  String rawData = barcodes.valueAt(i).rawValue;
 
-                                 processResultBarcode(rawData);
+                                 if (barcodeFormat == BarcodeFormat.QR_CODE.ordinal()) {
+                                     processRawResult(rawData);
+                                 } else {
+                                     processResultBarcode(rawData);
+                                 }
                              }
                          });
                      }
@@ -998,8 +1003,12 @@ public class QRScanFragment extends Fragment {
                                  }
                              }
                              String rawData = barcodes.valueAt(0).rawValue;
-
-                             processResultBarcode(rawData);
+                             Toast.makeText(context, "RAW  " + rawData, Toast.LENGTH_SHORT).show();
+                             if (barcodeFormat == BarcodeFormat.QR_CODE.ordinal()) {
+                                 processRawResult(rawData);
+                             } else {
+                                 processResultBarcode(rawData);
+                             }
                          });
                      }
                  }

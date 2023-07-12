@@ -186,7 +186,6 @@
                             android:id="@+id/vibrate"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
@@ -200,7 +199,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/vibrate"
-                            android:layout_toStartOf="@+id/vibration_switch"
                             android:layout_toEndOf="@+id/item_image"
                             android:paddingStart="10dp"
                             android:fontFamily="@font/poppins"
@@ -223,7 +221,7 @@
                         android:padding="12dp">
 
                         <ImageView
-                            android:id="@+id/item_image"
+                            android:id="@+id/item_image2"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -233,11 +231,10 @@
                             app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
 
                         <TextView
-                            android:id="@+id/vibrate"
+                            android:id="@+id/vibrate2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toEndOf="@+id/item_image2"
                             android:paddingStart="10dp"
                             android:text="@string/camera"
                             android:layout_marginStart="10sp"
@@ -249,9 +246,8 @@
                             android:id="@+id/camera_mode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/vibrate"
-                            android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_below="@+id/vibrate2"
+                            android:layout_toEndOf="@+id/item_image2"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:textSize="13sp"
@@ -272,7 +268,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/item_image"
+                            android:id="@+id/item_image3"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -282,11 +278,11 @@
                             app:srcCompat="@drawable/scanning" />
 
                         <TextView
-                            android:id="@+id/vibrate"
+                            android:id="@+id/vibrate3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toStartOf="@+id/batch_switch3"
+                            android:layout_toEndOf="@+id/item_image3"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -297,9 +293,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/vibrate"
-                            android:layout_toStartOf="@+id/batch_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_below="@+id/vibrate3"
+                            android:layout_toStartOf="@+id/batch_switch3"
+                            android:layout_toEndOf="@+id/item_image3"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
                             android:paddingStart="10dp"
@@ -307,7 +303,7 @@
                             android:textSize="13sp"/>
 
                         <Switch
-                            android:id="@+id/batch_switch"
+                            android:id="@+id/batch_switch3"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentEnd="true"
@@ -328,21 +324,21 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/item_image"
+                            android:id="@+id/item_image4"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
                             app:tint="@color/teal_200"
-                            app:srcCompat="@drawable/duplication" />
+                            app:srcCompat="@drawable/scan" />
 
                         <TextView
-                            android:id="@+id/vibrate"
+                            android:id="@+id/vibrate4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toStartOf="@+id/manual_switch"
+                            android:layout_toEndOf="@+id/item_image4"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -353,9 +349,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/vibrate"
+                            android:layout_below="@+id/vibrate4"
                             android:layout_toStartOf="@+id/manual_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toEndOf="@+id/item_image4"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -384,7 +380,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/item_image"
+                            android:id="@+id/item_image5"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -394,11 +390,11 @@
                             app:srcCompat="@drawable/duplication" />
 
                         <TextView
-                            android:id="@+id/vibrate"
+                            android:id="@+id/vibrate5"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toStartOf="@+id/duplicate_switch"
+                            android:layout_toEndOf="@+id/item_image5"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -409,9 +405,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/vibrate"
+                            android:layout_below="@+id/vibrate5"
                             android:layout_toStartOf="@+id/duplicate_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toEndOf="@+id/item_image5"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -441,7 +437,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/item_image"
+                            android:id="@+id/item_image6"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -451,11 +447,11 @@
                             app:srcCompat="@drawable/ic_vibration_setting" />
 
                         <TextView
-                            android:id="@+id/vibrate"
+                            android:id="@+id/vibrate6"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toEndOf="@+id/item_image6"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -466,9 +462,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/vibrate"
+                            android:layout_below="@+id/vibrate6"
                             android:layout_toStartOf="@+id/vibration_switch"
-                            android:layout_toEndOf="@+id/item_image"
+                            android:layout_toEndOf="@+id/item_image6"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -619,7 +615,7 @@
                             app:srcCompat="@drawable/ic_auto_web_search" />
 
                         <TextView
-                            android:id="@+id/search"
+                            android:id="@+id/search2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/web_switch"
@@ -634,7 +630,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/search"
+                            android:layout_below="@+id/search2"
                             android:layout_toStartOf="@+id/web_switch"
                             android:layout_toEndOf="@+id/item_image_4"
                             android:paddingStart="10dp"
@@ -665,7 +661,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/item_image_5"
+                            android:id="@+id/item_image_8"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -679,7 +675,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_toStartOf="@+id/save_history_switch"
-                            android:layout_toEndOf="@+id/item_image_5"
+                            android:layout_toEndOf="@+id/item_image_8"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -692,7 +688,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/save_history"
                             android:layout_toStartOf="@+id/save_history_switch"
-                            android:layout_toEndOf="@+id/item_image_5"
+                            android:layout_toEndOf="@+id/item_image_8"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -727,7 +723,7 @@
                             android:id="@+id/product"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toStartOf="@+id/save_history_switch"
+                            android:layout_toStartOf="@+id/product_switch"
                             android:layout_toEndOf="@+id/item_image_5"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
@@ -796,7 +792,7 @@
                         android:visibility="visible">
 
                         <ImageView
-                            android:id="@+id/general_image"
+                            android:id="@+id/general_image22"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -809,7 +805,7 @@
                             android:id="@+id/rateUs"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/general_image"
+                            android:layout_toEndOf="@+id/general_image22"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -821,7 +817,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/rateUs"
-                            android:layout_toEndOf="@+id/general_image"
+                            android:layout_toEndOf="@+id/general_image22"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -844,7 +840,7 @@
                         android:padding="8dp">
 
                         <ImageView
-                            android:id="@+id/general_image_2"
+                            android:id="@+id/general_image_22"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_centerVertical="true"
@@ -857,7 +853,7 @@
                             android:id="@+id/policy"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/general_image_2"
+                            android:layout_toEndOf="@+id/general_image_22"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"
@@ -869,7 +865,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/policy"
-                            android:layout_toEndOf="@+id/general_image_2"
+                            android:layout_toEndOf="@+id/general_image_22"
                             android:paddingStart="10dp"
                             android:layout_marginStart="10sp"
                             android:fontFamily="@font/poppins"

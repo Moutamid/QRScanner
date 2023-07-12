@@ -85,7 +85,7 @@
             android:layout_below="@+id/image_layout1"
             android:layout_marginTop="10dp">
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -135,7 +135,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/text"
-                    android:id="@+id/textView"
+                    android:id="@+id/textView2"
                     android:fontFamily="@font/poppins"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/teal_200"
@@ -145,7 +145,7 @@
                     android:id="@+id/seekbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView"
+                    android:layout_below="@+id/textView2"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
