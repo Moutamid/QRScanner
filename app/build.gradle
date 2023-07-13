@@ -50,6 +50,12 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 //    implementation project(path: ':zxing')
 
+    implementation 'androidx.browser:browser:1.5.0'
+    implementation "com.google.code.gson:gson:2.9.1"
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
+    implementation 'org.jsoup:jsoup:1.15.3'
+
     implementation 'com.hbb20:ccp:2.7.0'
 
     def lottieVersion = "3.5.0"
@@ -112,7 +118,6 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
 
     // (Java only)
    // implementation 'androidx.work:work-runtime:2.8.1'

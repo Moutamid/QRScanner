@@ -97,11 +97,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 public class QRScanFragment extends Fragment {
 
   //  private static ZXingScannerView mScannerView;
     private Context context;
-
+    private ZXingScannerView scannerView;
     private HistoryVM historyVM;
 
     private int zoomProgress = 5;
@@ -173,6 +175,12 @@ public class QRScanFragment extends Fragment {
         assert container != null;
         context = container.getContext();
        // mScannerView = new ZXingScannerView(getActivity());
+        scannerView = new ZXingScannerView(requireContext());
+
+        scannerView.setResultHandler(rawResult -> {
+            Toast.makeText(context, rawResult.getText().toString(), Toast.LENGTH_SHORT).show();
+        });
+        scannerView.startCamera();
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().LoadInterstitial();
         }
@@ -559,11 +567,14 @@ public class QRScanFragment extends Fragment {
                     if (!result.getText().isEmpty()) {
                         BarcodeFormat barcodeFormat = result.getBarcodeFormat();
                         Toast.makeText(context, barcodeFormat.name().toString(), Toast.LENGTH_SHORT).show();
-                        if (barcodeFormat.equals(BarcodeFormat.QR_CODE)) {
-                            processRawResult(result.getText());
-                        } else {
-                            processResultBarcode(result.getText());
-                        }
+//                        if (barcodeFormat.equals(BarcodeFormat.QR_CODE)) {
+//                            processRawResult(result.getText());
+//                        } else {
+//                            processResultBarcode(result.getText());
+//                        }
+
+                        processRawResult(result.getText());
+
                     } else {
                         Toast.makeText(getActivity(), "Not supported", Toast.LENGTH_SHORT).show();
                     }
@@ -625,12 +636,13 @@ public class QRScanFragment extends Fragment {
         }
 
     }*/
-    public void processResultBarcode(String text){
+    public void processResultBarcode(String text, int barcodeFormat){
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
         try {
             History contactHistory = new History(text, "barcode");
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
+            intent.putExtra("barcodeFormat", barcodeFormat);
             intent.putExtra("barcode", text);
             //intent.putExtra("image", savedBitmapFromViewToFile());
             startActivity(intent);
@@ -648,6 +660,7 @@ public class QRScanFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
 
+
         try {
             VCard vCard = new VCard();
             vCard.parseSchema(text);
@@ -659,8 +672,7 @@ public class QRScanFragment extends Fragment {
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
-        } catch (IllegalArgumentException e) {
-
+        } catch (IllegalArgumentException vcard) {
             try {
                 EMail eMail = new EMail();
                 eMail.parseSchema(text);
@@ -758,17 +770,32 @@ public class QRScanFragment extends Fragment {
                                             }
                                         } catch (IllegalArgumentException event) {
                                             try {
-                                                History contactHistory = new History(text, "text");
-                                                historyVM.insertHistory(contactHistory);
-                                                intent.putExtra("type", "Text");
-                                                intent.putExtra("text", text);
-                                                startActivity(intent);
-                                                if (!getPurchaseSharedPreference()) {
-                                                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                                                }
-                                            } catch (Exception t) {
+                                               try {
+                                                   Log.d("EMAILCHEC" , "TEXT  " + text);
+                                                   int i = Integer.parseInt(text);
+                                                   History contactHistory = new History(text, "barcode");
+                                                    historyVM.insertHistory(contactHistory);
+                                                    intent.putExtra("type", "Barcode");
+                                                    intent.putExtra("barcode", text);
+                                                    //intent.putExtra("image", savedBitmapFromViewToFile());
+                                                    startActivity(intent);
+                                                    if (!getPurchaseSharedPreference()) {
+                                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                                                    }
+                                               } catch (NumberFormatException e){
+                                                   Log.d("EMAILCHEC" , "Error  " + e.toString());
+                                                   History contactHistory = new History(text, "text");
+                                                   historyVM.insertHistory(contactHistory);
+                                                   intent.putExtra("type", "Text");
+                                                   intent.putExtra("text", text);
+                                                   startActivity(intent);
+                                                   if (!getPurchaseSharedPreference()) {
+                                                       ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                                                   }
+                                               }
+                                            } catch (Exception txt) {
                                                 Toast.makeText(context, "not scan", Toast.LENGTH_SHORT).show();
-                                                t.printStackTrace();
+                                                txt.printStackTrace();
                                             }
                                         }
 
@@ -779,8 +806,22 @@ public class QRScanFragment extends Fragment {
                     }
                 }
             }
-            }
         }
+
+//        try {
+//            History contactHistory = new History(text, "barcode");
+//            historyVM.insertHistory(contactHistory);
+//            intent.putExtra("type", "Barcode");
+//            intent.putExtra("barcode", text);
+//            //intent.putExtra("image", savedBitmapFromViewToFile());
+//            startActivity(intent);
+//            if (!getPurchaseSharedPreference()) {
+//                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+//            }
+//        } catch (IllegalArgumentException t) {
+//
+//        }
+    }
 
     public static void setFlashLight(Boolean b) {
         //mScannerView.setFlash(b);
@@ -809,7 +850,6 @@ public class QRScanFragment extends Fragment {
         boolean vibrate = prefs.getBoolean("vibrate", true);
         return vibrate;
     }
-
 
     /**
      * Restarts the camera.
@@ -846,12 +886,9 @@ public class QRScanFragment extends Fragment {
 
         barcodeDetector =
                 new BarcodeDetector.Builder(context)
-                        .setBarcodeFormats(Barcode.QR_CODE)//QR_CODE)
+                        .setBarcodeFormats(Barcode.ALL_FORMATS)//QR_CODE)
                         .build();
-
-
         if (b){
-
             builder = new CameraSource.Builder(getActivity(), barcodeDetector)
                     .setFacing(CameraSource.CAMERA_FACING_FRONT)
                     .setRequestedPreviewSize(1600, 1024)
@@ -862,8 +899,6 @@ public class QRScanFragment extends Fragment {
                     .setRequestedPreviewSize(1600, 1024)
                     .setRequestedFps(15.0f);
         }
-
-
 
         // make sure that auto focus is an available option
         builder = builder.setFocusMode(
@@ -886,6 +921,10 @@ public class QRScanFragment extends Fragment {
                  public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
                      final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                      if (barcodes.size() != 0) {
+                         Barcode barcode = barcodes.valueAt(0);
+                         String barcodeValue = barcode.rawValue;
+                         int format = barcode.format;
+
                          runOnUiThread(() -> {
                              mPreview.stop();
                              if (checkSoundPreferences()) {
@@ -907,11 +946,16 @@ public class QRScanFragment extends Fragment {
                              for (int i = 0; i < barcodes.size(); i++){
 
                                  String rawData = barcodes.valueAt(i).rawValue;
-
-                                 if (barcodeFormat == BarcodeFormat.QR_CODE.ordinal()) {
-                                     processRawResult(rawData);
+                                 if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
+                                     processResultBarcode(rawData, format);
                                  } else {
-                                     processResultBarcode(rawData);
+                                     processRawResult(rawData);
+
+                                     //                                 if (barcodeFormat == 32 || barcodeFormat == 64) {
+//                                     processResultBarcode(rawData);
+//                                 } else {
+//                                     processRawResult(rawData);
+//                                 }
                                  }
                              }
                          });
@@ -919,7 +963,8 @@ public class QRScanFragment extends Fragment {
                  }
              });
                 modeTxt.setText(R.string.mode1);
-            }else if (mode.equals("manual")) {
+            }
+         else if (mode.equals("manual")) {
                 modeTxt.setText(R.string.mode2);
 
              barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
@@ -972,8 +1017,8 @@ public class QRScanFragment extends Fragment {
                         barcodeDetector.release();
                     }
                 });*/
-            }else {
-
+            }
+         else {
              barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
                  @Override
                  public void release() {
@@ -984,6 +1029,9 @@ public class QRScanFragment extends Fragment {
                  public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
                      final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                      if (barcodes.size() != 0) {
+                         Barcode barcode = barcodes.valueAt(0);
+                         String barcodeValue = barcode.rawValue;
+                         int format = barcode.format;
                          runOnUiThread(() -> {
                              mPreview.stop();
                              if (checkSoundPreferences()) {
@@ -1003,11 +1051,18 @@ public class QRScanFragment extends Fragment {
                                  }
                              }
                              String rawData = barcodes.valueAt(0).rawValue;
-                             Toast.makeText(context, "RAW  " + rawData, Toast.LENGTH_SHORT).show();
-                             if (barcodeFormat == BarcodeFormat.QR_CODE.ordinal()) {
-                                 processRawResult(rawData);
+                             processRawResult(rawData);
+//                             Toast.makeText(context, "Barcode " + barcodeFormat, Toast.LENGTH_SHORT).show();
+                             if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
+                                    processResultBarcode(rawData, format);
                              } else {
-                                 processResultBarcode(rawData);
+                                 processRawResult(rawData);
+
+                                 //                                 if (barcodeFormat == 32 || barcodeFormat == 64) {
+//                                     processResultBarcode(rawData);
+//                                 } else {
+//                                     processRawResult(rawData);
+//                                 }
                              }
                          });
                      }

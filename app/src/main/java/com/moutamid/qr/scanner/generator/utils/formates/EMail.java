@@ -7,6 +7,8 @@ import java.util.Map;
 
 import static com.moutamid.qr.scanner.generator.utils.formates.SchemeUtil.getParameters;
 
+import android.util.Log;
+
 /**
  * Encodes a e-mail address, format is: <code>mailto:mail@address.com</code>
  *
@@ -14,6 +16,7 @@ import static com.moutamid.qr.scanner.generator.utils.formates.SchemeUtil.getPar
 public class EMail extends Schema implements Serializable {
 
 	private static final String BEGIN_EMAIL = "BEGIN:EMAIL";
+	private static final String BEGIN_EMAIL2 = "MATMSG:TO";
 	private static final String BODY = "body";
 	private static final String SUBJECT = "subject";
 	private static final String MAILTO = "mailto";
@@ -61,7 +64,9 @@ public class EMail extends Schema implements Serializable {
 
 	@Override
 	public Schema parseSchema(String code) {
-		if (code == null || !code.startsWith(BEGIN_EMAIL)) {
+		Log.d("EMAILCHEC", "" + code.startsWith(BEGIN_EMAIL2));
+		Log.d("EMAILCHEC", "" + code);
+		if (!code.startsWith(BEGIN_EMAIL)) {
 			throw new IllegalArgumentException("this is not a valid EMAIL code: " + code);
 		}
 		Map<String, String> parameters = SchemeUtil.getParameters(code);

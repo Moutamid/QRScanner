@@ -11,12 +11,14 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,22 +37,28 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.model.content.Mask;
+import com.bumptech.glide.Glide;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 
 import androidmads.library.qrgenearator.BuildConfig;
 
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.datamatrix.DataMatrixWriter;
+import com.google.zxing.oned.Code93Writer;
 import com.google.zxing.oned.EAN13Writer;
+import com.google.zxing.oned.EAN8Writer;
 import com.moutamid.qr.scanner.generator.Model.ButtonModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.databinding.ActivityScanResultBinding;
@@ -78,6 +86,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -85,6 +94,11 @@ import java.util.List;
 import java.util.Locale;
 
 import static java.io.File.separator;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class ScanResultActivity extends AppCompatActivity {
 
@@ -166,6 +180,7 @@ public class ScanResultActivity extends AppCompatActivity {
 
         switch (type) {
             case "VCard": {
+                binding.vcardLayout.setVisibility(View.VISIBLE);
                 VCard vCard = (VCard) getIntent().getSerializableExtra("vCard");
                 if (!(vCard.getName() == null)) {
                     resultdatalist.add(vCard.getName());
@@ -193,6 +208,14 @@ public class ScanResultActivity extends AppCompatActivity {
                 }
                 bmp = QRCode.from(vCard.toString()).bitmap();
                 binding.imageView4.setImageBitmap(bmp);
+                binding.cardName.setText(vCard.getName());
+                binding.cardEmail.setText(vCard.getEmail());
+                binding.cardNumb.setText(vCard.getPhoneNumber());
+                binding.cardOrg.setText(vCard.getCompany());
+                binding.cardAdd.setText(vCard.getAddress());
+
+                copyClipboard = vCard.getName() + "\n" + vCard.getEmail() + "\n" + vCard.getPhoneNumber() + "\n" + vCard.getCompany() + "\n" + vCard.getAddress();
+
 //                icon.setImageResource(R.drawable.contact);
 //                tvHead.setText(R.string.contact);
 //                tvTitle.setText(vCard.getName());
@@ -220,6 +243,7 @@ public class ScanResultActivity extends AppCompatActivity {
                     resultdatalist.add(eMail.getMailBody());
                 }
                 link = eMail.getEmail();
+                copyClipboard = eMail.getEmail() + "\nSubject : " + eMail.getMailSubject() + "\n" + eMail.getMailBody();
                 binding.email.setText(eMail.getEmail() + "");
                 binding.emailBody.setText(eMail.getMailBody() + "");
                 binding.emailSubject.setText(eMail.getMailSubject() + "");
@@ -254,6 +278,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (!(telephone.getTelephone() == null)) {
                     resultdatalist.add(telephone.getTelephone());
                 }
+                copyClipboard = telephone.getTelephone();
                 link = telephone.getTelephone();
                 contactNumber = telephone.getTelephone();
                 binding.phone.setText(contactNumber);
@@ -270,7 +295,8 @@ public class ScanResultActivity extends AppCompatActivity {
                 if (telephone.getSong() != null) {
                     resultdatalist.add(telephone.getSong());
                 }
-                link = telephone.getSong();
+                copyClipboard = telephone.getName();
+                link = telephone.getName();
                 binding.spotifyName.setText(telephone.getName());
                 binding.spotifySong.setText(telephone.getSong());
                 break;
@@ -288,6 +314,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.phoneTITLE.setText(R.string.whatsapp);
                 binding.phoneBtn.setText(R.string.whatsapp);
                 contactNumber = telephone.getTelephone();
+                copyClipboard = contactNumber;
                 link = contactNumber;
                 binding.phone.setText(contactNumber);
                 break;
@@ -305,6 +332,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.phoneTITLE.setText(R.string.viber);
                 binding.phoneBtn.setText(R.string.viber);
                 contactNumber = telephone.getTelephone();
+                copyClipboard = contactNumber;
                 link = contactNumber;
                 binding.phone.setText(contactNumber);
                 break;
@@ -318,6 +346,7 @@ public class ScanResultActivity extends AppCompatActivity {
                     resultdatalist.add(url.getUrl());
                 }
                 binding.url.setText(url.getUrl());
+                copyClipboard = url.getUrl();
                 link = url.getUrl();
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(url.getUrl());
@@ -335,7 +364,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.urlTitle.setText(R.string.youtube);
                 binding.urlImage.setImageResource(R.drawable.youtube);
                 binding.urlTypeName.setText(R.string.youtube);
-
+                copyClipboard = social.getUrl();
                 link = social.getUrl();
                 binding.url.setText(social.getUrl());
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
@@ -361,7 +390,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.url.setText(social.getUrl());
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
-
+                copyClipboard = social.getUrl();
                 link = social.getUrl();
                 binding.urlType.setVisibility(View.VISIBLE);
                 break;
@@ -378,7 +407,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.urlTitle.setText(R.string.twitter);
                 binding.urlImage.setImageResource(R.drawable.twitter);
                 binding.urlTypeName.setText(R.string.twitter);
-
+                copyClipboard = social.getUrl();
                 link = social.getUrl();
                 binding.url.setText(social.getUrl());
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
@@ -403,7 +432,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.url.setText(social.getUrl());
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
-
+                copyClipboard = social.getUrl();
                 link = social.getUrl();
                 binding.urlType.setVisibility(View.VISIBLE);
                 break;
@@ -425,6 +454,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 Linkify.addLinks(binding.url, Linkify.WEB_URLS);
                 autoSearch(social.getUrl());
 
+                copyClipboard = social.getUrl();
                 link = social.getUrl();
                 binding.urlType.setVisibility(View.VISIBLE);
                 break;
@@ -461,6 +491,7 @@ public class ScanResultActivity extends AppCompatActivity {
                     resultdatalist.add(sms.getSubject());
                 }
 
+                copyClipboard = sms.getNumber();
                 link = sms.getNumber();
                 binding.subject.setText(sms.getSubject());
                 binding.number.setText(sms.getNumber());
@@ -479,6 +510,8 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.urlTitleImage.setImageResource(R.drawable.ic_text);
                 binding.urlTitle.setText(R.string.text);
                 binding.url.setText(text);
+                copyClipboard = text;
+                link = text;
                 checkSearchEngine(text);
                 break;
             }
@@ -494,19 +527,38 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.urlTitleImage.setImageResource(R.drawable.clipboard);
                 binding.urlTitle.setText(R.string.clipboard);
                 checkSearchEngine(text);
+                copyClipboard = text;
+                link = text;
                 binding.url.setText(text);
                 break;
             }
-
             case "Barcode": {
+
+                ProgressDialog progressDialog = new ProgressDialog(ScanResultActivity.this);
+                progressDialog.setMessage("Fetching Product Details....");
+                progressDialog.setCancelable(false);
+
                 binding.urlLayout.setVisibility(View.VISIBLE);
                 String textBarcode = getIntent().getStringExtra("barcode");
-
+                int barcodeFormat = getIntent().getIntExtra("barcodeFormat", Barcode.EAN_13);
                 try {
                     Hashtable<EncodeHintType, ErrorCorrectionLevel> hintMap = new Hashtable<>();
                     hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-                    Writer codeWriter = new EAN13Writer();
-                    BitMatrix byteMatrix = codeWriter.encode(textBarcode, BarcodeFormat.EAN_13, 700, 300, hintMap);
+                    Writer codeWriter;
+                    BitMatrix byteMatrix;
+                    if (barcodeFormat == Barcode.EAN_8){
+                        codeWriter = new EAN8Writer();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.EAN_8, 700, 300, hintMap);
+                    } else if (barcodeFormat == Barcode.CODE_128) {
+                        codeWriter = new Code128Writer();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.CODE_128, 700, 300, hintMap);
+                    } else if (barcodeFormat == Barcode.CODE_93) {
+                        codeWriter = new Code93Writer();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.CODE_93, 700, 300, hintMap);
+                    } else {
+                        codeWriter = new EAN13Writer();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.EAN_13, 700, 300, hintMap);
+                    }
                     int width = byteMatrix.getWidth();
                     int height = byteMatrix.getHeight();
                     bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
@@ -531,6 +583,59 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.urlTitleImage.setImageResource(R.drawable.barcode);
                 binding.urlTitle.setText(R.string.barcode);
                 binding.url.setText(textBarcode);
+                binding.storesBtn.setVisibility(View.VISIBLE);
+
+                ISBN = textBarcode;
+
+                if (getProductPreference()) {
+                    progressDialog.show();
+                    binding.productLayout.setVisibility(View.VISIBLE);
+
+                    String url = "https://www.go-upc.com/search?q=" + textBarcode;
+
+                    Log.d("HTMLCHE" , url);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Document doc = Jsoup.connect(url).get();
+                                Elements name = doc.getElementsByClass("product-name");
+                                String n = name.get(0).text();
+                                Elements image = doc.getElementsByClass("product-image mobile");
+                                Element img = image.get(0).child(0);
+                                String link = img.baseUri();
+
+                                Elements table = doc.getElementsByClass("table-striped");
+                                Element body = table.get(0);
+                                Element tr = body.child(2);
+                                Element td = tr.child(1);
+                                String cat = td.text().toString();
+
+                                Glide.with(ScanResultActivity.this).load(link).into(binding.productImage);
+                                binding.productName.setText(n);
+                                binding.productISBN.setText(textBarcode);
+                                binding.productCategory.setText(cat);
+
+                                Log.d("HTMLCHE" , link);
+                                Log.d("HTMLCHE" , n);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Log.d("HTMLCHE", e.getMessage());
+                                runOnUiThread(() -> {
+                                    progressDialog.dismiss();
+                                   // Toast.makeText(ScanResultActivity.this, "Product detail not found", Toast.LENGTH_SHORT).show();
+                                    binding.productLayout.setVisibility(View.GONE);
+                                });
+                            }
+                        }
+                    }).start();
+
+                } else {
+                    binding.productLayout.setVisibility(View.GONE);
+                }
+
+                copyClipboard = ISBN;
 //                bmp = QRCode.from(textBarcode).bitmap();
 //                binding.imageView4.setImageBitmap(bmp);
 //                icon.setImageResource(R.drawable.ic_barcode);
@@ -573,6 +678,8 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.eventSubject.setText(iEvent.getStamp());
                 binding.eventStart.setText(iEvent.getStart());
                 binding.eventEnd.setText(iEvent.getEnd());
+
+                copyClipboard = iEvent.getUid() + "\n" + iEvent.getStamp() + "\n" + iEvent.getStart() + "\n" + iEvent.getEnd();
                 break;
             }
 
@@ -630,6 +737,50 @@ public class ScanResultActivity extends AppCompatActivity {
         }
     }
 
+    String ISBN = "";
+
+    public void ebayOpen(View view){
+        String isbnNumber = ISBN;
+        String searchUrl = "https://www.ebay.com/sch/i.html?_nkw=" + isbnNumber;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        boolean ebayAppInstalled = isPackageInstalled("com.ebay.mobile");
+
+        if (ebayAppInstalled) {
+            intent.setPackage("com.ebay.mobile");
+        } else {
+            intent.setPackage(null);
+        }
+
+        startActivity(intent);
+    }
+
+    public void amazonOpen(View view){
+        String isbnNumber = ISBN;
+        String searchUrl = "https://www.amazon.com/s?k=" + isbnNumber;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        boolean amazonAppInstalled = isPackageInstalled("com.amazon.mobile.shopping");
+
+        if (amazonAppInstalled) {
+            intent.setPackage("com.amazon.mobile.shopping");
+        } else {
+            intent.setPackage(null);
+        }
+        startActivity(intent);
+    }
+
+    private boolean isPackageInstalled(String packageName) {
+        try {
+            getPackageManager().getPackageInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
 
     private void getLocale() {
 
@@ -645,6 +796,10 @@ public class ScanResultActivity extends AppCompatActivity {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    public void shareGeo(View view){
+
     }
 
     private void contactContent() {
@@ -809,15 +964,24 @@ public class ScanResultActivity extends AppCompatActivity {
             file.setReadable(true, false);
             final Intent intent = new Intent(android.content.Intent.ACTION_SEND);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
+            Uri photoURI = FileProvider.getUriForFile(getApplicationContext(),  "com.moutamid.qr.scanner.generator.provider", file);
             intent.putExtra(Intent.EXTRA_STREAM, photoURI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             intent.setType("image/PNG");
-
             startActivity(Intent.createChooser(intent, "Share image via"));
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void shareText(View view){
+        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+        /*This will be the actual content you wish you share.*/
+        String shareBody = link;
+        /*The type of the content is text, obviously.*/
+        intent.setType("text/plain");
+        /*Fire!*/
+        startActivity(Intent.createChooser(intent, "Share Using"));
     }
 
     private void connectToWiFi(String ssid, String password) {
@@ -928,7 +1092,7 @@ public class ScanResultActivity extends AppCompatActivity {
     }
 
     public void backResult(View view) {
-        finish();
+        onBackPressed();
     }
 
     private void saveToGallery() {
@@ -996,8 +1160,18 @@ public class ScanResultActivity extends AppCompatActivity {
         }
     }
 
+    public void openWIFI(View view){
+        Intent intent = new Intent(Settings.ACTION_WIFI_SETTINGS);
+        startActivity(intent);
+    }
+
     public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public boolean getProductPreference() {
+        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        return prefs.getBoolean("product", true);
     }
 }
