@@ -103,7 +103,6 @@ public class QRScanFragment extends Fragment {
 
   //  private static ZXingScannerView mScannerView;
     private Context context;
-    private ZXingScannerView scannerView;
     private HistoryVM historyVM;
 
     private int zoomProgress = 5;
@@ -174,13 +173,6 @@ public class QRScanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         assert container != null;
         context = container.getContext();
-       // mScannerView = new ZXingScannerView(getActivity());
-        scannerView = new ZXingScannerView(requireContext());
-
-        scannerView.setResultHandler(rawResult -> {
-            Toast.makeText(context, rawResult.getText().toString(), Toast.LENGTH_SHORT).show();
-        });
-        scannerView.startCamera();
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().LoadInterstitial();
         }
