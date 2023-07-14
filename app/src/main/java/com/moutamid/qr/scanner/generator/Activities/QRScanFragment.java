@@ -565,7 +565,11 @@ public class QRScanFragment extends Fragment {
 //                            processResultBarcode(result.getText());
 //                        }
 
-                        processRawResult(result.getText());
+                        if (barcodeFormat.equals(BarcodeFormat.CODE_128) ||barcodeFormat.equals(BarcodeFormat.EAN_13) || barcodeFormat.equals(BarcodeFormat.EAN_8)|| barcodeFormat.equals(BarcodeFormat.CODE_93)) {
+                            processResultBarcode(result.getText(), barcodeFormat.ordinal());
+                        } else {
+                            processRawResult(result.getText());
+                        }
 
                     } else {
                         Toast.makeText(getActivity(), "Not supported", Toast.LENGTH_SHORT).show();

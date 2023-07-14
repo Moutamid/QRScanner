@@ -477,6 +477,11 @@ public class ScanResultActivity extends AppCompatActivity {
                 binding.longitutde.setText("" + getPoints.get(1));
                 binding.latitude.setText("" + getPoints.get(2));
                 binding.geoName.setText("" + getPoints.get(0));
+
+                lat = getPoints.get(2);
+                lon = getPoints.get(1);
+                nam = getPoints.get(0);
+
                 break;
             }
             case "Sms": {
@@ -591,7 +596,7 @@ public class ScanResultActivity extends AppCompatActivity {
                     progressDialog.show();
                     binding.productLayout.setVisibility(View.VISIBLE);
 
-                    String url = "https://www.go-upc.com/search?q=" + textBarcode;
+                    String url = "https://go-upc.com/search?q=" + textBarcode;
 
                     Log.d("HTMLCHE" , url);
                     new Thread(new Runnable() {
@@ -599,29 +604,34 @@ public class ScanResultActivity extends AppCompatActivity {
                         public void run() {
                             try {
                                 Document doc = Jsoup.connect(url).get();
+                           //     Log.d("HTMLCHE", doc.html().toString());
                                 Elements name = doc.getElementsByClass("product-name");
                                 String n = name.get(0).text();
                                 Elements image = doc.getElementsByClass("product-image mobile");
                                 Element img = image.get(0).child(0);
-                                String link = img.baseUri();
+                                String link = img.attr("src");
+
+                                Log.d("HTMLCHE" , "LINK    " + link);
+                                Log.d("HTMLCHE" ,"NAME    " +  n);
 
                                 Elements table = doc.getElementsByClass("table-striped");
                                 Element body = table.get(0);
-                                Element tr = body.child(2);
-                                Element td = tr.child(1);
+                                Element tr = body.child(body.childrenSize() - 1);
+                                Element td = tr.child(tr.childrenSize() - 1);
                                 String cat = td.text().toString();
 
-                                Glide.with(ScanResultActivity.this).load(link).into(binding.productImage);
-                                binding.productName.setText(n);
-                                binding.productISBN.setText(textBarcode);
-                                binding.productCategory.setText(cat);
-
-                                Log.d("HTMLCHE" , link);
-                                Log.d("HTMLCHE" , n);
+                                Log.d("HTMLCHE" ,"CAT    " +  cat);
+                                runOnUiThread(() -> {
+                                    Glide.with(ScanResultActivity.this).load(link).into(binding.productImage);
+                                    binding.productName.setText(n);
+                                    binding.productISBN.setText(textBarcode);
+                                    binding.productCategory.setText(cat);
+                                    progressDialog.dismiss();
+                                });
 
                             } catch (IOException e) {
                                 e.printStackTrace();
-                                Log.d("HTMLCHE", e.getMessage());
+                                Log.d("HTMLCHE",  "ERROR " +  e.getMessage());
                                 runOnUiThread(() -> {
                                     progressDialog.dismiss();
                                    // Toast.makeText(ScanResultActivity.this, "Product detail not found", Toast.LENGTH_SHORT).show();
@@ -798,7 +808,22 @@ public class ScanResultActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 
+    String  lat, lon, nam;
+
     public void shareGeo(View view){
+        String latitude = lat;
+        String longitude = lon;
+        String label = nam;
+
+        String uri = "geo:" + latitude + "," + longitude + "?q=" + Uri.encode(latitude + "," + longitude + "(" + label + ")");
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        intent.setPackage("com.google.android.apps.maps");
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "You don\'t have any apps install", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -1173,5 +1198,11 @@ public class ScanResultActivity extends AppCompatActivity {
     public boolean getProductPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean("product", true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
