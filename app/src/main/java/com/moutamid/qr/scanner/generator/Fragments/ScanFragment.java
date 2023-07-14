@@ -85,7 +85,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
         View view= inflater.inflate(R.layout.scan_fragment, container, false);
         historyVM = new ViewModelProvider(ScanFragment.this).get(HistoryVM.class);
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
-        historyRecyclerView.setHasFixedSize(true);
+        historyRecyclerView.setHasFixedSize(false);
         deleteImg = view.findViewById(R.id.all_delete_history);
         deleteImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +126,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 tvIsEmpty.setVisibility(View.VISIBLE);
                 isEmpty = true;
             }
-
+            historyList.clear();
             for (History model: histories){
                 if (model.getType().equals("barcode")){
                     historyList.add(model);

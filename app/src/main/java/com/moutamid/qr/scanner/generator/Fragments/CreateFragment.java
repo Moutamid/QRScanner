@@ -83,7 +83,7 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
         View view= inflater.inflate(R.layout.create_fragment, container, false);
         historyVM = new ViewModelProvider(CreateFragment.this).get(HistoryVM.class);
         historyRecyclerView = view.findViewById(R.id.history_recyclerview);
-        historyRecyclerView.setHasFixedSize(true);
+        historyRecyclerView.setHasFixedSize(false);
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
         deleteImg = view.findViewById(R.id.all_delete_history);
         deleteImg.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +124,7 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
                 tvIsEmpty.setVisibility(View.VISIBLE);
                 isEmpty = true;
             }
+            historyList.clear();
             for (History model: histories){
                 if (!model.getType().equals("barcode") && !model.getType().equals("card")){
                     historyList.add(model);
