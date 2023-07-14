@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -98,7 +98,7 @@ public class SmsGenActivity extends AppCompatActivity {
                 sms.setNumber(number.getEditText().getText().toString());
                 sms.setSubject(message.getEditText().getText().toString());
                 if (history) {
-                    History smsHistory = new History(sms.generateString(), "sms");
+                    History smsHistory = new History(sms.generateString(), "sms", false);
                     historyVM.insertHistory(smsHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

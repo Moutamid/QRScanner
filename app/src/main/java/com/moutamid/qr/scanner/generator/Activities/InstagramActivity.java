@@ -15,7 +15,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
@@ -99,7 +98,7 @@ public class InstagramActivity extends AppCompatActivity {
                 final Social social = new Social();
                 social.setUrl(urlValue);
                 if (history) {
-                    History urlHistory = new History(social.generateString(), "insta");
+                    History urlHistory = new History(social.generateString(), "insta", false);
                     historyVM.insertHistory(urlHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

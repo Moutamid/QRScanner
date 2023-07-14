@@ -10,7 +10,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
@@ -83,7 +83,7 @@ public class BarCodeActivity extends AppCompatActivity {
         } else {
             if (history){
 
-                History contactHistory = new History(barcodeText, "barcode");
+                History contactHistory = new History(barcodeText, "barcode", false);
                 historyVM.insertHistory(contactHistory);
             }
             Intent intent = new Intent(this, ScanResultActivity.class);

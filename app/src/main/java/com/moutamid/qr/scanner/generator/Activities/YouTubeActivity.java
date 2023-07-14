@@ -9,7 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -99,7 +99,7 @@ public class YouTubeActivity extends AppCompatActivity {
                 final Social social = new Social();
                 social.setUrl(urlValue);
                 if (history) {
-                    History urlHistory = new History(social.generateString(), "youtube");
+                    History urlHistory = new History(social.generateString(), "youtube", false);
                     historyVM.insertHistory(urlHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

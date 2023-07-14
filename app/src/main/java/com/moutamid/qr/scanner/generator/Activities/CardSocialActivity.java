@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
@@ -31,7 +30,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -223,7 +221,7 @@ public class CardSocialActivity extends AppCompatActivity {
                 businessCard.setTitle(text1.getText().toString());
                 businessCard.setContent(text2.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
-                History urlHistory = new History(businessCard.generateString(), "card");
+                History urlHistory = new History(businessCard.generateString(), "card", false);
                 historyVM.insertHistory(urlHistory);
             }
             text1.setBackgroundResource(0);

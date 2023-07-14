@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -101,7 +101,7 @@ public class EmailGenActivity extends AppCompatActivity {
                 eMail.setMailBody(body.getEditText().getText().toString());
                 eMail.setMailSubject(subject.getEditText().getText().toString());
                 if (history) {
-                    History emailHistory = new History(eMail.generateString(), "email");
+                    History emailHistory = new History(eMail.generateString(), "email", false);
                     historyVM.insertHistory(emailHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

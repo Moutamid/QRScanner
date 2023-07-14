@@ -18,7 +18,6 @@ import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -137,7 +136,7 @@ public class ClipboardActivity extends AppCompatActivity {
             textedit.setError("Please enter Text");
         } else {
             if (history) {
-                History textHistory = new History(data, "clipboard");
+                History textHistory = new History(data, "clipboard", false);
                 historyVM.insertHistory(textHistory);
             }
             Intent intent = new Intent(ClipboardActivity.this, ScanResultActivity.class);

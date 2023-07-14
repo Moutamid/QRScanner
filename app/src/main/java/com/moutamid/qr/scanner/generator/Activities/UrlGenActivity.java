@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
@@ -126,7 +125,7 @@ public class UrlGenActivity extends AppCompatActivity {
                     final Url url = new Url();
                     url.setUrl(urlValue);
                     if (history) {
-                        History urlHistory = new History(url.generateString(), "url");
+                        History urlHistory = new History(url.generateString(), "url", false);
                         historyVM.insertHistory(urlHistory);
                     }
 

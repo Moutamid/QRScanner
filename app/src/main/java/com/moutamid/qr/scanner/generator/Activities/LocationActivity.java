@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -107,7 +107,7 @@ public class LocationActivity extends AppCompatActivity {
                 final GeoInfo location = new GeoInfo();
                 location.setPoints(arrayList);
                 if (history) {
-                    History locHistory = new History(location.generateString(), "location");
+                    History locHistory = new History(location.generateString(), "location", false);
                     historyVM.insertHistory(locHistory);
                 }
 

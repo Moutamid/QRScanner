@@ -8,7 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -100,7 +100,7 @@ public class    WifiGenActivity extends AppCompatActivity {
                 wifi.setSsid(wifiname.getEditText().getText().toString());
                 wifi.setPsk(wifipassword.getEditText().getText().toString());
                 if (history) {
-                    History wifiHistory = new History(wifi.generateString(), "wifi");
+                    History wifiHistory = new History(wifi.generateString(), "wifi", false);
                     historyVM.insertHistory(wifiHistory);
                 }
 

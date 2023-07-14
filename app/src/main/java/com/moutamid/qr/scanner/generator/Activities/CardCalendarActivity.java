@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -31,22 +30,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
-import com.google.zxing.common.HybridBinarizer;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -55,9 +42,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.Locale;
 
 public class CardCalendarActivity extends AppCompatActivity {
@@ -266,7 +251,7 @@ public class CardCalendarActivity extends AppCompatActivity {
             businessCard.setTitle(eventName.getText().toString());
             businessCard.setContent(eventCity.getText().toString());
             businessCard.setTimestamp(System.currentTimeMillis());
-            History urlHistory = new History(businessCard.generateString(), "card");
+            History urlHistory = new History(businessCard.generateString(), "card", false);
             historyVM.insertHistory(urlHistory);
             eventName.setBackgroundResource(0);
             eventCity.setBackgroundResource(0);

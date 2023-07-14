@@ -10,7 +10,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -113,7 +112,7 @@ public class EventActivity extends AppCompatActivity {
                 iEvent.setEnd(data4);
                 iEvent.setStamp(data2);
                 if (history) {
-                    History eventHistory = new History(iEvent.generateString(), "event");
+                    History eventHistory = new History(iEvent.generateString(), "event", false);
                     historyVM.insertHistory(eventHistory);
                 }
 

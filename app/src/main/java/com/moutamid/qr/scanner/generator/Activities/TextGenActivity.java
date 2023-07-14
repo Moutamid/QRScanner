@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -92,7 +92,7 @@ public class TextGenActivity extends AppCompatActivity {
             textedit.setError("Please enter Text");
         } else {
             if (history) {
-                History textHistory = new History(data, "text");
+                History textHistory = new History(data, "text", false);
                 historyVM.insertHistory(textHistory);
             }
             Intent intent = new Intent(TextGenActivity.this, ScanResultActivity.class);

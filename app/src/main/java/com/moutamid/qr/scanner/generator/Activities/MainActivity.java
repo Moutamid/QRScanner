@@ -1,11 +1,9 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -22,14 +20,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -50,8 +45,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.billingclient.api.BillingClient;
@@ -72,7 +65,6 @@ import com.consoliads.mediation.nativeads.CANativeAdView;
 import com.consoliads.mediation.nativeads.ConsoliAdsNativeListener;
 import com.consoliads.mediation.nativeads.MediatedNativeAd;
 import com.moutamid.qr.scanner.generator.R;
-import com.moutamid.qr.scanner.generator.interfaces.ZoomChangeListener;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.EMail;
@@ -87,31 +79,10 @@ import com.moutamid.qr.scanner.generator.utils.formates.YouTube;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
-import com.google.zxing.common.HybridBinarizer;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionDeniedResponse;
-import com.karumi.dexter.listener.PermissionGrantedResponse;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.single.PermissionListener;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,9 +107,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         setContentView(R.layout.activity_main);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         imgRemoveAd = findViewById(R.id.img_ad);
         //RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
@@ -173,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
         inAppPurchases();
         checkPermissions();
+
+        loadQRfragment();
         Menu menu = bottomNavigationView.getMenu();
         menu.findItem(R.id.scan).setTitle(R.string.scan);
         menu.findItem(R.id.generate_qr).setTitle(R.string.create);
@@ -222,23 +195,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bottomNavigationView.invalidate();
-        Dexter.withActivity(this)
-                .withPermission(Manifest.permission.CAMERA)
-                .withListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted(PermissionGrantedResponse response) {
-                        loadQRfragment();
-                    }
-
-                    @Override
-                    public void onPermissionDenied(PermissionDeniedResponse response) {
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-                    }
-                })
-                .check();
+//        Dexter.withActivity(this)
+//                .withPermission(Manifest.permission.CAMERA)
+//                .withListener(new PermissionListener() {
+//                    @Override
+//                    public void onPermissionGranted(PermissionGrantedResponse response) {
+//                        loadQRfragment();
+//                    }
+//
+//                    @Override
+//                    public void onPermissionDenied(PermissionDeniedResponse response) {
+//                    }
+//
+//                    @Override
+//                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+//                    }
+//                })
+//                .check();
 
     }
 
@@ -262,23 +235,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED && ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE }, 200);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA }, 200);
         }
-        else {
-            Toast.makeText(MainActivity.this, "Permission already granted", Toast.LENGTH_SHORT).show();
-        }
+//        else {
+//            Toast.makeText(MainActivity.this, "Permission already granted", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 200) {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(MainActivity.this, "Storage Permission Granted", Toast.LENGTH_SHORT).show();
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadQRfragment();
+                Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
             else {
-                Toast.makeText(MainActivity.this, "Storage Permission Denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -334,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
     public void processResultBarcode(String text) {
         Intent intent = new Intent(this, ScanResultActivity.class);
         try {
-            History contactHistory = new History(text, "barcode");
+            History contactHistory = new History(text, "barcode", false);
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcode", text);
@@ -349,14 +322,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void processRawResult(String text) {
+/*    public void processRawResult(String text) {
 
         Intent intent = new Intent(this, ScanResultActivity.class);
 //Vcard Scanning
         try {
             VCard vCard = new VCard();
             vCard.parseSchema(text);
-            History contactHistory = new History(vCard.generateString(), "contact");
+            History contactHistory = new History(vCard.generateString(), "contact", scan);
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "VCard");
             intent.putExtra("vCard", vCard);
@@ -366,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 EMail eMail = new EMail();
                 eMail.parseSchema(text);
-                History contactHistory = new History(eMail.generateString(), "email");
+                History contactHistory = new History(eMail.generateString(), "email", scan);
                 historyVM.insertHistory(contactHistory);
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);
@@ -375,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Wifi wifi = new Wifi();
                     wifi.parseSchema(text);
-                    History contactHistory = new History(wifi.generateString(), "wifi");
+                    History contactHistory = new History(wifi.generateString(), "wifi", scan);
                     historyVM.insertHistory(contactHistory);
                     intent.putExtra("type", "wifi");
                     intent.putExtra("Wifi", wifi);
@@ -384,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Telephone telephone = new Telephone();
                         telephone.parseSchema(text);
-                        History contactHistory = new History(telephone.generateString(), "phone");
+                        History contactHistory = new History(telephone.generateString(), "phone", scan);
                         historyVM.insertHistory(contactHistory);
                         intent.putExtra("type", "telephone");
                         intent.putExtra("phone", telephone);
@@ -393,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             Url url = new Url();
                             url.parseSchema(text);
-                            History contactHistory = new History(url.generateString(), "url");
+                            History contactHistory = new History(url.generateString(), "url", scan);
                             historyVM.insertHistory(contactHistory);
                             intent.putExtra("type", "url");
                             intent.putExtra("Url", url);
@@ -402,7 +375,7 @@ public class MainActivity extends AppCompatActivity {
                             try {
                                 YouTube youTube = new YouTube();
                                 youTube.parseSchema(text);
-                                History contactHistory = new History(youTube.generateString(), "youtube");
+                                History contactHistory = new History(youTube.generateString(), "youtube", scan);
                                 historyVM.insertHistory(contactHistory);
                                 intent.putExtra("type", "YouTube");
                                 intent.putExtra("youtube", youTube);
@@ -411,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
                                 try {
                                     GeoInfo geoInfo = new GeoInfo();
                                     geoInfo.parseSchema(text);
-                                    History contactHistory = new History(geoInfo.generateString(), "location");
+                                    History contactHistory = new History(geoInfo.generateString(), "location", scan);
                                     historyVM.insertHistory(contactHistory);
                                     intent.putExtra("type", "GeoInfo");
                                     intent.putExtra("geoInfo", geoInfo);
@@ -420,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
                                     try {
                                         SMS sms = new SMS();
                                         sms.parseSchema(text);
-                                        History contactHistory = new History(sms.generateString(), "sms");
+                                        History contactHistory = new History(sms.generateString(), "sms", scan);
                                         historyVM.insertHistory(contactHistory);
                                         intent.putExtra("type", "Sms");
                                         intent.putExtra("sms", sms);
@@ -429,7 +402,7 @@ public class MainActivity extends AppCompatActivity {
                                         try {
                                             IEvent iEvent = new IEvent();
                                             iEvent.parseSchema(text);
-                                            History contactHistory = new History(iEvent.generateString(), "event");
+                                            History contactHistory = new History(iEvent.generateString(), "event", scan);
                                             historyVM.insertHistory(contactHistory);
                                             intent.putExtra("type", "Event");
                                             intent.putExtra("event", iEvent);
@@ -454,7 +427,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    }
+    }*/
 
   /*  @SuppressLint("ResourceAsColor")
     @Override
@@ -738,21 +711,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
-        if (getPurchaseSharedPreference()){
-            mediatedBannerView.setVisibility(View.INVISIBLE);
-            imgRemoveAd.setImageResource(R.drawable.pro);
-            imgRemoveAd.setEnabled(false);
-        }
-        else {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
-            mediatedBannerView.setVisibility(View.VISIBLE);
-            imgRemoveAd.setImageResource(R.drawable.ad);
-            imgRemoveAd.setEnabled(true);
-        }
-
         super.onResume();
+//        if (getPurchaseSharedPreference()){
+//            mediatedBannerView.setVisibility(View.INVISIBLE);
+//            imgRemoveAd.setImageResource(R.drawable.pro);
+//            imgRemoveAd.setEnabled(false);
+//        }
+//        else {
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
+//            mediatedBannerView.setVisibility(View.VISIBLE);
+//            imgRemoveAd.setImageResource(R.drawable.ad);
+//            imgRemoveAd.setEnabled(true);
+//        }
+
+       // super.onResume();
     }
     private boolean checkUserSubscription() {
         assert billingClient != null;

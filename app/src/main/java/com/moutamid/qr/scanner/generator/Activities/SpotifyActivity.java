@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
@@ -23,7 +22,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
-import com.moutamid.qr.scanner.generator.utils.formates.EMail;
 import com.moutamid.qr.scanner.generator.utils.formates.Spotify;
 
 import java.util.Locale;
@@ -97,7 +95,7 @@ public class SpotifyActivity extends AppCompatActivity {
                 final Spotify spotify = new Spotify();
                 spotify.setName(name.getEditText().getText().toString());
                 if (history) {
-                    History emailHistory = new History(spotify.generateString(), "spotify");
+                    History emailHistory = new History(spotify.generateString(), "spotify", false);
                     historyVM.insertHistory(emailHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

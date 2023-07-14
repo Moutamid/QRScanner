@@ -6,17 +6,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,18 +30,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
-import com.moutamid.qr.scanner.generator.utils.formates.Social;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -203,7 +195,7 @@ public class CardTxtActivity extends AppCompatActivity {
                 businessCard.setTitle("Text");
                 businessCard.setContent(text1.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
-                History urlHistory = new History(businessCard.generateString(), "card");
+                History urlHistory = new History(businessCard.generateString(), "card", false);
                 historyVM.insertHistory(urlHistory);
             }
             text1.setBackgroundResource(0);

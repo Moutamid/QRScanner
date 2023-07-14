@@ -10,12 +10,13 @@ public class History {
     private int id=0;
 
     private final String data;
-
     private final String type;
+    private final boolean scan;
 
-    public History(String data, String type) {
+    public History(String data, String type, boolean scan) {
         this.data = data;
         this.type = type;
+        this.scan = scan;
     }
 
     public void setId(int id) {
@@ -32,5 +33,9 @@ public class History {
 
     public String getType() {
         return type;
+    }
+
+    public boolean isScan() {
+        return scan;
     }
 }

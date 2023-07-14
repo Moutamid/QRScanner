@@ -14,7 +14,6 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
@@ -101,7 +100,7 @@ public class WhatsAppActivity extends AppCompatActivity {
                 final Telephone telephone = new Telephone();
                 telephone.setTelephone(data);
                 if (history) {
-                    History phoneHistory = new History(telephone.generateString(), "whatsapp");
+                    History phoneHistory = new History(telephone.generateString(), "whatsapp", false);
                     historyVM.insertHistory(phoneHistory);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

@@ -30,7 +30,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -220,7 +219,7 @@ public class CardGeoActivity extends AppCompatActivity {
                 businessCard.setTitle("Location");
                 businessCard.setContent("Latitude: " + text1.getText().toString() + "\n" + "Longitutde:" + text2.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
-                History urlHistory = new History(businessCard.generateString(), "card");
+                History urlHistory = new History(businessCard.generateString(), "card", false);
                 historyVM.insertHistory(urlHistory);
             }
             text1.setBackgroundResource(0);

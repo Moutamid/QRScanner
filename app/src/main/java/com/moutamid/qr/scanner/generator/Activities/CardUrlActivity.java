@@ -30,7 +30,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -222,7 +221,7 @@ public class CardUrlActivity extends AppCompatActivity {
                 businessCard.setTitle(text1.getText().toString());
                 businessCard.setContent(text2.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
-                History urlHistory = new History(businessCard.generateString(), "card");
+                History urlHistory = new History(businessCard.generateString(), "card", false);
                 historyVM.insertHistory(urlHistory);
             }
             text1.setBackgroundResource(0);

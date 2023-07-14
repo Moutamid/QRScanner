@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -97,7 +97,7 @@ public class PhoneActivity extends AppCompatActivity {
                 final Telephone telephone = new Telephone();
                 telephone.setTelephone(data);
                 if (history) {
-                    History phoneHistory = new History(telephone.generateString(), "phone");
+                    History phoneHistory = new History(telephone.generateString(), "phone", false);
                     historyVM.insertHistory(phoneHistory);
                 }
             Intent intent = new Intent(this, ScanResultActivity.class);

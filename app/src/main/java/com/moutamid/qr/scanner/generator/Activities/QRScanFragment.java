@@ -10,10 +10,6 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ImageFormat;
-import android.graphics.Rect;
-import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
@@ -26,7 +22,6 @@ import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourc
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview;
 import com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay;
 import com.google.android.gms.vision.Detector;
-import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import android.net.Uri;
@@ -41,7 +36,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import android.os.Environment;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.MediaStore;
@@ -89,15 +83,10 @@ import static android.content.Context.VIBRATOR_SERVICE;
 
 import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class QRScanFragment extends Fragment {
 
@@ -591,9 +580,9 @@ public class QRScanFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-   //     mScannerView.stopCamera();
-        mCameraSource.stop();
         super.onDestroy();
+   //     mScannerView.stopCamera();
+//        mCameraSource.stop();
     }
 
    /* @Override
@@ -635,7 +624,7 @@ public class QRScanFragment extends Fragment {
     public void processResultBarcode(String text, int barcodeFormat){
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
         try {
-            History contactHistory = new History(text, "barcode");
+            History contactHistory = new History(text, "barcode", true);
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcodeFormat", barcodeFormat);
@@ -656,11 +645,10 @@ public class QRScanFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
 
-
         try {
             VCard vCard = new VCard();
             vCard.parseSchema(text);
-            History contactHistory = new History(vCard.generateString(), "contact");
+            History contactHistory = new History(vCard.generateString(), "contact", true);
             historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "VCard");
             intent.putExtra("vCard", vCard);
@@ -672,7 +660,7 @@ public class QRScanFragment extends Fragment {
             try {
                 EMail eMail = new EMail();
                 eMail.parseSchema(text);
-                History contactHistory = new History(eMail.generateString(), "email");
+                History contactHistory = new History(eMail.generateString(), "email", true);
                 historyVM.insertHistory(contactHistory);
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);
@@ -684,7 +672,7 @@ public class QRScanFragment extends Fragment {
                 try {
                     Wifi wifi = new Wifi();
                     wifi.parseSchema(text);
-                    History contactHistory = new History(wifi.generateString(), "wifi");
+                    History contactHistory = new History(wifi.generateString(), "wifi", true);
                     historyVM.insertHistory(contactHistory);
                     intent.putExtra("type", "wifi");
                     intent.putExtra("Wifi", wifi);
@@ -696,7 +684,7 @@ public class QRScanFragment extends Fragment {
                     try {
                         Telephone telephone = new Telephone();
                         telephone.parseSchema(text);
-                        History contactHistory = new History(telephone.generateString(), "phone");
+                        History contactHistory = new History(telephone.generateString(), "phone", true);
                         historyVM.insertHistory(contactHistory);
                         intent.putExtra("type", "telephone");
                         intent.putExtra("phone", telephone);
@@ -708,7 +696,7 @@ public class QRScanFragment extends Fragment {
                         try {
                             Url url = new Url();
                             url.parseSchema(text);
-                            History contactHistory = new History(url.generateString(), "url");
+                            History contactHistory = new History(url.generateString(), "url", true);
                             historyVM.insertHistory(contactHistory);
                             intent.putExtra("type", "url");
                             intent.putExtra("Url", url);
@@ -720,7 +708,7 @@ public class QRScanFragment extends Fragment {
                             try {
                                 final Social social = new Social();
                                 social.parseSchema(text);
-                                History urlHistory = new History(social.generateString(), "social");
+                                History urlHistory = new History(social.generateString(), "social", true);
                                 historyVM.insertHistory(urlHistory);
                                 intent.putExtra("type", "Social");
                                 intent.putExtra("social", social);
@@ -732,7 +720,7 @@ public class QRScanFragment extends Fragment {
                                 try {
                                     GeoInfo geoInfo = new GeoInfo();
                                     geoInfo.parseSchema(text);
-                                    History contactHistory = new History(geoInfo.generateString(), "location");
+                                    History contactHistory = new History(geoInfo.generateString(), "location", true);
                                     historyVM.insertHistory(contactHistory);
                                     intent.putExtra("type", "GeoInfo");
                                     intent.putExtra("geoInfo", geoInfo);
@@ -744,7 +732,7 @@ public class QRScanFragment extends Fragment {
                                     try {
                                         SMS sms = new SMS();
                                         sms.parseSchema(text);
-                                        History contactHistory = new History(sms.generateString(), "sms");
+                                        History contactHistory = new History(sms.generateString(), "sms", true);
                                         historyVM.insertHistory(contactHistory);
                                         intent.putExtra("type", "Sms");
                                         intent.putExtra("sms", sms);
@@ -756,7 +744,7 @@ public class QRScanFragment extends Fragment {
                                         try {
                                             IEvent iEvent = new IEvent();
                                             iEvent.parseSchema(text);
-                                            History contactHistory = new History(iEvent.generateString(), "event");
+                                            History contactHistory = new History(iEvent.generateString(), "event", true);
                                             historyVM.insertHistory(contactHistory);
                                             intent.putExtra("type", "Event");
                                             intent.putExtra("event", iEvent);
@@ -769,7 +757,7 @@ public class QRScanFragment extends Fragment {
                                                try {
                                                    Log.d("EMAILCHEC" , "TEXT  " + text);
                                                    int i = Integer.parseInt(text);
-                                                   History contactHistory = new History(text, "barcode");
+                                                   History contactHistory = new History(text, "barcode", true);
                                                     historyVM.insertHistory(contactHistory);
                                                     intent.putExtra("type", "Barcode");
                                                     intent.putExtra("barcode", text);
@@ -780,7 +768,7 @@ public class QRScanFragment extends Fragment {
                                                     }
                                                } catch (NumberFormatException e){
                                                    Log.d("EMAILCHEC" , "Error  " + e.toString());
-                                                   History contactHistory = new History(text, "text");
+                                                   History contactHistory = new History(text, "text", true);
                                                    historyVM.insertHistory(contactHistory);
                                                    intent.putExtra("type", "Text");
                                                    intent.putExtra("text", text);
@@ -897,19 +885,15 @@ public class QRScanFragment extends Fragment {
         }
 
         // make sure that auto focus is an available option
-        builder = builder.setFocusMode(
-                autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
+        builder = builder.setFocusMode(autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
         modeTxt.setText(R.string.mode3);
 
-        mCameraSource = builder
-                .setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null)
-                .build();
+        mCameraSource = builder.setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null).build();
          if (mode.equals("batch")) {
 
              barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
                  @Override
                  public void release() {
-
                      Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
                  }
 
