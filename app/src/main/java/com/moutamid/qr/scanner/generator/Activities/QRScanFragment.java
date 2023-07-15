@@ -1,5 +1,6 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -105,7 +106,7 @@ public class QRScanFragment extends Fragment {
 
     private Camera.Parameters parameters;
     private final int REQUEST_CODE_PERMISSIONS = 101;
-    private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA"};
+    private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private BarcodeCapture barcodeCapture;
     private boolean isFlash = false;
     private static final int RC_HANDLE_GMS = 9001;
@@ -226,7 +227,6 @@ public class QRScanFragment extends Fragment {
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
         if (cameraPermissionGranted()) {
             createCameraSource(autoFocus,useFlash,cameraSwitch,cameraMode);
-
         } else {
             ActivityCompat.requestPermissions(getActivity(), REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS);
         }
@@ -417,7 +417,6 @@ public class QRScanFragment extends Fragment {
 
     public boolean cameraPermissionGranted() {
         for (String permission : REQUIRED_PERMISSIONS) {
-
             if (ContextCompat.checkSelfPermission(getActivity(), permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
@@ -429,10 +428,10 @@ public class QRScanFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
+            createCameraSource(autoFocus, useFlash, cameraSwitch,cameraMode);
             if (cameraPermissionGranted()) {
                // barcodeCapture.setSupportMultipleScan(false).setShowDrawRect(true).shouldAutoFocus(true);
                 createCameraSource(autoFocus, useFlash, cameraSwitch,cameraMode);
-
             } else {
                 Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
             }
@@ -880,8 +879,6 @@ public class QRScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
-
         if (cameraPermissionGranted()) {
             startCameraSource();
         } else {
