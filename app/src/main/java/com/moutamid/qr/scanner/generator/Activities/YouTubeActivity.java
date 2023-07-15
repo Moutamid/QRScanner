@@ -20,12 +20,15 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.Social;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class YouTubeActivity extends AppCompatActivity {
@@ -100,7 +103,9 @@ public class YouTubeActivity extends AppCompatActivity {
                 social.setUrl(urlValue);
                 if (history) {
                     History urlHistory = new History(social.generateString(), "youtube", false);
-                    historyVM.insertHistory(urlHistory);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(urlHistory);
+                    Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "youtube");

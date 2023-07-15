@@ -21,11 +21,15 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -113,7 +117,9 @@ public class EventActivity extends AppCompatActivity {
                 iEvent.setStamp(data2);
                 if (history) {
                     History eventHistory = new History(iEvent.generateString(), "event", false);
-                    historyVM.insertHistory(eventHistory);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(eventHistory);
+                    Stash.put(Constants.CREATE, historyList);
                 }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);

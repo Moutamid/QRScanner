@@ -18,12 +18,15 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.SMS;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class SmsGenActivity extends AppCompatActivity {
@@ -99,7 +102,9 @@ public class SmsGenActivity extends AppCompatActivity {
                 sms.setSubject(message.getEditText().getText().toString());
                 if (history) {
                     History smsHistory = new History(sms.generateString(), "sms", false);
-                    historyVM.insertHistory(smsHistory);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(smsHistory);
+                    Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);
                 intent.putExtra("type", "Sms");

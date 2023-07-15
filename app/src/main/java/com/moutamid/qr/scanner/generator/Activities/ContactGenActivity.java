@@ -19,16 +19,19 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ContactGenActivity extends AppCompatActivity {
-    private TextInputLayout name,phone,email,org,address;
+    private TextInputLayout name, phone, email, org, address;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -38,15 +41,15 @@ public class ContactGenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_gen);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -55,11 +58,11 @@ public class ContactGenActivity extends AppCompatActivity {
 
         }
         historyVM = new ViewModelProvider(ContactGenActivity.this).get(HistoryVM.class);
-        name=findViewById(R.id.contact_name);
-        phone=findViewById(R.id.contact_phone);
-        email=findViewById(R.id.contact_email);
-        org=findViewById(R.id.contact_organization);
-        address=findViewById(R.id.contact_address);
+        name = findViewById(R.id.contact_name);
+        phone = findViewById(R.id.contact_phone);
+        email = findViewById(R.id.contact_email);
+        org = findViewById(R.id.contact_organization);
+        address = findViewById(R.id.contact_address);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ContactGenActivity.this, mediatedBannerView);
@@ -69,42 +72,37 @@ public class ContactGenActivity extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
 
     public void contactGenerate(View view) {
         if (name.getEditText().getText().toString().equals("")) {
             name.getEditText().setError("Please enter Name");
-        }
-        else if (phone.getEditText().getText().toString().equals("")) {
+        } else if (phone.getEditText().getText().toString().equals("")) {
             phone.getEditText().setError("Please enter Phone");
-        }
-        else if (email.getEditText().getText().toString().equals("")) {
+        } else if (email.getEditText().getText().toString().equals("")) {
             email.getEditText().setError("Please enter Email");
-        }
-        else if (org.getEditText().getText().toString().equals("")) {
+        } else if (org.getEditText().getText().toString().equals("")) {
             org.getEditText().setError("Please enter Organization");
-        }
-        else if (address.getEditText().getText().toString().equals("")) {
+        } else if (address.getEditText().getText().toString().equals("")) {
             address.getEditText().setError("Please enter Address");
-        }
-        else {
+        } else {
             try {
                 final VCard vCard = new VCard(
                         name.getEditText().getText().toString())
@@ -112,9 +110,11 @@ public class ContactGenActivity extends AppCompatActivity {
                         .setAddress(address.getEditText().getText().toString())
                         .setCompany(org.getEditText().getText().toString())
                         .setPhoneNumber(phone.getEditText().getText().toString());
-                if (history){
-                History contactHistory = new History(vCard.generateString(), "contact", false);
-                historyVM.insertHistory(contactHistory);
+                if (history) {
+                    History contactHistory = new History(vCard.generateString(), "contact", false);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(contactHistory);
+                    Stash.put(Constants.CREATE, historyList);
                 }
 
                 if (ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -153,7 +153,8 @@ public class ContactGenActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }

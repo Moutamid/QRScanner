@@ -34,6 +34,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -42,6 +44,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class CardTxtActivity extends AppCompatActivity {
@@ -196,7 +199,9 @@ public class CardTxtActivity extends AppCompatActivity {
                 businessCard.setContent(text1.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
                 History urlHistory = new History(businessCard.generateString(), "card", false);
-                historyVM.insertHistory(urlHistory);
+                ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+                historyList.add(urlHistory);
+                Stash.put(Constants.CARD, historyList);
             }
             text1.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);

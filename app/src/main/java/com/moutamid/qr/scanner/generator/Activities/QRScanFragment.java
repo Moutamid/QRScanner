@@ -14,6 +14,7 @@ import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 
+import com.fxn.stash.Stash;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
@@ -63,6 +64,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.common.HybridBinarizer;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -86,6 +88,7 @@ import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class QRScanFragment extends Fragment {
@@ -625,7 +628,10 @@ public class QRScanFragment extends Fragment {
         Intent intent = new Intent(getActivity(), ScanResultActivity.class);
         try {
             History contactHistory = new History(text, "barcode", true);
-            historyVM.insertHistory(contactHistory);
+            ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+            historyList.add(contactHistory);
+            Stash.put(Constants.SCAN, historyList);
+//            historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcodeFormat", barcodeFormat);
             intent.putExtra("barcode", text);
@@ -649,7 +655,10 @@ public class QRScanFragment extends Fragment {
             VCard vCard = new VCard();
             vCard.parseSchema(text);
             History contactHistory = new History(vCard.generateString(), "contact", true);
-            historyVM.insertHistory(contactHistory);
+            ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+            historyList.add(contactHistory);
+            Stash.put(Constants.SCAN, historyList);
+        //    historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "VCard");
             intent.putExtra("vCard", vCard);
             startActivity(intent);
@@ -661,7 +670,10 @@ public class QRScanFragment extends Fragment {
                 EMail eMail = new EMail();
                 eMail.parseSchema(text);
                 History contactHistory = new History(eMail.generateString(), "email", true);
-                historyVM.insertHistory(contactHistory);
+                ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                historyList.add(contactHistory);
+                Stash.put(Constants.SCAN, historyList);
+//                historyVM.insertHistory(contactHistory);
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);
                 startActivity(intent);
@@ -673,7 +685,10 @@ public class QRScanFragment extends Fragment {
                     Wifi wifi = new Wifi();
                     wifi.parseSchema(text);
                     History contactHistory = new History(wifi.generateString(), "wifi", true);
-                    historyVM.insertHistory(contactHistory);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                    historyList.add(contactHistory);
+                    Stash.put(Constants.SCAN, historyList);
+//                    historyVM.insertHistory(contactHistory);
                     intent.putExtra("type", "wifi");
                     intent.putExtra("Wifi", wifi);
                     startActivity(intent);
@@ -685,7 +700,10 @@ public class QRScanFragment extends Fragment {
                         Telephone telephone = new Telephone();
                         telephone.parseSchema(text);
                         History contactHistory = new History(telephone.generateString(), "phone", true);
-                        historyVM.insertHistory(contactHistory);
+                        ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                        historyList.add(contactHistory);
+                        Stash.put(Constants.SCAN, historyList);
+//                        historyVM.insertHistory(contactHistory);
                         intent.putExtra("type", "telephone");
                         intent.putExtra("phone", telephone);
                         startActivity(intent);
@@ -697,7 +715,10 @@ public class QRScanFragment extends Fragment {
                             Url url = new Url();
                             url.parseSchema(text);
                             History contactHistory = new History(url.generateString(), "url", true);
-                            historyVM.insertHistory(contactHistory);
+                            ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                            historyList.add(contactHistory);
+                            Stash.put(Constants.SCAN, historyList);
+//                            historyVM.insertHistory(contactHistory);
                             intent.putExtra("type", "url");
                             intent.putExtra("Url", url);
                             startActivity(intent);
@@ -709,7 +730,10 @@ public class QRScanFragment extends Fragment {
                                 final Social social = new Social();
                                 social.parseSchema(text);
                                 History urlHistory = new History(social.generateString(), "social", true);
-                                historyVM.insertHistory(urlHistory);
+                                ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                historyList.add(urlHistory);
+                                Stash.put(Constants.SCAN, historyList);
+//                                historyVM.insertHistory(urlHistory);
                                 intent.putExtra("type", "Social");
                                 intent.putExtra("social", social);
                                 startActivity(intent);
@@ -721,7 +745,10 @@ public class QRScanFragment extends Fragment {
                                     GeoInfo geoInfo = new GeoInfo();
                                     geoInfo.parseSchema(text);
                                     History contactHistory = new History(geoInfo.generateString(), "location", true);
-                                    historyVM.insertHistory(contactHistory);
+                                    ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                    historyList.add(contactHistory);
+                                    Stash.put(Constants.SCAN, historyList);
+//                                    historyVM.insertHistory(contactHistory);
                                     intent.putExtra("type", "GeoInfo");
                                     intent.putExtra("geoInfo", geoInfo);
                                     startActivity(intent);
@@ -733,7 +760,10 @@ public class QRScanFragment extends Fragment {
                                         SMS sms = new SMS();
                                         sms.parseSchema(text);
                                         History contactHistory = new History(sms.generateString(), "sms", true);
-                                        historyVM.insertHistory(contactHistory);
+                                        ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                        historyList.add(contactHistory);
+                                        Stash.put(Constants.SCAN, historyList);
+//                                        historyVM.insertHistory(contactHistory);
                                         intent.putExtra("type", "Sms");
                                         intent.putExtra("sms", sms);
                                         startActivity(intent);
@@ -745,7 +775,10 @@ public class QRScanFragment extends Fragment {
                                             IEvent iEvent = new IEvent();
                                             iEvent.parseSchema(text);
                                             History contactHistory = new History(iEvent.generateString(), "event", true);
-                                            historyVM.insertHistory(contactHistory);
+                                            ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                            historyList.add(contactHistory);
+                                            Stash.put(Constants.SCAN, historyList);
+//                                            historyVM.insertHistory(contactHistory);
                                             intent.putExtra("type", "Event");
                                             intent.putExtra("event", iEvent);
                                             startActivity(intent);
@@ -758,7 +791,10 @@ public class QRScanFragment extends Fragment {
                                                    Log.d("EMAILCHEC" , "TEXT  " + text);
                                                    int i = Integer.parseInt(text);
                                                    History contactHistory = new History(text, "barcode", true);
-                                                    historyVM.insertHistory(contactHistory);
+                                                   ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                                   historyList.add(contactHistory);
+                                                   Stash.put(Constants.SCAN, historyList);
+//                                                    historyVM.insertHistory(contactHistory);
                                                     intent.putExtra("type", "Barcode");
                                                     intent.putExtra("barcode", text);
                                                     //intent.putExtra("image", savedBitmapFromViewToFile());
@@ -769,7 +805,10 @@ public class QRScanFragment extends Fragment {
                                                } catch (NumberFormatException e){
                                                    Log.d("EMAILCHEC" , "Error  " + e.toString());
                                                    History contactHistory = new History(text, "text", true);
-                                                   historyVM.insertHistory(contactHistory);
+                                                   ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
+                                                   historyList.add(contactHistory);
+                                                   Stash.put(Constants.SCAN, historyList);
+//                                                   historyVM.insertHistory(contactHistory);
                                                    intent.putExtra("type", "Text");
                                                    intent.putExtra("text", text);
                                                    startActivity(intent);

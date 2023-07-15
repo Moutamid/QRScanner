@@ -23,9 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.adapter.CardHistoryAdapter;
+import com.moutamid.qr.scanner.generator.adapter.HistoryAdapter;
 import com.moutamid.qr.scanner.generator.adapter.ScanHistoryAdapter;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -95,11 +98,15 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
             }
         });
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        getHistoryData();
         getLocale();
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getHistoryData();
+    }
 
     private void getLocale(){
 
@@ -121,25 +128,21 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
     }
     List<History> historyList = new ArrayList<>();
     private void getHistoryData() {
-        historyVM.getHistoryData().observe(getActivity(), histories -> {
-            if (histories.size() == 0){
-                tvIsEmpty.setVisibility(View.VISIBLE);
-                isEmpty = true;
-            }
-            historyList.clear();
-            for (History model: histories){
-                if (model.getType().equals("card")){
-                    historyList.add(model);
-                }
-            }
+        ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+        if (historyList.size() ==0 ){
+            tvIsEmpty.setVisibility(View.VISIBLE);
+            historyRecyclerView.setVisibility(View.GONE);
+            isEmpty = true;
+        } else {
+            tvIsEmpty.setVisibility(View.GONE);
+            historyRecyclerView.setVisibility(View.VISIBLE);
             adapter = new CardHistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mLayoutManager.setReverseLayout(true);
             mLayoutManager.setStackFromEnd(true);
             historyRecyclerView.setLayoutManager(mLayoutManager);
-
-        });
+        }
     }
 
     @Override
@@ -261,7 +264,9 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         adb.setTitle("Delete History");
         adb.setMessage("Are you sure you want to delete?");
         adb.setPositiveButton("Yes", (dialog, which) -> {
-            historyVM.deleteSingleItem(history);
+            ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+            historyList.remove(history);
+            Stash.put(Constants.CARD, historyList);
             adapter.notifyItemRemoved(i);
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
@@ -290,7 +295,10 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
             adb.setTitle("Delete History");
             adb.setMessage("Are you sure you want to delete all the history?");
             adb.setPositiveButton("Yes", (dialog, which) -> {
-                historyVM.deleteAllHistory();
+                ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+                historyList.clear();
+                Stash.put(Constants.CARD, historyList);
+//                historyVM.deleteAllHistory();
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                 }

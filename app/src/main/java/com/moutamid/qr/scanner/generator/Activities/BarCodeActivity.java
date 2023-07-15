@@ -14,11 +14,14 @@ import android.view.View;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class BarCodeActivity extends AppCompatActivity {
@@ -82,9 +85,10 @@ public class BarCodeActivity extends AppCompatActivity {
             editText.getEditText().setError("Please enter text");
         } else {
             if (history){
-
                 History contactHistory = new History(barcodeText, "barcode", false);
-                historyVM.insertHistory(contactHistory);
+                ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                historyList.add(contactHistory);
+                Stash.put(Constants.CREATE, historyList);
             }
             Intent intent = new Intent(this, ScanResultActivity.class);
             intent.putExtra("type", "Barcode");

@@ -18,7 +18,9 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -108,7 +110,9 @@ public class LocationActivity extends AppCompatActivity {
                 location.setPoints(arrayList);
                 if (history) {
                     History locHistory = new History(location.generateString(), "location", false);
-                    historyVM.insertHistory(locHistory);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(locHistory);
+                    Stash.put(Constants.CREATE, historyList);
                 }
 
                 Intent intent = new Intent(this, ScanResultActivity.class);

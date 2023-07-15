@@ -5,6 +5,7 @@ import android.content.Context;
 
 import androidx.multidex.MultiDex;
 
+import com.fxn.stash.Stash;
 import com.onesignal.OneSignal;
 
 public class QRApp extends Application {
@@ -13,6 +14,7 @@ public class QRApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Stash.init(this);
 
         // Enable verbose OneSignal logging to debug issues if needed.
         OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
