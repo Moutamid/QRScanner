@@ -269,6 +269,11 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
             Stash.put(Constants.SCAN, historyList);
 //            historyVM.deleteSingleItem(history);
             adapter.notifyItemRemoved(i);
+            if (historyList.size() ==0 ){
+                tvIsEmpty.setVisibility(View.VISIBLE);
+                historyRecyclerView.setVisibility(View.GONE);
+                isEmpty = true;
+            }
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
@@ -299,7 +304,14 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                 historyList.clear();
                 Stash.put(Constants.SCAN, historyList);
-                historyVM.deleteAllHistory();
+                adapter = new ScanHistoryAdapter(historyList, this);
+                historyRecyclerView.setAdapter(adapter);
+                if (historyList.size() ==0 ){
+                    tvIsEmpty.setVisibility(View.VISIBLE);
+                    historyRecyclerView.setVisibility(View.GONE);
+                    isEmpty = true;
+                }
+                //historyVM.deleteAllHistory();
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                 }

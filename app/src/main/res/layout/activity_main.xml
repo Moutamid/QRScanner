@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/main_frame"
+        app:layout_constraintBottom_toTopOf="@+id/frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +55,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
+        android:id="@+id/frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/ad_container"
@@ -68,190 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:id="@+id/cardView_seekbar"
-            android:layout_alignParentBottom="true">
-
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/constrant_first"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"
-                android:padding="8dp"
-                app:layout_constraintVertical_chainStyle="spread"
-                app:layout_constraintWidth_percent=".6" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constrant_first"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:padding="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/linear_round"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/seekBar">
-
-                <ImageView
-                    android:id="@+id/zoom_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_zoom_01"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    android:onClick="zoomCamera"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/zoom_image" />
-                <ImageView
-                    android:id="@+id/zoom_button_active"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    android:background="@drawable/ic_zoom_active"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    android:onClick="zoomCameraActive"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:contentDescription="@string/zoom_image" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/flash"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    android:onClick="flashButton"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_flash_01"
-                    tools:ignore="OnClick" />
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/flash"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    android:onClick="flashButton"
-                    android:visibility="invisible"
-                    app:layout_constraintStart_toEndOf="@+id/imageView2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_flash_02"
-                    tools:ignore="OnClick" />
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView3"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/zoom_button"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.51"
-                    app:srcCompat="@drawable/image_icon"
-                    android:onClick="btnGallery"
-                    tools:ignore="VectorDrawableCompat"
-                    android:contentDescription="@string/gallery_image" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-       <RelativeLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginBottom="20dp"
-           android:visibility="gone"
-           android:id="@+id/cardView_seekbar">
-           <LinearLayout android:orientation="horizontal"
-               android:backgroundTint="@color/teal_200" android:paddingTop="5dp" android:paddingBottom="5dp" android:layout_width="match_parent" android:layout_height="wrap_content"
-               android:weightSum="4"
-               android:layout_alignParentBottom="true"
-               android:gravity="center"
-               android:layout_marginStart="16dp"
-               android:layout_marginEnd="16dp"
-               android:layout_marginTop="16dp"
-               android:padding="8dp"
-               android:background="@drawable/linear_round"
-               android:layout_marginBottom="30dp"
-               android:id="@+id/options">
-               <ImageView android:id="@+id/mode_check"
-                   android:onClick="btnMode" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>
-               <ImageView android:id="@+id/flash_check"
-                   android:onClick="flashButton" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_flash_off_24"/>
-               <ImageView android:id="@+id/camera_switch"
-                   android:onClick="btnSwitch" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>
-               <ImageView android:id="@+id/beep_check" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/image_icon"
-                   android:onClick="btnGallery"
-                   android:tint="@color/white"/>
-           </LinearLayout>
-
-           <RelativeLayout
-               android:layout_above="@+id/options" android:layout_width="match_parent" android:layout_height="wrap_content">
-               <ImageView android:id="@+id/minus_img" android:paddingLeft="50dp" android:layout_width="wrap_content" android:layout_height="30dp" android:layout_alignParentStart="true" android:src="@drawable/ic_minus"/>
-               <SeekBar android:id="@+id/zoom_sb" android:layout_width="match_parent" android:layout_height="30dp" android:layout_toStartOf="@+id/plus_img" android:layout_toEndOf="@+id/minus_img" style="@style/Progress_color"/>
-               <ImageView android:id="@+id/plus_img" android:paddingRight="50dp" android:layout_width="wrap_content" android:layout_height="30dp" android:layout_alignParentEnd="true" android:src="@drawable/ic_plus"/>
-           </RelativeLayout>
-
-       </RelativeLayout>
-
-
     </RelativeLayout>
-
-
-    <!--<androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_main_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>-->
-    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

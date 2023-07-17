@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         getLocale();
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
         inAppPurchases();
-        checkPermissions();
+        //checkPermissions();
 
         loadQRfragment();
         Menu menu = bottomNavigationView.getMenu();
@@ -153,46 +153,43 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.business).setTitle(R.string.business);
         menu.findItem(R.id.settings).setTitle(R.string.setting);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.scan:
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                        }
-                        loadQRfragment();
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.scan:
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
+                    }
+                    loadQRfragment();
+                break;
+                case R.id.generate_qr:
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
+                    }
+                    loadMenuFragment();
                     break;
-                    case R.id.generate_qr:
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                        }
-                        loadMenuFragment();
-                        break;
-                    case R.id.history:
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                        }
-                        loadHistoryFragment();
-                        break;
-                    case R.id.business:
+                case R.id.history:
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
+                    }
+                    loadHistoryFragment();
+                    break;
+                case R.id.business:
 
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
-                                    MainActivity.this);
-                        }
-                        loadBusinessFragment();
-                        break;
-                    case R.id.settings:
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
-                                    MainActivity.this);
-                        }
-                        loadSettingsFragment();
-                        break;
-                }
-                return true;
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
+                                MainActivity.this);
+                    }
+                    loadBusinessFragment();
+                    break;
+                case R.id.settings:
+                    if (!getPurchaseSharedPreference()) {
+                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
+                                MainActivity.this);
+                    }
+                    loadSettingsFragment();
+                    break;
             }
+            return true;
         });
         bottomNavigationView.invalidate();
 //        Dexter.withActivity(this)
@@ -232,32 +229,6 @@ public class MainActivity extends AppCompatActivity {
         invalidateOptionsMenu();
     }
 
-
-    private void checkPermissions() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (
-                    (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_MEDIA_VIDEO) != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED))
-            {
-                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_VIDEO);
-                shouldShowRequestPermissionRationale(android.Manifest.permission.READ_MEDIA_IMAGES);
-                shouldShowRequestPermissionRationale(Manifest.permission.CAMERA);
-                ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_MEDIA_VIDEO,Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.CAMERA }, 200);
-            }
-        } else {
-            if (
-                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_DENIED &&
-                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED &&
-                    ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_DENIED
-            )
-            {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA }, 200);
-            }
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -265,9 +236,6 @@ public class MainActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 loadQRfragment();
                 Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(MainActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }

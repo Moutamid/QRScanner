@@ -268,6 +268,11 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
             historyList.remove(history);
             Stash.put(Constants.CARD, historyList);
             adapter.notifyItemRemoved(i);
+            if (historyList.size() ==0 ){
+                tvIsEmpty.setVisibility(View.VISIBLE);
+                historyRecyclerView.setVisibility(View.GONE);
+                isEmpty = true;
+            }
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
@@ -299,6 +304,13 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
                 historyList.clear();
                 Stash.put(Constants.CARD, historyList);
 //                historyVM.deleteAllHistory();
+                adapter = new CardHistoryAdapter(historyList, this);
+                historyRecyclerView.setAdapter(adapter);
+                if (historyList.size() ==0 ){
+                    tvIsEmpty.setVisibility(View.VISIBLE);
+                    historyRecyclerView.setVisibility(View.GONE);
+                    isEmpty = true;
+                }
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                 }

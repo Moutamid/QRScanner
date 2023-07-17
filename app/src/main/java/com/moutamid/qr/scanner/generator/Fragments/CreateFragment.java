@@ -28,6 +28,7 @@ import com.fxn.stash.Stash;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.adapter.CardHistoryAdapter;
 import com.moutamid.qr.scanner.generator.adapter.HistoryAdapter;
 import com.moutamid.qr.scanner.generator.adapter.ScanHistoryAdapter;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
@@ -266,6 +267,11 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
             historyList.remove(history);
             Stash.put(Constants.CREATE, historyList);
             adapter.notifyItemRemoved(i);
+            if (historyList.size() ==0 ){
+                tvIsEmpty.setVisibility(View.VISIBLE);
+                historyRecyclerView.setVisibility(View.GONE);
+                isEmpty = true;
+            }
             if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
@@ -296,6 +302,13 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
                 ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
                 historyList.clear();
                 Stash.put(Constants.CREATE, historyList);
+                adapter = new HistoryAdapter(historyList, this);
+                historyRecyclerView.setAdapter(adapter);
+                if (historyList.size() ==0 ){
+                    tvIsEmpty.setVisibility(View.VISIBLE);
+                    historyRecyclerView.setVisibility(View.GONE);
+                    isEmpty = true;
+                }
                 if (!getPurchaseSharedPreference()) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
                 }

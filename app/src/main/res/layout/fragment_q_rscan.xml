@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,21 +8,20 @@
     tools:context="com.moutamid.qr.scanner.generator.Activities.QRScanFragment">
 
     <RelativeLayout
+        android:id="@+id/card"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/card"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <me.dm7.barcodescanner.zxing.ZXingScannerView
             android:id="@+id/scanner_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            />
+            android:layout_gravity="center" />
 
         <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
             android:id="@+id/preview"
@@ -51,66 +49,112 @@
         </com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview>
 
         <ImageView
+            android:id="@+id/done"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_centerInParent="true"
             android:src="@drawable/ic_baseline_arrow_circle_right_24"
-            android:id="@+id/done"
-            android:visibility="gone"
-            android:layout_centerInParent="true"/>
-         <RelativeLayout
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/cardView_seekbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/cardView_seekbar">
+            android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/mode_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mode_status"
-                android:text="Scan Mode: Normal Scanning"
-                android:textSize="16sp"
-                android:textColor="#ffffff"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"></TextView>
-            <LinearLayout android:orientation="horizontal"
+                android:layout_marginTop="50dp"
+                android:text="Scan Mode: Normal Scanning"
+                android:textColor="#ffffff"
+                android:textSize="16sp"></TextView>
+
+            <LinearLayout
+                android:id="@+id/options"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/linear_round"
                 android:backgroundTint="@color/teal_200"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="8dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:layout_width="250dp" android:layout_height="wrap_content"
-                android:weightSum="4"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:padding="8dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/linear_round"
-                android:layout_marginBottom="15dp"
-                android:id="@+id/options">
-                <ImageView android:id="@+id/mode_check"
-                    android:onClick="btnMode"
-                    android:padding="10dp" android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/scan"/>
-                <ImageView android:id="@+id/flash_check"
-                    android:onClick="flashButton" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/ic_baseline_flash_off_24"/>
+                android:weightSum="4">
+
                 <ImageView
-                    android:id="@+id/camera_switch"
-                    android:onClick="btnSwitch"
-                    android:padding="10dp"
+                    android:id="@+id/mode_check"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_baseline_cameraswitch_24"/>
-                <ImageView android:id="@+id/beep_check" android:padding="10dp" android:layout_width="45dp" android:layout_height="45dp" android:layout_weight="1" app:srcCompat="@drawable/image_icon"
+                    android:onClick="btnMode"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/scan" />
+
+                <ImageView
+                    android:id="@+id/flash_check"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="flashButton"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_baseline_flash_off_24" />
+
+                <ImageView
+                    android:id="@+id/camera_switch"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:onClick="btnSwitch"
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/ic_baseline_cameraswitch_24" />
+
+                <ImageView
+                    android:id="@+id/beep_check"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
                     android:onClick="btnGallery"
-                    android:tint="#fff"/>
+                    android:padding="10dp"
+                    app:srcCompat="@drawable/image_icon"
+                    app:tint="#fff" />
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_above="@+id/options" android:layout_width="match_parent" android:layout_height="wrap_content">
-                <ImageView android:id="@+id/minus_img" android:paddingLeft="50dp" android:layout_width="wrap_content" android:layout_height="30dp" android:layout_alignParentStart="true" android:src="@drawable/ic_minus"/>
-                <SeekBar android:id="@+id/zoom_sb" android:layout_width="match_parent" android:layout_height="30dp" android:layout_toStartOf="@+id/plus_img" android:layout_toEndOf="@+id/minus_img" style="@style/Progress_color"/>
-                <ImageView android:id="@+id/plus_img" android:paddingRight="50dp" android:layout_width="wrap_content" android:layout_height="30dp" android:layout_alignParentEnd="true" android:src="@drawable/ic_plus"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/options">
+
+                <ImageView
+                    android:id="@+id/minus_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:paddingLeft="50dp"
+                    android:src="@drawable/ic_minus" />
+
+                <SeekBar
+                    android:id="@+id/zoom_sb"
+                    style="@style/Progress_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_toStartOf="@+id/plus_img"
+                    android:layout_toEndOf="@+id/minus_img" />
+
+                <ImageView
+                    android:id="@+id/plus_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:paddingRight="50dp"
+                    android:src="@drawable/ic_plus" />
+
             </RelativeLayout>
 
         </RelativeLayout>
