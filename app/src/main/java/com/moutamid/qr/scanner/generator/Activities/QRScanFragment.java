@@ -414,14 +414,10 @@ public class QRScanFragment extends Fragment {
             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
         }
         if (checkVibratePreferences()) {
+            Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= 26) {
-
-                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-
                 v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
             } else {
-
-                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
                 v.vibrate(100);
             }
         }
@@ -479,7 +475,7 @@ public class QRScanFragment extends Fragment {
                     Result result = reader.decode(bitmap);
                     if (!result.getText().isEmpty()) {
                         BarcodeFormat barcodeFormat = result.getBarcodeFormat();
-                        Toast.makeText(context, barcodeFormat.name().toString(), Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(context, barcodeFormat.name().toString(), Toast.LENGTH_SHORT).show();
 //                        if (barcodeFormat.equals(BarcodeFormat.QR_CODE)) {
 //                            processRawResult(result.getText());
 //                        } else {
@@ -931,7 +927,8 @@ public class QRScanFragment extends Fragment {
                 }
             });
             modeTxt.setText(R.string.mode1);
-        } else if (mode.equals("manual")) {
+        }
+        else if (mode.equals("manual")) {
             modeTxt.setText(R.string.mode2);
 
             barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
@@ -996,7 +993,6 @@ public class QRScanFragment extends Fragment {
                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                     if (barcodes.size() != 0) {
                         Barcode barcode = barcodes.valueAt(0);
-                        String barcodeValue = barcode.rawValue;
                         int format = barcode.format;
                         runOnUiThread(() -> {
                             mPreview.stop();
@@ -1005,30 +1001,26 @@ public class QRScanFragment extends Fragment {
                                 toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
                             }
                             if (checkVibratePreferences()) {
+                                Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
                                 if (Build.VERSION.SDK_INT >= 26) {
-
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-
                                     v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
                                 } else {
-
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
                                     v.vibrate(100);
                                 }
                             }
                             String rawData = barcodes.valueAt(0).rawValue;
-//                             Toast.makeText(context, "Barcode " + barcodeFormat, Toast.LENGTH_SHORT).show();
                             if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
                                 processResultBarcode(rawData, format);
                             } else {
                                 processRawResult(rawData);
+                            }
 
-                                //                                 if (barcodeFormat == 32 || barcodeFormat == 64) {
+//                                 if (barcodeFormat == 32 || barcodeFormat == 64) {
 //                                     processResultBarcode(rawData);
 //                                 } else {
 //                                     processRawResult(rawData);
 //                                 }
-                            }
+
                         });
                     }
                 }

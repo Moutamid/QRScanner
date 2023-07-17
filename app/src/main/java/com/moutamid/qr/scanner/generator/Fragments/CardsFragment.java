@@ -44,6 +44,8 @@ import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -136,6 +138,11 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         } else {
             tvIsEmpty.setVisibility(View.GONE);
             historyRecyclerView.setVisibility(View.VISIBLE);
+
+            HashSet<History> hashSet = new HashSet<>(historyList);
+            historyList.clear();
+            historyList.addAll(hashSet);
+//            Collections.sort(historyList, (o1, o2) -> History::getId);
             adapter = new CardHistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
