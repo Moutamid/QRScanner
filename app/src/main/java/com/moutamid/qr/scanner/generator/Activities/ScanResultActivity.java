@@ -59,6 +59,8 @@ import com.google.zxing.datamatrix.DataMatrixWriter;
 import com.google.zxing.oned.Code93Writer;
 import com.google.zxing.oned.EAN13Writer;
 import com.google.zxing.oned.EAN8Writer;
+import com.google.zxing.oned.UPCAWriter;
+import com.google.zxing.oned.UPCEWriter;
 import com.moutamid.qr.scanner.generator.Model.ButtonModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.databinding.ActivityScanResultBinding;
@@ -101,7 +103,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class ScanResultActivity extends AppCompatActivity {
-
+    ProgressDialog progressDialog;
     ActivityScanResultBinding binding;
     private final ArrayList<String> resultdatalist = new ArrayList<>();
     // private final ArrayList<ButtonModel> buttonResultdatalist = new ArrayList<>();
@@ -146,6 +148,10 @@ public class ScanResultActivity extends AppCompatActivity {
         }
 
         binding.save.setOnClickListener(view -> saveToGallery());
+
+        progressDialog = new ProgressDialog(ScanResultActivity.this);
+        progressDialog.setMessage("Fetching Product Details....");
+        progressDialog.setCancelable(false);
 
         /*
         deleteBtn.setOnClickListener(new View.OnClickListener() {
@@ -538,11 +544,6 @@ public class ScanResultActivity extends AppCompatActivity {
                 break;
             }
             case "Barcode": {
-
-                ProgressDialog progressDialog = new ProgressDialog(ScanResultActivity.this);
-                progressDialog.setMessage("Fetching Product Details....");
-                progressDialog.setCancelable(false);
-
                 binding.urlLayout.setVisibility(View.VISIBLE);
                 String textBarcode = getIntent().getStringExtra("barcode");
                 int barcodeFormat = getIntent().getIntExtra("barcodeFormat", Barcode.EAN_13);
@@ -560,6 +561,12 @@ public class ScanResultActivity extends AppCompatActivity {
                     } else if (barcodeFormat == Barcode.CODE_93) {
                         codeWriter = new Code93Writer();
                         byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.CODE_93, 700, 300, hintMap);
+                    } else if (barcodeFormat == Barcode.UPC_A) {
+                        codeWriter = new UPCAWriter();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.UPC_A, 700, 300, hintMap);
+                    }  else if (barcodeFormat == Barcode.UPC_E) {
+                        codeWriter = new UPCEWriter();
+                        byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.UPC_E, 700, 300, hintMap);
                     } else {
                         codeWriter = new EAN13Writer();
                         byteMatrix  = codeWriter.encode(textBarcode, BarcodeFormat.EAN_13, 700, 300, hintMap);
@@ -1201,8 +1208,18 @@ public class ScanResultActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        // Dismiss the toast if it is being shown
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+    }
+
+
+    @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
+       // startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 }
