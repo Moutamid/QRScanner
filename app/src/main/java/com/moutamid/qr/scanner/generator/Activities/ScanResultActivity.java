@@ -274,6 +274,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 }
 
                 binding.wifiName.setText(wifi.getSsid());
+                binding.wifiPassword.setText(wifi.getPsk());
                 break;
             }
             case "telephone": {
@@ -600,8 +601,7 @@ public class ScanResultActivity extends AppCompatActivity {
                 ISBN = textBarcode;
 
                 if (getProductPreference()) {
-                    progressDialog.show();
-                    binding.productLayout.setVisibility(View.VISIBLE);
+                    //progressDialog.show();
 
                     String url = "https://go-upc.com/search?q=" + textBarcode;
 
@@ -633,14 +633,13 @@ public class ScanResultActivity extends AppCompatActivity {
                                     binding.productName.setText(n);
                                     binding.productISBN.setText(textBarcode);
                                     binding.productCategory.setText(cat);
-                                    progressDialog.dismiss();
+                                    binding.productLayout.setVisibility(View.VISIBLE);
                                 });
 
-                            } catch (IOException e) {
+                            } catch (IOException | IndexOutOfBoundsException e) {
                                 e.printStackTrace();
                                 Log.d("HTMLCHE",  "ERROR " +  e.getMessage());
                                 runOnUiThread(() -> {
-                                    progressDialog.dismiss();
                                    // Toast.makeText(ScanResultActivity.this, "Product detail not found", Toast.LENGTH_SHORT).show();
                                     binding.productLayout.setVisibility(View.GONE);
                                 });

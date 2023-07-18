@@ -137,9 +137,6 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
         } else {
             tvIsEmpty.setVisibility(View.GONE);
             historyRecyclerView.setVisibility(View.VISIBLE);
-            HashSet<History> hashSet = new HashSet<>(historyList);
-            historyList.clear();
-            historyList.addAll(hashSet);
             adapter = new ScanHistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
