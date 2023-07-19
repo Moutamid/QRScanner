@@ -56,6 +56,10 @@ public class BusinessFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.business_fragment, container, false);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.transparentStatusBar(false);
+
         recyclerView = view.findViewById(R.id.recyclerView);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cardList = new ArrayList<>();

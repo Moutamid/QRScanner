@@ -139,11 +139,11 @@
     <string name="web_search">Auto Web Search</string>
     <string name="web_search_txt">Turn on/off save history</string>
 
-    <string name="mode1">Batch Scanning</string>
+    <string name="mode1">Scan Mode : Batch Scanning</string>
     <string name="mode1_txt">Turn on/off batch scanning</string>
-    <string name="mode2">Manual Scanning</string>
+    <string name="mode2">Scan Mode : Manual Scanning</string>
     <string name="mode2_txt">Turn on/off manual scanning</string>
-    <string name="mode3">Normal Scanning</string>
+    <string name="mode3">Scan Mode : Normal Scanning</string>
     <string name="duplicate">Duplicate QR/Barcode</string>
     <string name="duplicate_txt">Save duplicate QR/Barcode </string>
 

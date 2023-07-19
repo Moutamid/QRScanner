@@ -16,13 +16,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <me.dm7.barcodescanner.zxing.ZXingScannerView
-            android:id="@+id/scanner_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-
         <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
             android:id="@+id/preview"
             android:layout_width="match_parent"
@@ -39,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#54000000"
-                app:line_color="@android:color/holo_red_light"
+                app:line_color="@color/teal_200"
                 app:line_speed="6"
                 app:line_width="4"
                 app:square_height="280"
@@ -139,11 +132,13 @@
                     android:paddingLeft="50dp"
                     android:src="@drawable/ic_minus" />
 
-                <SeekBar
+                <androidx.appcompat.widget.AppCompatSeekBar
                     android:id="@+id/zoom_sb"
                     style="@style/Progress_color"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
+                    android:min="0"
+                    android:max="5"
                     android:layout_toStartOf="@+id/plus_img"
                     android:layout_toEndOf="@+id/minus_img" />
 
@@ -159,6 +154,23 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <me.dm7.barcodescanner.zxing.ZXingScannerView
+                android:id="@+id/scanner_view"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerInParent="true"
+                app:borderColor="@color/teal_200"
+                app:borderLength="25dp"
+                app:borderWidth="2sp"
+                android:visibility="gone"
+                android:layout_gravity="center" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

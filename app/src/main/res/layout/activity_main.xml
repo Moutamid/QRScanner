@@ -73,13 +73,15 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
+        style="@style/bottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:itemIconTint="@drawable/icon_active"
+        app:itemTextColor="@drawable/icon_active"
+        android:padding="10sp"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
         android:background="@color/white"
         app:itemHorizontalTranslationEnabled="false"
         app:layout_constraintHorizontal_bias="0.5"

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
@@ -216,6 +217,18 @@ public class MainActivity extends AppCompatActivity {
 
         String lang = prefs.getString("lang","");
         setLocale(lang);
+    }
+
+    public void transparentStatusBar(boolean transparent) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (transparent) {
+                WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+            } else {
+                WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.teal_200));
+            }
+        }
     }
 
     private void setLocale(String lng) {

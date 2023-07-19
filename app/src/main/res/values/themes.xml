@@ -52,4 +52,11 @@
         <item name="colorPrimary">#5ED9EF</item>
         <item name="android:shadowColor">@color/black</item>
     </style>
+    <style name="bottomNav" parent="Widget.MaterialComponents.BottomNavigationView" >
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="activeIcon" parent="Widget.MaterialComponents.BottomNavigationView" >
+        <item name="iconTint">@color/teal_200</item>
+    </style>
 </resources>

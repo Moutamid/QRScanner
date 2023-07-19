@@ -34,6 +34,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -101,7 +102,7 @@ public class QRScanFragment extends Fragment {
     private Context context;
     private HistoryVM historyVM;
 
-    private int zoomProgress = 5;
+    private int zoomProgress = 0;
     private SharedPreferences prefs;
     static String contents;
     static Uri picUri;
@@ -115,7 +116,7 @@ public class QRScanFragment extends Fragment {
     private static final int RC_HANDLE_GMS = 9001;
     //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
     private ImageView flashon, zoom_minus, zoom_plus, switchBtn, galleryBtn, modeBtn;
-    private SeekBar seekBar;
+    private AppCompatSeekBar seekBar;
     private TextView modeTxt;
     private boolean shouldShowText, multipleScan, showDrawRect, touchAsCallback, shouldFocus, showFlash = false;
     CameraSource.Builder builder;
@@ -174,6 +175,9 @@ public class QRScanFragment extends Fragment {
         }
 
         checkPermissions();
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.transparentStatusBar(true);
 
         return inflater.inflate(R.layout.fragment_q_rscan, container, false);
     }
@@ -1042,19 +1046,20 @@ public class QRScanFragment extends Fragment {
         }
 
         startCameraSource();
-
+//        zoomProgress = 0;
         zoom_plus.setOnClickListener(view -> {
             try {
-                Camera retrieveCamera = barcodeCapture.retrieveCamera();
-                parameters = retrieveCamera.getParameters();
-                if ((zoomProgress + 5) >= parameters.getMaxZoom()) {
+//                Camera retrieveCamera = barcodeCapture.retrieveCamera();
+//                parameters = retrieveCamera.getParameters();
+                if ((zoomProgress + 5) >= 1) {
 
                 }
-                zoomProgress = zoomProgress + 5;
+                zoomProgress = zoomProgress + 1;
                 mCameraSource.doZoom(zoomProgress);
                 seekBar.setProgress(zoomProgress);
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -1063,7 +1068,7 @@ public class QRScanFragment extends Fragment {
 
             }
             //parameters.setZoom(zoomProgress = zoomProgress - 5);
-            zoomProgress = zoomProgress - 5;
+            zoomProgress = zoomProgress - 1;
             mCameraSource.doZoom(zoomProgress);
             seekBar.setProgress(zoomProgress);
 

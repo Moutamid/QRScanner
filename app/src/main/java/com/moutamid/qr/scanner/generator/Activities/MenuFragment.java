@@ -58,6 +58,10 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_menu, container, false);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.transparentStatusBar(false);
+
         barcodeBt=view.findViewById(R.id.barcodeIcon);
         urlBt=view.findViewById(R.id.urlIcon);
         textBt=view.findViewById(R.id.textIcon);

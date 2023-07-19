@@ -62,6 +62,10 @@ public class HistoryActivity extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_history, container, false);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity.transparentStatusBar(false);
+
         CAMediatedBannerView mediatedBannerView = view.findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
