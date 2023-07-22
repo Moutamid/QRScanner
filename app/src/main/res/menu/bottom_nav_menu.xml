@@ -12,10 +12,10 @@
         android:id="@+id/history"
         android:title="@string/history"
         android:icon="@drawable/clockrotate"/>
-    <item
-        android:id="@+id/business"
-        android:title="@string/business"
-        android:icon="@drawable/idcard"/>
+<!--    <item-->
+<!--        android:id="@+id/business"-->
+<!--        android:title="@string/business"-->
+<!--        android:icon="@drawable/idcard"/>-->
     <item
         android:id="@+id/settings"
         android:title="@string/setting"

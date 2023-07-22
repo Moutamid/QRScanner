@@ -49,9 +49,11 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -60,6 +62,7 @@ import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -101,7 +104,7 @@ public class QRScanFragment extends Fragment {
     //  private static ZXingScannerView mScannerView;
     private Context context;
     private HistoryVM historyVM;
-
+    ImageButton flashBtn, modeBtn, galleryBtn;
     private int zoomProgress = 0;
     private SharedPreferences prefs;
     static String contents;
@@ -115,7 +118,7 @@ public class QRScanFragment extends Fragment {
     private boolean isFlash = false;
     private static final int RC_HANDLE_GMS = 9001;
     //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
-    private ImageView flashon, zoom_minus, zoom_plus, switchBtn, galleryBtn, modeBtn;
+    private ImageView flashon, zoom_minus, zoom_plus, switchBtn;//, galleryBtn, modeBtn;
     private AppCompatSeekBar seekBar;
     private TextView modeTxt;
     private boolean shouldShowText, multipleScan, showDrawRect, touchAsCallback, shouldFocus, showFlash = false;
@@ -133,6 +136,7 @@ public class QRScanFragment extends Fragment {
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
+    BottomNavigationView bottomNavigationView;
 
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
@@ -170,16 +174,49 @@ public class QRScanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         assert container != null;
         context = container.getContext();
+
+        View view = inflater.inflate(R.layout.fragment_q_rscan, container, false);
+
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().LoadInterstitial();
         }
 
         checkPermissions();
+        flashBtn = view.findViewById(R.id.flashBtn);
+        modeBtn = view.findViewById(R.id.modeBtn);
+        galleryBtn = view.findViewById(R.id.galleryBtn);
+        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+
+        flashBtn.setOnClickListener(v -> flashButton(v));
+        modeBtn.setOnClickListener(v -> btnMode(v));
+        galleryBtn.setOnClickListener(v -> btnGallery(v));
+
+        bottomNavigationView.setSelectedItemId(R.id.scan);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scan:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+                        break;
+                    case R.id.generate_qr:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        break;
+                    case R.id.history:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
+                        break;
+                    case R.id.settings:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
+                        break;
+                }
+                return false;
+            }
+        });
 
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.transparentStatusBar(true);
 
-        return inflater.inflate(R.layout.fragment_q_rscan, container, false);
+        return view;
     }
 
 
@@ -207,10 +244,10 @@ public class QRScanFragment extends Fragment {
         zoom_minus = view.findViewById(R.id.minus_img);
         zoom_plus = view.findViewById(R.id.plus_img);
         flashon = view.findViewById(R.id.flash_check);
-        modeBtn = view.findViewById(R.id.mode_check);
+//        modeBtn = view.findViewById(R.id.mode_check);
         modeTxt = view.findViewById(R.id.mode_status);
         switchBtn = view.findViewById(R.id.camera_switch);
-        galleryBtn = view.findViewById(R.id.beep_check);
+//        galleryBtn = view.findViewById(R.id.beep_check);
         seekBar = view.findViewById(R.id.zoom_sb);
         imageLayout = view.findViewById(R.id.card);
         cardLayout = view.findViewById(R.id.cardView_seekbar);
@@ -394,24 +431,26 @@ public class QRScanFragment extends Fragment {
                 .setShouldShowText(false);
     }
 
-    private void flashButton() {
+    public void flashButton(View view) {
         if (isFlash) {
             mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             flashon.setImageResource(R.drawable.ic_baseline_flash_off_24);
+            flashBtn.setImageResource(R.drawable.flashon);
             isFlash = false;
         } else {
             mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             isFlash = true;
             flashon.setImageResource(R.drawable.ic_baseline_flash_on_24);
+            flashBtn.setImageResource(R.drawable.flashoff);
         }
     }
 
-    private void btnGallery() {
+    public void btnGallery(View view) {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, 2);
     }
 
-    private void btnMode() {
+    public void btnMode(View view) {
         mPreview.stop();
         if (checkSoundPreferences()) {
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
@@ -453,7 +492,6 @@ public class QRScanFragment extends Fragment {
             cameraSwitch = true;
         }
     }
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -1094,13 +1132,13 @@ public class QRScanFragment extends Fragment {
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnGallery();
+                btnGallery(view);
             }
         });
         flashon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flashButton();
+                flashButton(view);
             }
         });
         switchBtn.setOnClickListener(new View.OnClickListener() {
@@ -1112,7 +1150,7 @@ public class QRScanFragment extends Fragment {
         modeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnMode();
+                btnMode(view);
             }
         });
         doneImg.setOnClickListener(new View.OnClickListener() {

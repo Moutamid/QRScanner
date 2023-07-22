@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         menu.findItem(R.id.scan).setTitle(R.string.scan);
         menu.findItem(R.id.generate_qr).setTitle(R.string.create);
         menu.findItem(R.id.history).setTitle(R.string.history);
-        menu.findItem(R.id.business).setTitle(R.string.business);
+       // menu.findItem(R.id.business).setTitle(R.string.business);
         menu.findItem(R.id.settings).setTitle(R.string.setting);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -174,14 +174,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     loadHistoryFragment();
                     break;
-                case R.id.business:
-
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
-                                MainActivity.this);
-                    }
-                    loadBusinessFragment();
-                    break;
+//                case R.id.business:
+//
+//                    if (!getPurchaseSharedPreference()) {
+//                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
+//                                MainActivity.this);
+//                    }
+//                    loadBusinessFragment();
+//                    break;
                 case R.id.settings:
                     if (!getPurchaseSharedPreference()) {
                         ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
                 getWindow().setStatusBarColor(Color.TRANSPARENT);
             } else {
                 WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.teal_200));
+                getWindow().setStatusBarColor(getResources().getColor(R.color.purple));
             }
         }
     }

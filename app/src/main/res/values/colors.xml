@@ -17,6 +17,7 @@
     <color name="wifiColor">#FDF1F0</color>
     <color name="lightGray">#e9e9e9</color>
     <color name="lightGray2">#F6F6F6</color>
+    <color name="hint">#808080</color>
     <color name="contactColor">#EBFCFF</color>
     <color name="smsColor">#E8FFEC</color>
     <color name="youTubeColor">#FFF1F0</color>
@@ -27,4 +28,12 @@
     <color name="barcodeColor">#F7F5FF</color>
     <color name="headingColour">#585858</color>
     <color name="red">#E91E63</color>
+
+
+    <color name="purple">#6E41D4</color>
+    <color name="purple_ight">#764BDA</color>
+    <color name="green">#4BDA5E</color>
+    <color name="light">#F4F5F7</color>
+    <color name="gray">#E7E9EE</color>
+    <color name="dark">#2E2E2F</color>
 </resources>

@@ -8,13 +8,8 @@
     tools:context="com.moutamid.qr.scanner.generator.Activities.QRScanFragment">
 
     <RelativeLayout
-        android:id="@+id/card"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
             android:id="@+id/preview"
@@ -40,6 +35,104 @@
 
 
         </com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="25sp"
+            app:cardCornerRadius="20sp"
+            app:cardElevation="0sp"
+            app:cardBackgroundColor="@color/light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10sp"
+                    app:cardCornerRadius="20sp"
+                    app:cardElevation="0sp"
+                    app:cardBackgroundColor="@color/gray">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/galleryBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="10sp"
+                            android:onClick="btnGallery"
+                            android:background="@color/gray"
+                            android:src="@drawable/imagesolid" />
+
+                        <ImageButton
+                            android:id="@+id/modeBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="10sp"
+                            android:onClick="btnMode"
+                            android:background="@color/gray"
+                            android:src="@drawable/barcodescanner" />
+
+                        <ImageButton
+                            android:id="@+id/flashBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="10sp"
+                            android:onClick="flashButton"
+                            android:background="@color/gray"
+                            android:src="@drawable/flashon" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottomNavigationView"
+                    style="@style/bottomNav"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:itemIconTint="@drawable/icon_active"
+                    android:padding="6sp"
+                    app:elevation="0sp"
+                    app:labelVisibilityMode="unlabeled"
+                    android:background="@color/light"
+                    app:itemHorizontalTranslationEnabled="false"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:menu="@menu/bottom_nav_menu"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <ImageView
             android:id="@+id/done"
@@ -105,6 +198,7 @@
                     android:layout_height="45dp"
                     android:layout_weight="1"
                     android:onClick="btnSwitch"
+                    android:visibility="gone"
                     android:padding="10dp"
                     app:srcCompat="@drawable/ic_baseline_cameraswitch_24" />
 

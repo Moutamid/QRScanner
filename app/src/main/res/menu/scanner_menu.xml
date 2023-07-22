@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/scan"
+        android:title="Gallery"
+        android:icon="@drawable/imagesolid"/>
+    <item
+        android:id="@+id/generate_qr"
+        android:title="ScannerMode"
+        android:icon="@drawable/barcodescanner"/>
+    <item
+        android:id="@+id/history"
+        android:title="Flash"
+        android:icon="@drawable/flash"/>
+</menu>

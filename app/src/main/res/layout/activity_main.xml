@@ -81,6 +81,7 @@
         app:itemIconTint="@drawable/icon_active"
         app:itemTextColor="@drawable/icon_active"
         android:padding="10sp"
+        android:visibility="gone"
         app:labelVisibilityMode="labeled"
         android:background="@color/white"
         app:itemHorizontalTranslationEnabled="false"

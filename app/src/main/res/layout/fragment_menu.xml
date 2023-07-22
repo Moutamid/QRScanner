@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,622 +8,784 @@
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/toolbar">
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="@string/create_title"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:padding="8dp"
-            android:gravity="center_vertical"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="20dp"
-        android:scrollbars="none">
+        android:layout_height="match_parent"
+        android:layout_above="@id/nav"
+        android:background="@color/purple"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/toolbar">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/create"
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/white"
+                android:textSize="26sp"
+                android:padding="8dp"
+                android:layout_marginTop="10sp"
+                android:gravity="center_vertical"
+                android:textStyle="bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15sp"
+                android:background="@drawable/active_background"
+                android:padding="13sp"
+                android:hint="Search"
+                android:fontFamily="@font/poppins"
+                android:drawableStart="@drawable/ic_baseline_search_24"
+                android:drawablePadding="12sp"
+                android:drawableTint="@color/hint"
+                android:backgroundTint="@color/white"
+                android:textColorHint="@color/hint" />
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/top_bg"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:padding="10sp"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/barcodeIcon"
-                    android:orientation="vertical">
+                    android:layout_margin="10sp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/barcode"
-                        android:src="@drawable/ic_barcode_01"
-                        android:padding="15dp"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
                         android:backgroundTint="@color/barcodeColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/barcodeIcon"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/barcode"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/barcode"
+                            android:src="@drawable/ic_barcode_01"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/barcode"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/purple"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/urlColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/urlIcon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/url"
+                            android:src="@drawable/url"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/url"
+                            android:textAllCaps="true"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#feda2a"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/textColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/textIcon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/text"
+                            android:src="@drawable/ic_text"  />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/text"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#34b565"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/urlIcon"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_margin="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/wifiColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/email_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/email"
+                            android:src="@drawable/email" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/email"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#f2555f" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/smsIcon"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/smsColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/sms"
+                            android:src="@drawable/sms" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/sms"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@android:color/holo_green_dark"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/phoneColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:gravity="center"
+                        android:id="@+id/phone_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:contentDescription="@string/phone"
+                            android:src="@drawable/phone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/phone"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#feda2a" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/businessCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10sp"
+                    android:backgroundTint="#F0E3FF"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/barcode_icon_rect"
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/url"
-                        android:src="@drawable/url"
-                        android:padding="15dp"
-                        android:backgroundTint="@color/urlColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:contentDescription="@string/text"
+                        android:layout_marginEnd="10sp"
+                        android:layout_marginStart="10sp"
+                        app:tint="#6C10DB"
+                        android:src="@drawable/idcard"  />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="Website"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/textIcon"
-                    android:orientation="vertical">
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:text="Business Cards"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="#6C10DB"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/text"
-                        android:src="@drawable/ic_text"                        android:padding="15dp"
-                        android:backgroundTint="@color/textColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:src="@drawable/round_arrow_forward_ios_24"  />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/text"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
                 </LinearLayout>
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Social"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:padding="15sp"/>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/email_icon"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/email"
-                        android:src="@drawable/email"                        android:padding="15dp"
-                        android:backgroundTint="@color/wifiColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/fb_icon"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/facebook"
+                            android:src="@drawable/facebook"                        android:padding="15dp"
+                            android:backgroundTint="@color/contactColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/facebook"
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/email"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/insta_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/insta"
+                            android:src="@drawable/instagram"                        android:padding="15dp"
+                            android:backgroundTint="@color/wifiColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            android:text="@string/insta"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/viber_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/viber"
+                            android:src="@drawable/viber"                        android:padding="15dp"
+                            android:backgroundTint="@color/emailColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/viber"
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/twitter_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/twitter"
+                            android:src="@drawable/twitter"                        android:padding="15dp"
+                            android:backgroundTint="@color/contactColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/twitter"
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/contatc_icon"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/contact"
-                        android:src="@drawable/contact"                        android:padding="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/youtubr_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/youtube"
+                            android:src="@drawable/youtube"                        android:padding="15dp"
+                            android:backgroundTint="@color/youTubeColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            android:text="@string/youtube"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/whatsapp_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/whatsapp"
+                            android:src="@drawable/whatsapp"                        android:padding="15dp"
+                            android:backgroundTint="@color/smsColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            android:text="@string/whatsapp"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/paypal_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/paypal"
+                            android:src="@drawable/paypal"                        android:padding="15dp"
+                            android:backgroundTint="@color/eventColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            android:text="@string/paypal"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        android:id="@+id/card_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/card"
+                            android:src="@drawable/card"                        android:padding="15dp"
+                            android:backgroundTint="@color/contactColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/card"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/spotify_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:contentDescription="@string/spotify"
+                            android:src="@drawable/spotify"                        android:padding="15dp"
+                            android:backgroundTint="@color/smsColor"
+                            android:background="@drawable/barcode_icon_back"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:textSize="14sp"
+                            android:text="@string/spotify"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Others"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:padding="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/eventColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/event_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:contentDescription="@string/event"
+                            android:src="@drawable/event" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/event"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#c72b20"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
                         android:backgroundTint="@color/contactColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/contatc_icon"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:contentDescription="@string/contact"
+                            android:src="@drawable/contact" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/contact"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#0000ff"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/locattion_icon"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/contact"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/locattion_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/location"
-                        android:src="@drawable/location"                        android:padding="15dp"
+                        android:layout_marginStart="5sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/barcode_icon_rect"
                         android:backgroundTint="@color/locationColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10sp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/location"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:contentDescription="@string/location"
+                            android:src="@drawable/location" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/location"
+                            android:textColor="#ef4136"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/wfiIcon"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/wifi"
-                        android:src="@drawable/wifi"                        android:padding="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
                         android:backgroundTint="@color/wifiColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/wfiIcon"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:contentDescription="@string/wifi"
+                            android:src="@drawable/wifi"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/wifi"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#fa3f4a"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/wifi"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/smsIcon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/sms"
-                        android:src="@drawable/sms"                        android:padding="15dp"
-                        android:backgroundTint="@color/smsColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/sms"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/phone_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/phone"
-                        android:src="@drawable/phone"                        android:padding="15dp"
-                        android:backgroundTint="@color/phoneColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/phone"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/event_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/event"
-                        android:src="@drawable/event"                        android:padding="15dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/clip_icon"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
                         android:backgroundTint="@color/eventColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                        android:background="@drawable/barcode_icon_rect"
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/event"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:contentDescription="@string/clipboard"
+                            android:src="@drawable/clipboard" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/youtubr_icon"
-                    android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/clipboard"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#673AB7"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/youtube"
-                        android:src="@drawable/youtube"                        android:padding="15dp"
-                        android:backgroundTint="@color/youTubeColor"
-                        android:background="@drawable/barcode_icon_back"/>
+                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/youtube"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/whatsapp_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/whatsapp"
-                        android:src="@drawable/whatsapp"                        android:padding="15dp"
-                        android:backgroundTint="@color/smsColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/whatsapp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
 
             </LinearLayout>
-            <LinearLayout
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="25sp"
+        app:cardCornerRadius="20sp"
+        app:cardElevation="0sp"
+        app:cardBackgroundColor="@color/light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                style="@style/bottomNav"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/insta_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/insta"
-                        android:src="@drawable/instagram"                        android:padding="15dp"
-                        android:backgroundTint="@color/wifiColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/insta"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/viber_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/viber"
-                        android:src="@drawable/viber"                        android:padding="15dp"
-                        android:backgroundTint="@color/emailColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/viber"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/twitter_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/twitter"
-                        android:src="@drawable/twitter"                        android:padding="15dp"
-                        android:backgroundTint="@color/contactColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/twitter"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/fb_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/facebook"
-                        android:src="@drawable/facebook"                        android:padding="15dp"
-                        android:backgroundTint="@color/contactColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/facebook"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/paypal_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/paypal"
-                        android:src="@drawable/paypal"                        android:padding="15dp"
-                        android:backgroundTint="@color/eventColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/paypal"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:id="@+id/card_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/card"
-                        android:src="@drawable/card"                        android:padding="15dp"
-                        android:backgroundTint="@color/contactColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/card"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/spotify_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/spotify"
-                        android:src="@drawable/spotify"                        android:padding="15dp"
-                        android:backgroundTint="@color/smsColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/spotify"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:id="@+id/clip_icon"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/clipboard"
-                        android:src="@drawable/clipboard"                        android:padding="15dp"
-                        android:backgroundTint="@color/youTubeColor"
-                        android:background="@drawable/barcode_icon_back"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:text="@string/clipboard"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"></View>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"></View>
-
-            </LinearLayout>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:itemIconTint="@drawable/icon_active"
+                android:padding="6sp"
+                app:elevation="0sp"
+                app:labelVisibilityMode="unlabeled"
+                android:background="@color/light"
+                app:itemHorizontalTranslationEnabled="false"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu"/>
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.cardview.widget.CardView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

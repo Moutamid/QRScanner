@@ -6,18 +6,21 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.moutamid.qr.scanner.generator.R;
 
 import java.util.Locale;
@@ -25,9 +28,10 @@ import java.util.Locale;
 public class MenuFragment extends Fragment {
 
     LinearLayout barcodeBt,urlBt,textBt,wifiBt,emailBt,contactBt,locationBt,smsBt,facebook,
-            youtubeBt,phoneBt,eventBt,whatsappBt,twitterBt,viberBt,spotifyBt,instaBt,paypalBt,cardBt,clipBt;
+            youtubeBt,phoneBt,eventBt,whatsappBt,twitterBt,viberBt,spotifyBt,instaBt,paypalBt,cardBt,clipBt, businessCard;
     private SharedPreferences prefs;
 
+    BottomNavigationView bottomNavigationView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class MenuFragment extends Fragment {
         mainActivity.transparentStatusBar(false);
 
         barcodeBt=view.findViewById(R.id.barcodeIcon);
+        businessCard=view.findViewById(R.id.businessCard);
         urlBt=view.findViewById(R.id.urlIcon);
         textBt=view.findViewById(R.id.textIcon);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -85,9 +90,38 @@ public class MenuFragment extends Fragment {
         cardBt=view.findViewById(R.id.card_icon);
         viberBt=view.findViewById(R.id.viber_icon);
         spotifyBt=view.findViewById(R.id.spotify_icon);
+        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+
+
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().LoadInterstitial();
         }
+
+        businessCard.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new BusinessFragment()).commit();
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.generate_qr);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scan:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+                        break;
+                    case R.id.generate_qr:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        break;
+                    case R.id.history:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
+                        break;
+                    case R.id.settings:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
+                        break;
+                }
+                return false;
+            }
+        });
 
         barcodeBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),BarCodeActivity.class);
