@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class BusinessFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Integer> cardList;
     private SharedPreferences prefs;
+    ImageButton close;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,12 @@ public class BusinessFragment extends Fragment {
         mainActivity.transparentStatusBar(false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
+        close = view.findViewById(R.id.close);
+
+        close.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+        });
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cardList = new ArrayList<>();
         loadData();

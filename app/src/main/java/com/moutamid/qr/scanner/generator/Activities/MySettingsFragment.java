@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -35,6 +36,7 @@ import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.moutamid.qr.scanner.generator.Fragments.ScanFragment;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -48,6 +50,7 @@ public class MySettingsFragment extends Fragment {
     private TextView searchTxt,languageTxt,cameraTxt,modeTxt;
     private RelativeLayout policyBtn,rateBtn,shareBtn,deleteBtn,cameraLayout,searchLayout,modelLayout,languageLayout;
     private boolean beepSound = false;
+    BottomNavigationView bottomNavigationView;
     private boolean vibration = false;
     private boolean copied =false;
     SharedPreferences prefs;
@@ -115,6 +118,28 @@ public class MySettingsFragment extends Fragment {
         productDetails = prefs.getBoolean("product",true);
         saveHistory = prefs.getBoolean("saveHistory",true);
         saveQR = prefs.getBoolean("saveQR",true);
+
+        bottomNavigationView.setSelectedItemId(R.id.generate_qr);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scan:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+                        break;
+                    case R.id.generate_qr:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        break;
+                    case R.id.history:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
+                        break;
+                    case R.id.settings:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
+                        break;
+                }
+                return false;
+            }
+        });
 
         String lang = prefs.getString("lang_name", "Default English (USA)");
 

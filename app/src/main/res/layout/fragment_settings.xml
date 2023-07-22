@@ -6,10 +6,25 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <TextView
+        android:id="@+id/setting_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins"
+        android:paddingStart="25dp"
+        android:text="@string/setting"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:layout_below="@id/setting_txt"
+        android:layout_above="@id/nav"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -57,7 +72,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_baseline_language_24" />
 
                         <TextView
@@ -107,7 +122,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/mode" />
 
                         <TextView
@@ -179,7 +194,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_baseline_language_24" />
 
                         <TextView
@@ -227,7 +242,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_baseline_camera_alt_24" />
 
                         <TextView
@@ -274,7 +289,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/scanning" />
 
                         <TextView
@@ -330,7 +345,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/scan" />
 
                         <TextView
@@ -386,7 +401,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/duplication" />
 
                         <TextView
@@ -443,7 +458,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_vibration_setting" />
 
                         <TextView
@@ -499,7 +514,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_sound_setting" />
 
                         <TextView
@@ -555,7 +570,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_auto_copy_setting" />
 
                         <TextView
@@ -611,7 +626,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_auto_web_search" />
 
                         <TextView
@@ -667,7 +682,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_history_erase_setting" />
 
                         <TextView
@@ -716,7 +731,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/box" />
 
                         <TextView
@@ -798,7 +813,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_rate_us" />
 
                         <TextView
@@ -846,7 +861,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_privacy__setting" />
 
                         <TextView
@@ -894,7 +909,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/ic_share_setting" />
 
                         <TextView
@@ -943,7 +958,7 @@
                             android:layout_centerVertical="true"
                             android:backgroundTint="@color/eventColor"
                             android:background="@drawable/icon_border"
-                            app:tint="@color/teal_200"
+                            app:tint="@color/purple"
                             app:srcCompat="@drawable/delete" />
 
                         <TextView
@@ -976,4 +991,43 @@
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="25sp"
+        app:cardCornerRadius="20sp"
+        app:cardElevation="0sp"
+        app:cardBackgroundColor="@color/light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                style="@style/bottomNav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:itemIconTint="@drawable/icon_active"
+                android:padding="6sp"
+                app:elevation="0sp"
+                app:labelVisibilityMode="unlabeled"
+                android:background="@color/light"
+                app:itemHorizontalTranslationEnabled="false"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

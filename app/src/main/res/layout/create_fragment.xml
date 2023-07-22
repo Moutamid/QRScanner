@@ -7,43 +7,78 @@
     android:background="@color/white">
 
 
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/history_recyclerview"
+       <RelativeLayout
+           android:id="@+id/recyclerLayout"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:visibility="gone">
+
+              <androidx.recyclerview.widget.RecyclerView
+                  android:id="@+id/history_recyclerview"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+              <ImageView
+                  android:id="@+id/all_delete_history"
+                  android:layout_width="50dp"
+                  android:layout_height="50dp"
+                  android:layout_alignParentEnd="true"
+                  android:layout_alignParentBottom="true"
+                  android:layout_marginStart="20dp"
+                  android:layout_marginTop="20dp"
+                  android:layout_marginEnd="20dp"
+                  android:layout_marginBottom="20dp"
+                  android:background="@drawable/contact_edit_back"
+                  android:backgroundTint="?attr/cardBackgroundColor"
+                  android:contentDescription="@string/delete_history"
+                  android:onClick="deleteAllHistory"
+                  android:padding="12sp"
+                  android:src="@drawable/delete" />
+
+       </RelativeLayout>
+
+
+       <LinearLayout
+           android:id="@+id/tv_is_empty"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical"
-           app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+           android:gravity="center">
 
-       <ImageView
-           android:id="@+id/all_delete_history"
-           android:layout_width="50dp"
-           android:layout_height="50dp"
-           android:layout_alignParentEnd="true"
-           android:layout_alignParentBottom="true"
-           android:layout_marginStart="20dp"
-           android:layout_marginTop="20dp"
-           android:layout_marginEnd="20dp"
-           android:layout_marginBottom="20dp"
-           android:padding="12sp"
-           android:background="@drawable/contact_edit_back"
-           android:backgroundTint="?attr/cardBackgroundColor"
-           android:contentDescription="@string/delete_history"
-           android:onClick="deleteAllHistory"
-           android:src="@drawable/delete" />
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                  android:text="Empty"
+                  android:textColor="@color/black"
+                  android:textSize="28sp"
+                  android:fontFamily="@font/poppins"
+                  android:textStyle="bold" />
 
+              <TextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                  android:text="Let\'s start to create some codes"
+                  android:textColor="@color/hint"
+                  android:textSize="18sp"
+                  android:fontFamily="@font/poppins"/>
 
-       <TextView
-           android:id="@+id/tv_is_empty"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textSize="18sp"
-           android:textStyle="bold"
-           android:textColor="@color/black"
-           android:text="@string/history_is_empty"
-           android:layout_centerVertical="true"
-           android:layout_centerHorizontal="true"
-           android:visibility="gone"
-           />
+              <Button
+                  android:id="@+id/scanNow"
+                  style="@style/Widget.Material3.Button"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:fontFamily="@font/poppins"
+                  android:layout_margin="10sp"
+                  android:text="Create Now"
+                  android:textSize="16sp" />
+
+       </LinearLayout>
 
 
 </RelativeLayout>

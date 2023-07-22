@@ -1,75 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/toolbar">
-        <TextView
-            android:id="@+id/textView2"
+        android:layout_height="match_parent"
+        android:layout_above="@id/nav">
+
+        <LinearLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="@string/history"
-            android:padding="8dp"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/purple"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/purple"
+                android:fontFamily="@font/poppins"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_margin="10sp"
+                android:text="@string/history"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="0dp"
-        android:layout_height="?actionBarSize"
-        android:id="@+id/tab_layout"
-        android:background="@drawable/contact_edit_back"
-        android:backgroundTint="?attr/cardBackgroundColor"
-        app:tabInlineLabel="true"
-        app:tabIndicator="@drawable/contact_edit_back"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorGravity="stretch"
-        app:tabTextColor="@color/black"
-        app:tabIndicatorColor="@color/black"
-        app:tabSelectedTextColor="@color/white"
-        android:layout_margin="10sp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:tabTextAppearance="@style/CustomTabTexStyle"/>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="?actionBarSize"
+            android:layout_margin="10sp"
+            android:background="@drawable/contact_edit_back"
+            android:backgroundTint="?attr/cardBackgroundColor"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:tabIndicator="@drawable/contact_edit_back"
+            app:tabIndicatorColor="@color/purple"
+            app:tabIndicatorFullWidth="true"
+            app:tabIndicatorGravity="stretch"
+            app:tabInlineLabel="true"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextAppearance="@style/CustomTabTexStyle"
+            app:tabTextColor="@color/black" />
 
-    <androidx.viewpager.widget.ViewPager
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tab_layout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ad_container"
-        android:id="@+id/view_pager"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/ad_container"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
-    <FrameLayout
-        android:id="@+id/ad_container"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:visibility="gone"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
-        <com.consoliads.mediation.bannerads.CAMediatedBannerView
+        <FrameLayout
+            android:id="@+id/ad_container"
+            android:layout_width="0dp"
+            android:layout_height="65dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <com.consoliads.mediation.bannerads.CAMediatedBannerView
                 android:id="@+id/consoli_banner_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                />
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_gravity="center_horizontal" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15sp"
+        android:layout_marginEnd="15sp"
+        android:layout_marginBottom="25sp"
+        app:cardCornerRadius="20sp"
+        app:cardElevation="0sp"
+        app:cardBackgroundColor="@color/light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottomNavigationView"
+                style="@style/bottomNav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:itemIconTint="@drawable/icon_active"
+                android:padding="6sp"
+                app:elevation="0sp"
+                app:labelVisibilityMode="unlabeled"
+                android:background="@color/light"
+                app:itemHorizontalTranslationEnabled="false"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:menu="@menu/bottom_nav_menu"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

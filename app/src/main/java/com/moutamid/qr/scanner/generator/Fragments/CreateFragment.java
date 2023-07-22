@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +28,8 @@ import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 
 import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.Activities.MenuFragment;
+import com.moutamid.qr.scanner.generator.Activities.QRScanFragment;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -54,10 +59,12 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
     private HistoryVM historyVM;
     private RecyclerView historyRecyclerView;
     private HistoryAdapter adapter;
-    private TextView tvIsEmpty;
+    private LinearLayout tvIsEmpty;
     private boolean isEmpty = false;
     private SharedPreferences prefs;
     private ImageView deleteImg;
+
+    RelativeLayout recyclerLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +98,13 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
         historyRecyclerView.setHasFixedSize(false);
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
         deleteImg = view.findViewById(R.id.all_delete_history);
+
+        recyclerLayout = view.findViewById(R.id.recyclerLayout);
+        Button scanNow = view.findViewById(R.id.scanNow);
+        scanNow.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+        });
+
         deleteImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,11 +145,11 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
         ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
         if (historyList.size() ==0 ){
             tvIsEmpty.setVisibility(View.VISIBLE);
-            historyRecyclerView.setVisibility(View.GONE);
+            recyclerLayout.setVisibility(View.GONE);
             isEmpty = true;
         } else {
             tvIsEmpty.setVisibility(View.GONE);
-            historyRecyclerView.setVisibility(View.VISIBLE);
+            recyclerLayout.setVisibility(View.VISIBLE);
             adapter = new HistoryAdapter(historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -270,7 +284,7 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
             adapter.notifyItemRemoved(i);
             if (historyList.size() ==0 ){
                 tvIsEmpty.setVisibility(View.VISIBLE);
-                historyRecyclerView.setVisibility(View.GONE);
+                recyclerLayout.setVisibility(View.GONE);
                 isEmpty = true;
             }
             if (!getPurchaseSharedPreference()) {
@@ -307,7 +321,7 @@ public class CreateFragment extends Fragment implements HistoryItemClickListner 
                 historyRecyclerView.setAdapter(adapter);
                 if (historyList.size() ==0 ){
                     tvIsEmpty.setVisibility(View.VISIBLE);
-                    historyRecyclerView.setVisibility(View.GONE);
+                    recyclerLayout.setVisibility(View.GONE);
                     isEmpty = true;
                 }
                 if (!getPurchaseSharedPreference()) {

@@ -13,12 +13,14 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import com.moutamid.qr.scanner.generator.adapter.HistoryTabAdapter;
@@ -34,6 +36,7 @@ public class HistoryActivity extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences prefs;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -94,6 +97,7 @@ public class HistoryActivity extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.create)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.card)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
         HistoryTabAdapter adapter = new HistoryTabAdapter(getActivity(), getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -112,6 +116,30 @@ public class HistoryActivity extends Fragment {
             }
         });
         getLocale();
+
+        bottomNavigationView.setSelectedItemId(R.id.history);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scan:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+                        break;
+                    case R.id.generate_qr:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        break;
+                    case R.id.history:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
+                        break;
+                    case R.id.settings:
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
+                        break;
+                }
+                return false;
+            }
+        });
+
+
         return view;
     }
 
