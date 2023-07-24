@@ -7,45 +7,53 @@
     android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.ViberActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="5dp"
+        app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            android:onClick="backViber"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/poppins"
-            android:text="@string/viber"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/back_button"
+                android:onClick="backViber"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/viber"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -63,20 +71,22 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:background="@drawable/barcode_icon_back"
+            android:backgroundTint="@color/viber_bg"
+            app:tint="@color/viber_solid"
             android:contentDescription="@string/viber"
-            android:src="@drawable/viber"                        android:padding="15dp"
-            android:backgroundTint="@color/emailColor"
-            android:background="@drawable/barcode_icon_back"/>
+            android:padding="15dp"
+            android:src="@drawable/vibersolid" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
             android:text="Encode your Viber contact details into a QR code and connect seamlessly!"
-            android:layout_margin="5dp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -98,34 +108,34 @@
             android:id="@+id/cpp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:ccp_showArrow="true"
-            app:ccp_showPhoneCode="true"
-            android:gravity="center"
-            app:ccp_showFlag="false"
-            app:ccp_autoDetectCountry="true"
-            android:backgroundTint="@color/emailColor"
-            android:background="@drawable/button_background"
-            app:ccpDialog_textColor="@color/black"
             android:layout_marginStart="20sp"
-            app:ccp_showNameCode="true"/>
+            android:background="@drawable/button_background"
+            android:backgroundTint="@color/viber_bg"
+            android:gravity="center"
+            app:ccpDialog_textColor="@color/black"
+            app:ccp_autoDetectCountry="true"
+            app:ccp_showArrow="true"
+            app:ccp_showFlag="false"
+            app:ccp_showNameCode="true"
+            app:ccp_showPhoneCode="true" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edit_phone"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            android:layout_weight="1"
             android:layout_marginStart="10sp"
             android:layout_marginEnd="20sp"
-            app:hintTextColor="#34B565"
-            app:boxStrokeColor="#34B565"
-            android:hint="@string/phone_number">
+            android:layout_weight="1"
+            android:hint="@string/phone_number"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/viber_solid"
+            app:hintTextColor="@color/viber_solid">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:inputType="phone"
-                android:fontFamily="@font/poppins"/>
+                android:fontFamily="@font/poppins"
+                android:inputType="phone" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -136,18 +146,18 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/viber_bg"
+        android:fontFamily="@font/poppins"
         android:onClick="viberGenerate"
+        android:padding="12dp"
         android:text="@string/generate"
         android:textColor="@color/black"
-        android:fontFamily="@font/poppins"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:background="@drawable/button_background"
-        android:backgroundTint="@color/emailColor"
-        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
 
 
     <androidx.cardview.widget.CardView
@@ -155,11 +165,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="viberGenerate"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/emailColor"
         app:cardCornerRadius="50dp"
         app:cardElevation="10dp"
-        android:visibility="gone"
-        android:onClick="viberGenerate"
         app:layout_constraintDimensionRatio="H,1:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
@@ -171,9 +181,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="12dp"
             android:text="@string/generate"
             android:textColor="@color/black"
-            android:padding="12dp"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -192,11 +202,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <com.consoliads.mediation.bannerads.CAMediatedBannerView
             android:id="@+id/consoli_banner_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            />
+            android:layout_gravity="center_horizontal" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

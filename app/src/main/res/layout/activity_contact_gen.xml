@@ -16,47 +16,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
                 android:id="@+id/constraintLayout_history"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:padding="5dp"
+                app:elevation="16dp"
+                app:cardCornerRadius="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:contentDescription="@string/back_button"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
-                    android:onClick="backContact"
-                    app:tint="@color/black"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="@string/contact"
-                    android:fontFamily="@font/poppins"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/back_button"
+                        android:src="@drawable/ic_baseline_arrow_back_24"
+                        android:onClick="backContact"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
 
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@string/contact"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView5"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -74,20 +80,22 @@
                 <ImageView
                     android:layout_width="80dp"
                     android:layout_height="80dp"
+                    app:tint="@color/contact_solid"
+                    android:background="@drawable/barcode_icon_back"
+                    android:backgroundTint="@color/contact_bg"
                     android:contentDescription="@string/contact"
-                    android:src="@drawable/contact"                        android:padding="15dp"
-                    android:backgroundTint="@color/contactColor"
-                    android:background="@drawable/barcode_icon_back"/>
+                    android:padding="15dp"
+                    android:src="@drawable/contact" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/poppins"
-                    android:text="Capture and share contact details effortlessly with a QR code!"
                     android:layout_margin="5dp"
-                    android:textColor="@color/black"/>
+                    android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Capture and share contact details effortlessly with a QR code!"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -102,24 +110,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent=".36"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-                >
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/contact_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/white"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
-                    app:hintTextColor="#0000FF"
-                    app:boxStrokeColor="#0000FF"
-                    android:hint="@string/name">
+                    android:hint="@string/name"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/contact_solid"
+                    app:hintTextColor="@color/contact_solid">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,17 +134,17 @@
                     android:id="@+id/contact_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/white"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
-                    app:hintTextColor="#0000FF"
-                    app:boxStrokeColor="#0000FF"
-                    android:hint="@string/phone">
+                    android:hint="@string/phone"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/contact_solid"
+                    app:hintTextColor="@color/contact_solid">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,17 +152,17 @@
                     android:id="@+id/contact_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/white"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
-                    app:hintTextColor="#0000FF"
-                    app:boxStrokeColor="#0000FF"
-                    android:hint="@string/email">
+                    android:hint="@string/email"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/contact_solid"
+                    app:hintTextColor="@color/contact_solid">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,17 +170,17 @@
                     android:id="@+id/contact_organization"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/white"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
-                    app:hintTextColor="#0000FF"
-                    app:boxStrokeColor="#0000FF"
-                    android:hint="@string/organization">
+                    android:hint="@string/organization"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/contact_solid"
+                    app:hintTextColor="@color/contact_solid">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -181,17 +188,17 @@
                     android:id="@+id/contact_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:boxBackgroundColor="@color/white"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
-                    app:hintTextColor="#0000FF"
-                    app:boxStrokeColor="#0000FF"
-                    android:hint="@string/address">
+                    android:hint="@string/address"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/contact_solid"
+                    app:hintTextColor="@color/contact_solid">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:fontFamily="@font/poppins"/>
+                        android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -201,29 +208,29 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/contact_bg"
+                android:fontFamily="@font/poppins"
                 android:onClick="contactGenerate"
+                android:padding="12dp"
                 android:text="@string/generate"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:background="@drawable/button_background"
-                android:backgroundTint="@color/contactColor"
-                android:padding="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout13"/>
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/contact_card"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:onClick="contactGenerate"
+                android:visibility="gone"
                 app:cardBackgroundColor="@color/contactColor"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="10dp"
-                android:onClick="contactGenerate"
-                android:visibility="gone"
                 app:layout_constraintDimensionRatio="H,1:3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.07"
@@ -235,11 +242,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/generate"
                     android:fontFamily="@font/poppins"
+                    android:padding="12dp"
+                    android:text="@string/generate"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:padding="12dp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -249,6 +256,7 @@
                 </TextView>
 
             </androidx.cardview.widget.CardView>
+
             <FrameLayout
                 android:id="@+id/ad_container"
                 android:layout_width="0dp"
@@ -256,18 +264,17 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
+
                 <com.consoliads.mediation.bannerads.CAMediatedBannerView
                     android:id="@+id/consoli_banner_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    />
+                    android:layout_gravity="center_horizontal" />
             </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

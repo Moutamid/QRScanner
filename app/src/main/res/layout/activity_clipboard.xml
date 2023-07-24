@@ -7,47 +7,53 @@
     android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.ClipboardActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:padding="5dp"
+        app:elevation="16dp"
+        app:cardCornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:contentDescription="@string/back_button"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            android:onClick="backClipboard"
-            app:tint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/clipboard"
-            android:fontFamily="@font/poppins"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView5"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/back_button"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:onClick="backClipboard"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/poppins"
+                android:text="@string/clipboard"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="parent" />
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -66,8 +72,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:contentDescription="@string/clipboard"
-            android:src="@drawable/clipboard"                        android:padding="15dp"
-            android:backgroundTint="@color/wifiColor"
+            android:src="@drawable/clipboardsolid"
+            app:tint="@color/clipboard_solid"
+            android:padding="15dp"
+            android:backgroundTint="@color/clipboard_bg"
             android:background="@drawable/barcode_icon_back"/>
 
         <TextView
@@ -101,7 +109,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:hintTextColor="@color/black"
-            app:boxStrokeColor="#669900"
+            app:boxStrokeColor="@color/clipboard_solid"
             android:hint="@string/texthint">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -141,7 +149,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:background="@drawable/button_background"
-        android:backgroundTint="@color/wifiColor"
+        android:backgroundTint="@color/clipboard_bg"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

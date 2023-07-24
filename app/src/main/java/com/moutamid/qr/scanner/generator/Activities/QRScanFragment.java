@@ -35,6 +35,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -110,7 +111,7 @@ public class QRScanFragment extends Fragment {
     static String contents;
     static Uri picUri;
     private RelativeLayout imageLayout, cardLayout;
-
+    View navLay;
     private Camera.Parameters parameters;
     private final int REQUEST_CODE_PERMISSIONS = 101;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
@@ -144,7 +145,7 @@ public class QRScanFragment extends Fragment {
     BarcodeDetector barcodeDetector;
     private String cameraMode;
     private String textBarcode = "";
-
+    CardView buttonsLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -182,10 +183,14 @@ public class QRScanFragment extends Fragment {
         }
 
         checkPermissions();
-        flashBtn = view.findViewById(R.id.flashBtn);
-        modeBtn = view.findViewById(R.id.modeBtn);
-        galleryBtn = view.findViewById(R.id.galleryBtn);
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        navLay = view.findViewById(R.id.navLay);
+        flashBtn = navLay.findViewById(R.id.flashBtn);
+        modeBtn = navLay.findViewById(R.id.modeBtn);
+        galleryBtn = navLay.findViewById(R.id.galleryBtn);
+        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
+        buttonsLayout = navLay.findViewById(R.id.buttonsLayout);
+
+        buttonsLayout.setVisibility(View.VISIBLE);
 
         flashBtn.setOnClickListener(v -> flashButton(v));
         modeBtn.setOnClickListener(v -> btnMode(v));

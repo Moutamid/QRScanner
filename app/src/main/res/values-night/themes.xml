@@ -27,11 +27,11 @@
     </style>
 
     <style name="Theme.QRScanner.ChipsColor" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipBackgroundColor">@color/wifiColor</item>
+        <item name="chipBackgroundColor">@color/wifi_bg</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/poppins</item>
         <item name="android:textSize">16sp</item>
-        <item name="checkedIconTint">#E91E63</item>
+        <item name="checkedIconTint">@color/wifi_solid</item>
     </style>
 
 </resources>

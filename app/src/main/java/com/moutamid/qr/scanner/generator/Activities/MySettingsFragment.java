@@ -65,7 +65,7 @@ public class MySettingsFragment extends Fragment {
     private boolean web =false;
     private HistoryVM historyVM;
     //private RelativeLayout languageTxt;
-
+    View navLay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,7 +119,10 @@ public class MySettingsFragment extends Fragment {
         saveHistory = prefs.getBoolean("saveHistory",true);
         saveQR = prefs.getBoolean("saveQR",true);
 
-        bottomNavigationView.setSelectedItemId(R.id.generate_qr);
+        navLay = view.findViewById(R.id.navLay);
+        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setSelectedItemId(R.id.settings);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

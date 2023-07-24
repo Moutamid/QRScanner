@@ -5,23 +5,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context="com.moutamid.qr.scanner.generator.Activities.MenuFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/nav"
-        android:background="@color/purple"
-        android:orientation="vertical">
+        android:background="@color/purple">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+            android:layout_alignParentTop="true"
             android:id="@+id/toolbar">
 
             <TextView
@@ -55,12 +52,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_below="@id/toolbar"
             android:background="@drawable/top_bg"
             android:scrollbars="none">
 
@@ -90,10 +84,11 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/barcode"
-                            android:src="@drawable/ic_barcode_01"/>
+                            app:tint="@color/purple"
+                            android:src="@drawable/barcodesolid"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -114,16 +109,17 @@
                         android:layout_marginEnd="5sp"
                         android:layout_marginStart="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/urlColor"
+                        android:backgroundTint="@color/url_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:id="@+id/urlIcon"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/url"
-                            android:src="@drawable/url"/>
+                            app:tint="@color/url_solid"
+                            android:src="@drawable/linksolid"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -134,7 +130,7 @@
                             android:textStyle="bold"
                             android:fontFamily="@font/poppins"
                             android:layout_marginTop="5dp"
-                            android:textColor="#feda2a"/>
+                            android:textColor="@color/url_solid"/>
 
                     </LinearLayout>
 
@@ -145,16 +141,17 @@
                         android:gravity="center"
                         android:layout_marginStart="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/textColor"
+                        android:backgroundTint="@color/text_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:id="@+id/textIcon"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/text"
-                            android:src="@drawable/ic_text"  />
+                            app:tint="@color/text_solid"
+                            android:src="@drawable/spell_check_solid"  />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -164,7 +161,7 @@
                             android:fontFamily="@font/poppins"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textColor="#34b565"/>
+                            android:textColor="@color/text_solid"/>
                     </LinearLayout>
 
 
@@ -184,16 +181,17 @@
                         android:gravity="center"
                         android:layout_marginEnd="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/wifiColor"
+                        android:backgroundTint="@color/email_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:id="@+id/email_icon"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/email"
-                            android:src="@drawable/email" />
+                            app:tint="@color/email_solid"
+                            android:src="@drawable/envelopesolid" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -203,7 +201,7 @@
                             android:fontFamily="@font/poppins"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textColor="#f2555f" />
+                            android:textColor="@color/email_solid" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -220,10 +218,11 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/sms"
-                            android:src="@drawable/sms" />
+                            app:tint="@android:color/holo_green_dark"
+                            android:src="@drawable/commentsolid" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -243,17 +242,18 @@
                         android:layout_weight="1"
                         android:layout_marginStart="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/phoneColor"
+                        android:backgroundTint="@color/phone_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:gravity="center"
                         android:id="@+id/phone_icon"
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="35dp"
-                            android:layout_height="35dp"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
                             android:contentDescription="@string/phone"
-                            android:src="@drawable/phone" />
+                            app:tint="@color/phone_solid"
+                            android:src="@drawable/phonesolid" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -263,45 +263,219 @@
                             android:fontFamily="@font/poppins"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textColor="#feda2a" />
+                            android:textColor="@color/phone_solid" />
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/businessCard"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10sp"
-                    android:backgroundTint="#F0E3FF"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/barcode_icon_rect"
+                    android:text="Others"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginTop="10dp"
+                    android:padding="15sp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:contentDescription="@string/text"
-                        android:layout_marginEnd="10sp"
-                        android:layout_marginStart="10sp"
-                        app:tint="#6C10DB"
-                        android:src="@drawable/idcard"  />
-
-                    <TextView
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="18sp"
-                        android:text="Business Cards"
-                        android:fontFamily="@font/poppins"
-                        android:textColor="#6C10DB"/>
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/calender_bg"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/event_icon"
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/event"
+                            app:tint="@color/calender_solid"
+                            android:src="@drawable/calendarsolid" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/event"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/calender_solid"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:contentDescription="@string/text"
-                        android:src="@drawable/round_arrow_forward_ios_24"  />
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginStart="5sp"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/contact_bg"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/contatc_icon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/contact"
+                            app:tint="@color/contact_solid"
+                            android:src="@drawable/addresssolid" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/contact"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/contact_solid"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/locattion_icon"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5sp"
+                        android:layout_weight="1"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:backgroundTint="@color/locationColor"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10sp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/location"
+                            app:tint="@color/location_solid"
+                            android:src="@drawable/locationsolid" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/poppins"
+                            android:text="@string/location"
+                            android:textColor="@color/location_solid"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_marginEnd="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/wifi_bg"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:id="@+id/wfiIcon"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/wifi"
+                            app:tint="@color/wifi_solid"
+                            android:src="@drawable/wifisolid"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/wifi"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/wifi_solid"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/clip_icon"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/clipboard_bg"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@string/clipboard"
+                            app:tint="@color/clipboard_solid"
+                            android:src="@drawable/clipboardsolid" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="@string/clipboard"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="@color/clipboard_solid"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:id="@+id/businessCard"
+                        android:layout_marginStart="5sp"
+                        android:padding="10sp"
+                        android:backgroundTint="@color/eventColor"
+                        android:background="@drawable/barcode_icon_rect"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            app:tint="#6C10DB"
+                            android:contentDescription="@string/clipboard"
+                            android:src="@drawable/id_card_clip_solid" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:text="Cards"
+                            android:fontFamily="@font/poppins"
+                            android:textStyle="bold"
+                            android:layout_marginTop="5dp"
+                            android:textColor="#6C10DB"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -332,8 +506,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/facebook"
-                            android:src="@drawable/facebook"                        android:padding="15dp"
-                            android:backgroundTint="@color/contactColor"
+                            android:src="@drawable/facebooksolid"
+                            android:padding="15sp"
+                            app:tint="@color/facebook_solid"
+                            android:backgroundTint="@color/facebook_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -358,8 +534,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/insta"
-                            android:src="@drawable/instagram"                        android:padding="15dp"
-                            android:backgroundTint="@color/wifiColor"
+                            android:src="@drawable/instagramsolid"
+                            android:padding="15dp"
+                            app:tint="@color/insta_solid"
+                            android:backgroundTint="@color/insta_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -384,8 +562,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/viber"
-                            android:src="@drawable/viber"                        android:padding="15dp"
-                            android:backgroundTint="@color/emailColor"
+                            android:src="@drawable/vibersolid"
+                            android:padding="15dp"
+                            app:tint="@color/viber_solid"
+                            android:backgroundTint="@color/viber_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -411,7 +591,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/twitter"
-                            android:src="@drawable/twitter"                        android:padding="15dp"
+                            android:src="@drawable/twittersolid"
+                            android:padding="15dp"
+                            app:tint="@color/twitter_solid"
                             android:backgroundTint="@color/contactColor"
                             android:background="@drawable/barcode_icon_back"/>
 
@@ -446,7 +628,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/youtube"
-                            android:src="@drawable/youtube"                        android:padding="15dp"
+                            android:src="@drawable/youtubesolid"
+                            android:padding="15dp"
+                            app:tint="@color/youtube_solid"
                             android:backgroundTint="@color/youTubeColor"
                             android:background="@drawable/barcode_icon_back"/>
 
@@ -473,8 +657,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/whatsapp"
-                            android:src="@drawable/whatsapp"                        android:padding="15dp"
-                            android:backgroundTint="@color/smsColor"
+                            android:src="@drawable/whatsappsolid"
+                            android:padding="15dp"
+                            app:tint="@color/whatsapp_solid"
+                            android:backgroundTint="@color/whatsapp_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -499,8 +685,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/paypal"
-                            android:src="@drawable/paypal"                        android:padding="15dp"
-                            android:backgroundTint="@color/eventColor"
+                            android:src="@drawable/paypalsolid"
+                            android:padding="15dp"
+                            app:tint="@color/paypal_solid"
+                            android:backgroundTint="@color/paypal_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -552,7 +740,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="@string/spotify"
-                            android:src="@drawable/spotify"                        android:padding="15dp"
+                            android:src="@drawable/spotifysolid"
+                            android:padding="15dp"
+                            app:tint="@color/spotify_solid"
                             android:backgroundTint="@color/smsColor"
                             android:background="@drawable/barcode_icon_back"/>
 
@@ -569,178 +759,16 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Others"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/poppins"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:layout_marginTop="10dp"
-                    android:padding="15sp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_marginEnd="5sp"
-                        android:padding="10sp"
-                        android:backgroundTint="@color/eventColor"
-                        android:background="@drawable/barcode_icon_rect"
-                        android:id="@+id/event_icon"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:contentDescription="@string/event"
-                            android:src="@drawable/event" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/event"
-                            android:fontFamily="@font/poppins"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#c72b20"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_marginStart="5sp"
-                        android:layout_marginEnd="5sp"
-                        android:padding="10sp"
-                        android:backgroundTint="@color/contactColor"
-                        android:background="@drawable/barcode_icon_rect"
-                        android:id="@+id/contatc_icon"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:contentDescription="@string/contact"
-                            android:src="@drawable/contact" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/contact"
-                            android:fontFamily="@font/poppins"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#0000ff"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/locattion_icon"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5sp"
-                        android:layout_weight="1"
-                        android:background="@drawable/barcode_icon_rect"
-                        android:backgroundTint="@color/locationColor"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10sp">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:contentDescription="@string/location"
-                            android:src="@drawable/location" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:fontFamily="@font/poppins"
-                            android:text="@string/location"
-                            android:textColor="#ef4136"
-                            android:textSize="14sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="10dp">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:layout_marginEnd="5sp"
-                        android:padding="10sp"
-                        android:backgroundTint="@color/wifiColor"
-                        android:background="@drawable/barcode_icon_rect"
-                        android:id="@+id/wfiIcon"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:contentDescription="@string/wifi"
-                            android:src="@drawable/wifi"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/wifi"
-                            android:fontFamily="@font/poppins"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#fa3f4a"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:id="@+id/clip_icon"
-                        android:layout_marginStart="5sp"
-                        android:padding="10sp"
-                        android:backgroundTint="@color/eventColor"
-                        android:background="@drawable/barcode_icon_rect"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:contentDescription="@string/clipboard"
-                            android:src="@drawable/clipboard" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:text="@string/clipboard"
-                            android:fontFamily="@font/poppins"
-                            android:textStyle="bold"
-                            android:layout_marginTop="5dp"
-                            android:textColor="#673AB7"/>
-
-                    </LinearLayout>
-
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="100sp"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
 
@@ -748,44 +776,15 @@
 
         </ScrollView>
 
-    </LinearLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15sp"
-        android:layout_marginEnd="15sp"
-        android:layout_marginBottom="25sp"
-        app:cardCornerRadius="20sp"
-        app:cardElevation="0sp"
-        app:cardBackgroundColor="@color/light">
-
-        <LinearLayout
+        <include layout="@layout/bottom_nav"
+            android:id="@+id/navLay"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="25sp"
+            android:layout_alignParentBottom="true" />
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottomNavigationView"
-                style="@style/bottomNav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:itemIconTint="@drawable/icon_active"
-                android:padding="6sp"
-                app:elevation="0sp"
-                app:labelVisibilityMode="unlabeled"
-                android:background="@color/light"
-                app:itemHorizontalTranslationEnabled="false"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:menu="@menu/bottom_nav_menu"/>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
 </RelativeLayout>

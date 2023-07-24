@@ -30,7 +30,7 @@ public class MenuFragment extends Fragment {
     LinearLayout barcodeBt,urlBt,textBt,wifiBt,emailBt,contactBt,locationBt,smsBt,facebook,
             youtubeBt,phoneBt,eventBt,whatsappBt,twitterBt,viberBt,spotifyBt,instaBt,paypalBt,cardBt,clipBt, businessCard;
     private SharedPreferences prefs;
-
+    View navLay;
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -90,7 +90,8 @@ public class MenuFragment extends Fragment {
         cardBt=view.findViewById(R.id.card_icon);
         viberBt=view.findViewById(R.id.viber_icon);
         spotifyBt=view.findViewById(R.id.spotify_icon);
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        navLay = view.findViewById(R.id.navLay);
+        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
 
 
         if (!getPurchaseSharedPreference()) {

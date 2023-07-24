@@ -37,7 +37,7 @@ public class HistoryActivity extends Fragment {
     private ViewPager viewPager;
     private SharedPreferences prefs;
     BottomNavigationView bottomNavigationView;
-
+    View navLay;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +97,8 @@ public class HistoryActivity extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.create)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.card)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        bottomNavigationView = view.findViewById(R.id.bottomNavigationView);
+        navLay = view.findViewById(R.id.navLay);
+        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
         HistoryTabAdapter adapter = new HistoryTabAdapter(getActivity(), getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
