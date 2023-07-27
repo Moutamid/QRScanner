@@ -34,19 +34,42 @@
                 android:gravity="center_vertical"
                 android:textStyle="bold" />
 
-            <EditText
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15sp"
+                android:gravity="center_vertical"
                 android:background="@drawable/active_background"
-                android:padding="13sp"
-                android:hint="Quick Create QR"
-                android:fontFamily="@font/poppins"
+                android:backgroundTint="@color/white"
+                android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/quick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:drawableStart="@drawable/qrcodesolid"
                 android:drawablePadding="12sp"
-                android:drawableTint="@color/hint"
                 android:backgroundTint="@color/white"
+                android:background="@drawable/active_background"
+                android:drawableTint="@color/hint"
+                android:fontFamily="@font/poppins"
+                android:layout_weight="1"
+                android:hint="Quick Create QR"
+                android:padding="13sp"
                 android:textColorHint="@color/hint" />
+
+                <ImageView
+                    android:id="@+id/quickBtn"
+                    android:layout_width="38sp"
+                    android:layout_height="38sp"
+                    android:padding="3sp"
+                    android:layout_marginEnd="10sp"
+                    android:layout_marginStart="10sp"
+                    android:backgroundTint="@color/lightGray2"
+                    android:background="@drawable/round_bg"
+                    android:src="@drawable/round_arrow_forward_ios_24" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

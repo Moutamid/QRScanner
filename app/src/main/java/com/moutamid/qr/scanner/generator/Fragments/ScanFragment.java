@@ -48,6 +48,7 @@ import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -149,6 +150,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
             recyclerLayout.setVisibility(View.GONE);
             isEmpty = true;
         } else {
+            Collections.reverse(historyList);
             tvIsEmpty.setVisibility(View.GONE);
             recyclerLayout.setVisibility(View.VISIBLE);
             adapter = new ScanHistoryAdapter(historyList, this);

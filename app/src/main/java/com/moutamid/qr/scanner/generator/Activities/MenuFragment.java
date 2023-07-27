@@ -16,13 +16,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.fxn.stash.Stash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.qrscanner.History;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MenuFragment extends Fragment {
@@ -30,6 +37,8 @@ public class MenuFragment extends Fragment {
     LinearLayout barcodeBt,urlBt,textBt,wifiBt,emailBt,contactBt,locationBt,smsBt,facebook,
             youtubeBt,phoneBt,eventBt,whatsappBt,twitterBt,viberBt,spotifyBt,instaBt,paypalBt,cardBt,clipBt, businessCard;
     private SharedPreferences prefs;
+    EditText quick;
+    ImageView quickBtn;
     View navLay;
     BottomNavigationView bottomNavigationView;
 
@@ -68,6 +77,8 @@ public class MenuFragment extends Fragment {
 
         barcodeBt=view.findViewById(R.id.barcodeIcon);
         businessCard=view.findViewById(R.id.businessCard);
+        quick=view.findViewById(R.id.quick);
+        quickBtn=view.findViewById(R.id.quickBtn);
         urlBt=view.findViewById(R.id.urlIcon);
         textBt=view.findViewById(R.id.textIcon);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -93,6 +104,27 @@ public class MenuFragment extends Fragment {
         navLay = view.findViewById(R.id.navLay);
         bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
 
+        boolean history = prefs.getBoolean("saveHistory",true);
+        quickBtn.setOnClickListener(v -> {
+            if (quick.getText().toString().isEmpty()){
+                Toast.makeText(mainActivity, "Text is empty", Toast.LENGTH_SHORT).show();
+            } else {
+                String data = quick.getText().toString();
+                if (history) {
+                    History textHistory = new History(data, "text", false);
+                    ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
+                    historyList.add(textHistory);
+                    Stash.put(Constants.CREATE, historyList);
+                }
+                Intent intent = new Intent(requireActivity(), ScanResultActivity.class);
+                intent.putExtra("type", "Text");
+                intent.putExtra("text", data);
+                startActivity(intent);
+                if (!getPurchaseSharedPreference()) {
+                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, requireActivity());
+                }
+            }
+        });
 
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().LoadInterstitial();
@@ -101,6 +133,8 @@ public class MenuFragment extends Fragment {
         businessCard.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new BusinessFragment()).commit();
         });
+
+
 
         bottomNavigationView.setSelectedItemId(R.id.generate_qr);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

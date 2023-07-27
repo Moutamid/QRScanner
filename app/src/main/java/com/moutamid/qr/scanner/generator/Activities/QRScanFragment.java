@@ -491,10 +491,6 @@ public class QRScanFragment extends Fragment {
             cameraMode = "batch";
             createCameraSource(true, false, false, cameraMode);
             modeTxt.setText(R.string.mode1);
-        } else if (cameraMode.equals("batch")) {
-            cameraMode = "manual";
-            createCameraSource(true, false, false, cameraMode);
-            modeTxt.setText(R.string.mode2);
         } else {
             cameraMode = "normal";
             createCameraSource(true, false, false, cameraMode);
@@ -965,14 +961,18 @@ public class QRScanFragment extends Fragment {
                                 String barcodeValue = barcode.rawValue;
                                 int format = barcode.format;
                                 String rawData = barcodes.valueAt(barcodes.size()-1).rawValue;
-                                ResultModel resultModel = new ResultModel(format, rawData);
                                 ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
-                                list.add(resultModel);
-                                Stash.put(Constants.RESULT_BATCH, list);
+
                                 if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
                                    qrBar.setText("Barcode");
+                                   ResultModel resultModel = new ResultModel(format, rawData);
+                                    list.add(resultModel);
+                                    Stash.put(Constants.RESULT_BATCH, list);
                                 } else {
                                     qrBar.setText("QR Code");
+                                    ResultModel resultModel = new ResultModel(-1, rawData);
+                                    list.add(resultModel);
+                                    Stash.put(Constants.RESULT_BATCH, list);
                                 }
                                 int size = list.size() - (list.size()/2);
                                 itemCount.setText(size+"");
@@ -1013,61 +1013,6 @@ public class QRScanFragment extends Fragment {
                 }
             });
             modeTxt.setText(R.string.mode1);
-        }
-        else if (mode.equals("manual")) {
-            modeTxt.setText(R.string.mode2);
-
-            Log.d("CAMRA", "MANUAL");
-            barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
-                @Override
-                public void release() {
-                    Toast.makeText(getActivity(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
-                    final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                    if (barcodes.size() != 0) {
-                        runOnUiThread(() -> {
-                            mPreview.stop();
-                            if (checkSoundPreferences()) {
-                                ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                                toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                            }
-                            if (checkVibratePreferences()) {
-                                if (Build.VERSION.SDK_INT >= 26) {
-
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-
-                                    v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                                } else {
-
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                                    v.vibrate(100);
-                                }
-                            }
-                            textBarcode = barcodes.valueAt(0).rawValue;
-                            doneImg.setVisibility(View.VISIBLE);
-                            //captureImage();
-                        });
-                    }
-                }
-            });
-               /* mCameraSource.getCamera().setPreviewCallback(new Camera.PreviewCallback() {
-                    @Override
-                    public void onPreviewFrame(byte[] bytes, Camera camera) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                        Frame frame = new Frame.Builder().setBitmap(bitmap).build();
-                        SparseArray<Barcode> sparseArray = barcodeDetector.detect(frame);
-                        for (int i = 0; i < sparseArray.size(); i++){
-
-                            String rawData = sparseArray.valueAt(i).rawValue;
-
-                            processResultBarcode(rawData);
-                        }
-                        barcodeDetector.release();
-                    }
-                });*/
         }
         else {
             Log.d("CAMRA", "NORMAL ELSE");
