@@ -4,4 +4,5 @@ public class Constants {
     public static final String SCAN = "scan";
     public static final String CREATE = "create";
     public static final String CARD = "card";
+    public static final String RESULT_BATCH = "RESULT_BATCH";
 }

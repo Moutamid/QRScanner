@@ -114,6 +114,9 @@
             app:helperTextTextColor="@color/black"
             app:helperText="Use Country code with plus symbol"
             app:hintTextColor="@color/black"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/addresssolid"
+            app:endIconCheckable="true"
             app:boxStrokeColor="@color/phone_solid"
             android:hint="@string/phone_number">
 

@@ -24,6 +24,21 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url 'https://maven.google.com' }
         flatDir { dirs 'libs' }
+
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = "mapbox"
+                // Use the secret token you stored in gradle.properties as the password
+                password = "sk.eyJ1Ijoic3VsZW1hbmJhandhIiwiYSI6ImNsa2pyMXAyODB1OXQzamtna2R4eXd5am0ifQ.7HwGKYlONfW5_IRbWl5ogw"
+            }
+        }
+
     }
 }
 

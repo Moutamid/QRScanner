@@ -64,6 +64,7 @@ import android.widget.Toast;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.card.MaterialCardView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -74,6 +75,7 @@ import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Reader;
 import com.google.zxing.common.HybridBinarizer;
 import com.moutamid.qr.scanner.generator.Constants;
+import com.moutamid.qr.scanner.generator.Model.ResultModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -97,6 +99,7 @@ import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -106,6 +109,7 @@ public class QRScanFragment extends Fragment {
     private Context context;
     private HistoryVM historyVM;
     ImageButton flashBtn, modeBtn, galleryBtn;
+    TextView qrBar, result, itemCount;
     private int zoomProgress = 0;
     private SharedPreferences prefs;
     static String contents;
@@ -116,6 +120,7 @@ public class QRScanFragment extends Fragment {
     private final int REQUEST_CODE_PERMISSIONS = 101;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
     private BarcodeCapture barcodeCapture;
+    MaterialCardView batchCard;
     private boolean isFlash = false;
     private static final int RC_HANDLE_GMS = 9001;
     //private final ArrayList<ButtonMainModel> mainDataList = new ArrayList<>();
@@ -182,11 +187,18 @@ public class QRScanFragment extends Fragment {
             ConsoliAds.Instance().LoadInterstitial();
         }
 
+        ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
+        list.clear();
+        Stash.put(Constants.RESULT_BATCH, list);
         checkPermissions();
         navLay = view.findViewById(R.id.navLay);
         flashBtn = navLay.findViewById(R.id.flashBtn);
         modeBtn = navLay.findViewById(R.id.modeBtn);
         galleryBtn = navLay.findViewById(R.id.galleryBtn);
+        batchCard = view.findViewById(R.id.batchCard);
+        itemCount = view.findViewById(R.id.itemCount);
+        qrBar = view.findViewById(R.id.qrBar);
+        result = view.findViewById(R.id.result);
         bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
         buttonsLayout = navLay.findViewById(R.id.buttonsLayout);
 
@@ -195,6 +207,12 @@ public class QRScanFragment extends Fragment {
         flashBtn.setOnClickListener(v -> flashButton(v));
         modeBtn.setOnClickListener(v -> btnMode(v));
         galleryBtn.setOnClickListener(v -> btnGallery(v));
+
+        batchCard.setVisibility(View.GONE);
+
+        batchCard.setOnClickListener(v -> {
+            startActivity(new Intent(view.getContext(), BatchScanResultActivity.class));
+        });
 
         bottomNavigationView.setSelectedItemId(R.id.scan);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -940,12 +958,30 @@ public class QRScanFragment extends Fragment {
                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                     if (processingBarcode[0]) {
                         if (barcodes.size() > 0) {
-                            Barcode barcode = barcodes.valueAt(0);
-                            String barcodeValue = barcode.rawValue;
-                            int format = barcode.format;
-
                             runOnUiThread(() -> {
                                 mPreview.stop();
+                                batchCard.setVisibility(View.VISIBLE);
+                                Barcode barcode = barcodes.valueAt(barcodes.size()-1);
+                                String barcodeValue = barcode.rawValue;
+                                int format = barcode.format;
+                                String rawData = barcodes.valueAt(barcodes.size()-1).rawValue;
+                                ResultModel resultModel = new ResultModel(format, rawData);
+                                ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
+                                list.add(resultModel);
+                                Stash.put(Constants.RESULT_BATCH, list);
+                                if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
+                                   qrBar.setText("Barcode");
+                                } else {
+                                    qrBar.setText("QR Code");
+                                }
+                                int size = list.size() - (list.size()/2);
+                                itemCount.setText(size+"");
+                                result.setText(rawData);
+                                startCameraSource();
+                            });
+
+/*                            runOnUiThread(() -> {
+                               // mPreview.stop();
                                 if (checkSoundPreferences()) {
                                     ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
                                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
@@ -971,7 +1007,7 @@ public class QRScanFragment extends Fragment {
                                     }
                                 }
                             });
-                            processingBarcode[0] = false;
+                            processingBarcode[0] = false;*/
                         }
                     }
                 }

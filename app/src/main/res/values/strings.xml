@@ -5,6 +5,7 @@
 
     <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>
 
+    <string name="mapbox_access_token" translatable="false">pk.eyJ1Ijoic3VsZW1hbmJhandhIiwiYSI6ImNsa2pxenk0MzBpdmszaG5lMHJqcDZyMXAifQ.2VebsAokmpQmPov3lWiz-Q</string>
 
     <string name="Signature_ads">4034a75ca5bbb9e42c0a013d8518a53f</string>
 

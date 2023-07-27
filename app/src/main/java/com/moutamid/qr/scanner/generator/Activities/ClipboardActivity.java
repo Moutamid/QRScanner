@@ -68,7 +68,7 @@ public class ClipboardActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        this.clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         textView = findViewById(R.id.clipboard); // Replace with the actual ID of your TextView
 
         String copiedText = getTextFromClipboard();
@@ -98,16 +98,15 @@ public class ClipboardActivity extends AppCompatActivity {
     }
 
     private String getTextFromClipboard() {
+
         ClipData clipData = clipboardManager.getPrimaryClip();
         if (clipData != null && clipData.getItemCount() > 0) {
             ClipData.Item item = clipData.getItemAt(0);
             if (item != null) {
-                CharSequence text = item.coerceToText(getApplicationContext());
-                if (text != null) {
-                    return text.toString();
-                }
+                return item.getText().toString();
             }
         }
+
         return "Clipboard is empty" ;
     }
 

@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -20,6 +22,13 @@ import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.mapbox.mapboxsdk.offline.OfflineManager;
+import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
+import com.mapbox.mapboxsdk.offline.OfflineRegion;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -28,16 +37,18 @@ import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextInputLayout latitude,longitude,locationname;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
+    MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_location);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -63,11 +74,53 @@ public class LocationActivity extends AppCompatActivity {
         }
         latitude=findViewById(R.id.latitude);
         longitude=findViewById(R.id.longitude);
+        mapView = findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(this);
+
         locationname=findViewById(R.id.location_name);
         historyVM = new ViewModelProvider(LocationActivity.this).get(HistoryVM.class);
         getLocale();
     }
+    private void addAnnotationToMap() {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mapView.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mapView.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
 
     private void getLocale(){
 
@@ -150,5 +203,41 @@ public class LocationActivity extends AppCompatActivity {
     public boolean getPurchaseSharedPreference(){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    @Override
+    public void onMapReady(@NonNull MapboxMap mapboxMap) {
+        OfflineManager offlineManager = OfflineManager.getInstance(LocationActivity.this);
+
+// Define the region for offline download
+/*
+        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
+                mapboxMap.getStyleUrl(),
+                mapboxMap.getProjection().getVisibleRegion().latLngBounds,
+                mapboxMap.getCameraPosition().zoom,
+                10
+        );
+*/
+
+// Generate a unique region name for storing in the database
+        String regionName = "YOUR_UNIQUE_REGION_NAME";
+        Log.d("MAPBOX", "regionName " + regionName);
+
+// Kick off the download process
+        /*offlineManager.createOfflineRegion(
+                definition,
+                new OfflineManager.CreateOfflineRegionCallback() {
+                    @Override
+                    public void onCreate(OfflineRegion offlineRegion) {
+                        // Start the download
+                        offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        // Handle any errors that occur during the download process
+                    }
+                }
+        );*/
     }
 }

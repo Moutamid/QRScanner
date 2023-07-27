@@ -464,8 +464,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
-        Dialog dialog = new Dialog(this);
+        super.onBackPressed();
+/*        Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_rating_bar);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
 
@@ -560,7 +560,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please give rating", Toast.LENGTH_SHORT).show();
             }
             finish();
-        });
+        });*/
 
     }
     public void removeAds(View view) {

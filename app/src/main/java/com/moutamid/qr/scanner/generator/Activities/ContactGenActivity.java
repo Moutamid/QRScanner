@@ -6,9 +6,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -27,6 +34,7 @@ import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 
+import java.security.Permission;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -69,8 +77,112 @@ public class ContactGenActivity extends AppCompatActivity {
             ConsoliAds.Instance().LoadInterstitial();
         }
         getLocale();
+
+        phone.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(ContactGenActivity.this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS);
+                    }
+                    ActivityCompat.requestPermissions(ContactGenActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 2);
+                } else {
+                    Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                    pickContact.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                    startActivityForResult(pickContact, 1);
+                }
+            }
+        });
+
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 2){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                pickContact.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(pickContact, 1);
+            } else {
+                Toast.makeText(this, "Permission is required to get the Email, Organization and Address", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            Uri contactData = data.getData();
+            Cursor c = getContentResolver().query(contactData, null, null, null, null);
+            if (c.moveToFirst()) {
+                int phoneIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                int nameIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                int emailIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
+
+                if (emailIndex >= 0) {
+                    String contactId = c.getString(emailIndex);
+                    Cursor emailCursor = getContentResolver().query(
+                            ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
+                            new String[]{contactId},
+                            null
+                    );
+
+                    if (emailCursor != null && emailCursor.moveToFirst()) {
+                        int i = emailCursor.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS);
+                        if (i >= 0) {
+                            String email = emailCursor.getString(i);
+                            this.email.getEditText().setText(email);
+                        }
+                    }
+
+                    Cursor organizationCursor = getContentResolver().query(
+                            ContactsContract.Data.CONTENT_URI,
+                            null,
+                            ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?",
+                            new String[]{contactId, ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE},
+                            null
+                    );
+
+                    if (organizationCursor != null && organizationCursor.moveToFirst()) {
+                        int o = organizationCursor.getColumnIndex(ContactsContract.CommonDataKinds.Organization.COMPANY);
+                        if (o >= 0) {
+                            String organizationName = organizationCursor.getString(o);
+                            this.org.getEditText().setText(organizationName);
+                        }
+                        Cursor addressCursor = getContentResolver().query(
+                                ContactsContract.Data.CONTENT_URI,
+                                null,
+                                ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?",
+                                new String[]{contactId, ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE},
+                                null
+                        );
+
+                        String organizationAddress = "";
+                        if (addressCursor != null && addressCursor.moveToFirst()) {
+                            int a = addressCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredPostal.FORMATTED_ADDRESS);
+                            if (a >= 0) {
+                                organizationAddress = addressCursor.getString(a);
+                                this.address.getEditText().setText(organizationAddress);
+                            }
+                            addressCursor.close();
+                        }
+                        organizationCursor.close();
+                    }
+
+                    emailCursor.close();
+                }
+
+                String num = c.getString(phoneIndex);
+                String name = c.getString(nameIndex);
+                phone.getEditText().setText(num);
+                this.name.getEditText().setText(name);
+            }
+        }
+    }
 
     private void getLocale() {
 

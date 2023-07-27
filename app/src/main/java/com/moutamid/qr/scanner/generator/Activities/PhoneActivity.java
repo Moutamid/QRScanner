@@ -1,13 +1,19 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
+import static androidx.room.util.CursorUtil.getColumnIndex;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
@@ -66,8 +72,31 @@ public class PhoneActivity extends AppCompatActivity {
         phonenumber=findViewById(R.id.edit_phone);
         historyVM = new ViewModelProvider(PhoneActivity.this).get(HistoryVM.class);
         getLocale();
+
+        phonenumber.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                pickContact.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(pickContact, 1);
+            }
+        });
+
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            Uri contactData = data.getData();
+            Cursor c = getContentResolver().query(contactData, null, null, null, null);
+            if (c.moveToFirst()) {
+                int phoneIndex = c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                String num = c.getString(phoneIndex);
+                phonenumber.getEditText().setText(num);
+            }
+        }
+    }
 
     private void getLocale(){
 

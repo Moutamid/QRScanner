@@ -137,6 +137,8 @@
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
                     android:hint="@string/phone"
+                    app:endIconMode="custom"
+                    app:endIconDrawable="@drawable/addresssolid"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
                     app:hintTextColor="@color/contact_solid">
