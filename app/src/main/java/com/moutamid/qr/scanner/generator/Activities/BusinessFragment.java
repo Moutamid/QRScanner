@@ -63,11 +63,6 @@ public class BusinessFragment extends Fragment {
         mainActivity.transparentStatusBar(false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        close = view.findViewById(R.id.close);
-
-        close.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
-        });
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cardList = new ArrayList<>();

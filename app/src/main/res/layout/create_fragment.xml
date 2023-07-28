@@ -35,7 +35,8 @@
                   android:contentDescription="@string/delete_history"
                   android:onClick="deleteAllHistory"
                   android:padding="12sp"
-                  android:src="@drawable/delete" />
+                  app:tint="@color/icon_tint3"
+                  android:src="@drawable/deleteall" />
 
        </RelativeLayout>
 

@@ -11,8 +11,8 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondary">@color/active_icon</item>
+        <item name="colorSecondaryVariant">@color/active_icon</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
 <!--        <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">false</item>-->

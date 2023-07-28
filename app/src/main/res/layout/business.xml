@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="170dp"
-    android:layout_height="100dp"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="8dp"
     android:layout_margin="8dp">
 
     <RelativeLayout
-        android:layout_width="170dp"
-        android:layout_height="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:id="@+id/cardView"
         app:cardCornerRadius="5dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/imageView"
             android:scaleType="fitXY"
             android:src="@drawable/ic_card_contact_1"/>
 
         <TextView
             android:id="@+id/edit"
-            android:layout_width="40dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
@@ -30,12 +30,19 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/button_background"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint="@color/purple"
             android:gravity="center"
-            android:padding="4dp"
+            android:fontFamily="@font/poppins"
+            android:paddingTop="10sp"
+            android:paddingBottom="10sp"
+            android:drawablePadding="12sp"
+            android:drawableTint="@color/tabsText"
+            android:paddingStart="16sp"
+            android:drawableStart="@drawable/round_edit_24"
+            android:paddingEnd="16sp"
             android:text="@string/edit"
-            android:textColor="@color/white"
-            android:textSize="9sp" />
+            android:textColor="@color/tabsText"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

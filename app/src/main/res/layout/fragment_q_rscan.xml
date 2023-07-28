@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#54000000"
-                app:line_color="@color/teal_200"
+                app:line_color="@color/active_icon"
                 app:line_speed="6"
                 app:line_width="4"
                 app:square_height="280"

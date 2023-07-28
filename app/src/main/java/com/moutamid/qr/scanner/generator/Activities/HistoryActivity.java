@@ -23,6 +23,7 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.adapter.HistoryTabAdapter;
 
 import com.moutamid.qr.scanner.generator.R;
@@ -70,7 +71,7 @@ public class HistoryActivity extends Fragment {
         mainActivity.transparentStatusBar(false);
 
         CAMediatedBannerView mediatedBannerView = view.findViewById(R.id.consoli_banner_view);
-        if (!getPurchaseSharedPreference()) {
+        if (!Constants.getPurchaseSharedPreference(requireContext())) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
@@ -127,7 +128,7 @@ public class HistoryActivity extends Fragment {
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
                         break;
                     case R.id.generate_qr:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
                         break;
                     case R.id.history:
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
@@ -161,12 +162,6 @@ public class HistoryActivity extends Fragment {
         Configuration configuration = new Configuration();
         configuration.locale = locale;
         getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
-
-    }
-
-    public boolean getPurchaseSharedPreference() {
-        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getActivity());
-        return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
 
     }
 }

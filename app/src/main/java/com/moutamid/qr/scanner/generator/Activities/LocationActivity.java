@@ -1,10 +1,15 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,14 +26,18 @@ import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.mapbox.mapboxsdk.maps.MapView;
-import com.mapbox.mapboxsdk.Mapbox;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-import com.mapbox.mapboxsdk.offline.OfflineManager;
-import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
-import com.mapbox.mapboxsdk.offline.OfflineRegion;
+import com.mapbox.geojson.Point;
+import com.mapbox.maps.CameraOptions;
+import com.mapbox.maps.MapInitOptions;
+import com.mapbox.maps.MapView;
+import com.mapbox.maps.Style;
+import com.mapbox.maps.plugin.Plugin;
+import com.mapbox.navigation.base.options.NavigationOptions;
+import com.mapbox.navigation.core.lifecycle.MapboxNavigationApp;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -37,18 +46,21 @@ import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationActivity extends AppCompatActivity {
 
     private TextInputLayout latitude,longitude,locationname;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
     MapView mapView;
+    Location currentLocation;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
+//        Plugin.Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_location);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -75,39 +87,144 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         latitude=findViewById(R.id.latitude);
         longitude=findViewById(R.id.longitude);
         mapView = findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.getMapAsync(this);
+
+        if (!MapboxNavigationApp.isSetup()) {
+            MapboxNavigationApp.setup(
+                new NavigationOptions.Builder(this)
+                        .accessToken(getResources().getString(R.string.mapbox_access_token))
+                        .build()
+            );
+        }
+
+        mapView.setVisibility(View.GONE);
+        if (!hasLocationPermission()){
+            requestLocationPermission();
+        }
+
 
         locationname=findViewById(R.id.location_name);
         historyVM = new ViewModelProvider(LocationActivity.this).get(HistoryVM.class);
         getLocale();
     }
-    private void addAnnotationToMap() {
 
+    private void dialog() {
+        if (!isLocationEnabled()) {
+            showAlert();
+        } else {
+            mapView.setVisibility(View.VISIBLE);
+            showMap();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mapView.onResume();
+        if (hasLocationPermission()) {
+            dialog();
+        }
+    }
+
+    private void showAlert() {
+        new AlertDialog.Builder(this)
+                .setTitle("GPS is not enabled")
+                .setMessage("To continue let your device turn on location.")
+                .setPositiveButton("Open Settings", ((dialog, which) -> {
+                    dialog.dismiss();
+                    startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                }))
+                .setNegativeButton("Cancel", ((dialog, which) -> {
+                    dialog.dismiss();
+                    mapView.setVisibility(View.GONE);
+                }))
+                .show();
+    }
+
+    private void addAnnotationToMap() {
+
+    }
+
+    private boolean hasLocationPermission() {
+        // Check if the app has location permissions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return ContextCompat.checkSelfPermission(
+                    this, Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED;
+        }
+        return true; // If targeting API level lower than 23, permissions are granted at installation time
+    }
+
+    private void requestLocationPermission() {
+        // Request location permissions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE
+            );
+        }
+    }
+
+    private boolean isLocationEnabled() {
+        // Check if location services are enabled on the device
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (locationManager != null) {
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+                    || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        }
+        return false;
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mapView.onSaveInstanceState(outState);
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            // Check if the permission is granted or not
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Location permission granted, proceed with your location-related logic
+                dialog();
+            } else {
+                mapView.setVisibility(View.GONE);
+                // Location permission denied, handle this situation (e.g., show a message, disable location-based features)
+            }
+        }
+    }
+
+    private void showMap() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        task.addOnSuccessListener(location -> {
+            currentLocation = location;
+            latitude.getEditText().setText(currentLocation.getLatitude() + "");
+            longitude.getEditText().setText("" + currentLocation.getLongitude());
+
+            CameraOptions cameraOptions = new CameraOptions.Builder()
+                    .center(
+                            Point.fromLngLat(
+                                    currentLocation.getLongitude(),currentLocation.getLatitude()
+                            )
+                    )
+                    .zoom(9.0)
+                    .build();
+
+            mapView = new MapView(this, new MapInitOptions(this));
+
+        }).addOnFailureListener(e -> {
+            latitude.getEditText().setText("40.7128");
+            longitude.getEditText().setText("-74.0060");
+        });
+        mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+            @Override
+            public void onStyleLoaded(@NonNull Style style) {
+                Log.d("STYLELOADED", style.getStyleJSON());
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mapView.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
     }
 
     @Override
@@ -120,6 +237,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mapView.onStop();
     }
 
     private void getLocale(){
@@ -203,41 +326,5 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     public boolean getPurchaseSharedPreference(){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
-    }
-
-    @Override
-    public void onMapReady(@NonNull MapboxMap mapboxMap) {
-        OfflineManager offlineManager = OfflineManager.getInstance(LocationActivity.this);
-
-// Define the region for offline download
-/*
-        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
-                mapboxMap.getStyleUrl(),
-                mapboxMap.getProjection().getVisibleRegion().latLngBounds,
-                mapboxMap.getCameraPosition().zoom,
-                10
-        );
-*/
-
-// Generate a unique region name for storing in the database
-        String regionName = "YOUR_UNIQUE_REGION_NAME";
-        Log.d("MAPBOX", "regionName " + regionName);
-
-// Kick off the download process
-        /*offlineManager.createOfflineRegion(
-                definition,
-                new OfflineManager.CreateOfflineRegionCallback() {
-                    @Override
-                    public void onCreate(OfflineRegion offlineRegion) {
-                        // Start the download
-                        offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        // Handle any errors that occur during the download process
-                    }
-                }
-        );*/
     }
 }

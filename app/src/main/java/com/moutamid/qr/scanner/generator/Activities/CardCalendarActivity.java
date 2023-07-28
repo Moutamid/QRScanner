@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -55,7 +56,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     TextView eventName,eventDate,eventCity;
     private EditText edittext;
     private SharedPreferences prefs;
-    private RelativeLayout imageLayout,imageLayout1;
+    private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private SwitchCompat bold,shadow;

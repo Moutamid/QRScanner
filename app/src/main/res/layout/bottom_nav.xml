@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="20sp"
     app:cardElevation="0sp"
-    app:cardBackgroundColor="@color/light">
+    app:cardBackgroundColor="@color/bottom_nav">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             app:cardCornerRadius="20sp"
             android:visibility="gone"
             app:cardElevation="0sp"
-            app:cardBackgroundColor="@color/gray">
+            app:cardBackgroundColor="@color/bottom_nav_top">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,7 +40,8 @@
                     android:layout_weight="1"
                     android:padding="10sp"
                     android:onClick="btnGallery"
-                    android:background="@color/gray"
+                    app:tint="@color/icon_tint2"
+                    android:background="@color/bottom_nav_top"
                     android:src="@drawable/imagesolid" />
 
                 <ImageButton
@@ -48,9 +49,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    app:tint="@color/icon_tint2"
                     android:padding="10sp"
                     android:onClick="btnMode"
-                    android:background="@color/gray"
+                    android:background="@color/bottom_nav_top"
                     android:src="@drawable/barcodescanner" />
 
                 <ImageButton
@@ -58,9 +60,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    app:tint="@color/icon_tint2"
                     android:padding="10sp"
                     android:onClick="flashButton"
-                    android:background="@color/gray"
+                    android:background="@color/bottom_nav_top"
                     android:src="@drawable/flashon" />
 
             </LinearLayout>
@@ -78,7 +81,7 @@
             android:padding="6sp"
             app:elevation="0sp"
             app:labelVisibilityMode="unlabeled"
-            android:background="@color/light"
+            android:background="@color/bottom_nav"
             app:itemHorizontalTranslationEnabled="false"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

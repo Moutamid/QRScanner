@@ -5,73 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/top_bg"
     tools:context="com.moutamid.qr.scanner.generator.Activities.MenuFragment">
 
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/purple">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentTop="true"
-            android:id="@+id/toolbar">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/create"
-                android:fontFamily="@font/poppins"
-                android:textColor="@color/white"
-                android:textSize="26sp"
-                android:padding="8dp"
-                android:layout_marginTop="10sp"
-                android:gravity="center_vertical"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15sp"
-                android:gravity="center_vertical"
-                android:background="@drawable/active_background"
-                android:backgroundTint="@color/white"
-                android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/quick"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/qrcodesolid"
-                android:drawablePadding="12sp"
-                android:backgroundTint="@color/white"
-                android:background="@drawable/active_background"
-                android:drawableTint="@color/hint"
-                android:fontFamily="@font/poppins"
-                android:layout_weight="1"
-                android:hint="Quick Create QR"
-                android:padding="13sp"
-                android:textColorHint="@color/hint" />
-
-                <ImageView
-                    android:id="@+id/quickBtn"
-                    android:layout_width="38sp"
-                    android:layout_height="38sp"
-                    android:padding="3sp"
-                    android:layout_marginEnd="10sp"
-                    android:layout_marginStart="10sp"
-                    android:backgroundTint="@color/lightGray2"
-                    android:background="@drawable/round_bg"
-                    android:src="@drawable/round_arrow_forward_ios_24" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -101,7 +41,7 @@
                         android:gravity="center"
                         android:layout_marginEnd="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/barcodeColor"
+                        android:backgroundTint="@color/barcode_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:id="@+id/barcodeIcon"
                         android:orientation="vertical">
@@ -110,7 +50,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:contentDescription="@string/barcode"
-                            app:tint="@color/purple"
+                            app:tint="@color/barcode_solid"
                             android:src="@drawable/barcodesolid"/>
 
                         <TextView
@@ -121,7 +61,7 @@
                             android:fontFamily="@font/poppins"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textColor="@color/purple"/>
+                            android:textColor="@color/barcode_solid"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -236,7 +176,7 @@
                         android:layout_marginStart="5sp"
                         android:layout_marginEnd="5sp"
                         android:padding="10sp"
-                        android:backgroundTint="@color/smsColor"
+                        android:backgroundTint="@color/sms_bg"
                         android:background="@drawable/barcode_icon_rect"
                         android:orientation="vertical">
 
@@ -244,7 +184,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:contentDescription="@string/sms"
-                            app:tint="@android:color/holo_green_dark"
+                            app:tint="@color/sms_solid"
                             android:src="@drawable/commentsolid" />
 
                         <TextView
@@ -255,7 +195,7 @@
                             android:fontFamily="@font/poppins"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
-                            android:textColor="@android:color/holo_green_dark"/>
+                            android:textColor="@color/sms_solid"/>
 
                     </LinearLayout>
 
@@ -378,7 +318,7 @@
                         android:layout_marginStart="5sp"
                         android:layout_weight="1"
                         android:background="@drawable/barcode_icon_rect"
-                        android:backgroundTint="@color/locationColor"
+                        android:backgroundTint="@color/location_bg"
                         android:gravity="center"
                         android:orientation="vertical"
                         android:padding="10sp">
@@ -478,6 +418,7 @@
                         android:id="@+id/businessCard"
                         android:layout_marginStart="5sp"
                         android:padding="10sp"
+                        android:visibility="invisible"
                         android:backgroundTint="@color/eventColor"
                         android:background="@drawable/barcode_icon_rect"
                         android:orientation="vertical">
@@ -618,7 +559,7 @@
                             android:src="@drawable/twittersolid"
                             android:padding="15dp"
                             app:tint="@color/twitter_solid"
-                            android:backgroundTint="@color/contactColor"
+                            android:backgroundTint="@color/twitter_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -655,7 +596,7 @@
                             android:src="@drawable/youtubesolid"
                             android:padding="15dp"
                             app:tint="@color/youtube_solid"
-                            android:backgroundTint="@color/youTubeColor"
+                            android:backgroundTint="@color/youtube_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -767,7 +708,7 @@
                             android:src="@drawable/spotifysolid"
                             android:padding="15dp"
                             app:tint="@color/spotify_solid"
-                            android:backgroundTint="@color/smsColor"
+                            android:backgroundTint="@color/sms_bg"
                             android:background="@drawable/barcode_icon_back"/>
 
                         <TextView
@@ -800,14 +741,7 @@
 
         </ScrollView>
 
-        <include layout="@layout/bottom_nav"
-            android:id="@+id/navLay"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp"
-            android:layout_marginBottom="25sp"
-            android:layout_alignParentBottom="true" />
+
 
     </RelativeLayout>
 

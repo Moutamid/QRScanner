@@ -10,8 +10,8 @@
 <!--        <item name="android:windowTranslucentStatus">true</item>-->
 <!--        <item name="android:windowFullscreen">true</item>-->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/purple</item>
-        <item name="colorSecondaryVariant">@color/purple</item>
+        <item name="colorSecondary">@color/active_icon</item>
+        <item name="colorSecondaryVariant">@color/active_icon</item>
         <item name="colorOnSecondary">@color/white</item>
 
         <!-- Status bar color. -->

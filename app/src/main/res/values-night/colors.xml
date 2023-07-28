@@ -13,6 +13,21 @@
     <color name="urlColor">#FFF9EC</color>
     <color name="textColor">#EDFFF6</color>
 
+    <color name="bottom_nav">#242426</color>
+    <color name="toolbar">#212121</color>
+    <color name="bottom_nav_top">#2F2E31</color>
+    <color name="icon_tint">#FFFFFFFF</color>
+    <color name="icon_tint2">#FFFFFFFF</color>
+    <color name="icon_tint3">#E97931</color>
+    <color name="active_icon">#E97931</color>
+    <color name="top_bg">#171717</color>
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="tabsText">#ffffff</color>
+    <color name="cardBg">#2F2E31</color>
+
+    <color name="purple">#585858</color>
+    <color name="hint">#808080</color>
+
     <color name="card_background_color">#212121</color>
     <color name="main_background_color">#000000</color>
     <color name="wifiColor">#FDF1F0</color>
@@ -26,4 +41,46 @@
     <color name="emailColor">#F2FAFF</color>
     <color name="barcodeColor">#F7F5FF</color>
     <color name="headingColour">#585858</color>
+
+
+<!--    <color name="barcode_bg">#2F2E31</color>-->
+<!--    <color name="barcode_solid">#FFFFFF</color>-->
+    <color name="barcode_bg">#2F2E31</color>
+    <color name="barcode_solid">#FFFFFF</color>
+    <color name="clipboard_bg">#2F2E31</color>
+    <color name="clipboard_solid">#FFFFFF</color>
+    <color name="contact_solid">#FFFFFF</color>
+    <color name="contact_bg">#2F2E31</color>
+    <color name="email_bg">#2F2E31</color>
+    <color name="email_solid">#FFFFFF</color>
+    <color name="calender_bg">#2F2E31</color>
+    <color name="calender_solid">#FFFFFF</color>
+    <color name="facebook_solid">#FFFFFF</color>
+    <color name="facebook_bg">#2F2E31</color>
+    <color name="insta_solid">#FFFFFF</color>
+    <color name="insta_bg">#2F2E31</color>
+    <color name="location_solid">#FFFFFF</color>
+    <color name="paypal_solid">#FFFFFF</color>
+    <color name="paypal_bg">#2F2E31</color>
+    <color name="phone_solid">#FFFFFF</color>
+    <color name="phone_bg">#2F2E31</color>
+    <color name="spotify_solid">#FFFFFF</color>
+    <color name="text_bg">#2F2E31</color>
+    <color name="text_solid">#FFFFFF</color>
+    <color name="twitter_solid">#FFFFFF</color>
+    <color name="url_bg">#2F2E31</color>
+    <color name="url_solid">#FFFFFF</color>
+    <color name="viber_solid">#FFFFFF</color>
+    <color name="viber_bg">#2F2E31</color>
+    <color name="whatsapp_solid">#FFFFFF</color>
+    <color name="whatsapp_bg">#2F2E31</color>
+    <color name="wifi_bg">#2F2E31</color>
+    <color name="wifi_solid">#FFFFFF</color>
+    <color name="youtube_solid">#FFFFFF</color>
+    <color name="sms_bg">#2F2E31</color>
+    <color name="sms_solid">#FFFFFF</color>
+    <color name="twitter_bg">#2F2E31</color>
+    <color name="location_bg">#2F2E31</color>
+    <color name="youtube_bg">#2F2E31</color>
+
 </resources>

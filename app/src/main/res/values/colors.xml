@@ -36,6 +36,22 @@
     <color name="light">#F4F5F7</color>
     <color name="gray">#E7E9EE</color>
     <color name="dark">#2E2E2F</color>
+    <color name="tabsText">#ffffff</color>
+
+    <color name="bottom_nav">#F4F5F7</color>
+    <color name="active_icon">#6E41D4</color>
+    <color name="toolbar">#6E41D4</color>
+    <color name="bottom_nav_top">#E7E9EE</color>
+    <color name="icon_tint">#2E2E2F</color>
+    <color name="icon_tint2">#2E2E2F</color>
+    <color name="icon_tint3">#2E2E2F</color>
+    <color name="top_bg">#FFFFFFFF</color>
+    <color name="text_color">#FFFFFFFF</color>
+    <color name="cardBg">#F6F6F6</color>
+    <color name="orange">#E97931</color>
+
+    <color name="barcode_bg">#F7F5FF</color>
+    <color name="barcode_solid">#6E41D4</color>
     <color name="clipboard_bg">#99E9EBEF</color>
     <color name="clipboard_solid">#263B61</color>
     <color name="contact_solid">#ecd547</color>
@@ -66,4 +82,9 @@
     <color name="wifi_bg">#e6f5fd</color>
     <color name="wifi_solid">#08a1ec</color>
     <color name="youtube_solid">#FF0000</color>
+    <color name="sms_bg">#E8FFEC</color>
+    <color name="sms_solid">#ff669900</color>
+    <color name="twitter_bg">#EBFCFF</color>
+    <color name="location_bg">#EDFBEF</color>
+    <color name="youtube_bg">#FFF1F0</color>
 </resources>

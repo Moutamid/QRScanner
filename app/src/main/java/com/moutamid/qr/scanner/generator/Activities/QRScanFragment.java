@@ -223,7 +223,7 @@ public class QRScanFragment extends Fragment {
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
                         break;
                     case R.id.generate_qr:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MenuFragment()).commit();
+                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
                         break;
                     case R.id.history:
                         requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
@@ -844,7 +844,7 @@ public class QRScanFragment extends Fragment {
     private boolean checkSoundPreferences() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean beepSound = prefs.getBoolean("beepsound", true);
+        boolean beepSound = prefs.getBoolean("beepsound", Boolean.TRUE);
 
         return beepSound;
     }
@@ -853,7 +853,7 @@ public class QRScanFragment extends Fragment {
     private boolean checkVibratePreferences() {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean vibrate = prefs.getBoolean("vibrate", true);
+        boolean vibrate = prefs.getBoolean("vibrate", Boolean.TRUE);
         return vibrate;
     }
 
@@ -963,7 +963,22 @@ public class QRScanFragment extends Fragment {
                                 String rawData = barcodes.valueAt(barcodes.size()-1).rawValue;
                                 ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
 
-                                if (format == Barcode.CODE_128 || format == Barcode.EAN_13 || format == Barcode.EAN_8 || format == Barcode.CODE_93) {
+                                if (checkSoundPreferences()) {
+                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+                                }
+                                if (checkVibratePreferences()) {
+                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+                                    if (Build.VERSION.SDK_INT >= 26) {
+                                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+                                    } else {
+                                        v.vibrate(100);
+                                    }
+                                }
+
+                                if (format == Barcode.CODE_128 || format == Barcode.CODE_93 ||
+                                        format == Barcode.EAN_8 || format == Barcode.EAN_13 ||
+                                        format == Barcode.UPC_A || format == Barcode.UPC_E) {
                                    qrBar.setText("Barcode");
                                    ResultModel resultModel = new ResultModel(format, rawData);
                                     list.add(resultModel);
@@ -1053,12 +1068,6 @@ public class QRScanFragment extends Fragment {
                                 } else {
                                     processRawResult(rawData);
                                 }
-
-//                                 if (barcodeFormat == 32 || barcodeFormat == 64) {
-//                                     processResultBarcode(rawData);
-//                                 } else {
-//                                     processRawResult(rawData);
-//                                 }
 
                             });
                             processingBarcode[0] = false;
