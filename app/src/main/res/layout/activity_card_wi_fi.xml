@@ -8,160 +8,225 @@
     tools:context=".Activities.CardWiFiActivity">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:padding="5dp"
+        android:layout_height="?attr/actionBarSize"
+        app:cardBackgroundColor="@color/purple"
+        app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/edit_title"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins"
-            android:textSize="18sp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/back_button"
+                android:onClick="backPress"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/text_color" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10sp"
+                android:layout_toRightOf="@id/back"
+                android:fontFamily="@font/poppins"
+                android:text="@string/edit_title"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/save_text"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10sp"
+                android:onClick="SaveTxt"
+                android:src="@drawable/ic_mtrl_chip_checked_black"
+                app:tint="@color/text_color" />
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout_history"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout_history">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/image_layout1">
-            <ImageView
-                android:id="@+id/imageView"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_gen_card_wifi_f_1" />
+                android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/lat_layout"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="100dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/image_layout1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/ssid"
-                    android:textColor="@android:color/black"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8sp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                        <ImageView
+                            android:id="@+id/imageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_gen_card_wifi_f_1" />
+
+                        <LinearLayout
+                            android:id="@+id/lat_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="100dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="@string/ssid"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/ssid"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:fontFamily="@font/poppins"
+                                android:backgroundTint="@color/transparent"
+                                android:background="@drawable/active_background"
+                                android:textColor="@color/dark"
+                                android:text="WiFi Name"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lng_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/lat_layout"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins"
+                                android:text="@string/type"
+                                android:textColor="@android:color/black"
+                                android:textSize="20sp" />
+
+                            <EditText
+                                android:id="@+id/lng"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:fontFamily="@font/poppins"
+                                android:backgroundTint="@color/transparent"
+                                android:background="@drawable/active_background"
+                                android:textColor="@color/dark"
+                                android:text="WPA2"
+                                android:textSize="20sp" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/image_layout2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="WiFi Name"
-                    android:layout_marginLeft="6dp"
-                    android:fontFamily="@font/poppins"
-                    android:id="@+id/ssid"
-                    android:textSize="20sp"/>
+                    android:layout_below="@+id/image_layout1"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="8sp">
 
-            </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/lng_layout"
-                android:gravity="center"
-                android:layout_below="@+id/lat_layout"
-                android:layout_centerHorizontal="true">
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/ic_gen_card_wifi_b_1" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/type"
-                    android:textColor="@android:color/black"
-                    android:fontFamily="@font/poppins"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins"
-                    android:text="WPA2"
-                    android:layout_marginLeft="6dp"
-                    android:id="@+id/lng"
-                    android:textSize="20sp"/>
+                        <ImageView
+                            android:id="@+id/logo"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="20dp"
+                            android:src="@drawable/orginal" />
 
-            </LinearLayout>
+                    </RelativeLayout>
 
-        </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/image_layout2"
-            android:layout_below="@+id/image_layout1"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_gen_card_wifi_b_1" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/orginal"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="20dp"
-                android:id="@+id/logo"
-                android:layout_alignParentLeft="true"/>
-
-        </RelativeLayout>
-
+        </androidx.core.widget.NestedScrollView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/card_background_color"
-            android:layout_above="@+id/bottom">
+            android:layout_alignParentBottom="true"
+            app:cardBackgroundColor="@color/white">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp">
+
                 <TextView
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text"
-                    android:id="@+id/textView"
-                    android:fontFamily="@font/poppins"
                     android:layout_centerHorizontal="true"
-                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/poppins"
+                    android:text="@string/text"
                     android:textColor="@color/teal_200"
-                    android:layout_gravity="center"/>
+                    android:textSize="16sp"
+                    android:visibility="gone" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/seekbarLayout"
@@ -172,11 +237,12 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    app:cardBackgroundColor="@color/cardBg"
                     app:cardCornerRadius="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" >
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -189,6 +255,7 @@
                             android:layout_height="wrap_content" />
 
                         <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/color_seek_bar"
@@ -197,20 +264,19 @@
                             android:fontFamily="@font/poppins"
                             android:padding="8dp"
                             android:text="@string/bold_txt"
-                            android:textColor="@color/black"
-                            android:id="@+id/bold"/>
+                            android:textColor="@color/black" />
 
                         <androidx.appcompat.widget.SwitchCompat
+                            android:id="@+id/shadow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/poppins"
+                            android:layout_below="@+id/color_seek_bar"
                             android:layout_alignParentEnd="true"
                             android:layout_marginRight="20dp"
+                            android:fontFamily="@font/poppins"
                             android:padding="8dp"
-                            android:layout_below="@+id/color_seek_bar"
                             android:text="@string/shadow_tx"
-                            android:id="@+id/shadow"/>
+                            android:textColor="@color/black" />
 
                     </RelativeLayout>
 
@@ -219,58 +285,6 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/bottom"
-            app:cardBackgroundColor="@color/card_background_color"
-            android:layout_alignParentBottom="true">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:layout_margin="10dp">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:id="@+id/clear_text"
-                    android:layout_alignParentStart="true"
-                    android:onClick="ClearTxt"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10sp"
-                    android:src="@drawable/abc_ic_clear_material"
-                    app:tint="@color/black" />
-
-                <EditText
-                    android:id="@+id/edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_toLeftOf="@+id/save_text"
-                    android:layout_toRightOf="@+id/clear_text"
-                    android:fontFamily="@font/poppins"
-                    android:background="@drawable/contact_edit_back"
-                    android:backgroundTint="@color/white"
-                    android:padding="8dp"
-                    android:textColor="@color/black" />
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:id="@+id/save_text"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:onClick="SaveTxt"
-                    android:layout_marginStart="10sp"
-                    android:src="@drawable/ic_mtrl_chip_checked_black"
-                    app:tint="@color/black" />
-
-
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

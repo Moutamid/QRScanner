@@ -28,16 +28,15 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
-import com.mapbox.geojson.Point;
-import com.mapbox.maps.CameraOptions;
-import com.mapbox.maps.MapInitOptions;
-import com.mapbox.maps.MapView;
-import com.mapbox.maps.Style;
-import com.mapbox.maps.plugin.Plugin;
-import com.mapbox.navigation.base.options.NavigationOptions;
-import com.mapbox.navigation.core.lifecycle.MapboxNavigationApp;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -46,14 +45,17 @@ import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextInputLayout latitude,longitude,locationname;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-    MapView mapView;
+
+    private View mapView;
+
+    private GoogleMap mMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -88,13 +90,11 @@ public class LocationActivity extends AppCompatActivity {
         longitude=findViewById(R.id.longitude);
         mapView = findViewById(R.id.mapView);
 
-        if (!MapboxNavigationApp.isSetup()) {
-            MapboxNavigationApp.setup(
-                new NavigationOptions.Builder(this)
-                        .accessToken(getResources().getString(R.string.mapbox_access_token))
-                        .build()
-            );
-        }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.mapView);
+        mapFragment.getMapAsync(this);
 
         mapView.setVisibility(View.GONE);
         if (!hasLocationPermission()){
@@ -112,7 +112,6 @@ public class LocationActivity extends AppCompatActivity {
             showAlert();
         } else {
             mapView.setVisibility(View.VISIBLE);
-            showMap();
         }
     }
 
@@ -189,61 +188,6 @@ public class LocationActivity extends AppCompatActivity {
         }
     }
 
-    private void showMap() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(location -> {
-            currentLocation = location;
-            latitude.getEditText().setText(currentLocation.getLatitude() + "");
-            longitude.getEditText().setText("" + currentLocation.getLongitude());
-
-            CameraOptions cameraOptions = new CameraOptions.Builder()
-                    .center(
-                            Point.fromLngLat(
-                                    currentLocation.getLongitude(),currentLocation.getLatitude()
-                            )
-                    )
-                    .zoom(9.0)
-                    .build();
-
-            mapView = new MapView(this, new MapInitOptions(this));
-
-        }).addOnFailureListener(e -> {
-            latitude.getEditText().setText("40.7128");
-            longitude.getEditText().setText("-74.0060");
-        });
-        mapView.getMapboxMap().loadStyleUri(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
-            @Override
-            public void onStyleLoaded(@NonNull Style style) {
-                Log.d("STYLELOADED", style.getStyleJSON());
-            }
-        });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mapView.onStart();
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        mapView.onLowMemory();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mapView.onDestroy();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mapView.onStop();
-    }
 
     private void getLocale(){
 
@@ -326,5 +270,60 @@ public class LocationActivity extends AppCompatActivity {
     public boolean getPurchaseSharedPreference(){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
+            return;
+        }
+        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+
+        task.addOnSuccessListener(location -> {
+            if (location!=null){
+                currentLocation = location;
+                LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                latitude.getEditText().setText(currentLocation.getLatitude() + "");
+                longitude.getEditText().setText("" + currentLocation.getLongitude());
+            }
+        }).addOnFailureListener(e -> {
+            latitude.getEditText().setText("40.7128");
+            longitude.getEditText().setText("-74.0060");
+        });
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        getCurrentLocation();
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                LatLng latLng = marker.getPosition();
+                latitude.getEditText().setText(latLng.latitude + "");
+                longitude.getEditText().setText("" + latLng.longitude);
+            }
+        });
     }
 }

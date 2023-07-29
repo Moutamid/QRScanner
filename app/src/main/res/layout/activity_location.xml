@@ -180,16 +180,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
 
-            <com.mapbox.maps.MapView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                xmlns:mapbox="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/mapView"
+            <fragment
                 android:layout_width="match_parent"
-                android:layout_height="400sp"
-                mapbox:mapbox_cameraTargetLat="40.7128"
-                mapbox:mapbox_cameraTargetLng="-74.0060"
-                mapbox:mapbox_cameraZoom="9.0"
-                />
+                android:layout_height="300dp"
+                android:id="@+id/mapView"
+                android:layout_weight="1"
+                tools:context=".ui.GetLocationActivity"
+                android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="200dp"

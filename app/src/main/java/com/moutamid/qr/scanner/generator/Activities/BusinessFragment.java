@@ -102,6 +102,7 @@ public class BusinessFragment extends Fragment {
         cardList.add(R.drawable.ic_card_social_3);
         cardList.add(R.drawable.ic_card_sms_2);
         cardList.add(R.drawable.ic_card_email_3);
+        cardList.add(0);
 
         CardMainAdapter adapter = new CardMainAdapter(cardList,getActivity());
         recyclerView.setAdapter(adapter);

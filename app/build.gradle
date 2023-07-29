@@ -48,11 +48,9 @@ android {
 
 dependencies {
 
-    // MAP BOX
-    implementation 'com.mapbox.maps:android:10.15.0'
-    implementation "com.mapbox.navigation:ui-dropin:2.14.1"
+    // MAP
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
-//    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.6.1'
 
     implementation 'com.github.raheemadamboev:image-radio-button-android:1.0.7'
 

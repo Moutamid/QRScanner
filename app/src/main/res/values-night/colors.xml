@@ -84,5 +84,6 @@
     <color name="twitter_bg">#2F2E31</color>
     <color name="location_bg">#2F2E31</color>
     <color name="youtube_bg">#2F2E31</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

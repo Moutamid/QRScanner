@@ -11,8 +11,6 @@ import androidx.lifecycle.LifecycleRegistry;
 import androidx.multidex.MultiDex;
 
 import com.fxn.stash.Stash;
-import com.mapbox.navigation.base.options.NavigationOptions;
-import com.mapbox.navigation.core.lifecycle.MapboxNavigationApp;
 import com.onesignal.OneSignal;
 
 public class QRApp extends Application {

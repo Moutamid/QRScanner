@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -51,9 +52,8 @@ public class CardTxtActivity extends AppCompatActivity {
 
     private boolean isText1Selected = false;
     private boolean isEventLogoSelected = false;
-    TextView text1;
-    private EditText edittext;
-    private RelativeLayout imageLayout,imageLayout1;
+    EditText text1;
+    private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private SwitchCompat bold, shadow;
@@ -83,7 +83,26 @@ public class CardTxtActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        edittext = findViewById(R.id.edittext);
+
+        text1.requestFocus();
+
+        text1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text1.clearFocus();
+            }
+        });
+
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         //    text3 = findViewById(R.id.event_city);
@@ -97,8 +116,6 @@ public class CardTxtActivity extends AppCompatActivity {
             public void onClick(View view) {
                 isText1Selected = true;
                 isEventLogoSelected = false;
-                edittext.setText(text1.getText().toString());
-                text1.setBackgroundResource(R.drawable.text_input);
             }
         });
         bold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -123,27 +140,6 @@ public class CardTxtActivity extends AppCompatActivity {
                         text1.setElevation(20f);
                     }
                 }
-            }
-        });
-
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    if (isText1Selected) {
-                        text1.setText(charSequence.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -186,9 +182,6 @@ public class CardTxtActivity extends AppCompatActivity {
 
     }
 
-    public void ClearTxt(View view) {
-        edittext.setText("");
-    }
 
     public void SaveTxt(View view) {
 
@@ -320,4 +313,7 @@ public class CardTxtActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void backPress(View view) {
+        onBackPressed();
+    }
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
+import androidx.core.util.Pair;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.google.android.material.datepicker.MaterialDatePicker;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -44,6 +46,8 @@ import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 public class CardCalendarActivity extends AppCompatActivity {
@@ -53,8 +57,8 @@ public class CardCalendarActivity extends AppCompatActivity {
     private boolean isEventDateSelected = false;
     private boolean isEventCitySelected = false;
     private boolean isEventLogoSelected = false;
-    TextView eventName,eventDate,eventCity;
-    private EditText edittext;
+    TextView eventDate;
+    EditText eventName,eventCity;
     private SharedPreferences prefs;
     private CardView imageLayout,imageLayout1;
     private ImageView logo;
@@ -88,7 +92,6 @@ public class CardCalendarActivity extends AppCompatActivity {
 
         }
         eventDate = findViewById(R.id.event_date);
-        edittext = findViewById(R.id.edittext);
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         eventCity = findViewById(R.id.event_city);
@@ -98,17 +101,56 @@ public class CardCalendarActivity extends AppCompatActivity {
         getLocale();
         colorSeekBar = findViewById(R.id.color_seek_bar);
         historyVM = new ViewModelProvider(CardCalendarActivity.this).get(HistoryVM.class);
+
+        eventName.requestFocus();
+        eventName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                eventName.clearFocus();
+            }
+        });
+
+        eventCity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                eventCity.clearFocus();
+            }
+        });
+
         eventName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                eventName.setBackgroundResource(R.drawable.text_input);
-                eventCity.setBackgroundResource(0);
-                eventDate.setBackgroundResource(0);
                 isEventNameSelected = true;
                 isEventDateSelected = false;
                 isEventCitySelected = false;
                 isEventLogoSelected = false;
-                edittext.setText(eventName.getText().toString());
+
+                if (eventName.getTypeface().getStyle() == Typeface.BOLD){
+                    bold.setChecked(true);
+                } else {
+                    bold.setChecked(false);
+                }
+
             }
         });
         eventDate.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +160,15 @@ public class CardCalendarActivity extends AppCompatActivity {
                 isEventNameSelected = false;
                 isEventCitySelected = false;
                 isEventLogoSelected = false;
-                eventDate.setBackgroundResource(R.drawable.text_input);
-                eventName.setBackgroundResource(0);
-                eventCity.setBackgroundResource(0);
-                edittext.setText(eventDate.getText().toString());
+
+                DatePickerdialog();
+
+                if (eventDate.getTypeface().getStyle() == Typeface.BOLD){
+                    bold.setChecked(true);
+                } else {
+                    bold.setChecked(false);
+                }
+
             }
         });
         eventCity.setOnClickListener(new View.OnClickListener() {
@@ -131,10 +178,13 @@ public class CardCalendarActivity extends AppCompatActivity {
                 isEventNameSelected = false;
                 isEventDateSelected = false;
                 isEventLogoSelected = false;
-                eventCity.setBackgroundResource(R.drawable.text_input);
-                eventDate.setBackgroundResource(0);
-                eventName.setBackgroundResource(0);
-                edittext.setText(eventCity.getText().toString());
+
+                if (eventCity.getTypeface().getStyle() == Typeface.BOLD){
+                    bold.setChecked(true);
+                } else {
+                    bold.setChecked(false);
+                }
+
             }
         });
 
@@ -145,17 +195,17 @@ public class CardCalendarActivity extends AppCompatActivity {
                     if (isEventNameSelected){
                         eventName.setTypeface(eventName.getTypeface(), Typeface.BOLD);
                     }else if (isEventDateSelected){
-                        eventName.setTypeface(eventDate.getTypeface(), Typeface.BOLD);
+                        eventDate.setTypeface(eventDate.getTypeface(), Typeface.BOLD);
                     }else if (isEventCitySelected){
-                        eventName.setTypeface(eventCity.getTypeface(), Typeface.BOLD);
+                        eventCity.setTypeface(eventCity.getTypeface(), Typeface.BOLD);
                     }
-                }else {
+                } else {
                     if (isEventNameSelected){
                         eventName.setTypeface(eventName.getTypeface(), Typeface.NORMAL);
                     }else if (isEventDateSelected){
-                        eventName.setTypeface(eventDate.getTypeface(), Typeface.NORMAL);
+                        eventDate.setTypeface(eventDate.getTypeface(), Typeface.NORMAL);
                     }else if (isEventCitySelected){
-                        eventName.setTypeface(eventCity.getTypeface(), Typeface.NORMAL);
+                        eventCity.setTypeface(eventCity.getTypeface(), Typeface.NORMAL);
                     }
                 }
             }
@@ -173,31 +223,6 @@ public class CardCalendarActivity extends AppCompatActivity {
                         eventCity.setElevation(20f);
                     }
                 }
-            }
-        });
-        
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0){
-                    if (isEventNameSelected){
-                        eventName.setText(charSequence.toString());
-                    }else if (isEventDateSelected){
-                        eventDate.setText(charSequence.toString());
-                    }else if (isEventCitySelected){
-                        eventCity.setText(charSequence.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -223,6 +248,35 @@ public class CardCalendarActivity extends AppCompatActivity {
         });
     }
 
+    private void DatePickerdialog() {
+        // Creating a MaterialDatePicker builder for selecting a date range
+        MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
+        builder.setTitleText("Select a date range");
+
+        // Building the date picker dialog
+        MaterialDatePicker<Pair<Long, Long>> datePicker = builder.build();
+        datePicker.addOnPositiveButtonClickListener(selection -> {
+
+            // Retrieving the selected start and end dates
+            Long startDate = selection.first;
+            Long endDate = selection.second;
+
+            // Formating the selected dates as strings
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", Locale.getDefault());
+            String startDateString = sdf.format(new Date(startDate));
+            String endDateString = sdf.format(new Date(endDate));
+
+            // Creating the date range string
+            String selectedDateRange = startDateString + "  To  " + endDateString;
+
+            // Displaying the selected date range in the TextView
+            eventDate.setText(selectedDateRange);
+        });
+
+        // Showing the date picker dialog
+        datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+    }
+
 
     private void getLocale(){
 
@@ -241,7 +295,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     }
 
     public void ClearTxt(View view) {
-        edittext.setText("");
+
     }
 
 
@@ -342,6 +396,10 @@ public class CardCalendarActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         exitActivity();
+    }
+
+    public void backPress(View view){
+        onBackPressed();
     }
 
     private void exitActivity(){

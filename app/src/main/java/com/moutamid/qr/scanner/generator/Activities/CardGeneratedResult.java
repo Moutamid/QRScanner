@@ -208,4 +208,8 @@ public class CardGeneratedResult extends AppCompatActivity {
         startActivity(new Intent(CardGeneratedResult.this,MainActivity.class));
         finish();
     }
+
+    public void backBarcode(View view) {
+        onBackPressed();
+    }
 }

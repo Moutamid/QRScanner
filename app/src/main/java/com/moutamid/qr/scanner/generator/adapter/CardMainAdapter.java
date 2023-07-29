@@ -40,6 +40,9 @@ public class CardMainAdapter extends  RecyclerView.Adapter<CardMainAdapter.Butto
     @Override
     public void onBindViewHolder(@NonNull ButtonMainViewHolder holder, int position) {
         holder.imageView.setImageResource(btMainList.get(position));
+        if (position == btMainList.size()-1){
+            holder.itemView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

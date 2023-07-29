@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -54,9 +55,8 @@ public class CardSMSActivity extends AppCompatActivity {
     private boolean isText3Selected = false;
     private boolean isText4Selected = false;
     private boolean isEventLogoSelected = false;
-    TextView text1,text2,text3,text4;
-    private EditText edittext;
-    private RelativeLayout imageLayout,imageLayout1;
+    EditText text1,text2,text3,text4;
+    private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private SwitchCompat bold, shadow;
@@ -91,7 +91,77 @@ public class CardSMSActivity extends AppCompatActivity {
         text3 = findViewById(R.id.name);
         text4 = findViewById(R.id.phone);
 
-        edittext = findViewById(R.id.edittext);
+        text1.requestFocus();
+
+        text1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text1.clearFocus();
+            }
+        });
+
+        text2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text2.clearFocus();
+            }
+        });
+
+
+        text3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text3.clearFocus();
+            }
+        });
+
+        text4.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text4.clearFocus();
+            }
+        });
+
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         //    text3 = findViewById(R.id.event_city);
@@ -104,16 +174,10 @@ public class CardSMSActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isText1Selected = true;
-                text1.setBackgroundResource(R.drawable.text_input);
-                text2.setBackgroundResource(0);
-                text3.setBackgroundResource(0);
-                text4.setBackgroundResource(0);
-
                 isText2Selected = false;
                 isText3Selected = false;
                 isText4Selected = false;
                 isEventLogoSelected = false;
-                edittext.setText(text1.getText().toString());
             }
         });
         text2.setOnClickListener(new View.OnClickListener() {
@@ -122,13 +186,8 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText1Selected = false;
                 isText2Selected = true;
                 isText3Selected = false;
-                text2.setBackgroundResource(R.drawable.text_input);
-                text4.setBackgroundResource(0);
-                text1.setBackgroundResource(0);
-                text3.setBackgroundResource(0);
                 isText4Selected = false;
                 isEventLogoSelected = false;
-                edittext.setText(text2.getText().toString());
             }
         });
 
@@ -138,14 +197,8 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText3Selected = true;
                 isText2Selected = false;
                 isText1Selected = false;
-                text3.setBackgroundResource(R.drawable.text_input);
-                text4.setBackgroundResource(0);
-                text1.setBackgroundResource(0);
-                text2.setBackgroundResource(0);
-
                 isText4Selected = false;
                 isEventLogoSelected = false;
-                edittext.setText(text3.getText().toString());
             }
         });
         text4.setOnClickListener(new View.OnClickListener() {
@@ -155,12 +208,7 @@ public class CardSMSActivity extends AppCompatActivity {
                 isText4Selected = true;
                 isText3Selected = false;
                 isText2Selected = false;
-                text4.setBackgroundResource(R.drawable.text_input);
-                text2.setBackgroundResource(0);
-                text1.setBackgroundResource(0);
-                text2.setBackgroundResource(0);
                 isEventLogoSelected = false;
-                edittext.setText(text4.getText().toString());
             }
         });
         bold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -208,33 +256,6 @@ public class CardSMSActivity extends AppCompatActivity {
             }
         });
 
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    if (isText1Selected) {
-                        text1.setText(charSequence.toString());
-                    } else if (isText2Selected) {
-                        text2.setText(charSequence.toString());
-                    }else if (isText3Selected) {
-                        text3.setText(charSequence.toString());
-                    }else if (isText4Selected) {
-                        text4.setText(charSequence.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
             @Override
             public void onColorChangeListener(int i) {
@@ -278,10 +299,6 @@ public class CardSMSActivity extends AppCompatActivity {
         configuration.locale = locale;
         getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
 
-    }
-
-    public void ClearTxt(View view) {
-        edittext.setText("");
     }
 
     public void SaveTxt(View view) {
@@ -418,4 +435,7 @@ public class CardSMSActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void backPress(View view) {
+        onBackPressed();
+    }
 }

@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -49,9 +50,8 @@ public class CardEmailActivity extends AppCompatActivity {
     private boolean isNameSelected = false;
     private boolean isText1Selected = false;
     private boolean isEventLogoSelected = false;
-    TextView text1,text2;
-    private EditText edittext;
-    private RelativeLayout imageLayout,imageLayout1;
+    EditText email,subject, body;
+    private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private Switch bold, shadow;
@@ -64,9 +64,10 @@ public class CardEmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_email);
-        text1 = findViewById(R.id.name);
-        text2 = findViewById(R.id.subject);
-        edittext = findViewById(R.id.edittext);
+        email = findViewById(R.id.email);
+        subject = findViewById(R.id.subject);
+        body = findViewById(R.id.body);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
         history = prefs.getBoolean("saveHistory",true);
@@ -84,6 +85,61 @@ public class CardEmailActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        email.requestFocus();
+
+        email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                email.clearFocus();
+            }
+        });
+
+        subject.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                subject.clearFocus();
+            }
+        });
+
+        body.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                body.clearFocus();
+            }
+        });
+
+
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         //    text3 = findViewById(R.id.event_city);
@@ -92,26 +148,20 @@ public class CardEmailActivity extends AppCompatActivity {
         logo = findViewById(R.id.logo);
         colorSeekBar = findViewById(R.id.color_seek_bar);
         historyVM = new ViewModelProvider(CardEmailActivity.this).get(HistoryVM.class);
-        text1.setOnClickListener(new View.OnClickListener() {
+        email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isNameSelected = true;
-                text1.setBackgroundResource(R.drawable.text_input);
-                text2.setBackgroundResource(0);
                 isText1Selected = false;
                 isEventLogoSelected = false;
-                edittext.setText(text1.getText().toString());
             }
         });
-        text2.setOnClickListener(new View.OnClickListener() {
+        subject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 isText1Selected = true;
                 isNameSelected = false;
                 isEventLogoSelected = false;
-                text2.setBackgroundResource(R.drawable.text_input);
-                text1.setBackgroundResource(0);
-                edittext.setText(text2.getText().toString());
             }
         });
 
@@ -120,17 +170,17 @@ public class CardEmailActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     if (isNameSelected) {
-                        text1.setTypeface(text1.getTypeface(), Typeface.BOLD);
+                        email.setTypeface(email.getTypeface(), Typeface.BOLD);
                     }
                     if (isText1Selected) {
-                        text2.setTypeface(text2.getTypeface(), Typeface.BOLD);
+                        subject.setTypeface(subject.getTypeface(), Typeface.BOLD);
                     }
                 } else {
                     if (isNameSelected) {
-                        text1.setTypeface(text1.getTypeface(), Typeface.NORMAL);
+                        email.setTypeface(email.getTypeface(), Typeface.NORMAL);
                     }
                     if (isText1Selected) {
-                        text2.setTypeface(text2.getTypeface(), Typeface.NORMAL);
+                        subject.setTypeface(subject.getTypeface(), Typeface.NORMAL);
                     }
                 }
             }
@@ -141,36 +191,12 @@ public class CardEmailActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     if (isNameSelected) {
-                        text1.setElevation(20f);
+                        email.setElevation(20f);
                     }
                     else if (isText1Selected) {
-                        text2.setElevation(20f);
+                        subject.setElevation(20f);
                     }
                 }
-            }
-        });
-
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    if (isNameSelected) {
-                        text1.setText(charSequence.toString());
-                    }
-                    else if (isText1Selected) {
-                        text2.setText(charSequence.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -178,10 +204,10 @@ public class CardEmailActivity extends AppCompatActivity {
             @Override
             public void onColorChangeListener(int i) {
                 if (isNameSelected) {
-                    text1.setTextColor(i);
+                    email.setTextColor(i);
                 }
                 else if (isText1Selected) {
-                    text2.setTextColor(i);
+                    subject.setTextColor(i);
                 }
             }
         });
@@ -213,9 +239,6 @@ public class CardEmailActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
     }
 
-    public void ClearTxt(View view) {
-        edittext.setText("");
-    }
 
 
 
@@ -223,13 +246,13 @@ public class CardEmailActivity extends AppCompatActivity {
 
         try {
             BusinessCard businessCard = new BusinessCard();
-            businessCard.setTitle(text1.getText().toString());
-            businessCard.setContent(text2.getText().toString());
+            businessCard.setTitle(email.getText().toString());
+            businessCard.setContent(subject.getText().toString());
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card", false);
             historyVM.insertHistory(urlHistory);
-            text1.setBackgroundResource(0);
-            text2.setBackgroundResource(0);
+            email.setBackgroundResource(0);
+            subject.setBackgroundResource(0);
             Intent intent = new Intent(getApplicationContext(), CardGeneratedResult.class);
             intent.putExtra("image1", savedBitmapFromViewToFile());
             intent.putExtra("image2", savedBitmapFromViewToFile2());
@@ -344,6 +367,10 @@ public class CardEmailActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void backPress(View view){
+        onBackPressed();
     }
 
 }

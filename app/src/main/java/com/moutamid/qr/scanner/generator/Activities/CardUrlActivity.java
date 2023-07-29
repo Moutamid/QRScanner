@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
@@ -52,9 +53,8 @@ public class CardUrlActivity extends AppCompatActivity {
     private boolean isText1Selected = false;
     private boolean isText2Selected = false;
     private boolean isEventLogoSelected = false;
-    TextView text1,text2;
-    private EditText edittext;
-    private RelativeLayout imageLayout,imageLayout1;
+    EditText text1,text2;
+    private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
     private SwitchCompat bold, shadow;
@@ -85,7 +85,43 @@ public class CardUrlActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        edittext = findViewById(R.id.edittext);
+
+        text1.requestFocus();
+
+        text1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text1.clearFocus();
+            }
+        });
+
+        text2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                text2.clearFocus();
+            }
+        });
+
         imageLayout = findViewById(R.id.image_layout1);
         imageLayout1 = findViewById(R.id.image_layout2);
         //    text3 = findViewById(R.id.event_city);
@@ -100,9 +136,6 @@ public class CardUrlActivity extends AppCompatActivity {
                 isText1Selected = true;
                 isText2Selected = false;
                 isEventLogoSelected = false;
-                edittext.setText(text1.getText().toString());
-                text1.setBackgroundResource(R.drawable.text_input);
-                text2.setBackgroundResource(0);
             }
         });
         text2.setOnClickListener(new View.OnClickListener() {
@@ -111,9 +144,6 @@ public class CardUrlActivity extends AppCompatActivity {
                 isText1Selected = false;
                 isText2Selected = true;
                 isEventLogoSelected = false;
-                edittext.setText(text2.getText().toString());
-                text2.setBackgroundResource(R.drawable.text_input);
-                text1.setBackgroundResource(0);
             }
         });
 
@@ -145,29 +175,6 @@ public class CardUrlActivity extends AppCompatActivity {
                         text2.setElevation(20f);
                     }
                 }
-            }
-        });
-
-        edittext.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() > 0) {
-                    if (isText1Selected) {
-                        text1.setText(charSequence.toString());
-                    } else if (isText2Selected) {
-                        text2.setText(charSequence.toString());
-                    }
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
             }
         });
 
@@ -210,10 +217,6 @@ public class CardUrlActivity extends AppCompatActivity {
         configuration.locale = locale;
         getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
 
-    }
-
-    public void ClearTxt(View view) {
-        edittext.setText("");
     }
 
     public void SaveTxt(View view) {
@@ -347,4 +350,7 @@ public class CardUrlActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void backPress(View view) {
+        onBackPressed();
+    }
 }
