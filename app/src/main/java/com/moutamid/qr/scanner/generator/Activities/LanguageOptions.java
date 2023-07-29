@@ -15,36 +15,29 @@ import android.widget.ImageView;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.adapter.ButtonMainAdapter;
+import com.moutamid.qr.scanner.generator.databinding.ActivityLanguageOptionsBinding;
 import com.moutamid.qr.scanner.generator.interfaces.ButtonItemClickListener;
 
 import java.util.Locale;
 
 public class LanguageOptions extends AppCompatActivity {
-
-    private Integer[] images = {R.drawable.us,R.drawable.us,R.drawable.china,
-            R.drawable.france,R.drawable.germany,
-            R.drawable.india,R.drawable.italy,R.drawable.malaysia,R.drawable.turkey};
-    String[] listItems = {"Default English (USA)","English (USA)",
-            "Chinese","French","Germany","Hindi","Italian","Malaysian","Turkish"};
-
-    private RecyclerView recyclerView;
-    private ButtonMainAdapter adapter;
-    private ImageView submitImg;
     private SharedPreferences prefs;
-
     private SharedPreferences.Editor edit;
     private String name;
+    ActivityLanguageOptionsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = ActivityLanguageOptionsBinding.inflate(getLayoutInflater());
         prefs = PreferenceManager.getDefaultSharedPreferences(LanguageOptions.this);
         edit = prefs.edit();
-        setContentView(R.layout.activity_language_options);
-        recyclerView = findViewById(R.id.recyclerView);
-        submitImg = findViewById(R.id.submit);
+        setContentView(binding.getRoot());
+//        recyclerView = findViewById(R.id.recyclerView);
+//        submitImg = findViewById(R.id.submit);
         boolean theme = prefs.getBoolean("theme",false);
 
         if (theme){
@@ -62,71 +55,129 @@ public class LanguageOptions extends AppCompatActivity {
 
         }
          getLocale();
-        adapter = new ButtonMainAdapter(LanguageOptions.this,images,listItems);
-        recyclerView.setAdapter(adapter);
-        adapter.setButtonItemClickListener(new ButtonItemClickListener() {
-            @Override
-            public void clickedItem(View view, int position) {
-                name = listItems[position];
 
-                }
-
-
-            @Override
-            public void clickedItemButton(View view, int position, String type) {
-
-            }
+        binding.english.setOnClickListener(v -> {
+            binding.english.setChecked(true);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
         });
-        submitImg.setOnClickListener(new View.OnClickListener() {
+
+        binding.chinese.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(true);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.french.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(true);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.germany.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(true);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.hindi.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(true);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.italian.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(true);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.malaysian.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(true);
+            binding.turkish.setChecked(false);
+        });
+
+        binding.turkish.setOnClickListener(v -> {
+            binding.english.setChecked(false);
+            binding.chinese.setChecked(false);
+            binding.french.setChecked(false);
+            binding.germany.setChecked(false);
+            binding.hindi.setChecked(false);
+            binding.italian.setChecked(false);
+            binding.malaysian.setChecked(false);
+            binding.turkish.setChecked(true);
+        });
+
+
+        binding.choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (name.equals("Default English (USA)")){
+
+                if (binding.english.isChecked()){
                     setLocale("en","Default English (USA)");
                     recreate();
                 }
-                else if (name.equals("English (USA)")){
-
-                    setLocale("en","English (USA)");
-                    recreate();
-
-                }
-                else if (name.equals("Chinese")){
-
+                else if (binding.chinese.isChecked()){
                     setLocale("zh","Chinese");
                     recreate();
-
                 }
-                else if (name.equals("French")){
-
+                else if (binding.french.isChecked()){
                     setLocale("fr","French");
                     recreate();
                 }
-                else if (name.equals("German")){
-
+                else if (binding.germany.isChecked()){
                     setLocale("de","German");
                     recreate();
-
                 }
-                else if (name.equals("Hindi")){
-
+                else if (binding.hindi.isChecked()){
                     setLocale("hi","Hindi");
                     recreate();
-
                 }
-                else if (name.equals("Italian")){
-
+                else if (binding.italian.isChecked()){
                     setLocale("it","Italian");
                     recreate();
-
                 }
-                else if (name.equals("Malaysian")){
-
+                else if (binding.malaysian.isChecked()){
                     setLocale("ms","Malaysian");
                     recreate();
-
                 }
-                else if (name.equals("Turkish")){
-
+                else if (binding.turkish.isChecked()){
                     setLocale("tr","Turkish");
                     recreate();
                 }
@@ -142,6 +193,32 @@ public class LanguageOptions extends AppCompatActivity {
         String name = prefs.getString("lang_name","");
         //   languageTxt.setText(name);
         setLocale(lang,name);
+
+        if (name.equals("Default English (USA)")){
+            binding.english.setChecked(true);
+        }
+        else if (name.equals("Chinese")){
+            binding.chinese.setChecked(true);
+        }
+        else if (name.equals("French")){
+            binding.french.setChecked(true);
+        }
+        else if (name.equals("German")){
+            binding.germany.setChecked(true);
+        }
+        else if (name.equals("Hindi")){
+            binding.hindi.setChecked(true);
+        }
+        else if (name.equals("Italian")){
+            binding.italian.setChecked(true);
+        }
+        else if (name.equals("Malaysian")){
+            binding.malaysian.setChecked(true);
+        }
+        else if (name.equals("Turkish")){
+            binding.turkish.setChecked(true);
+        }
+
     }
 
     private void setLocale(String lng,String name) {
@@ -158,13 +235,9 @@ public class LanguageOptions extends AppCompatActivity {
     }
 
     public void backButton(View view) {
-        if (!getPurchaseSharedPreference()) {
+        if (!Constants.getPurchaseSharedPreference(LanguageOptions.this)) {
             ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
         }
         finish();
-    }
-    public boolean getPurchaseSharedPreference(){
-        SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }
 }

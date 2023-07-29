@@ -37,6 +37,7 @@
     <color name="gray">#E7E9EE</color>
     <color name="dark">#2E2E2F</color>
     <color name="tabsText">#ffffff</color>
+    <color name="default_text_color">#808080</color>
 
     <color name="bottom_nav">#F4F5F7</color>
     <color name="active_icon">#6E41D4</color>

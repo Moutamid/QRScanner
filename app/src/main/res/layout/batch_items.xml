@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="12sp"
     app:cardElevation="8sp"
+    app:cardBackgroundColor="@color/cardBg"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="12dp">
 
@@ -18,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@color/purple"
+            android:textColor="@color/active_icon"
             tools:text="Barcode"
             android:textStyle="bold"
             android:fontFamily="@font/poppins" />
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:lines="1"
+            android:textColor="@color/default_text_color"
             tools:text="12345687612235"
             android:layout_below="@id/qrBar"
             android:fontFamily="@font/poppins" />
@@ -45,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/round_arrow_forward_ios_24"
-                app:tint="@color/purple" />
+                app:tint="@color/active_icon" />
 
         </LinearLayout>
 

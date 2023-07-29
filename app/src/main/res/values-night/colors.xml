@@ -12,6 +12,7 @@
     <color name="colorAccent">#D3D3D3</color>
     <color name="urlColor">#FFF9EC</color>
     <color name="textColor">#EDFFF6</color>
+    <color name="default_text_color">#C8C8C8</color>
 
     <color name="bottom_nav">#242426</color>
     <color name="toolbar">#212121</color>
@@ -20,6 +21,7 @@
     <color name="icon_tint2">#FFFFFFFF</color>
     <color name="icon_tint3">#E97931</color>
     <color name="active_icon">#E97931</color>
+    <color name="red">#E97931</color>
     <color name="top_bg">#171717</color>
     <color name="text_color">#FFFFFFFF</color>
     <color name="tabsText">#ffffff</color>

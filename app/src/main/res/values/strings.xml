@@ -194,7 +194,7 @@
     <string name="subscription_policy">Payment will be charged to your Google play Account at confirmation of purchase. Subscription auto-renew before the end of the current period.unless canceled 24-hours in advance, and the cancellation takes effect at the end of the current period. You may manage your subscription and turned off auto renewal from your Google Play store account setting subscription canceled during the trial will not be charged. Privacy Policy </string>
     <string name="enjoying_qr_scanner">Enjoying QR Scanner</string>
     <string name="adsubscribed">AdSubscribed</string>
-    <string name="select_lang">Select Language</string>
+    <string name="select_lang">Choose Language</string>
     <string name="google_link" translatable="false"><u>www.google.com</u></string>
 
 </resources>

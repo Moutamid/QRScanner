@@ -208,8 +208,6 @@ public class QRScanFragment extends Fragment {
         modeBtn.setOnClickListener(v -> btnMode(v));
         galleryBtn.setOnClickListener(v -> btnGallery(v));
 
-        batchCard.setVisibility(View.GONE);
-
         batchCard.setOnClickListener(v -> {
             startActivity(new Intent(view.getContext(), BatchScanResultActivity.class));
         });
@@ -457,13 +455,11 @@ public class QRScanFragment extends Fragment {
     public void flashButton(View view) {
         if (isFlash) {
             mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            flashon.setImageResource(R.drawable.ic_baseline_flash_off_24);
             flashBtn.setImageResource(R.drawable.flashon);
             isFlash = false;
         } else {
             mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             isFlash = true;
-            flashon.setImageResource(R.drawable.ic_baseline_flash_on_24);
             flashBtn.setImageResource(R.drawable.flashoff);
         }
     }
@@ -864,11 +860,13 @@ public class QRScanFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (cameraPermissionGranted()) {
-            cameraMode = "normal";
             createCameraSource(true, false, false, cameraMode);
         } else {
             checkPermissions();
         }
+        isFlash = false;
+        batchCard.setVisibility(View.GONE);
+        flashBtn.setImageResource(R.drawable.flashon);
     }
 
     private void checkPermissions() {

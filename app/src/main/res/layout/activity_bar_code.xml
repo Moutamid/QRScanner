@@ -10,9 +10,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:elevation="16dp"
+        android:layout_height="?attr/actionBarSize"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -110,12 +111,12 @@
             android:layout_marginTop="8sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            app:hintTextColor="#887DFF"
+            app:hintTextColor="@color/active_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:boxStrokeColor="#887DFF"
+            app:boxStrokeColor="@color/active_icon"
             app:counterEnabled="true"
             app:counterMaxLength="13"
             android:hint="@string/enter_text_here">
@@ -123,6 +124,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +142,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/poppins"
         android:background="@drawable/button_background"
-        android:backgroundTint="@color/barcodeColor"
+        android:backgroundTint="@color/barcode_bg"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

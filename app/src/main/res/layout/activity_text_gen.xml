@@ -10,7 +10,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?attr/actionBarSize"
+        app:cardBackgroundColor="@color/white"
         app:elevation="16dp"
         app:cardCornerRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"

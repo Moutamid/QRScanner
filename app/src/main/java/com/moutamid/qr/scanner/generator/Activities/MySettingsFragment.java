@@ -458,36 +458,33 @@ public class MySettingsFragment extends Fragment {
         String[] listItems = {getActivity().getResources().getString(R.string.theme1),
                 getActivity().getResources().getString(R.string.theme2)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (i==0){
-
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_YES);
-                    // it will set isDarkModeOn
-                    // boolean to false
-                    modeTxt.setText(listItems[i]);
-                    edit.putBoolean("theme",Boolean.TRUE);
-                    edit.apply();
-                }
-                else if (i == 1){
-                    modeTxt.setText(listItems[i]);
-                    AppCompatDelegate
-                            .setDefaultNightMode(
-                                    AppCompatDelegate
-                                            .MODE_NIGHT_NO);
-                    // it will set isDarkModeOn
-                    // boolean to false
-
-                    edit.putBoolean("theme",Boolean.FALSE);
-                    edit.apply();
-                }
-
-                dialogInterface.dismiss();
+        int checkedItem = prefs.getBoolean("theme",Boolean.FALSE) ? 0 : 1;
+        builder.setSingleChoiceItems(listItems, checkedItem, (dialogInterface, i) -> {
+            if (i==0){
+                AppCompatDelegate
+                        .setDefaultNightMode(
+                                AppCompatDelegate
+                                        .MODE_NIGHT_YES);
+                // it will set isDarkModeOn
+                // boolean to false
+                modeTxt.setText(listItems[i]);
+                edit.putBoolean("theme",Boolean.TRUE);
+                edit.apply();
             }
+            else if (i == 1){
+                modeTxt.setText(listItems[i]);
+                AppCompatDelegate
+                        .setDefaultNightMode(
+                                AppCompatDelegate
+                                        .MODE_NIGHT_NO);
+                // it will set isDarkModeOn
+                // boolean to false
+
+                edit.putBoolean("theme",Boolean.FALSE);
+                edit.apply();
+            }
+
+            dialogInterface.dismiss();
         });
         AlertDialog dialog = builder.create();
         dialog.show();

@@ -10,9 +10,10 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/constraintLayout_history"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="?attr/actionBarSize"
         app:elevation="16dp"
         app:cardCornerRadius="0dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,11 +130,11 @@
             android:layout_margin="6sp"
             android:padding="12sp"
             android:textColor="@color/red"
-            android:drawableTint="@color/red"
             android:fontFamily="@font/poppins"
             android:gravity="center_vertical"
             android:drawablePadding="12sp"
-            android:drawableStart="@drawable/baseline_content_copy_24" />
+            app:drawableTint="@color/red"
+            app:drawableStartCompat="@drawable/baseline_content_copy_24" />
 
     </LinearLayout>
 
