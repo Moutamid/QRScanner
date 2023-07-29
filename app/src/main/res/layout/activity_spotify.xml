@@ -112,12 +112,14 @@
             app:hintTextColor="@color/black"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
+            android:textColorHint="@color/default_text_color"
             app:boxStrokeColor="@color/spotify_solid"
             android:hint="@string/artist_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -129,6 +131,7 @@
             app:boxBackgroundColor="@color/white"
             app:hintTextColor="@color/black"
             android:layout_marginStart="20sp"
+            android:textColorHint="@color/default_text_color"
             android:layout_marginEnd="20sp"
             app:boxStrokeColor="@color/spotify_solid"
             android:hint="@string/artist_song">
@@ -136,6 +139,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

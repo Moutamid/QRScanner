@@ -115,8 +115,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:hintTextColor="@color/text_bg"
-            app:boxStrokeColor="@color/text_bg"
+            app:hintTextColor="@color/black"
+            android:textColorHint="@color/default_text_color"
+            app:boxStrokeColor="@color/black"
             app:layout_constraintVertical_bias="0.110000014"
             android:hint="@string/texthint">
 
@@ -127,6 +128,7 @@
                 android:lineSpacingExtra="2dp"
                 android:lines="1"
                 android:maxLines="8"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

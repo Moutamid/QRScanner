@@ -114,11 +114,13 @@
             android:layout_marginEnd="20sp"
             app:hintTextColor="@color/wifi_solid"
             app:boxStrokeColor="@color/wifi_solid"
+            android:textColorHint="@color/default_text_color"
             android:hint="@string/ssid_network_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -132,6 +134,7 @@
             android:layout_marginTop="10sp"
             android:layout_marginEnd="20sp"
             app:passwordToggleEnabled="true"
+            android:textColorHint="@color/default_text_color"
             app:hintTextColor="@color/wifi_solid"
             app:passwordToggleTint="@color/wifi_solid"
             app:boxStrokeColor="@color/wifi_solid"
@@ -140,6 +143,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:inputType="textPassword"
                 android:fontFamily="@font/poppins" />
 

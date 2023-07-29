@@ -76,7 +76,7 @@
             android:src="@drawable/twittersolid"
             app:tint="@color/twitter_solid"
             android:padding="15dp"
-            android:backgroundTint="@color/contactColor"
+            android:backgroundTint="@color/twitter_bg"
             android:background="@drawable/barcode_icon_back" />
 
         <TextView
@@ -126,6 +126,7 @@
             android:layout_marginEnd="20sp"
             android:layout_gravity="start"
             android:fontFamily="@font/poppins"
+            android:textColor="@color/default_text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -139,6 +140,7 @@
             android:layout_marginTop="8sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:textColorHint="@color/default_text_color"
             app:hintTextColor="@color/twitter_solid"
             app:boxStrokeColor="@color/twitter_solid"
             android:hint="@string/twitter_url">
@@ -147,6 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="https://twitter.com/"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins" />
 
         </com.google.android.material.textfield.TextInputLayout>

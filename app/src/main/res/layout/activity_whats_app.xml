@@ -112,6 +112,8 @@
             android:background="@drawable/button_background"
             android:backgroundTint="@color/whatsapp_bg"
             android:gravity="center"
+            app:ccpDialog_backgroundColor="@color/white"
+            app:ccp_contentColor="@color/black"
             app:ccpDialog_textColor="@color/black"
             app:ccp_autoDetectCountry="true"
             app:ccp_showArrow="true"
@@ -128,6 +130,7 @@
             android:layout_weight="1"
             android:hint="@string/phone_number"
             app:boxBackgroundColor="@color/white"
+            android:textColorHint="@color/default_text_color"
             app:boxStrokeColor="@color/whatsapp_solid"
             app:hintTextColor="@color/whatsapp_solid">
 
@@ -135,6 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins"
+                android:textColor="@color/black"
                 android:inputType="phone" />
 
         </com.google.android.material.textfield.TextInputLayout>

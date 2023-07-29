@@ -117,12 +117,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:textColorHint="@color/default_text_color"
             app:boxStrokeColor="@color/paypal_solid"
             android:hint="@string/paypal_url">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

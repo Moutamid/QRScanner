@@ -132,11 +132,13 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:boxStrokeColor="@color/calender_solid"
+                    android:textColorHint="@color/default_text_color"
                     android:hint="@string/event_name">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -170,12 +172,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:textColorHint="@color/default_text_color"
                     app:layout_constraintTop_toTopOf="parent"
                     android:hint="@string/subject">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins"/>
 
                 </com.google.android.material.textfield.TextInputLayout>

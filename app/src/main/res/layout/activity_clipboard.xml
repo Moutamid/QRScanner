@@ -110,6 +110,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             app:hintTextColor="@color/black"
+            android:textColorHint="@color/default_text_color"
             app:boxStrokeColor="@color/clipboard_solid"
             android:hint="@string/texthint">
 
@@ -118,6 +119,7 @@
                 android:layout_height="100sp"
                 android:inputType="textMultiLine"
                 android:lineSpacingExtra="2dp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

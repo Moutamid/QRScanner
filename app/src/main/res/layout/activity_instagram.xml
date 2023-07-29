@@ -127,6 +127,7 @@
             android:layout_marginEnd="20sp"
             android:layout_gravity="start"
             android:fontFamily="@font/poppins"
+            android:textColor="@color/default_text_color"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
@@ -140,6 +141,7 @@
             android:layout_marginTop="8sp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:textColorHint="@color/default_text_color"
             app:hintTextColor="@color/insta_solid"
             app:boxStrokeColor="@color/insta_solid"
             android:hint="@string/insta_url">
@@ -148,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="https://www.instagram.com/"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

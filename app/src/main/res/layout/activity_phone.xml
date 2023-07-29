@@ -118,6 +118,8 @@
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/addresssolid"
             app:endIconCheckable="true"
+            app:endIconTint="@color/default_text_color"
+            android:textColorHint="@color/default_text_color"
             app:boxStrokeColor="@color/phone_solid"
             android:hint="@string/phone_number">
 
@@ -125,6 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="phone"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins"/>
 
         </com.google.android.material.textfield.TextInputLayout>

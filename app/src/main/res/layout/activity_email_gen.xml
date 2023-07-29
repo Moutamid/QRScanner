@@ -112,6 +112,7 @@
             android:layout_marginTop="3sp"
             android:layout_marginEnd="20dp"
             android:hint="@string/email"
+            android:textColorHint="@color/default_text_color"
             app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/email_solid"
             app:counterEnabled="true"
@@ -121,6 +122,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -133,6 +135,7 @@
             android:layout_marginTop="3sp"
             android:layout_marginEnd="20dp"
             android:hint="@string/subject"
+            android:textColorHint="@color/default_text_color"
             app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/email_solid"
             app:counterEnabled="true"
@@ -142,6 +145,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -155,6 +159,7 @@
             android:layout_marginTop="3sp"
             android:layout_marginEnd="20dp"
             android:hint="@string/body"
+            android:textColorHint="@color/default_text_color"
             app:boxBackgroundColor="@color/white"
             app:boxStrokeColor="@color/email_solid"
             app:counterEnabled="true"
@@ -165,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100sp"
                 android:fontFamily="@font/poppins"
+                android:textColor="@color/black"
                 android:inputType="textMultiLine" />
 
         </com.google.android.material.textfield.TextInputLayout>

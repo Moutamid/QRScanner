@@ -128,6 +128,7 @@
             android:layout_gravity="start"
             android:fontFamily="@font/poppins"
             android:textSize="14sp"
+            android:textColor="@color/default_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toTopOf="parent" />
@@ -142,12 +143,14 @@
             android:layout_marginEnd="20dp"
             app:hintTextColor="@color/youtube_solid"
             app:boxStrokeColor="@color/youtube_solid"
+            android:textColorHint="@color/default_text_color"
             android:hint="@string/youtube_link_here">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="https://www.youtube.com/@"
+                android:textColor="@color/black"
                 android:fontFamily="@font/poppins" />
 
         </com.google.android.material.textfield.TextInputLayout>

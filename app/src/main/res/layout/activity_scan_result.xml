@@ -68,13 +68,23 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/image_layout1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/text_color"
+                app:cardElevation="8sp">
+
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="150sp"
                 android:layout_height="150sp"
-                android:layout_marginTop="8dp"
                 android:contentDescription="@string/qr_image"
                 android:src="@drawable/imageqr" />
+
+            </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/save"
@@ -95,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout

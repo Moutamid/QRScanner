@@ -118,6 +118,7 @@
                 app:boxBackgroundColor="@color/white"
                 android:layout_marginStart="20sp"
                 android:layout_marginEnd="20sp"
+                android:textColorHint="@color/default_text_color"
                 app:hintTextColor="@color/location_solid"
                 app:boxStrokeColor="@color/location_solid"
                 android:hint="@string/location_name_here">
@@ -125,6 +126,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/poppins"/>
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -134,6 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
+                android:textColorHint="@color/default_text_color"
                 android:layout_marginStart="20sp"
                 android:layout_marginEnd="20sp"
                 app:counterEnabled="true"
@@ -145,6 +148,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/black"
                     android:inputType="numberDecimal|numberSigned"
                     android:fontFamily="@font/poppins"/>
 
@@ -157,6 +161,7 @@
                 android:layout_marginStart="20sp"
                 android:layout_marginEnd="20sp"
                 android:hint="@string/enter_longitude"
+                android:textColorHint="@color/default_text_color"
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeColor="@color/location_solid"
                 app:counterEnabled="true"
@@ -167,6 +172,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:fontFamily="@font/poppins"
+                    android:textColor="@color/black"
                     android:inputType="numberDecimal|numberSigned" />
 
             </com.google.android.material.textfield.TextInputLayout>

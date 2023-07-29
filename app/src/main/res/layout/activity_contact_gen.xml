@@ -120,6 +120,7 @@
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
                     android:hint="@string/name"
+                    android:textColorHint="@color/default_text_color"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
                     app:hintTextColor="@color/contact_solid">
@@ -127,6 +128,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -138,7 +140,9 @@
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
                     android:hint="@string/phone"
+                    android:textColorHint="@color/default_text_color"
                     app:endIconMode="custom"
+                    app:endIconTint="@color/default_text_color"
                     app:endIconDrawable="@drawable/addresssolid"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
@@ -147,6 +151,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -158,6 +163,7 @@
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
                     android:hint="@string/email"
+                    android:textColorHint="@color/default_text_color"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
                     app:hintTextColor="@color/contact_solid">
@@ -165,6 +171,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -175,6 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
+                    android:textColorHint="@color/default_text_color"
                     android:hint="@string/organization"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
@@ -183,6 +191,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -194,6 +203,7 @@
                     android:layout_marginStart="20sp"
                     android:layout_marginEnd="20sp"
                     android:hint="@string/address"
+                    android:textColorHint="@color/default_text_color"
                     app:boxBackgroundColor="@color/white"
                     app:boxStrokeColor="@color/contact_solid"
                     app:hintTextColor="@color/contact_solid">
@@ -201,6 +211,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:textColor="@color/black"
                         android:fontFamily="@font/poppins" />
 
                 </com.google.android.material.textfield.TextInputLayout>
