@@ -39,6 +39,7 @@ public class SpotifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_spotify);
         name=findViewById(R.id.artist_name);
         song=findViewById(R.id.song);

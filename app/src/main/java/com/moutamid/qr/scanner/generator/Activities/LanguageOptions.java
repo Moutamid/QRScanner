@@ -32,6 +32,7 @@ public class LanguageOptions extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         binding = ActivityLanguageOptionsBinding.inflate(getLayoutInflater());
         prefs = PreferenceManager.getDefaultSharedPreferences(LanguageOptions.this);
         edit = prefs.edit();

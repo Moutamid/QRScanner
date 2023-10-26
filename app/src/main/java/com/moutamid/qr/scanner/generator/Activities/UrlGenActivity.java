@@ -41,6 +41,7 @@ public class UrlGenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_url_gen);
 
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);

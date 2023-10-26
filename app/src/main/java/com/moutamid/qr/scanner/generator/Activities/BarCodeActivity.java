@@ -34,6 +34,7 @@ public class BarCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_bar_code);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         editText=findViewById(R.id.edit_barcode);

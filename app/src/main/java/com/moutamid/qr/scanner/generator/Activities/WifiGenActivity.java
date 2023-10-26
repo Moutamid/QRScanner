@@ -41,6 +41,7 @@ public class    WifiGenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_wifi_gen);
         wifiname=findViewById(R.id.wifi_name);
         wifipassword=findViewById(R.id.wfi_password);

@@ -64,6 +64,7 @@ public class CardTxtActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_txt);
         text1 = findViewById(R.id.txt);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);

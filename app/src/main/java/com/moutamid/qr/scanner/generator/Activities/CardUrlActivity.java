@@ -65,6 +65,7 @@ public class CardUrlActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_url);
         text1 = findViewById(R.id.txt);
         text2 = findViewById(R.id.url);

@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 
 import java.io.File;
@@ -47,6 +48,7 @@ public class CardGeneratedResult extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_generated_result);
         imageView = findViewById(R.id.imageView);
         imageView1 = findViewById(R.id.imageView2);

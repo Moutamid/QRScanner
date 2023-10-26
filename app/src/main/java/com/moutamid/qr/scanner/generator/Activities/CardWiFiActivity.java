@@ -67,6 +67,7 @@ public class CardWiFiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_wi_fi);
         text1 = findViewById(R.id.ssid);
         text2 = findViewById(R.id.lng);

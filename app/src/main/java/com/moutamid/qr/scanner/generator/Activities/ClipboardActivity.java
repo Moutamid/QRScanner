@@ -49,6 +49,7 @@ public class ClipboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_clipboard);
         textedit=findViewById(R.id.text_edit);
         prefs = PreferenceManager.getDefaultSharedPreferences(ClipboardActivity.this);

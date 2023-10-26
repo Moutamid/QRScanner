@@ -66,6 +66,7 @@ public class CardGeoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_geo);
         text1 = findViewById(R.id.lat);
         text2 = findViewById(R.id.lng);

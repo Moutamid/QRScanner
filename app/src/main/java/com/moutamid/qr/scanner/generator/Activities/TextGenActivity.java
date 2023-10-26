@@ -39,6 +39,7 @@ public class TextGenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_text_gen);
         textedit=findViewById(R.id.text_edit);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);

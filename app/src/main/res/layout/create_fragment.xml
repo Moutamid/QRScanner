@@ -17,26 +17,32 @@
                   android:id="@+id/history_recyclerview"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
+                  android:layout_below="@+id/all_delete_history"
+                  android:layout_marginTop="10dp"
                   android:orientation="vertical"
                   app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-              <ImageView
+              <com.google.android.material.button.MaterialButton
                   android:id="@+id/all_delete_history"
-                  android:layout_width="50dp"
-                  android:layout_height="50dp"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:cornerRadius="100dp"
+                  android:text="Clear All"
+                  android:textAllCaps="false"
+                  android:fontFamily="@font/poppins"
+                  android:includeFontPadding="false"
+                  app:icon="@drawable/deleteall"
+                  app:iconSize="26dp"
+                  android:padding="12dp"
+                  app:iconTint="@color/icon_tint3"
+                  android:textColor="@color/icon_tint3"
+                  app:backgroundTint="?attr/cardBackgroundColor"
+                  android:layout_alignParentTop="true"
                   android:layout_alignParentEnd="true"
-                  android:layout_alignParentBottom="true"
                   android:layout_marginStart="20dp"
                   android:layout_marginTop="20dp"
                   android:layout_marginEnd="20dp"
-                  android:layout_marginBottom="100dp"
-                  android:background="@drawable/contact_edit_back"
-                  android:backgroundTint="?attr/cardBackgroundColor"
-                  android:contentDescription="@string/delete_history"
-                  android:onClick="deleteAllHistory"
-                  android:padding="12sp"
-                  app:tint="@color/icon_tint3"
-                  android:src="@drawable/deleteall" />
+                  android:onClick="deleteAllHistory" />
 
        </RelativeLayout>
 

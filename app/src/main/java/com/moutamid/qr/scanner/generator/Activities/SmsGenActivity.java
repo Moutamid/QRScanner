@@ -39,6 +39,7 @@ public class SmsGenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_sms_gen);
         number=findViewById(R.id.phone_number);
         message=findViewById(R.id.text_message);

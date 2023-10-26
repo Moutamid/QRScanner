@@ -62,6 +62,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
 //        Plugin.Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_location);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);

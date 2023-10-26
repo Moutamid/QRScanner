@@ -68,6 +68,7 @@ public class CardSMSActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_smsactivity);
         text1 = findViewById(R.id.username);
         text2 = findViewById(R.id.msg);

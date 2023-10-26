@@ -66,6 +66,7 @@ public class CardSocial2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_social2);
         text1 = findViewById(R.id.username);
         text2 = findViewById(R.id.url);

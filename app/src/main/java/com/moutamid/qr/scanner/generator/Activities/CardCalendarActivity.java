@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -71,6 +72,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_calendar);
         eventCity = findViewById(R.id.event_city);
         eventName = findViewById(R.id.event_name);

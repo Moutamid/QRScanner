@@ -610,7 +610,16 @@ public class QRScanFragment extends Fragment {
         try {
             History contactHistory = new History(text, "barcode", true);
             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-            historyList.add(contactHistory);
+            boolean check = false;
+            for (History model : historyList){
+                if (model.getData().equals(contactHistory.getData())){
+                    check = true;
+                    break;
+                }
+            }
+            if (!check) {
+                historyList.add(contactHistory);
+            }
             Stash.put(Constants.SCAN, historyList);
 //            historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "Barcode");
@@ -638,7 +647,16 @@ public class QRScanFragment extends Fragment {
             vCard.parseSchema(text);
             History contactHistory = new History(vCard.generateString(), "contact", true);
             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-            historyList.add(contactHistory);
+            boolean check = false;
+            for (History model : historyList){
+                if (model.getData().equals(contactHistory.getData())){
+                    check = true;
+                    break;
+                }
+            }
+            if (!check) {
+                historyList.add(contactHistory);
+            }
             Stash.put(Constants.SCAN, historyList);
             //    historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "VCard");
@@ -652,7 +670,18 @@ public class QRScanFragment extends Fragment {
                 eMail.parseSchema(text);
                 History contactHistory = new History(eMail.generateString(), "email", true);
                 ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                historyList.add(contactHistory);
+
+                boolean check = false;
+                for (History model : historyList){
+                    if (model.getData().equals(contactHistory.getData())){
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check) {
+                    historyList.add(contactHistory);
+                }
+
                 Stash.put(Constants.SCAN, historyList);
 //                historyVM.insertHistory(contactHistory);
                 intent.putExtra("type", "EMail");
@@ -667,7 +696,16 @@ public class QRScanFragment extends Fragment {
                     wifi.parseSchema(text);
                     History contactHistory = new History(wifi.generateString(), "wifi", true);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                    historyList.add(contactHistory);
+                    boolean check = false;
+                    for (History model : historyList){
+                        if (model.getData().equals(contactHistory.getData())){
+                            check = true;
+                            break;
+                        }
+                    }
+                    if (!check) {
+                        historyList.add(contactHistory);
+                    }
                     Stash.put(Constants.SCAN, historyList);
 //                    historyVM.insertHistory(contactHistory);
                     intent.putExtra("type", "wifi");
@@ -682,7 +720,16 @@ public class QRScanFragment extends Fragment {
                         telephone.parseSchema(text);
                         History contactHistory = new History(telephone.generateString(), "phone", true);
                         ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                        historyList.add(contactHistory);
+                        boolean check = false;
+                        for (History model : historyList){
+                            if (model.getData().equals(contactHistory.getData())){
+                                check = true;
+                                break;
+                            }
+                        }
+                        if (!check) {
+                            historyList.add(contactHistory);
+                        }
                         Stash.put(Constants.SCAN, historyList);
 //                        historyVM.insertHistory(contactHistory);
                         intent.putExtra("type", "telephone");
@@ -697,7 +744,16 @@ public class QRScanFragment extends Fragment {
                             url.parseSchema(text);
                             History contactHistory = new History(url.generateString(), "url", true);
                             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                            historyList.add(contactHistory);
+                            boolean check = false;
+                            for (History model : historyList){
+                                if (model.getData().equals(contactHistory.getData())){
+                                    check = true;
+                                    break;
+                                }
+                            }
+                            if (!check) {
+                                historyList.add(contactHistory);
+                            }
                             Stash.put(Constants.SCAN, historyList);
 //                            historyVM.insertHistory(contactHistory);
                             intent.putExtra("type", "url");
@@ -712,7 +768,16 @@ public class QRScanFragment extends Fragment {
                                 social.parseSchema(text);
                                 History urlHistory = new History(social.generateString(), "social", true);
                                 ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                historyList.add(urlHistory);
+                                boolean check = false;
+                                for (History model : historyList){
+                                    if (model.getData().equals(urlHistory.getData())){
+                                        check = true;
+                                        break;
+                                    }
+                                }
+                                if (!check) {
+                                    historyList.add(urlHistory);
+                                }
                                 Stash.put(Constants.SCAN, historyList);
 //                                historyVM.insertHistory(urlHistory);
                                 intent.putExtra("type", "Social");
@@ -727,7 +792,16 @@ public class QRScanFragment extends Fragment {
                                     geoInfo.parseSchema(text);
                                     History contactHistory = new History(geoInfo.generateString(), "location", true);
                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                    historyList.add(contactHistory);
+                                    boolean check = false;
+                                    for (History model : historyList){
+                                        if (model.getData().equals(contactHistory.getData())){
+                                            check = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!check) {
+                                        historyList.add(contactHistory);
+                                    }
                                     Stash.put(Constants.SCAN, historyList);
 //                                    historyVM.insertHistory(contactHistory);
                                     intent.putExtra("type", "GeoInfo");
@@ -742,7 +816,16 @@ public class QRScanFragment extends Fragment {
                                         sms.parseSchema(text);
                                         History contactHistory = new History(sms.generateString(), "sms", true);
                                         ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                        historyList.add(contactHistory);
+                                        boolean check = false;
+                                        for (History model : historyList){
+                                            if (model.getData().equals(contactHistory.getData())){
+                                                check = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!check) {
+                                            historyList.add(contactHistory);
+                                        }
                                         Stash.put(Constants.SCAN, historyList);
 //                                        historyVM.insertHistory(contactHistory);
                                         intent.putExtra("type", "Sms");
@@ -757,7 +840,16 @@ public class QRScanFragment extends Fragment {
                                             iEvent.parseSchema(text);
                                             History contactHistory = new History(iEvent.generateString(), "event", true);
                                             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                            historyList.add(contactHistory);
+                                            boolean check = false;
+                                            for (History model : historyList){
+                                                if (model.getData().equals(contactHistory.getData())){
+                                                    check = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!check) {
+                                                historyList.add(contactHistory);
+                                            }
                                             Stash.put(Constants.SCAN, historyList);
 //                                            historyVM.insertHistory(contactHistory);
                                             intent.putExtra("type", "Event");
@@ -773,7 +865,16 @@ public class QRScanFragment extends Fragment {
                                                     int i = Integer.parseInt(text);
                                                     History contactHistory = new History(text, "barcode", true);
                                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                                    historyList.add(contactHistory);
+                                                    boolean check = false;
+                                                    for (History model : historyList){
+                                                        if (model.getData().equals(contactHistory.getData())){
+                                                            check = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!check) {
+                                                        historyList.add(contactHistory);
+                                                    }
                                                     Stash.put(Constants.SCAN, historyList);
 //                                                    historyVM.insertHistory(contactHistory);
                                                     intent.putExtra("type", "Barcode");
@@ -786,7 +887,16 @@ public class QRScanFragment extends Fragment {
                                                     Log.d("EMAILCHEC", "Error  " + e.toString());
                                                     History contactHistory = new History(text, "text", true);
                                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
-                                                    historyList.add(contactHistory);
+                                                    boolean check = false;
+                                                    for (History model : historyList){
+                                                        if (model.getData().equals(contactHistory.getData())){
+                                                            check = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (!check) {
+                                                        historyList.add(contactHistory);
+                                                    }
                                                     Stash.put(Constants.SCAN, historyList);
 //                                                   historyVM.insertHistory(contactHistory);
                                                     intent.putExtra("type", "Text");
@@ -978,16 +1088,37 @@ public class QRScanFragment extends Fragment {
                                         format == Barcode.EAN_8 || format == Barcode.EAN_13 ||
                                         format == Barcode.UPC_A || format == Barcode.UPC_E) {
                                    qrBar.setText("Barcode");
+
+                                   boolean check = false;
                                    ResultModel resultModel = new ResultModel(format, rawData);
-                                    list.add(resultModel);
+                                   for (ResultModel model : list){
+                                       if (model.getRawData().equals(resultModel.getRawData())){
+                                           check = true;
+                                           break;
+                                       }
+                                   }
+
+                                   if (!check) {
+                                       list.add(resultModel);
+                                   }
                                     Stash.put(Constants.RESULT_BATCH, list);
                                 } else {
                                     qrBar.setText("QR Code");
                                     ResultModel resultModel = new ResultModel(-1, rawData);
-                                    list.add(resultModel);
+                                    boolean check = false;
+                                    for (ResultModel model : list){
+                                        if (model.getRawData().equals(resultModel.getRawData())){
+                                            check = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!check) {
+                                        list.add(resultModel);
+                                    }
                                     Stash.put(Constants.RESULT_BATCH, list);
                                 }
-                                int size = list.size() - (list.size()/2);
+                                int size = list.size() ; // - (list.size()/2)
                                 itemCount.setText(size+"");
                                 result.setText(rawData);
                                 startCameraSource();

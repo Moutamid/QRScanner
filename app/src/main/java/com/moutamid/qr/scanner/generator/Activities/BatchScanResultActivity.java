@@ -40,6 +40,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_batch_scan_result);
 
         listItems = findViewById(R.id.listItems);
@@ -297,7 +298,13 @@ public class BatchScanResultActivity extends AppCompatActivity {
     }
 
     public void backResult(View view){
+        Stash.clear(Constants.RESULT_BATCH);
         onBackPressed();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Stash.clear(Constants.RESULT_BATCH);
+    }
 }

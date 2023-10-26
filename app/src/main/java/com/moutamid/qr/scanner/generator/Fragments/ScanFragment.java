@@ -28,6 +28,7 @@ import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.button.MaterialButton;
 import com.moutamid.qr.scanner.generator.Activities.QRScanFragment;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.Constants;
@@ -63,7 +64,7 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
     private RelativeLayout recyclerLayout;
     private boolean isEmpty = false;
     private SharedPreferences prefs;
-    private ImageView deleteImg;
+    private MaterialButton deleteImg;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

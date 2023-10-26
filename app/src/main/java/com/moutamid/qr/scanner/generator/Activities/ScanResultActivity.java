@@ -61,6 +61,7 @@ import com.google.zxing.oned.EAN13Writer;
 import com.google.zxing.oned.EAN8Writer;
 import com.google.zxing.oned.UPCAWriter;
 import com.google.zxing.oned.UPCEWriter;
+import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.Model.ButtonModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.databinding.ActivityScanResultBinding;
@@ -120,6 +121,7 @@ public class ScanResultActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         binding = ActivityScanResultBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

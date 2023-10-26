@@ -65,6 +65,7 @@ public class CardEmail2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Constants.adjustFontScale(this);
         setContentView(R.layout.activity_card_email2);
         text1 = findViewById(R.id.email);
         text2 = findViewById(R.id.subject);
