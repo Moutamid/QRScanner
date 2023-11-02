@@ -67,18 +67,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
-        <include
-            android:id="@+id/navLay"
-            layout="@layout/bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp"
-            android:layout_marginBottom="45sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
         <FrameLayout
             android:id="@+id/ad_container"
             android:layout_width="0dp"

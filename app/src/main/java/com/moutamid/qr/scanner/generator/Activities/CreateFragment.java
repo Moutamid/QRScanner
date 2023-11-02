@@ -39,10 +39,8 @@ import java.util.List;
 public class CreateFragment extends Fragment {
     EditText quick;
     ImageView quickBtn;
-    View navLay;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    BottomNavigationView bottomNavigationView;
     private SharedPreferences prefs;
 
     public CreateFragment() {
@@ -67,8 +65,6 @@ public class CreateFragment extends Fragment {
 
         quick=view.findViewById(R.id.quick);
         quickBtn=view.findViewById(R.id.quickBtn);
-        navLay = view.findViewById(R.id.navLay);
-        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
 
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
@@ -96,29 +92,6 @@ public class CreateFragment extends Fragment {
                 if (!Constants.getPurchaseSharedPreference(requireContext())) {
                     ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, requireActivity());
                 }
-            }
-        });
-
-
-        bottomNavigationView.setSelectedItemId(R.id.generate_qr);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.scan:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-                        break;
-                    case R.id.generate_qr:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
-                        break;
-                    case R.id.history:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
-                        break;
-                    case R.id.settings:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
-                        break;
-                }
-                return false;
             }
         });
 

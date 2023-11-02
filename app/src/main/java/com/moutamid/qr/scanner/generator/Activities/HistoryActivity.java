@@ -37,8 +37,7 @@ public class HistoryActivity extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences prefs;
-    BottomNavigationView bottomNavigationView;
-    View navLay;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +97,7 @@ public class HistoryActivity extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.create)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.card)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        navLay = view.findViewById(R.id.navLay);
-        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
+
         HistoryTabAdapter adapter = new HistoryTabAdapter(getActivity(), getChildFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -118,28 +116,6 @@ public class HistoryActivity extends Fragment {
             }
         });
         getLocale();
-
-        bottomNavigationView.setSelectedItemId(R.id.history);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.scan:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-                        break;
-                    case R.id.generate_qr:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
-                        break;
-                    case R.id.history:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
-                        break;
-                    case R.id.settings:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
-                        break;
-                }
-                return false;
-            }
-        });
 
 
         return view;

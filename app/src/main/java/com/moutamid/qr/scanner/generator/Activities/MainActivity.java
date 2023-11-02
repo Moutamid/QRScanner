@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.WindowCompat;
@@ -22,10 +23,16 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.hardware.Camera;
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -41,6 +48,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -109,11 +117,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgRemoveAd;
     private RadioButton radioButton2;
     private RadioGroup radioGroup;
-    private BottomNavigationView bottomNavigationView;
     private CAMediatedBannerView mediatedBannerView;
     private SharedPreferences prefs;
     private static final int MY_REQUEST_CODE = 1000; // You can choose any code you like
-
+    BottomNavigationView bottomNavigationView;
+    CardView cardView;
+    View navLay;
+    ImageButton flashBtn, modeBtn, galleryBtn;
     private AppUpdateManager appUpdateManager;
 
 
@@ -124,13 +134,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Constants.adjustFontScale(MainActivity.this);
         setContentView(R.layout.activity_main);
-
+        Constants.checkApp(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         imgRemoveAd = findViewById(R.id.img_ad);
-        //RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
-        //cardViewHide = findViewById(R.id.cardView_seekbar);
-        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        // RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
+        // cardViewHide = findViewById(R.id.cardView_seekbar);
+
         boolean theme = prefs.getBoolean("theme",false);
         if (theme){
             AppCompatDelegate
@@ -162,52 +172,41 @@ public class MainActivity extends AppCompatActivity {
         //checkPermissions();
 
         loadQRfragment();
-        Menu menu = bottomNavigationView.getMenu();
-        menu.findItem(R.id.scan).setTitle(R.string.scan);
-        menu.findItem(R.id.generate_qr).setTitle(R.string.create);
-        menu.findItem(R.id.history).setTitle(R.string.history);
-       // menu.findItem(R.id.business).setTitle(R.string.business);
-        menu.findItem(R.id.settings).setTitle(R.string.setting);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()){
-                case R.id.scan:
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                    }
-                    loadQRfragment();
-                break;
-                case R.id.generate_qr:
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                    }
-                    loadMenuFragment();
-                    break;
-                case R.id.history:
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, MainActivity.this);
-                    }
-                    loadHistoryFragment();
-                    break;
-//                case R.id.business:
-//
-//                    if (!getPurchaseSharedPreference()) {
-//                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
-//                                MainActivity.this);
-//                    }
-//                    loadBusinessFragment();
-//                    break;
-                case R.id.settings:
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1,
-                                MainActivity.this);
-                    }
-                    loadSettingsFragment();
-                    break;
+        navLay = findViewById(R.id.navLay);
+        flashBtn = navLay.findViewById(R.id.flashBtn);
+        modeBtn = navLay.findViewById(R.id.modeBtn);
+        galleryBtn = navLay.findViewById(R.id.galleryBtn);
+        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
+        cardView = navLay.findViewById(R.id.buttonsLayout);
+        cardView.setVisibility(View.VISIBLE);
+
+        bottomNavigationView.setSelectedItemId(R.id.scan);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.scan:
+                        cardView.setVisibility(View.VISIBLE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+                        break;
+                    case R.id.generate_qr:
+                        cardView.setVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
+                        break;
+                    case R.id.history:
+                        cardView.setVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
+                        break;
+                    case R.id.settings:
+                        cardView.setVisibility(View.GONE);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
+                        break;
+                }
+                return false;
             }
-            return true;
         });
-        bottomNavigationView.invalidate();
+
 //        Dexter.withActivity(this)
 //                .withPermission(Manifest.permission.CAMERA)
 //                .withListener(new PermissionListener() {
@@ -227,6 +226,50 @@ public class MainActivity extends AppCompatActivity {
 //                .check();
 
     }
+
+/*
+    public void flashButton(View view) {
+        if (isFlash) {
+            mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            flashBtn.setImageResource(R.drawable.flashon);
+            isFlash = false;
+        } else {
+            mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            isFlash = true;
+            flashBtn.setImageResource(R.drawable.flashoff);
+        }
+    }
+
+    public void btnGallery(View view) {
+        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(pickPhoto, 2);
+    }
+
+    public void btnMode(View view) {
+        mPreview.stop();
+        if (checkSoundPreferences()) {
+            ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
+            toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
+        }
+        if (checkVibratePreferences()) {
+            Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
+            if (Build.VERSION.SDK_INT >= 26) {
+                v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
+            } else {
+                v.vibrate(100);
+            }
+        }
+        if (cameraMode.equals("normal")) {
+            cameraMode = "batch";
+            createCameraSource(true, false, false, cameraMode);
+            modeTxt.setText(R.string.mode1);
+        } else {
+            cameraMode = "normal";
+            createCameraSource(true, false, false, cameraMode);
+            modeTxt.setText(R.string.mode3);
+        }
+    }
+*/
 
     private void getLocale(){
 

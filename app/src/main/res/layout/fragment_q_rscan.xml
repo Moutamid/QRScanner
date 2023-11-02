@@ -115,15 +115,6 @@
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
-        <include layout="@layout/bottom_nav"
-            android:id="@+id/navLay"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp"
-            android:layout_marginBottom="45sp"
-            android:layout_alignParentBottom="true" />
-
 
     </RelativeLayout>
 

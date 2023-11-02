@@ -35,7 +35,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatSeekBar;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -50,7 +49,6 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +61,6 @@ import android.widget.Toast;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -99,7 +96,6 @@ import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -142,7 +138,6 @@ public class QRScanFragment extends Fragment {
     private CameraSource mCameraSource;
     private CameraSourcePreview mPreview;
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
-    BottomNavigationView bottomNavigationView;
 
     // helper objects for detecting taps and pinches.
     private ScaleGestureDetector scaleGestureDetector;
@@ -150,7 +145,6 @@ public class QRScanFragment extends Fragment {
     BarcodeDetector barcodeDetector;
     private String cameraMode;
     private String textBarcode = "";
-    CardView buttonsLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -191,51 +185,28 @@ public class QRScanFragment extends Fragment {
         list.clear();
         Stash.put(Constants.RESULT_BATCH, list);
         checkPermissions();
-        navLay = view.findViewById(R.id.navLay);
-        flashBtn = navLay.findViewById(R.id.flashBtn);
-        modeBtn = navLay.findViewById(R.id.modeBtn);
-        galleryBtn = navLay.findViewById(R.id.galleryBtn);
+
         batchCard = view.findViewById(R.id.batchCard);
         itemCount = view.findViewById(R.id.itemCount);
         qrBar = view.findViewById(R.id.qrBar);
         result = view.findViewById(R.id.result);
-        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
-        buttonsLayout = navLay.findViewById(R.id.buttonsLayout);
 
-        buttonsLayout.setVisibility(View.VISIBLE);
+        MainActivity activity = (MainActivity) getActivity();
 
-        flashBtn.setOnClickListener(v -> flashButton(v));
-        modeBtn.setOnClickListener(v -> btnMode(v));
-        galleryBtn.setOnClickListener(v -> btnGallery(v));
+        if (activity != null) {
+            flashBtn = activity.flashBtn;
+            modeBtn = activity.modeBtn;
+            galleryBtn = activity.galleryBtn;
+
+            flashBtn.setOnClickListener(v -> flashButton());
+            modeBtn.setOnClickListener(v -> btnMode());
+            galleryBtn.setOnClickListener(v -> btnGallery());
+        }
 
         batchCard.setOnClickListener(v -> {
             startActivity(new Intent(view.getContext(), BatchScanResultActivity.class));
         });
-
-        bottomNavigationView.setSelectedItemId(R.id.scan);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.scan:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-                        break;
-                    case R.id.generate_qr:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
-                        break;
-                    case R.id.history:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
-                        break;
-                    case R.id.settings:
-                        requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
-                        break;
-                }
-                return false;
-            }
-        });
-
-        MainActivity mainActivity = (MainActivity) getActivity();
-        mainActivity.transparentStatusBar(true);
+        activity.transparentStatusBar(true);
 
         return view;
     }
@@ -452,7 +423,7 @@ public class QRScanFragment extends Fragment {
                 .setShouldShowText(false);
     }
 
-    public void flashButton(View view) {
+    public void flashButton() {
         if (isFlash) {
             mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             flashBtn.setImageResource(R.drawable.flashon);
@@ -464,12 +435,12 @@ public class QRScanFragment extends Fragment {
         }
     }
 
-    public void btnGallery(View view) {
+    public void btnGallery() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, 2);
     }
 
-    public void btnMode(View view) {
+    public void btnMode() {
         mPreview.stop();
         if (checkSoundPreferences()) {
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
@@ -611,8 +582,8 @@ public class QRScanFragment extends Fragment {
             History contactHistory = new History(text, "barcode", true);
             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
             boolean check = false;
-            for (History model : historyList){
-                if (model.getData().equals(contactHistory.getData())){
+            for (History model : historyList) {
+                if (model.getData().equals(contactHistory.getData())) {
                     check = true;
                     break;
                 }
@@ -648,8 +619,8 @@ public class QRScanFragment extends Fragment {
             History contactHistory = new History(vCard.generateString(), "contact", true);
             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
             boolean check = false;
-            for (History model : historyList){
-                if (model.getData().equals(contactHistory.getData())){
+            for (History model : historyList) {
+                if (model.getData().equals(contactHistory.getData())) {
                     check = true;
                     break;
                 }
@@ -672,8 +643,8 @@ public class QRScanFragment extends Fragment {
                 ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
 
                 boolean check = false;
-                for (History model : historyList){
-                    if (model.getData().equals(contactHistory.getData())){
+                for (History model : historyList) {
+                    if (model.getData().equals(contactHistory.getData())) {
                         check = true;
                         break;
                     }
@@ -697,8 +668,8 @@ public class QRScanFragment extends Fragment {
                     History contactHistory = new History(wifi.generateString(), "wifi", true);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                     boolean check = false;
-                    for (History model : historyList){
-                        if (model.getData().equals(contactHistory.getData())){
+                    for (History model : historyList) {
+                        if (model.getData().equals(contactHistory.getData())) {
                             check = true;
                             break;
                         }
@@ -721,8 +692,8 @@ public class QRScanFragment extends Fragment {
                         History contactHistory = new History(telephone.generateString(), "phone", true);
                         ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                         boolean check = false;
-                        for (History model : historyList){
-                            if (model.getData().equals(contactHistory.getData())){
+                        for (History model : historyList) {
+                            if (model.getData().equals(contactHistory.getData())) {
                                 check = true;
                                 break;
                             }
@@ -745,8 +716,8 @@ public class QRScanFragment extends Fragment {
                             History contactHistory = new History(url.generateString(), "url", true);
                             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                             boolean check = false;
-                            for (History model : historyList){
-                                if (model.getData().equals(contactHistory.getData())){
+                            for (History model : historyList) {
+                                if (model.getData().equals(contactHistory.getData())) {
                                     check = true;
                                     break;
                                 }
@@ -769,8 +740,8 @@ public class QRScanFragment extends Fragment {
                                 History urlHistory = new History(social.generateString(), "social", true);
                                 ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                 boolean check = false;
-                                for (History model : historyList){
-                                    if (model.getData().equals(urlHistory.getData())){
+                                for (History model : historyList) {
+                                    if (model.getData().equals(urlHistory.getData())) {
                                         check = true;
                                         break;
                                     }
@@ -793,8 +764,8 @@ public class QRScanFragment extends Fragment {
                                     History contactHistory = new History(geoInfo.generateString(), "location", true);
                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                     boolean check = false;
-                                    for (History model : historyList){
-                                        if (model.getData().equals(contactHistory.getData())){
+                                    for (History model : historyList) {
+                                        if (model.getData().equals(contactHistory.getData())) {
                                             check = true;
                                             break;
                                         }
@@ -817,8 +788,8 @@ public class QRScanFragment extends Fragment {
                                         History contactHistory = new History(sms.generateString(), "sms", true);
                                         ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                         boolean check = false;
-                                        for (History model : historyList){
-                                            if (model.getData().equals(contactHistory.getData())){
+                                        for (History model : historyList) {
+                                            if (model.getData().equals(contactHistory.getData())) {
                                                 check = true;
                                                 break;
                                             }
@@ -841,8 +812,8 @@ public class QRScanFragment extends Fragment {
                                             History contactHistory = new History(iEvent.generateString(), "event", true);
                                             ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                             boolean check = false;
-                                            for (History model : historyList){
-                                                if (model.getData().equals(contactHistory.getData())){
+                                            for (History model : historyList) {
+                                                if (model.getData().equals(contactHistory.getData())) {
                                                     check = true;
                                                     break;
                                                 }
@@ -866,8 +837,8 @@ public class QRScanFragment extends Fragment {
                                                     History contactHistory = new History(text, "barcode", true);
                                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                                     boolean check = false;
-                                                    for (History model : historyList){
-                                                        if (model.getData().equals(contactHistory.getData())){
+                                                    for (History model : historyList) {
+                                                        if (model.getData().equals(contactHistory.getData())) {
                                                             check = true;
                                                             break;
                                                         }
@@ -888,8 +859,8 @@ public class QRScanFragment extends Fragment {
                                                     History contactHistory = new History(text, "text", true);
                                                     ArrayList<History> historyList = Stash.getArrayList(Constants.SCAN, History.class);
                                                     boolean check = false;
-                                                    for (History model : historyList){
-                                                        if (model.getData().equals(contactHistory.getData())){
+                                                    for (History model : historyList) {
+                                                        if (model.getData().equals(contactHistory.getData())) {
                                                             check = true;
                                                             break;
                                                         }
@@ -1065,10 +1036,10 @@ public class QRScanFragment extends Fragment {
                             runOnUiThread(() -> {
                                 mPreview.stop();
                                 batchCard.setVisibility(View.VISIBLE);
-                                Barcode barcode = barcodes.valueAt(barcodes.size()-1);
+                                Barcode barcode = barcodes.valueAt(barcodes.size() - 1);
                                 String barcodeValue = barcode.rawValue;
                                 int format = barcode.format;
-                                String rawData = barcodes.valueAt(barcodes.size()-1).rawValue;
+                                String rawData = barcodes.valueAt(barcodes.size() - 1).rawValue;
                                 ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
 
                                 if (checkSoundPreferences()) {
@@ -1087,27 +1058,27 @@ public class QRScanFragment extends Fragment {
                                 if (format == Barcode.CODE_128 || format == Barcode.CODE_93 ||
                                         format == Barcode.EAN_8 || format == Barcode.EAN_13 ||
                                         format == Barcode.UPC_A || format == Barcode.UPC_E) {
-                                   qrBar.setText("Barcode");
+                                    qrBar.setText("Barcode");
 
-                                   boolean check = false;
-                                   ResultModel resultModel = new ResultModel(format, rawData);
-                                   for (ResultModel model : list){
-                                       if (model.getRawData().equals(resultModel.getRawData())){
-                                           check = true;
-                                           break;
-                                       }
-                                   }
+                                    boolean check = false;
+                                    ResultModel resultModel = new ResultModel(format, rawData);
+                                    for (ResultModel model : list) {
+                                        if (model.getRawData().equals(resultModel.getRawData())) {
+                                            check = true;
+                                            break;
+                                        }
+                                    }
 
-                                   if (!check) {
-                                       list.add(resultModel);
-                                   }
+                                    if (!check) {
+                                        list.add(resultModel);
+                                    }
                                     Stash.put(Constants.RESULT_BATCH, list);
                                 } else {
                                     qrBar.setText("QR Code");
                                     ResultModel resultModel = new ResultModel(-1, rawData);
                                     boolean check = false;
-                                    for (ResultModel model : list){
-                                        if (model.getRawData().equals(resultModel.getRawData())){
+                                    for (ResultModel model : list) {
+                                        if (model.getRawData().equals(resultModel.getRawData())) {
                                             check = true;
                                             break;
                                         }
@@ -1118,8 +1089,8 @@ public class QRScanFragment extends Fragment {
                                     }
                                     Stash.put(Constants.RESULT_BATCH, list);
                                 }
-                                int size = list.size() ; // - (list.size()/2)
-                                itemCount.setText(size+"");
+                                int size = list.size(); // - (list.size()/2)
+                                itemCount.setText(size + "");
                                 result.setText(rawData);
                                 startCameraSource();
                             });
@@ -1157,8 +1128,7 @@ public class QRScanFragment extends Fragment {
                 }
             });
             modeTxt.setText(R.string.mode1);
-        }
-        else {
+        } else {
             Log.d("CAMRA", "NORMAL ELSE");
             barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
                 @Override
@@ -1256,13 +1226,13 @@ public class QRScanFragment extends Fragment {
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnGallery(view);
+                btnGallery();
             }
         });
         flashon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                flashButton(view);
+                flashButton();
             }
         });
         switchBtn.setOnClickListener(new View.OnClickListener() {
@@ -1274,7 +1244,7 @@ public class QRScanFragment extends Fragment {
         modeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnMode(view);
+                btnMode();
             }
         });
         doneImg.setOnClickListener(new View.OnClickListener() {
