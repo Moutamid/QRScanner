@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -31,7 +32,7 @@ import java.util.Locale;
 
 public class SpotifyActivity extends AppCompatActivity {
 
-    private TextInputLayout name,song;
+    private TextInputLayout name, song;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -41,18 +42,18 @@ public class SpotifyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Constants.adjustFontScale(this);
         setContentView(R.layout.activity_spotify);
-        name=findViewById(R.id.artist_name);
-        song=findViewById(R.id.song);
+        name = findViewById(R.id.artist_name);
+        song = findViewById(R.id.song);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -70,22 +71,22 @@ public class SpotifyActivity extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
 
@@ -137,8 +138,26 @@ public class SpotifyActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openSpotify(View view) {
+        PackageManager pm = getPackageManager();
+        boolean isSpotifyInstalled = false;
+        try {
+            isSpotifyInstalled = pm.getPackageInfo("com.spotify.music", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (!isSpotifyInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://open.spotify.com"));
+            startActivity(browserIntent);
+        } else {
+            Intent spotifyIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("spotify://"));
+            startActivity(spotifyIntent);
+        }
     }
 }

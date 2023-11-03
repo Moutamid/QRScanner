@@ -7,217 +7,204 @@
     android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.LocationActivity">
 
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/ad_container">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/constraintLayout_history"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:cardBackgroundColor="@color/white"
-            app:elevation="16dp"
-            app:cardCornerRadius="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.cardview.widget.CardView
+                android:id="@+id/constraintLayout_history"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="5dp">
+                android:layout_height="?attr/actionBarSize"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="0dp"
+                app:elevation="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="8dp"
-                    android:contentDescription="@string/back_button"
-                    android:src="@drawable/ic_baseline_arrow_back_24"
-                    android:onClick="backLocation"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/black" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:fontFamily="@font/poppins"
-                    android:text="@string/location"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imageView5"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:contentDescription="@string/back_button"
+                        android:onClick="backLocation"
+                        android:src="@drawable/ic_baseline_arrow_back_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/black" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@string/location"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView5"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.cardview.widget.CardView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout_history">
+            </androidx.cardview.widget.CardView>
 
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:contentDescription="@string/location"
-                app:tint="@color/location_solid"
-                android:src="@drawable/locationsolid"                        android:padding="15dp"
-                android:backgroundTint="@color/location_bg"
-                android:background="@drawable/barcode_icon_back"/>
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="@font/poppins"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="Encode your location with a QR code and navigate with precision!"
-                android:layout_margin="5dp"
-                android:textColor="@color/black"/>
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout13"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout_history">
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout13"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_percent="0.085"
-            app:layout_constraintHorizontal_bias="0.512"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/barcode_icon_back"
+                    android:backgroundTint="@color/location_bg"
+                    android:contentDescription="@string/location"
+                    android:padding="15dp"
+                    android:src="@drawable/locationsolid"
+                    app:tint="@color/location_solid" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/location_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp"
-                android:textColorHint="@color/default_text_color"
-                app:hintTextColor="@color/location_solid"
-                app:boxStrokeColor="@color/location_solid"
-                android:hint="@string/location_name_here">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/poppins"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/latitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:textColorHint="@color/default_text_color"
-                android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp"
-                app:counterEnabled="true"
-                app:counterMaxLength="15"
-                app:hintTextColor="@color/location_solid"
-                app:boxStrokeColor="@color/location_solid"
-                android:hint="@string/enter_latitude_here">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:fontFamily="@font/poppins"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/longitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20sp"
-                android:layout_marginEnd="20sp"
-                android:hint="@string/enter_longitude"
-                android:textColorHint="@color/default_text_color"
-                app:boxBackgroundColor="@color/white"
-                app:boxStrokeColor="@color/location_solid"
-                app:counterEnabled="true"
-                app:counterMaxLength="15"
-                app:hintTextColor="@color/location_solid">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:fontFamily="@font/poppins"
+                    android:gravity="center"
+                    android:text="Encode your location with a QR code and navigate with precision!"
                     android:textColor="@color/black"
-                    android:inputType="numberDecimal|numberSigned" />
+                    android:textSize="16sp" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
-
-            <fragment
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:id="@+id/mapView"
-                android:layout_weight="1"
-                tools:context=".ui.GetLocationActivity"
-                android:name="com.google.android.gms.maps.SupportMapFragment"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="200dp"
+            <LinearLayout
+                android:id="@+id/linearLayout13"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/button_background"
-                android:backgroundTint="@color/location_bg"
-                android:fontFamily="@font/poppins"
-                android:onClick="locationGenerate"
-                android:padding="12dp"
-                android:text="@string/generate"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.085"
+                app:layout_constraintHorizontal_bias="0.512"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        </RelativeLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/location_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginEnd="20sp"
+                    android:hint="@string/location_name_here"
+                    android:textColorHint="@color/default_text_color"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/location_solid"
+                    app:hintTextColor="@color/location_solid">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:textColor="@color/black" />
 
-</androidx.core.widget.NestedScrollView>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/latitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginEnd="20sp"
+                    android:hint="@string/enter_latitude_here"
+                    android:textColorHint="@color/default_text_color"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/location_solid"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="15"
+                    app:hintTextColor="@color/location_solid">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/longitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginEnd="20sp"
+                    android:hint="@string/enter_longitude"
+                    android:textColorHint="@color/default_text_color"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxStrokeColor="@color/location_solid"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="15"
+                    app:hintTextColor="@color/location_solid">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/poppins"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="12dp"
+                    android:background="@drawable/button_background"
+                    android:backgroundTint="@color/location_bg"
+                    android:fontFamily="@font/poppins"
+                    android:onClick="locationGenerate"
+                    android:padding="12dp"
+                    android:text="@string/generate"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <fragment
+                    android:id="@+id/mapView"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_weight="1"
+                    tools:context=".ui.GetLocationActivity" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
     <FrameLayout
         android:id="@+id/ad_container"

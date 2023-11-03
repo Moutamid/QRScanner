@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,15 +51,15 @@ public class YouTubeActivity extends AppCompatActivity {
             ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -66,29 +67,28 @@ public class YouTubeActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        link=findViewById(R.id.youtube_link);
+        link = findViewById(R.id.youtube_link);
         historyVM = new ViewModelProvider(YouTubeActivity.this).get(HistoryVM.class);
         getLocale();
     }
 
 
+    private void getLocale() {
 
-    private void getLocale(){
-
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
 
@@ -139,8 +139,28 @@ public class YouTubeActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openYoutube(View view) {
+        PackageManager pm = getPackageManager();
+        boolean isYoutubeInstalled = false;
+        try {
+            isYoutubeInstalled = pm.getPackageInfo("com.google.android.youtube", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // If the Youtube app is not installed, open the Youtube website in a web browser.
+        if (!isYoutubeInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com"));
+            startActivity(browserIntent);
+        } else {
+            Intent youtubeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("youtube://"));
+            startActivity(youtubeIntent);
+        }
     }
 }

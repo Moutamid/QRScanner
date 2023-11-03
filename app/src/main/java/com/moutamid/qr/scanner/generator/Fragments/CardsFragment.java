@@ -150,7 +150,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
             recyclerLayout.setVisibility(View.GONE);
             isEmpty = true;
         } else {
-            Collections.reverse(historyList);
+//            Collections.reverse(historyList);
             tvIsEmpty.setVisibility(View.GONE);
             recyclerLayout.setVisibility(View.VISIBLE);
             adapter = new CardHistoryAdapter(historyList, this);

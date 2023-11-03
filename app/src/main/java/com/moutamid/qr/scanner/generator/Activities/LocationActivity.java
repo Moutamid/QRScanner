@@ -42,6 +42,8 @@ import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -317,14 +319,22 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onMarkerDrag(Marker marker) {
+                LatLng latLng = marker.getPosition();
+                latitude.getEditText().setText(getFormatted(latLng.latitude));
+                longitude.getEditText().setText(getFormatted(latLng.longitude));
             }
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 LatLng latLng = marker.getPosition();
-                latitude.getEditText().setText(latLng.latitude + "");
-                longitude.getEditText().setText("" + latLng.longitude);
+                latitude.getEditText().setText(getFormatted(latLng.latitude));
+                longitude.getEditText().setText(getFormatted(latLng.longitude));
             }
         });
+    }
+
+    private String getFormatted(double pos) {
+        DecimalFormat df = new DecimalFormat("#.######");
+        return df.format(pos);
     }
 }

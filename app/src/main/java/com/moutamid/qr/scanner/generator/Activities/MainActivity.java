@@ -181,7 +181,8 @@ public class MainActivity extends AppCompatActivity {
         cardView = navLay.findViewById(R.id.buttonsLayout);
         cardView.setVisibility(View.VISIBLE);
 
-        bottomNavigationView.setSelectedItemId(R.id.scan);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -278,14 +279,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void transparentStatusBar(boolean transparent) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            if (transparent) {
-                WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-                getWindow().setStatusBarColor(Color.TRANSPARENT);
-            } else {
-                WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.purple));
-            }
+        if (transparent) {
+            WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        } else {
+            WindowCompat.setDecorFitsSystemWindows(getWindow(), true);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.purple));
         }
     }
 

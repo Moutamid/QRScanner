@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -44,15 +45,15 @@ public class TwitterActivity extends AppCompatActivity {
         Constants.adjustFontScale(this);
         setContentView(R.layout.activity_twitter);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -65,30 +66,31 @@ public class TwitterActivity extends AppCompatActivity {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, TwitterActivity.this, mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
-        link=findViewById(R.id.facebook_link);
+        link = findViewById(R.id.facebook_link);
         historyVM = new ViewModelProvider(TwitterActivity.this).get(HistoryVM.class);
         getLocale();
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
+
     public void twitterGenerate(View view) {
 
 
@@ -136,8 +138,31 @@ public class TwitterActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openTwitter(View view) {
+        PackageManager pm = getPackageManager();
+        boolean isTwitterInstalled = false;
+        try {
+            isTwitterInstalled = pm.getPackageInfo("com.twitter.android", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // If the Twitter app is not installed, open the Twitter website in a web browser.
+        if (!isTwitterInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.twitter.com"));
+            startActivity(browserIntent);
+        }
+
+        // If the Twitter app is installed, open the Twitter app.
+        else {
+            Intent twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://"));
+            startActivity(twitterIntent);
+        }
     }
 }

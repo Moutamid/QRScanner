@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -16,7 +17,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +29,14 @@ import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
 import com.google.android.material.textfield.TextInputLayout;
+import com.moutamid.qr.scanner.generator.BuildConfig;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ClipboardActivity extends AppCompatActivity {
@@ -69,6 +74,14 @@ public class ClipboardActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+/*
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CLIPBOARD) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CLIPBOARD },1);
+            return;
+        }
+*/
+
         this.clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         textView = findViewById(R.id.clipboard); // Replace with the actual ID of your TextView
 
@@ -98,17 +111,38 @@ public class ClipboardActivity extends AppCompatActivity {
 
     }
 
-    private String getTextFromClipboard() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bringAppIntoFocus(this, BuildConfig.APPLICATION_ID);
+        String copiedText = getTextFromClipboard();
+        textView.setText(copiedText);
+    }
 
+    private String getTextFromClipboard() {
+        clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboardManager.getPrimaryClip();
         if (clipData != null && clipData.getItemCount() > 0) {
             ClipData.Item item = clipData.getItemAt(0);
             if (item != null) {
                 return item.getText().toString();
+            } else {
+                Log.e("Clipboard", "item is null");
             }
+        } else {
+            Log.e("Clipboard", "clipData is null or empty");
         }
 
-        return "Clipboard is empty" ;
+        return "Clipboard is empty";
+    }
+
+    public static void bringAppIntoFocus(Context context, String packageName) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> runningTasks = am.getRunningTasks(1);
+        ActivityManager.RunningTaskInfo taskInfo = runningTasks.get(0);
+        if (taskInfo.baseActivity.getPackageName().equals(packageName)) {
+            am.moveTaskToFront(taskInfo.id, ActivityManager.MOVE_TASK_WITH_HOME);
+        }
     }
 
 

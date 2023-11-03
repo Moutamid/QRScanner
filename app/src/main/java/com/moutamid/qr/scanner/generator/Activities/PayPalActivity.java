@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -49,15 +50,15 @@ public class PayPalActivity extends AppCompatActivity {
             ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -65,30 +66,31 @@ public class PayPalActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        link=findViewById(R.id.facebook_link);
+        link = findViewById(R.id.facebook_link);
         historyVM = new ViewModelProvider(PayPalActivity.this).get(HistoryVM.class);
         getLocale();
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
+
     public void paypalGenerate(View view) {
 
 
@@ -136,8 +138,31 @@ public class PayPalActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openPaypal(View view) {
+        PackageManager pm = getPackageManager();
+        boolean isPayPalInstalled = false;
+        try {
+            isPayPalInstalled = pm.getPackageInfo("com.paypal.android.p2pmobile", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // If the PayPal app is not installed, open the PayPal website in a web browser.
+        if (!isPayPalInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com"));
+            startActivity(browserIntent);
+        }
+
+        // If the PayPal app is installed, open the PayPal app.
+        else {
+            Intent paypalIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("pp://"));
+            startActivity(paypalIntent);
+        }
     }
 }

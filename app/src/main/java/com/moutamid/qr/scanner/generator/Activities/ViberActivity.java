@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -50,15 +51,15 @@ public class ViberActivity extends AppCompatActivity {
             ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -66,31 +67,32 @@ public class ViberActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        phonenumber=findViewById(R.id.edit_phone);
-        cpp=findViewById(R.id.cpp);
+        phonenumber = findViewById(R.id.edit_phone);
+        cpp = findViewById(R.id.cpp);
         historyVM = new ViewModelProvider(ViberActivity.this).get(HistoryVM.class);
         getLocale();
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
+
     public void viberGenerate(View view) {
 
         String data = cpp.getSelectedCountryCode() + phonenumber.getEditText().getText().toString();
@@ -141,8 +143,31 @@ public class ViberActivity extends AppCompatActivity {
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openViber(View view) {
+        PackageManager pm = getPackageManager();
+        boolean isViberInstalled = false;
+        try {
+            isViberInstalled = pm.getPackageInfo("com.viber.voip", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // If the Viber app is not installed, open the Viber website in a web browser.
+        if (!isViberInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.viber.com"));
+            startActivity(browserIntent);
+        }
+
+        // If the Viber app is installed, open the Viber app.
+        else {
+            Intent viberIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("viber://"));
+            startActivity(viberIntent);
+        }
     }
 }

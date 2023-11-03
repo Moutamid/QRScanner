@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -139,5 +140,22 @@ public class FacebookActivity extends AppCompatActivity {
     public boolean getPurchaseSharedPreference(){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openFacebook(View view)  {
+        PackageManager pm = this.getPackageManager();
+        boolean isFacebookInstalled = false;
+        try {
+            isFacebookInstalled = pm.getPackageInfo("com.facebook.katana", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+           e.printStackTrace();
+        }
+        if (!isFacebookInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com"));
+            this.startActivity(browserIntent);
+        } else {
+            Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("fb://"));
+            this.startActivity(facebookIntent);
+        }
     }
 }

@@ -105,8 +105,8 @@ public class MySettingsFragment extends Fragment {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
-        beepSound = prefs.getBoolean("beepsound",false);
-        vibration = prefs.getBoolean("vibrate",false);
+        beepSound = prefs.getBoolean("beepsound",true);
+        vibration = prefs.getBoolean("vibrate",true);
         cameraStatus = prefs.getBoolean("camera",false);
         theme = prefs.getBoolean("theme",false);
         web = prefs.getBoolean("web",false);

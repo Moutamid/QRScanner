@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -145,5 +146,24 @@ public class WhatsAppActivity extends AppCompatActivity {
     public boolean getPurchaseSharedPreference(){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
+
+    public void openWhatsapp(View view) {
+        PackageManager pm = this.getPackageManager();
+        boolean isWhatsAppInstalled = false;
+        try {
+            isWhatsAppInstalled = pm.getPackageInfo("com.whatsapp", PackageManager.GET_ACTIVITIES) != null;
+        } catch (PackageManager.NameNotFoundException e) {
+           e.printStackTrace();
+        }
+
+        if (!isWhatsAppInstalled) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://web.whatsapp.com"));
+            this.startActivity(browserIntent);
+        }
+        else {
+            Intent whatsappIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("whatsapp://"));
+            this.startActivity(whatsappIntent);
+        }
     }
 }
