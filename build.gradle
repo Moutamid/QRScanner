@@ -25,6 +25,7 @@ allprojects {
         maven { url 'https://maven.google.com' }
         flatDir { dirs 'libs' }
 
+/*
         maven {
             url 'https://api.mapbox.com/downloads/v2/releases/maven'
             authentication {
@@ -38,6 +39,7 @@ allprojects {
                 password = "sk.eyJ1Ijoic3VsZW1hbmJhandhIiwiYSI6ImNsa2pyMXAyODB1OXQzamtna2R4eXd5am0ifQ.7HwGKYlONfW5_IRbWl5ogw"
             }
         }
+*/
 
     }
 }

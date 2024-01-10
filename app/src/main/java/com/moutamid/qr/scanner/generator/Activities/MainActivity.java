@@ -1,38 +1,15 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.WindowCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.hardware.Camera;
-import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
-import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -42,20 +19,24 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.WindowCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
+
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -66,45 +47,22 @@ import com.android.billingclient.api.SkuDetailsParams;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.consoliads.mediation.nativeads.CAAdChoicesView;
-import com.consoliads.mediation.nativeads.CAAppIconView;
-import com.consoliads.mediation.nativeads.CACallToActionView;
-import com.consoliads.mediation.nativeads.CAMediaView;
-import com.consoliads.mediation.nativeads.CANativeAdView;
-import com.consoliads.mediation.nativeads.ConsoliAdsNativeListener;
-import com.consoliads.mediation.nativeads.MediatedNativeAd;
-import com.google.android.play.core.install.model.AppUpdateType;
+import com.fxn.stash.Stash;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
-import com.moutamid.qr.scanner.generator.utils.formates.EMail;
-import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
-import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
-import com.moutamid.qr.scanner.generator.utils.formates.SMS;
-import com.moutamid.qr.scanner.generator.utils.formates.Telephone;
-import com.moutamid.qr.scanner.generator.utils.formates.Url;
-import com.moutamid.qr.scanner.generator.utils.formates.VCard;
-import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
-import com.moutamid.qr.scanner.generator.utils.formates.YouTube;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import com.google.android.play.core.appupdate.AppUpdateInfo;
-import com.google.android.play.core.appupdate.AppUpdateManager;
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
-import com.google.android.play.core.appupdate.AppUpdateOptions;
-import com.google.android.play.core.install.InstallState;
-import com.google.android.play.core.install.InstallStateUpdatedListener;
-
 public class MainActivity extends AppCompatActivity {
 
-//    private RelativeLayout cardViewHide;
+    //    private RelativeLayout cardViewHide;
     static Uri picUri;
     private HistoryVM historyVM;
     static String contents;
@@ -112,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<String> skuList;
     private BottomSheetDialog bottomSheetSubscription;
-    private int selectSubscription=1;
+    private int selectSubscription = 1;
     private BillingClient billingClient;
     private ImageView imgRemoveAd;
     private RadioButton radioButton2;
@@ -125,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
     View navLay;
     ImageButton flashBtn, modeBtn, galleryBtn;
     private AppUpdateManager appUpdateManager;
-
 
 
     @SuppressLint({"ResourceAsColor", "MissingInflatedId", "WrongViewCast"})
@@ -141,14 +98,14 @@ public class MainActivity extends AppCompatActivity {
         // RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
         // cardViewHide = findViewById(R.id.cardView_seekbar);
 
-        boolean theme = prefs.getBoolean("theme",false);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -159,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
         bottomSheetSubscription = new BottomSheetDialog(this);
         bottomSheetSubscription.setContentView(R.layout.subscription_layout);
-        radioGroup=bottomSheetSubscription.findViewById(R.id.rgRight);
+        radioGroup = bottomSheetSubscription.findViewById(R.id.rgRight);
         radioButton2 = bottomSheetSubscription.findViewById(R.id.radio2);
         mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -170,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
         inAppPurchases();
         //checkPermissions();
-
-        loadQRfragment();
+        Stash.put("ONBACKPRESS", 0);
 
         navLay = findViewById(R.id.navLay);
         flashBtn = navLay.findViewById(R.id.flashBtn);
@@ -182,50 +138,28 @@ public class MainActivity extends AppCompatActivity {
         cardView.setVisibility(View.VISIBLE);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.scan:
-                        cardView.setVisibility(View.VISIBLE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-                        break;
-                    case R.id.generate_qr:
-                        cardView.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).commit();
-                        break;
-                    case R.id.history:
-                        cardView.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).commit();
-                        break;
-                    case R.id.settings:
-                        cardView.setVisibility(View.GONE);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).commit();
-                        break;
-                }
-                return false;
+        bottomNavigationView.setSelectedItemId(R.id.scan);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.scan) {
+                Stash.put("ONBACKPRESS", 0);
+                cardView.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).addToBackStack(QRScanFragment.TAG).commit();
+            } else if (itemId == R.id.generate_qr) {
+                Stash.put("ONBACKPRESS", 1);
+                cardView.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).addToBackStack(CreateFragment.TAG).commit();
+            } else if (itemId == R.id.history) {
+                Stash.put("ONBACKPRESS", 2);
+                cardView.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).addToBackStack(HistoryActivity.TAG).commit();
+            } else if (itemId == R.id.settings) {
+                Stash.put("ONBACKPRESS", 3);
+                cardView.setVisibility(View.GONE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).addToBackStack(MySettingsFragment.TAG).commit();
             }
+            return true;
         });
-
-//        Dexter.withActivity(this)
-//                .withPermission(Manifest.permission.CAMERA)
-//                .withListener(new PermissionListener() {
-//                    @Override
-//                    public void onPermissionGranted(PermissionGrantedResponse response) {
-//                        loadQRfragment();
-//                    }
-//
-//                    @Override
-//                    public void onPermissionDenied(PermissionDeniedResponse response) {
-//                    }
-//
-//                    @Override
-//                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
-//                    }
-//                })
-//                .check();
-
     }
 
 /*
@@ -272,9 +206,9 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
+        String lang = prefs.getString("lang", "");
         setLocale(lang);
     }
 
@@ -295,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
         invalidateOptionsMenu();
     }
 
@@ -304,58 +238,10 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 200) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                loadQRfragment();
+                bottomNavigationView.setSelectedItemId(R.id.scan);
                 Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-
-    public void loadQRfragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        QRScanFragment fragment = new QRScanFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, fragment);
-        transaction.commit();
-      //  cardViewHide.setVisibility(View.VISIBLE);
-
-    }
-
-    public void loadSettingsFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        MySettingsFragment fragment = new MySettingsFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, fragment);
-        transaction.commit();
-        //cardViewHide.setVisibility(View.GONE);
-
-    }
-
-    public void loadBusinessFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        BusinessFragment fragment = new BusinessFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, fragment);
-        transaction.commit();
-        //cardViewHide.setVisibility(View.GONE);
-
-    }
-
-    public void loadMenuFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        MenuFragment fragment = new MenuFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, fragment);
-        transaction.commit();
-        //cardViewHide.setVisibility(View.GONE);
-    }
-
-    public void loadHistoryFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        HistoryActivity fragment = new HistoryActivity();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.main_frame, fragment);
-        transaction.commit();
-        //cardViewHide.setVisibility(View.GONE);
     }
 
     public void processResultBarcode(String text) {
@@ -366,11 +252,10 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcode", text);
             startActivity(intent);
-            if (!getPurchaseSharedPreference()){
+            if (!getPurchaseSharedPreference()) {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
-        }
-        catch (Exception t) {
+            }
+        } catch (Exception t) {
             Toast.makeText(this, "not scan", Toast.LENGTH_SHORT).show();
             t.printStackTrace();
         }
@@ -522,6 +407,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        /*int i = Stash.getInt("ONBACKPRESS", 0);
+        if (i == 0) {
+            super.onBackPressed();
+        } else if (i == 1) {
+            bottomNavigationView.setSelectedItemId(R.id.scan);
+        } else if (i == 2) {
+            bottomNavigationView.setSelectedItemId(R.id.generate_qr);
+        } else if (i == 3) {
+            bottomNavigationView.setSelectedItemId(R.id.history);
+        }*/
+
+
 /*        Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.custom_rating_bar);
         RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
@@ -620,6 +517,7 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
     }
+
     public void removeAds(View view) {
         Spannable spannable = new SpannableString(getString(R.string._13_99_year));
         spannable.setSpan(new ForegroundColorSpan(Color.GRAY),
@@ -640,8 +538,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View textView) {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy))));
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -718,6 +615,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     public void skuProductList() {
         skuList = new ArrayList<>();
         skuList.add(getResources().getString(R.string.per_month_subscription));
@@ -725,6 +623,7 @@ public class MainActivity extends AppCompatActivity {
         skuList.add(getResources().getString(R.string.one_time_purchase));
 
     }
+
     public void inAppPurchases() {
         // To be implemented in a later section.
         PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) -> {
@@ -779,8 +678,9 @@ public class MainActivity extends AppCompatActivity {
 //            imgRemoveAd.setEnabled(true);
 //        }
 
-       // super.onResume();
+        // super.onResume();
     }
+
     private boolean checkUserSubscription() {
         assert billingClient != null;
         Purchase.PurchasesResult purchasesResult = billingClient.queryPurchases(BillingClient.SkuType.SUBS);
@@ -814,12 +714,14 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
     public void checkButton(View view) {
         int radioButtonID = radioGroup.getCheckedRadioButtonId();
         View radioButton = radioGroup.findViewById(radioButtonID);
         selectSubscription = radioGroup.indexOfChild(radioButton);
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
 

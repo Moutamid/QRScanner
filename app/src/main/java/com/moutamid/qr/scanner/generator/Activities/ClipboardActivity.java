@@ -119,6 +119,15 @@ public class ClipboardActivity extends AppCompatActivity {
         textView.setText(copiedText);
     }
 
+//    public String getClipboardContent() {
+//        ClipboardManagerCompat clipboardManager = ClipboardManagerCompat.getManager(context);
+//        ClipDataCompat clipData = clipboardManager.getPrimaryClip();
+//        if (clipData != null && clipData.getItemCount() > 0) {
+//            return clipData.getItemAt(0).getText().toString();
+//        }
+//        return null;
+//    }
+
     private String getTextFromClipboard() {
         clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clipData = clipboardManager.getPrimaryClip();

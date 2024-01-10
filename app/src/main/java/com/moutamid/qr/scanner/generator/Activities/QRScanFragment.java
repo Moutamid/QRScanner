@@ -102,6 +102,7 @@ import java.util.Locale;
 public class QRScanFragment extends Fragment {
 
     //  private static ZXingScannerView mScannerView;
+    public static final String TAG = "QRScanFragment";
     private Context context;
     private HistoryVM historyVM;
     ImageButton flashBtn, modeBtn, galleryBtn;

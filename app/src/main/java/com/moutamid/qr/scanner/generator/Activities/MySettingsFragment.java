@@ -44,7 +44,7 @@ import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import java.util.Locale;
 
 public class MySettingsFragment extends Fragment {
-
+    public static final String TAG = "MySettingsFragment";
     public static String PACKAGE_NAME;
     private Switch beep,vibrate,copy,batch_scanning,manual_scanning,web_search,product_details,save_history,save_qr;
     private TextView searchTxt,languageTxt,cameraTxt,modeTxt;
@@ -428,16 +428,12 @@ public class MySettingsFragment extends Fragment {
     }
 
     private void ThemeDialog() {
-        String[] listItems = {getActivity().getResources().getString(R.string.theme1),
-                getActivity().getResources().getString(R.string.theme2)};
+        String[] listItems = {getActivity().getResources().getString(R.string.theme1), getActivity().getResources().getString(R.string.theme2)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         int checkedItem = prefs.getBoolean("theme",Boolean.FALSE) ? 0 : 1;
         builder.setSingleChoiceItems(listItems, checkedItem, (dialogInterface, i) -> {
             if (i==0){
-                AppCompatDelegate
-                        .setDefaultNightMode(
-                                AppCompatDelegate
-                                        .MODE_NIGHT_YES);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 // it will set isDarkModeOn
                 // boolean to false
                 modeTxt.setText(listItems[i]);
@@ -446,17 +442,13 @@ public class MySettingsFragment extends Fragment {
             }
             else if (i == 1){
                 modeTxt.setText(listItems[i]);
-                AppCompatDelegate
-                        .setDefaultNightMode(
-                                AppCompatDelegate
-                                        .MODE_NIGHT_NO);
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 // it will set isDarkModeOn
                 // boolean to false
-
                 edit.putBoolean("theme",Boolean.FALSE);
                 edit.apply();
             }
-
+            getActivity().recreate();
             dialogInterface.dismiss();
         });
         AlertDialog dialog = builder.create();
@@ -532,7 +524,6 @@ public class MySettingsFragment extends Fragment {
     }*/
 
     private void getLocale(){
-
         String lang = prefs.getString("lang","");
         String name = prefs.getString("lang_name","");
         //   languageTxt.setText(name);

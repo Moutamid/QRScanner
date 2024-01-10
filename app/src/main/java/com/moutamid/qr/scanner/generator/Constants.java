@@ -36,8 +36,8 @@ public class Constants {
     public static void adjustFontScale(Context context) {
         Configuration configuration = context.getResources().getConfiguration();
         if (configuration.fontScale > 1.00) {
-            Log.d(TAG, "fontScale=" + configuration.fontScale); //Custom Log class, you can use Log.w
-            Log.d(TAG, "font too big. scale down..."); //Custom Log class, you can use Log.w
+            Log.d(TAG, "fontScale=" + configuration.fontScale);
+            Log.d(TAG, "font too big. scale down...");
             configuration.fontScale = 1.00f;
             DisplayMetrics metrics = context.getResources().getDisplayMetrics();
             WindowManager wm = (WindowManager) context.getSystemService(WINDOW_SERVICE);
@@ -67,9 +67,7 @@ public class Constants {
             StringBuffer stringBuffer = new StringBuffer();
             while (true) {
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        if ((input = in != null ? in.readLine() : null) == null) break;
-                    }
+                    if ((input = in != null ? in.readLine() : null) == null) break;
                 } catch (final IOException e) {
                     e.printStackTrace();
                 }

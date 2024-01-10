@@ -60,6 +60,7 @@
                     android:layout_weight="1"
                     app:tint="@color/icon_tint2"
                     android:padding="10sp"
+                    
                     android:background="@color/bottom_nav_top"
                     android:src="@drawable/flashon" />
 
@@ -74,8 +75,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:itemIconTint="@drawable/icon_active"
             android:padding="6sp"
+            app:itemIconTint="@color/icon_tintt"
             app:elevation="0sp"
             app:labelVisibilityMode="unlabeled"
             android:background="@color/bottom_nav"

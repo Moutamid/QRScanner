@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateFragment extends Fragment {
+    public static final String TAG = "CreateFragment";
     EditText quick;
     ImageView quickBtn;
     private TabLayout tabLayout;

@@ -32,7 +32,7 @@ import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import java.util.Locale;
 
 public class HistoryActivity extends Fragment {
-
+    public static final String TAG = "HistoryActivity";
     private HistoryVM historyVM;
     private TabLayout tabLayout;
     private ViewPager viewPager;

@@ -54,9 +54,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
     private View mapView;
-
     private GoogleMap mMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
