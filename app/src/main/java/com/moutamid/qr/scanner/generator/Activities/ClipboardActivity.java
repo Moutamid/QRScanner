@@ -19,6 +19,7 @@ import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -81,17 +82,14 @@ public class ClipboardActivity extends AppCompatActivity {
             return;
         }
 */
-
-        this.clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
         textView = findViewById(R.id.clipboard); // Replace with the actual ID of your TextView
 
-        String copiedText = getTextFromClipboard();
-        textView.setText(copiedText);
+
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Perform the desired action when the TextView is clicked
+                String copiedText = getTextFromClipboard();
                 textedit.getEditText().setText(copiedText);
             }
         });
@@ -108,15 +106,16 @@ public class ClipboardActivity extends AppCompatActivity {
             ConsoliAds.Instance().LoadInterstitial();
         }
         getLocale();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         bringAppIntoFocus(this, BuildConfig.APPLICATION_ID);
-        String copiedText = getTextFromClipboard();
-        textView.setText(copiedText);
+        new Handler().postDelayed(() -> {
+            String copiedText = getTextFromClipboard();
+            textView.setText(copiedText);
+        }, 2000);
     }
 
 //    public String getClipboardContent() {
@@ -129,19 +128,17 @@ public class ClipboardActivity extends AppCompatActivity {
 //    }
 
     private String getTextFromClipboard() {
-        clipboardManager = (ClipboardManager) this.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = clipboardManager.getPrimaryClip();
-        if (clipData != null && clipData.getItemCount() > 0) {
-            ClipData.Item item = clipData.getItemAt(0);
-            if (item != null) {
-                return item.getText().toString();
-            } else {
-                Log.e("Clipboard", "item is null");
+        clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        if (clipboardManager.hasPrimaryClip()) {
+            ClipData clipData = clipboardManager.getPrimaryClip();
+            if (clipData != null && clipData.getItemCount() > 0) {
+                ClipData.Item item = clipData.getItemAt(0);
+                if (item != null) {
+                    String text = item.getText().toString();
+                    return text;
+                }
             }
-        } else {
-            Log.e("Clipboard", "clipData is null or empty");
         }
-
         return "Clipboard is empty";
     }
 
