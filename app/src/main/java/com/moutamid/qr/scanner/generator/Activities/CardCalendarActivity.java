@@ -36,7 +36,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -64,7 +67,7 @@ public class CardCalendarActivity extends AppCompatActivity {
     private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
-    private SwitchCompat bold,shadow;
+    private SwitchMaterial bold,shadow;
     private HistoryVM historyVM;
     private boolean history;
 
@@ -213,16 +216,23 @@ public class CardCalendarActivity extends AppCompatActivity {
             }
         });
         shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     if (isEventNameSelected){
-                        eventName.setElevation(20f);
+                        eventName.setElevation(8f);
                     }else if (isEventDateSelected){
-                        eventDate.setElevation(20f);
+                        eventDate.setElevation(8f);
                     }else if (isEventCitySelected){
-                        eventCity.setElevation(20f);
+                        eventCity.setElevation(8f);
+                    }
+                } else {
+                    if (isEventNameSelected){
+                        eventName.setElevation(0f);
+                    }else if (isEventDateSelected){
+                        eventDate.setElevation(0f);
+                    }else if (isEventCitySelected){
+                        eventCity.setElevation(0f);
                     }
                 }
             }
@@ -252,19 +262,21 @@ public class CardCalendarActivity extends AppCompatActivity {
 
     private void DatePickerdialog() {
         // Creating a MaterialDatePicker builder for selecting a date range
+
+
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setStart(System.currentTimeMillis() - 1000); // Set the start date if needed
+//        constraintsBuilder.setEnd(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 365); // Set the end date if needed
+
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
-        builder.setTitleText("Select a date range");
-
-        // Building the date picker dialog
-        MaterialDatePicker<Pair<Long, Long>> datePicker = builder.build();
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-
-            // Retrieving the selected start and end dates
+        builder.setCalendarConstraints(constraintsBuilder.build());
+        MaterialDatePicker<Pair<Long, Long>> picker = builder.build();
+        picker.addOnPositiveButtonClickListener(selection -> {
             Long startDate = selection.first;
             Long endDate = selection.second;
 
             // Formating the selected dates as strings
-            SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM", Locale.getDefault());
+            SimpleDateFormat sdf = new SimpleDateFormat("dd MM", Locale.getDefault());
             String startDateString = sdf.format(new Date(startDate));
             String endDateString = sdf.format(new Date(endDate));
 
@@ -275,8 +287,7 @@ public class CardCalendarActivity extends AppCompatActivity {
             eventDate.setText(selectedDateRange);
         });
 
-        // Showing the date picker dialog
-        datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
+        picker.show(getSupportFragmentManager(), picker.toString());
     }
 
 

@@ -1,15 +1,5 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.cardview.widget.CardView;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -30,12 +19,19 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
 import com.fxn.stash.Stash;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -54,11 +50,11 @@ public class CardWiFiActivity extends AppCompatActivity {
     private boolean isText1Selected = false;
     private boolean isText2Selected = false;
     private boolean isEventLogoSelected = false;
-    EditText text1,text2;
-    private CardView imageLayout,imageLayout1;
+    EditText text1, text2;
+    private CardView imageLayout, imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
-    private SwitchCompat bold, shadow;
+    private SwitchMaterial bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -72,15 +68,15 @@ public class CardWiFiActivity extends AppCompatActivity {
         text1 = findViewById(R.id.ssid);
         text2 = findViewById(R.id.lng);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -154,11 +150,12 @@ public class CardWiFiActivity extends AppCompatActivity {
         bold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) { if (isText1Selected) {
-                    text1.setTypeface(text1.getTypeface(), Typeface.BOLD);
-                } else if (isText2Selected) {
-                    text2.setTypeface(text1.getTypeface(), Typeface.BOLD);
-                }
+                if (b) {
+                    if (isText1Selected) {
+                        text1.setTypeface(text1.getTypeface(), Typeface.BOLD);
+                    } else if (isText2Selected) {
+                        text2.setTypeface(text1.getTypeface(), Typeface.BOLD);
+                    }
                 } else {
                     if (isText1Selected) {
                         text1.setTypeface(text1.getTypeface(), Typeface.NORMAL);
@@ -169,14 +166,19 @@ public class CardWiFiActivity extends AppCompatActivity {
             }
         });
         shadow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     if (isText1Selected) {
-                        text1.setElevation(20f);
+                        text1.setElevation(8f);
                     } else if (isText2Selected) {
-                        text2.setElevation(20f);
+                        text2.setElevation(8f);
+                    }
+                } else {
+                    if (isText1Selected) {
+                        text1.setElevation(0f);
+                    } else if (isText2Selected) {
+                        text2.setElevation(0f);
                     }
                 }
             }
@@ -205,25 +207,24 @@ public class CardWiFiActivity extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
-
 
 
     public void SaveTxt(View view) {
@@ -250,6 +251,7 @@ public class CardWiFiActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private byte[] savedBitmapFromViewToFile2() {
         //inflate layout
 
@@ -327,10 +329,11 @@ public class CardWiFiActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         exitActivity();
     }
 
-    private void exitActivity(){
+    private void exitActivity() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         // Setting Alert Dialog Title
         alertDialogBuilder.setTitle(R.string.dialog_title);

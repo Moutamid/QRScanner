@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -56,7 +57,7 @@ public class CardTelActivity extends AppCompatActivity {
     private CardView imageLayout,imageLayout1;
     private ImageView logo;
     private ColorSeekBar colorSeekBar;
-    private SwitchCompat bold, shadow;
+    private SwitchMaterial bold, shadow;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
@@ -203,11 +204,19 @@ public class CardTelActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     if (isNameSelected) {
-                        text1.setElevation(20f);
+                        text1.setElevation(8f);
                     } else if (isText1Selected) {
-                        text2.setElevation(20f);
+                        text2.setElevation(8f);
                     } else if (isText2Selected) {
-                        text3.setElevation(20f);
+                        text3.setElevation(8f);
+                    }
+                } else {
+                    if (isNameSelected) {
+                        text1.setElevation(0f);
+                    } else if (isText1Selected) {
+                        text2.setElevation(0f);
+                    } else if (isText2Selected) {
+                        text3.setElevation(0f);
                     }
                 }
             }
@@ -354,6 +363,7 @@ public class CardTelActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         exitActivity();
     }
 
