@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -34,8 +35,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.WindowCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -50,8 +53,10 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.moutamid.qr.scanner.generator.Constants;
+import com.moutamid.qr.scanner.generator.Fragments.CardsFragment;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
@@ -60,7 +65,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CardsFragment.OnButtonClickListener {
 
     //    private RelativeLayout cardViewHide;
     static Uri picUri;
@@ -75,15 +80,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgRemoveAd;
     private RadioButton radioButton2;
     private RadioGroup radioGroup;
-    private CAMediatedBannerView mediatedBannerView;
+//    private CAMediatedBannerView mediatedBannerView;
     private SharedPreferences prefs;
     private static final int MY_REQUEST_CODE = 1000; // You can choose any code you like
-    BottomNavigationView bottomNavigationView;
-    CardView cardView;
-    View navLay;
-    ImageButton flashBtn, modeBtn, galleryBtn;
+    public CardView cardView;
+    public CardView parentCard;
+    ImageView flashBtn, modeBtn, galleryBtn;
+    ImageView scan, create, history, setting;
     private AppUpdateManager appUpdateManager;
-
+    private int lastBackStackEntryCount = 0;
 
     @SuppressLint({"ResourceAsColor", "MissingInflatedId", "WrongViewCast"})
     @Override
@@ -94,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         Constants.checkApp(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
-        imgRemoveAd = findViewById(R.id.img_ad);
         // RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
         // cardViewHide = findViewById(R.id.cardView_seekbar);
 
@@ -118,49 +122,112 @@ public class MainActivity extends AppCompatActivity {
         bottomSheetSubscription.setContentView(R.layout.subscription_layout);
         radioGroup = bottomSheetSubscription.findViewById(R.id.rgRight);
         radioButton2 = bottomSheetSubscription.findViewById(R.id.radio2);
-        mediatedBannerView = findViewById(R.id.consoli_banner_view);
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
-        }
+        //mediatedBannerView = findViewById(R.id.consoli_banner_view);
+//        if (!getPurchaseSharedPreference()) {
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
+//        }
         getLocale();
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
         inAppPurchases();
         //checkPermissions();
         Stash.put("ONBACKPRESS", 0);
+        
+        flashBtn = findViewById(R.id.flashBtn);
+        modeBtn = findViewById(R.id.modeBtn);
+        galleryBtn = findViewById(R.id.galleryBtn);
 
-        navLay = findViewById(R.id.navLay);
-        flashBtn = navLay.findViewById(R.id.flashBtn);
-        modeBtn = navLay.findViewById(R.id.modeBtn);
-        galleryBtn = navLay.findViewById(R.id.galleryBtn);
-        bottomNavigationView = navLay.findViewById(R.id.bottomNavigationView);
-        cardView = navLay.findViewById(R.id.buttonsLayout);
+        scan = findViewById(R.id.scan);
+        create = findViewById(R.id.create);
+        history = findViewById(R.id.history);
+        setting = findViewById(R.id.setting);
+
+        cardView = findViewById(R.id.buttonsLayout);
+        parentCard = findViewById(R.id.nav);
         cardView.setVisibility(View.VISIBLE);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).commit();
-        bottomNavigationView.setSelectedItemId(R.id.scan);
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.scan) {
-                Stash.put("ONBACKPRESS", 0);
-                cardView.setVisibility(View.VISIBLE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).addToBackStack(QRScanFragment.TAG).commit();
-            } else if (itemId == R.id.generate_qr) {
-                Stash.put("ONBACKPRESS", 1);
-                cardView.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).addToBackStack(CreateFragment.TAG).commit();
-            } else if (itemId == R.id.history) {
-                Stash.put("ONBACKPRESS", 2);
-                cardView.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).addToBackStack(HistoryActivity.TAG).commit();
-            } else if (itemId == R.id.settings) {
-                Stash.put("ONBACKPRESS", 3);
-                cardView.setVisibility(View.GONE);
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).addToBackStack(MySettingsFragment.TAG).commit();
-            }
-            return true;
+        scan.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.active_icon)));
+
+        scan.setOnClickListener(v -> {
+            scan();
+        });
+        create.setOnClickListener(v -> {
+            create();
+
+        });
+        setting.setOnClickListener(v -> {
+            setting();
+
+        });
+        history.setOnClickListener(v -> {
+            history();
+
         });
     }
+
+    public void history() {
+        Stash.put("ONBACKPRESS", 2);
+        Stash.put(Constants.TAB_INDEX, 0);
+        cardView.setVisibility(View.GONE);
+        history.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.active_icon)));
+        scan.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        create.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        setting.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new HistoryActivity()).addToBackStack(HistoryActivity.TAG).commit();
+    }
+
+    public void setting() {
+        Stash.put("ONBACKPRESS", 3);
+        Stash.put(Constants.TAB_INDEX, 0);
+        cardView.setVisibility(View.GONE);
+        setting.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.active_icon)));
+        scan.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        create.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        history.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new MySettingsFragment()).addToBackStack(MySettingsFragment.TAG).commit();
+    }
+
+    public void create() {
+        Stash.put("ONBACKPRESS", 1);
+        cardView.setVisibility(View.GONE);
+        create.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.active_icon)));
+        scan.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        setting.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        history.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new CreateFragment()).addToBackStack(CreateFragment.TAG).commit();
+    }
+
+    public void scan() {
+        Stash.put("ONBACKPRESS", 0);
+        Stash.put(Constants.TAB_INDEX, 0);
+        cardView.setVisibility(View.VISIBLE);
+        scan.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.active_icon)));
+        setting.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        create.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+        history.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.icon_tint)));
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new QRScanFragment()).addToBackStack(QRScanFragment.TAG).commit();
+    }
+
+    private int getCorrespondingItemId(String fragmentTag) {
+        switch (fragmentTag) {
+            case QRScanFragment.TAG:
+                return R.id.scan;
+            case CreateFragment.TAG:
+                return R.id.generate_qr;
+            case HistoryActivity.TAG:
+                return R.id.history;
+            case MySettingsFragment.TAG:
+                return R.id.settings;
+            default:
+                return -1;
+        }
+    }
+
 
 /*
     public void flashButton(View view) {
@@ -238,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 200) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                bottomNavigationView.setSelectedItemId(R.id.scan);
+                scan();
                 Toast.makeText(MainActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
         }
@@ -407,16 +474,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        /*int i = Stash.getInt("ONBACKPRESS", 0);
+        int i = Stash.getInt("ONBACKPRESS", 0);
         if (i == 0) {
             super.onBackPressed();
         } else if (i == 1) {
-            bottomNavigationView.setSelectedItemId(R.id.scan);
+            scan();
         } else if (i == 2) {
-            bottomNavigationView.setSelectedItemId(R.id.generate_qr);
+            create();
         } else if (i == 3) {
-            bottomNavigationView.setSelectedItemId(R.id.history);
-        }*/
+            history();
+        }
 
 
 /*        Dialog dialog = new Dialog(this);
@@ -632,8 +699,7 @@ public class MainActivity extends AppCompatActivity {
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(MainActivity.this.getString(R.string.adsubscribed), Boolean.TRUE);
                 edit.apply();
-                imgRemoveAd.setImageResource(R.drawable.pro);
-                mediatedBannerView.setVisibility(View.INVISIBLE);
+           //     mediatedBannerView.setVisibility(View.INVISIBLE);
             }
         };
         ///create client billing
@@ -724,6 +790,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
+    }
 
+    @Override
+    public void onButtonClicked() {
+        Stash.put(Constants.TAB_INDEX, 1);
+        create();
     }
 }

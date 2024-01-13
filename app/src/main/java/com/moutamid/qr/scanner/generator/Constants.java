@@ -27,6 +27,7 @@ public class Constants {
     public static final String CARD = "card";
     public static final String RESULT_BATCH = "RESULT_BATCH";
     private static final String TAG = "Constants";
+    public static final String TAB_INDEX = "TAB_INDEX";
 
     public static boolean getPurchaseSharedPreference(Context context){
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context);

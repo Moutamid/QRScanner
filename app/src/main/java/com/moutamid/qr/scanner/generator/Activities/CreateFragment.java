@@ -40,10 +40,9 @@ public class CreateFragment extends Fragment {
     public static final String TAG = "CreateFragment";
     EditText quick;
     ImageView quickBtn;
-    private TabLayout tabLayout;
+    public TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences prefs;
-
     public CreateFragment() {
         // Required empty public constructor
     }
@@ -99,6 +98,7 @@ public class CreateFragment extends Fragment {
         return view;
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
         CreateTabAdapter adapter = new CreateTabAdapter(getChildFragmentManager());
 
@@ -106,8 +106,10 @@ public class CreateFragment extends Fragment {
         adapter.addFragment(new BusinessFragment(), "Business Cards");
 
         viewPager.setAdapter(adapter);
-    }
+        int data = Stash.getInt(Constants.TAB_INDEX, 0);
+        viewPager.setCurrentItem(data);
 
+    }
 
     static class CreateTabAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

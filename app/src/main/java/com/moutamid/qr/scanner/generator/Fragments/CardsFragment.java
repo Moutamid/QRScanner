@@ -29,6 +29,7 @@ import com.consoliads.mediation.constants.NativePlaceholderName;
 import com.fxn.stash.Stash;
 import com.google.android.material.button.MaterialButton;
 import com.moutamid.qr.scanner.generator.Activities.BusinessFragment;
+import com.moutamid.qr.scanner.generator.Activities.MainActivity;
 import com.moutamid.qr.scanner.generator.Activities.QRScanFragment;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.Constants;
@@ -100,11 +101,11 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         historyRecyclerView.setHasFixedSize(false);
         tvIsEmpty = view.findViewById(R.id.tv_is_empty);
         deleteImg = view.findViewById(R.id.all_delete_history);
-
+        OnButtonClickListener buttonClickListener = (OnButtonClickListener) requireContext();
         recyclerLayout = view.findViewById(R.id.recyclerLayout);
         Button scanNow = view.findViewById(R.id.scanNow);
         scanNow.setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new BusinessFragment()).commit();
+            buttonClickListener.onButtonClicked();
         });
 
         deleteImg.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +124,11 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         super.onResume();
         getHistoryData();
     }
+
+    public interface OnButtonClickListener {
+        void onButtonClicked();
+    }
+
 
     private void getLocale(){
 

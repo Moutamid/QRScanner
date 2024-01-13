@@ -19,7 +19,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
             app:cardCornerRadius="20sp"
-            android:visibility="gone"
             app:cardElevation="0sp"
             app:cardBackgroundColor="@color/bottom_nav_top">
 
@@ -60,7 +59,6 @@
                     android:layout_weight="1"
                     app:tint="@color/icon_tint2"
                     android:padding="10sp"
-                    
                     android:background="@color/bottom_nav_top"
                     android:src="@drawable/flashon" />
 
@@ -73,16 +71,11 @@
             style="@style/bottomNav"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:padding="6sp"
             app:itemIconTint="@color/icon_tintt"
             app:elevation="0sp"
             app:labelVisibilityMode="unlabeled"
             android:background="@color/bottom_nav"
-            app:itemHorizontalTranslationEnabled="false"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu"/>
 
     </LinearLayout>
