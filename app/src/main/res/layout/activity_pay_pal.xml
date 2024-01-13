@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:cardBackgroundColor="@color/white"
-        app:elevation="16dp"
         app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/back_button"
-                android:src="@drawable/ic_baseline_arrow_back_24"
                 android:onClick="backPayPal"
+                android:src="@drawable/ic_baseline_arrow_back_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,21 +72,22 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:contentDescription="@string/paypal"
-            android:src="@drawable/paypalsolid"                                          android:padding="15dp"
+            android:background="@drawable/barcode_icon_back"
             android:backgroundTint="@color/paypal_bg"
-            app:tint="@color/paypal_solid"
-            android:background="@drawable/barcode_icon_back"/>
+            android:contentDescription="@string/paypal"
+            android:padding="15dp"
+            android:src="@drawable/paypalsolid"
+            app:tint="@color/paypal_solid" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Encode your PayPal URL into a QR code and simplify transactions!"
-            android:layout_margin="5dp"
-            android:textColor="@color/black"/>
+            android:text="@string/encode_your_paypal_url_into_a_qr_code_and_simplify_transactions"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -108,24 +109,24 @@
             android:id="@+id/facebook_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            android:layout_marginTop="8sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="8sp"
             android:layout_marginEnd="20dp"
+            android:hint="@string/paypal_url"
+            android:textColorHint="@color/default_text_color"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/paypal_solid"
             app:hintTextColor="@color/paypal_solid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColorHint="@color/default_text_color"
-            app:boxStrokeColor="@color/paypal_solid"
-            android:hint="@string/paypal_url">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins"/>
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,18 +136,18 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:onClick="paypalGenerate"
-        android:text="@string/generate"
-        android:textColor="@color/black"
-        android:fontFamily="@font/poppins"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:background="@drawable/button_background"
         android:backgroundTint="@color/paypal_bg"
+        android:fontFamily="@font/poppins"
+        android:onClick="paypalGenerate"
         android:padding="12dp"
+        android:text="@string/generate"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -158,9 +159,9 @@
         android:fontFamily="@font/poppins"
         android:onClick="openPaypal"
         android:padding="12dp"
-        android:text="Open PayPal"
-        android:textColor="@color/black"
+        android:text="@string/open_paypal"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -172,11 +173,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="paypalGenerate"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/eventColor"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp"
-        android:visibility="gone"
-        android:onClick="paypalGenerate"
         app:layout_constraintDimensionRatio="H,1:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
@@ -188,10 +189,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="12dp"
             android:text="@string/generate"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:padding="12dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

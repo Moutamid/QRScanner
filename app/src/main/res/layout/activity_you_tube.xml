@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Turn your YouTube link into a QR code and share the excitement!"
+            android:text="@string/turn_your_youtube_link_into_a_qr_code_and_share_the_excitement"
             android:layout_margin="5dp"
             android:textColor="@color/black" />
 
@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="How to Create a link: "
+            android:text="@string/how_to_create_a_link"
             android:layout_marginStart="20sp"
             android:layout_gravity="start"
             android:fontFamily="@font/poppins"
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="just add your Youtube username after '@' and generate QR or you can copy paste the link"
+            android:text="@string/just_add_your_youtube_username_after_and_generate_qr_or_you_can_copy_paste_the_link"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_gravity="start"
@@ -166,7 +166,7 @@
         android:fontFamily="@font/poppins"
         android:onClick="openYoutube"
         android:padding="12dp"
-        android:text="Open Youtube"
+        android:text="@string/open_youtube"
         android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="16sp"

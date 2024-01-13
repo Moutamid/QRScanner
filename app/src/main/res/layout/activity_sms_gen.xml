@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:gravity="center"
             android:fontFamily="@font/poppins"
-            android:text="Instantly send messages by scanning a QR code, no typing required!"
+            android:text="@string/instantly_send_messages_by_scanning_a_qr_code_no_typing_required"
             android:layout_margin="5dp"
             android:textColor="@color/black"/>
 

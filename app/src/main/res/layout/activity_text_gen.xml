@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Create your own QR code and share your message with style!"
+            android:text="@string/create_your_own_qr_code_and_share_your_message_with_style"
             android:layout_margin="5dp"
             android:textColor="@color/black"/>
 

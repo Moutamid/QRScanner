@@ -86,7 +86,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/poppins"
                 android:gravity="center"
-                android:text="Encode your location with a QR code and navigate with precision!"
+                android:text="@string/encode_your_location_with_a_qr_code_and_navigate_with_precision"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 

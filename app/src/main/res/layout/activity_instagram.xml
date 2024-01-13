@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:gravity="center"
             android:fontFamily="@font/poppins"
-            android:text="Transform your Instagram profile into a QR code and share the magic!"
+            android:text="@string/transform_your_instagram_profile_into_a_qr_code_and_share_the_magic"
             android:layout_margin="5dp"
             android:textColor="@color/black"/>
 
@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="How to Create a link: "
+            android:text="@string/how_to_create_a_link"
             android:layout_marginStart="20sp"
             android:layout_gravity="start"
             android:fontFamily="@font/poppins"
@@ -122,7 +122,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="just add your Instagram username after the link and generate QR or you can copy paste the link"
+            android:text="@string/just_add_your_instagram_username_after_the_link_and_generate_qr_or_you_can_copy_paste_the_link"
             android:layout_marginStart="20sp"
             android:layout_marginEnd="20sp"
             android:layout_gravity="start"
@@ -184,7 +184,7 @@
         android:fontFamily="@font/poppins"
         android:onClick="openInstagram"
         android:padding="12dp"
-        android:text="Open Instagram"
+        android:text="@string/open_instagram"
         android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="16sp"

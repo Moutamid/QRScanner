@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:cardBackgroundColor="@color/white"
-        app:elevation="16dp"
         app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/back_button"
-                android:src="@drawable/ic_baseline_arrow_back_24"
                 android:onClick="backFacebook"
+                android:src="@drawable/ic_baseline_arrow_back_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,21 +72,22 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:contentDescription="@string/facebook"
-            app:tint="@color/facebook_solid"
-            android:src="@drawable/facebooksolid"                                          android:padding="15dp"
+            android:background="@drawable/barcode_icon_back"
             android:backgroundTint="@color/facebook_bg"
-            android:background="@drawable/barcode_icon_back"/>
+            android:contentDescription="@string/facebook"
+            android:padding="15dp"
+            android:src="@drawable/facebooksolid"
+            app:tint="@color/facebook_solid" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:fontFamily="@font/poppins"
-            android:text="Transform your Facebook profile into a QR code and share your story!"
             android:layout_margin="5dp"
-            android:textColor="@color/black"/>
+            android:fontFamily="@font/poppins"
+            android:gravity="center"
+            android:text="@string/transform_your_facebook_profile_into_a_qr_code_and_share_your_story"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -109,24 +110,24 @@
             android:id="@+id/facebook_link"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
-            android:layout_marginTop="8sp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="8sp"
             android:layout_marginEnd="20dp"
+            android:hint="@string/enter_facebook_url"
+            android:textColorHint="@color/default_text_color"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/facebook_solid"
             app:hintTextColor="@color/facebook_solid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:textColorHint="@color/default_text_color"
-            app:layout_constraintTop_toTopOf="parent"
-            app:boxStrokeColor="@color/facebook_solid"
-            android:hint="Enter Facebook Url">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins" />
+                android:fontFamily="@font/poppins"
+                android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -160,9 +161,9 @@
         android:fontFamily="@font/poppins"
         android:onClick="openFacebook"
         android:padding="12dp"
-        android:text="Open Facebook"
-        android:textColor="@color/black"
+        android:text="@string/open_facebook"
         android:textAllCaps="false"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
@@ -174,11 +175,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="facebookGenerate"
+        android:visibility="gone"
         app:cardBackgroundColor="#0000ff"
         app:cardCornerRadius="30dp"
         app:cardElevation="10dp"
-        android:visibility="gone"
-        android:onClick="facebookGenerate"
         app:layout_constraintDimensionRatio="H,1:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
@@ -190,10 +191,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="12dp"
             android:text="@string/generate"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:padding="12dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

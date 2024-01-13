@@ -98,7 +98,7 @@
                     android:layout_margin="5dp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center"
-                    android:text="Encode important events into a QR code and stay organized effortlessly!"
+                    android:text="@string/encode_important_events_into_a_qr_code_and_stay_organized_effortlessly"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

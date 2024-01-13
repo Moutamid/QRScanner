@@ -85,7 +85,7 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Transform your email into a QR code and connect instantly!"
+            android:text="@string/transform_your_email_into_a_qr_code_and_connect_instantly"
             android:textColor="@color/black"
             android:textSize="15sp" />
 

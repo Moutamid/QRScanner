@@ -82,7 +82,7 @@ public class CardGeneratedResult extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveContent();
+                saveToGallery();
             }
         });
 
@@ -135,7 +135,6 @@ public class CardGeneratedResult extends AppCompatActivity {
     }
 
     private void saveContent() {
-        saveToGallery();
     }
 
     private void saveToGallery() {
@@ -157,8 +156,7 @@ public class CardGeneratedResult extends AppCompatActivity {
                 getContentResolver().update(uri, values, null, null);
             }
         } else {
-            File directory = new File(Environment.getExternalStorageDirectory().toString()
-                    + separator + "Photo Lab");
+            File directory = new File(Environment.getExternalStorageDirectory().toString() + separator + "Photo Lab");
 
             //getExternalStorageDirectory is deprecated in API 29
 

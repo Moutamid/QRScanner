@@ -85,7 +85,7 @@
             android:textSize="16sp"
             android:gravity="center"
             android:fontFamily="@font/poppins"
-            android:text="Generate a QR code effortlessly and share Wi-Fi with ease!"
+            android:text="@string/generate_a_qr_code_effortlessly_and_share_wi_fi_with_ease"
             android:layout_margin="5dp"
             android:textColor="@color/black" />
 
@@ -157,7 +157,7 @@
             android:layout_marginTop="15sp"
             android:layout_marginStart="20sp"
             android:fontFamily="@font/poppins"
-            android:text="Security Mode"
+            android:text="@string/security_mode"
             android:textColor="@color/black" />
 
         <com.google.android.material.chip.ChipGroup
@@ -177,7 +177,7 @@
                 android:checkable="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="WPA/WPA2"
+                android:text="@string/wpa_wpa2"
                 checkedIconEnabled="true"
                 android:textSize="16sp" />
 
@@ -190,7 +190,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:checkedIconEnabled="true"
-                android:text="WEP"
+                android:text="@string/wep"
                 android:textSize="16sp" />
 
             <com.google.android.material.chip.Chip
@@ -203,7 +203,7 @@
                 android:focusable="true"
                 android:checked="true"
                 app:checkedIconEnabled="true"
-                android:text="None"
+                android:text="@string/none"
                 android:textSize="16sp" />
 
         </com.google.android.material.chip.ChipGroup>

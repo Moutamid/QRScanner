@@ -82,8 +82,8 @@ public class BarCodeActivity extends AppCompatActivity {
 
     public void barcodeGenerate(View view) {
         String barcodeText = editText.getEditText().getText().toString();
-        if (barcodeText.equals("")) {
-            editText.getEditText().setError("Please enter text");
+        if (barcodeText.equals("") || barcodeText.length() < 12) {
+            editText.getEditText().setError(getString(R.string.please_enter_valid_barcode_text_should_be_12_or_13_digits_long));
         } else {
             if (history){
                 History contactHistory = new History(barcodeText, "barcode", false);

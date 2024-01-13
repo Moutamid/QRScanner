@@ -85,7 +85,7 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Generate a barcode from any product or item for easy scanning!"
+            android:text="@string/generate_a_barcode_from_any_product_or_item_for_easy_scanning"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

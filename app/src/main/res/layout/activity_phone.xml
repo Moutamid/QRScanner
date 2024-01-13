@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:cardBackgroundColor="@color/white"
-        app:elevation="16dp"
         app:cardCornerRadius="0dp"
+        app:elevation="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/back_button"
-                android:src="@drawable/ic_baseline_arrow_back_24"
                 android:onClick="backPhone"
+                android:src="@drawable/ic_baseline_arrow_back_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,21 +72,22 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:contentDescription="@string/phone"
-            app:tint="@color/phone_solid"
-            android:src="@drawable/phonesolid"                        android:padding="15dp"
+            android:background="@drawable/barcode_icon_back"
             android:backgroundTint="@color/phone_bg"
-            android:background="@drawable/barcode_icon_back"/>
+            android:contentDescription="@string/phone"
+            android:padding="15dp"
+            android:src="@drawable/phonesolid"
+            app:tint="@color/phone_solid" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Convert your phone number into a QR code and connect instantly!"
-            android:layout_margin="5dp"
-            android:textColor="@color/black"/>
+            android:text="@string/convert_your_phone_number_into_a_qr_code_and_connect_instantly"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -108,27 +109,27 @@
             android:id="@+id/edit_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@color/white"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/default_text_color"
+            app:boxBackgroundColor="@color/white"
+            app:boxStrokeColor="@color/phone_solid"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/addresssolid"
+            app:endIconMode="custom"
+            app:endIconTint="@color/default_text_color"
+            app:helperText="@string/use_country_code_with_plus_symbol"
             app:helperTextEnabled="true"
             app:helperTextTextColor="@color/black"
-            app:helperText="Use Country code with plus symbol"
-            app:hintTextColor="@color/black"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/addresssolid"
-            app:endIconCheckable="true"
-            app:endIconTint="@color/default_text_color"
-            android:textColorHint="@color/default_text_color"
-            app:boxStrokeColor="@color/phone_solid"
-            android:hint="@string/phone_number">
+            app:hintTextColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/poppins"
                 android:inputType="phone"
-                android:textColor="@color/black"
-                android:fontFamily="@font/poppins"/>
+                android:textColor="@color/black" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,18 +139,18 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:onClick="phoneGenerate"
-        android:text="@string/generate"
+        android:background="@drawable/button_background"
+        android:backgroundTint="@color/phone_bg"
         android:fontFamily="@font/poppins"
+        android:onClick="phoneGenerate"
+        android:padding="12dp"
+        android:text="@string/generate"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:background="@drawable/button_background"
-        android:backgroundTint="@color/phone_bg"
-        android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
 
 
     <androidx.cardview.widget.CardView
@@ -157,11 +158,11 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:onClick="phoneGenerate"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/phone_bg"
         app:cardCornerRadius="50dp"
-        android:visibility="gone"
         app:cardElevation="10dp"
-        android:onClick="phoneGenerate"
         app:layout_constraintDimensionRatio="H,1:3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.07"
@@ -173,9 +174,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:padding="12dp"
             android:text="@string/generate"
             android:textColor="@color/black"
-            android:padding="12dp"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -194,11 +195,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
+
         <com.consoliads.mediation.bannerads.CAMediatedBannerView
             android:id="@+id/consoli_banner_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            />
+            android:layout_gravity="center_horizontal" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

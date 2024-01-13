@@ -4,7 +4,6 @@ import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -35,9 +33,6 @@ import androidx.preference.PreferenceManager;
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
 import com.consoliads.mediation.constants.NativePlaceholderName;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.moutamid.qr.scanner.generator.Fragments.ScanFragment;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 
@@ -46,22 +41,22 @@ import java.util.Locale;
 public class MySettingsFragment extends Fragment {
     public static final String TAG = "MySettingsFragment";
     public static String PACKAGE_NAME;
-    private Switch beep,vibrate,copy,batch_scanning,manual_scanning,web_search,product_details,save_history,save_qr;
-    private TextView searchTxt,languageTxt,cameraTxt,modeTxt;
-    private RelativeLayout policyBtn,rateBtn,shareBtn,deleteBtn,cameraLayout,searchLayout,modelLayout,languageLayout;
+    private Switch beep, vibrate, copy, batch_scanning, manual_scanning, web_search, product_details, save_history, save_qr;
+    private TextView searchTxt, languageTxt, cameraTxt, modeTxt;
+    private RelativeLayout policyBtn, rateBtn, shareBtn, deleteBtn, cameraLayout, searchLayout, modelLayout, languageLayout;
     private boolean beepSound = false;
     private boolean vibration = false;
-    private boolean copied =false;
+    private boolean copied = false;
     SharedPreferences prefs;
     private boolean theme = false;
     SharedPreferences.Editor edit;
-    private String engine ="";
+    private String engine = "";
     private String cameraMode;
-    private boolean productDetails =false;
+    private boolean productDetails = false;
     private boolean saveHistory = false;
-    private boolean cameraStatus =false;
-    private boolean saveQR =false;
-    private boolean web =false;
+    private boolean cameraStatus = false;
+    private boolean saveQR = false;
+    private boolean web = false;
     private HistoryVM historyVM;
     //private RelativeLayout languageTxt;
 
@@ -71,14 +66,14 @@ public class MySettingsFragment extends Fragment {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity());
         edit = prefs.edit();
-        theme = prefs.getBoolean("theme",false);
-        if (theme){
+        theme = prefs.getBoolean("theme", false);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -92,7 +87,7 @@ public class MySettingsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.transparentStatusBar(false);
@@ -105,17 +100,17 @@ public class MySettingsFragment extends Fragment {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
             ConsoliAds.Instance().LoadInterstitial();
         }
-        beepSound = prefs.getBoolean("beepsound",true);
-        vibration = prefs.getBoolean("vibrate",true);
-        cameraStatus = prefs.getBoolean("camera",false);
-        theme = prefs.getBoolean("theme",false);
-        web = prefs.getBoolean("web",false);
-        copied = prefs.getBoolean("copy",false);
-        engine = prefs.getString("search","Google");
-        cameraMode = prefs.getString("cameraMode","normal");
-        productDetails = prefs.getBoolean("product",true);
-        saveHistory = prefs.getBoolean("saveHistory",true);
-        saveQR = prefs.getBoolean("saveQR",true);
+        beepSound = prefs.getBoolean("beepsound", true);
+        vibration = prefs.getBoolean("vibrate", true);
+        cameraStatus = prefs.getBoolean("camera", false);
+        theme = prefs.getBoolean("theme", false);
+        web = prefs.getBoolean("web", false);
+        copied = prefs.getBoolean("copy", false);
+        engine = prefs.getString("search", "Google");
+        cameraMode = prefs.getString("cameraMode", "normal");
+        productDetails = prefs.getBoolean("product", true);
+        saveHistory = prefs.getBoolean("saveHistory", true);
+        saveQR = prefs.getBoolean("saveQR", true);
 
         String lang = prefs.getString("lang_name", "Default English (USA)");
 
@@ -135,13 +130,13 @@ public class MySettingsFragment extends Fragment {
 
         languageTxt.setText(lang);
 
-        if (theme){
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
             modeTxt.setText(getActivity().getResources().getString(R.string.theme1));
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -163,20 +158,20 @@ public class MySettingsFragment extends Fragment {
 
 
         getLocale();
-        if (cameraStatus){
+        if (cameraStatus) {
             cameraTxt.setText(getActivity().getResources().getString(R.string.camera_txt2));
-        }else {
+        } else {
             cameraTxt.setText(getActivity().getResources().getString(R.string.camera_txt1));
         }
 
         save_qr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putBoolean("saveQR",true);
+                if (b) {
+                    edit.putBoolean("saveQR", true);
                     edit.apply();
-                }else {
-                    edit.putBoolean("saveQR",false);
+                } else {
+                    edit.putBoolean("saveQR", false);
                     edit.apply();
                 }
             }
@@ -184,11 +179,11 @@ public class MySettingsFragment extends Fragment {
         web_search.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putBoolean("web",true);
+                if (b) {
+                    edit.putBoolean("web", true);
                     edit.apply();
-                }else {
-                    edit.putBoolean("web",false);
+                } else {
+                    edit.putBoolean("web", false);
                     edit.apply();
                 }
             }
@@ -196,11 +191,11 @@ public class MySettingsFragment extends Fragment {
         save_history.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putBoolean("saveHistory",true);
+                if (b) {
+                    edit.putBoolean("saveHistory", true);
                     edit.apply();
-                }else {
-                    edit.putBoolean("saveHistory",false);
+                } else {
+                    edit.putBoolean("saveHistory", false);
                     edit.apply();
                 }
             }
@@ -208,11 +203,11 @@ public class MySettingsFragment extends Fragment {
         product_details.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putBoolean("product",true);
+                if (b) {
+                    edit.putBoolean("product", true);
                     edit.apply();
-                }else {
-                    edit.putBoolean("product",false);
+                } else {
+                    edit.putBoolean("product", false);
                     edit.apply();
                 }
             }
@@ -221,11 +216,11 @@ public class MySettingsFragment extends Fragment {
         batch_scanning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putString("cameraMode","batch");
+                if (b) {
+                    edit.putString("cameraMode", "batch");
                     edit.apply();
-                }else {
-                    edit.putString("cameraMode","normal");
+                } else {
+                    edit.putString("cameraMode", "normal");
                     edit.apply();
                 }
             }
@@ -233,22 +228,22 @@ public class MySettingsFragment extends Fragment {
         manual_scanning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    edit.putString("cameraMode","manual");
+                if (b) {
+                    edit.putString("cameraMode", "manual");
                     edit.apply();
-                }else {
-                    edit.putString("cameraMode","normal");
+                } else {
+                    edit.putString("cameraMode", "normal");
                     edit.apply();
                 }
             }
         });
-        if (cameraMode.equals("batch")){
+        if (cameraMode.equals("batch")) {
             batch_scanning.setChecked(true);
             manual_scanning.setChecked(false);
-        }else if (cameraMode.equals("manual")){
+        } else if (cameraMode.equals("manual")) {
             batch_scanning.setChecked(false);
             manual_scanning.setChecked(true);
-        }else {
+        } else {
 
             batch_scanning.setChecked(false);
             manual_scanning.setChecked(false);
@@ -270,7 +265,7 @@ public class MySettingsFragment extends Fragment {
                     edit.putBoolean("beepsound", Boolean.TRUE);
                     ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
                     toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                }else {
+                } else {
                     edit.putBoolean("beepsound", Boolean.FALSE);
                 }
                 edit.apply();
@@ -284,7 +279,7 @@ public class MySettingsFragment extends Fragment {
                     edit.putBoolean("vibrate", Boolean.TRUE);
                     Vibrator v = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
                     v.vibrate(300);
-                }else {
+                } else {
                     edit.putBoolean("vibrate", Boolean.FALSE);
                 }
                 edit.apply();
@@ -295,9 +290,9 @@ public class MySettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (!copied) {
                     edit.putBoolean("copy", Boolean.TRUE);
-                 //   Vibrator v = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
-                   // v.vibrate(300);
-                }else {
+                    //   Vibrator v = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
+                    // v.vibrate(300);
+                } else {
                     edit.putBoolean("copy", Boolean.FALSE);
                 }
                 edit.apply();
@@ -314,14 +309,14 @@ public class MySettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //  languageOptionsDialog();
-                startActivity(new Intent(getActivity(),LanguageOptions.class));
+                startActivity(new Intent(getActivity(), LanguageOptions.class));
             }
         });
         languageTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              //  languageOptionsDialog();
-                startActivity(new Intent(getActivity(),LanguageOptions.class));
+                //  languageOptionsDialog();
+                startActivity(new Intent(getActivity(), LanguageOptions.class));
             }
         });
 
@@ -344,13 +339,10 @@ public class MySettingsFragment extends Fragment {
             public void onClick(View view) {
                 Uri uri = Uri.parse("market://details?id=" + getActivity().getPackageName());
                 Intent myAppLinkToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                try
-                {
+                try {
                     getActivity().startActivity(myAppLinkToMarket);
-                }
-                catch (ActivityNotFoundException e)
-                {
-                    Toast.makeText(getActivity(), " Sorry, Not able to open!", Toast.LENGTH_SHORT).show();
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(getActivity(), "Sorry, Not able to open!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -401,20 +393,19 @@ public class MySettingsFragment extends Fragment {
     }
 
     private void cameraDialog() {
-        String[] listItems = {getActivity().getResources().getString(R.string.camera_txt1),getActivity().getResources().getString(R.string.camera_txt2)};
+        String[] listItems = {getActivity().getResources().getString(R.string.camera_txt1), getActivity().getResources().getString(R.string.camera_txt2)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getActivity().getResources().getString(R.string.camera));
         builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (i==0){
+                if (i == 0) {
                     cameraTxt.setText(listItems[i]);
-                    edit.putBoolean("camera",Boolean.FALSE);
+                    edit.putBoolean("camera", Boolean.FALSE);
                     edit.apply();
-                }
-                else if (i == 1){
+                } else if (i == 1) {
                     cameraTxt.setText(listItems[i]);
-                    edit.putBoolean("camera",Boolean.TRUE);
+                    edit.putBoolean("camera", Boolean.TRUE);
                     edit.apply();
 
                 }
@@ -430,22 +421,21 @@ public class MySettingsFragment extends Fragment {
     private void ThemeDialog() {
         String[] listItems = {getActivity().getResources().getString(R.string.theme1), getActivity().getResources().getString(R.string.theme2)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        int checkedItem = prefs.getBoolean("theme",Boolean.FALSE) ? 0 : 1;
+        int checkedItem = prefs.getBoolean("theme", Boolean.FALSE) ? 0 : 1;
         builder.setSingleChoiceItems(listItems, checkedItem, (dialogInterface, i) -> {
-            if (i==0){
+            if (i == 0) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 // it will set isDarkModeOn
                 // boolean to false
                 modeTxt.setText(listItems[i]);
-                edit.putBoolean("theme",Boolean.TRUE);
+                edit.putBoolean("theme", Boolean.TRUE);
                 edit.apply();
-            }
-            else if (i == 1){
+            } else if (i == 1) {
                 modeTxt.setText(listItems[i]);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 // it will set isDarkModeOn
                 // boolean to false
-                edit.putBoolean("theme",Boolean.FALSE);
+                edit.putBoolean("theme", Boolean.FALSE);
                 edit.apply();
             }
             getActivity().recreate();
@@ -523,75 +513,97 @@ public class MySettingsFragment extends Fragment {
         dialog.show();
     }*/
 
-    private void getLocale(){
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+    private void getLocale() {
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getActivity().getResources().updateConfiguration(configuration,getActivity().getResources().getDisplayMetrics());
-        edit.putString("lang",lng);
-        edit.putString("lang_name",name);
+        getActivity().getResources().updateConfiguration(configuration, getActivity().getResources().getDisplayMetrics());
+        edit.putString("lang", lng);
+        edit.putString("lang_name", name);
         edit.apply();
 //        languageTxt.setText(name);
     }
 
 
-
     private void showSearchEngineDialogBox() {
-        String[] listItems = {"Default","Google","Bing","Yahoo","DuckDuckGo","Yandex","Qwant"};
+        String[] listItems = {"Google", "Bing", "Yahoo", "DuckDuckGo", "Yandex", "Qwant"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Search Engines");
-        builder.setSingleChoiceItems(listItems, -1, new DialogInterface.OnClickListener() {
+
+        String saved = prefs.getString("search", "Default");
+        int checked;
+        switch (saved) {
+            case "Google":
+                checked = 0;
+                break;
+            case "Bing":
+                checked = 1;
+                break;
+            case "Yahoo":
+                checked = 2;
+                break;
+            case "DuckDuckGo":
+                checked = 3;
+                break;
+            case "Yandex":
+                checked = 4;
+                break;
+            case "Qwant":
+                checked = 5;
+                break;
+            default:
+                checked = -1;
+                break;
+        }
+        builder.setSingleChoiceItems(listItems, checked, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if (i==0){
-                    searchTxt.setText("Default");
-                    edit.putString("search","Default");
-                    edit.apply();
-                }
-                if (i==1){
-                    searchTxt.setText("Google");
-                    edit.putString("search","Google");
-                    edit.apply();
-                }
-                else if (i == 2){
-                    searchTxt.setText("Bing");
-                    edit.putString("search","Bing");
-                    edit.apply();
+                switch (i) {
+                    case 0:
+                        searchTxt.setText("Google");
+                        edit.putString("search", "Google");
+                        edit.apply();
+                        break;
+                    case 1:
+                        searchTxt.setText("Bing");
+                        edit.putString("search", "Bing");
+                        edit.apply();
 
-                }else if (i == 3){
-                    searchTxt.setText("Yahoo");
-                    edit.putString("search","Yahoo");
-                    edit.apply();
+                        break;
+                    case 2:
+                        searchTxt.setText("Yahoo");
+                        edit.putString("search", "Yahoo");
+                        edit.apply();
 
-                }
-                else if (i == 4){
-                    searchTxt.setText("DuckDuckGo");
-                    edit.putString("search","DuckDuckGo");
-                    edit.apply();
+                        break;
+                    case 3:
+                        searchTxt.setText("DuckDuckGo");
+                        edit.putString("search", "DuckDuckGo");
+                        edit.apply();
 
-                }
-                else if (i == 5){
-                    searchTxt.setText("Yandex");
-                    edit.putString("search","Yandex");
-                    edit.apply();
+                        break;
+                    case 4:
+                        searchTxt.setText("Yandex");
+                        edit.putString("search", "Yandex");
+                        edit.apply();
 
-                }
+                        break;
+                    case 5:
+                        searchTxt.setText("Qwant");
+                        edit.putString("search", "Qwant");
+                        edit.apply();
 
-                else if (i == 6){
-                    searchTxt.setText("Qwant");
-                    edit.putString("search","Qwant");
-                    edit.apply();
-
+                        break;
                 }
                 dialogInterface.dismiss();
             }
@@ -601,8 +613,7 @@ public class MySettingsFragment extends Fragment {
     }
 
 
-
-    public boolean getPurchaseSharedPreference(){
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getActivity());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }

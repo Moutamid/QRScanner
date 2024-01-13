@@ -48,7 +48,7 @@
                 android:fontFamily="@font/poppins"
                 android:layout_weight="1"
                 android:textColor="@color/black"
-                android:hint="Quick Create QR"
+                android:hint="@string/quick_create_qr"
                 android:padding="13sp"
                 android:textColorHint="@color/hint" />
 

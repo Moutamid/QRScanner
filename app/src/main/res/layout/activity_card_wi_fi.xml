@@ -125,11 +125,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:fontFamily="@font/poppins"
-                                android:backgroundTint="@color/transparent"
                                 android:background="@drawable/active_background"
-                                android:textColor="@color/dark"
+                                android:backgroundTint="@color/transparent"
+                                android:fontFamily="@font/poppins"
                                 android:text="WiFi Name"
+                                android:textColor="@color/dark"
                                 android:textSize="20sp" />
 
                         </LinearLayout>
@@ -156,11 +156,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="6dp"
-                                android:fontFamily="@font/poppins"
-                                android:backgroundTint="@color/transparent"
                                 android:background="@drawable/active_background"
-                                android:textColor="@color/dark"
+                                android:backgroundTint="@color/transparent"
+                                android:fontFamily="@font/poppins"
                                 android:text="WPA2"
+                                android:textColor="@color/dark"
                                 android:textSize="20sp" />
 
                         </LinearLayout>
@@ -205,8 +205,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:layout_below="@id/image_layout2"
+                    android:layout_margin="10dp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -224,26 +224,27 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Bold/Unbold"
+                                android:text="@string/bold_unbold"
                                 android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
+                                android:text="@string/quickly_switch_between_bold_and_regular_weight"
                                 android:textColor="@color/default_text_color"
-                                android:text="Quickly switch between bold and regular weight"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:padding="8dp"
-                            android:id="@+id/bold" />
+                            android:padding="8dp" />
 
                     </LinearLayout>
 
@@ -263,44 +264,45 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
-                                android:text="Add/Remove Shadow"
+                                android:text="@string/add_remove_shadow"
                                 android:textColor="@color/black"
-                                android:textStyle="bold"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins"
+                                android:text="@string/tailor_your_text_to_suit_your_style"
                                 android:textColor="@color/default_text_color"
-                                android:text="Tailor your text to suit your style"
                                 android:textSize="16sp" />
 
                         </LinearLayout>
 
                         <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/shadow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:padding="8dp"
-                            android:id="@+id/shadow" />
+                            android:padding="8dp" />
 
                     </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins"
-                        android:text="Change Text Color"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:text="@string/change_text_color"
                         android:textColor="@color/black"
-                        android:textStyle="bold"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins"
-                        android:text="(Select text first)"
+                        android:text="@string/select_text_first"
                         android:textColor="@color/default_text_color"
                         android:textSize="16sp" />
 
@@ -308,7 +310,7 @@
                         android:id="@+id/color_seek_bar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginVertical="10dp"/>
+                        android:layout_marginVertical="10dp" />
 
                 </LinearLayout>
 

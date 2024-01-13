@@ -85,7 +85,7 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Encode your Viber contact details into a QR code and connect seamlessly!"
+            android:text="@string/encode_your_viber_contact_details_into_a_qr_code_and_connect_seamlessly"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -171,7 +171,7 @@
         android:fontFamily="@font/poppins"
         android:onClick="openViber"
         android:padding="12dp"
-        android:text="Open Viber"
+        android:text="@string/open_viber"
         android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="16sp"

@@ -58,7 +58,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private GoogleMap mMap;
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-
+    SupportMapFragment mapFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +93,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapView);
         mapFragment.getMapAsync(this);
 
@@ -122,6 +122,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         if (hasLocationPermission()) {
             dialog();
         }
+        mapFragment.getMapAsync(this);
     }
 
     private void showAlert() {
@@ -273,11 +274,19 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }
 
-    public void getCurrentLocation() {
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+
+        mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
             return;
         }
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
 
         task.addOnSuccessListener(location -> {
@@ -293,22 +302,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             latitude.getEditText().setText("40.7128");
             longitude.getEditText().setText("-74.0060");
         });
-    }
-
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-
-
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
-        getCurrentLocation();
 
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override

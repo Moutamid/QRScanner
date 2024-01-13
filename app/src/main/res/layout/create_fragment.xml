@@ -27,7 +27,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   app:cornerRadius="100dp"
-                  android:text="Clear All"
+                  android:text="@string/clear_all"
                   android:textAllCaps="false"
                   android:fontFamily="@font/poppins"
                   android:includeFontPadding="false"
@@ -59,7 +59,7 @@
                   android:layout_height="wrap_content"
                   android:layout_centerHorizontal="true"
                   android:layout_centerVertical="true"
-                  android:text="Empty"
+                  android:text="@string/empty"
                   android:textColor="@color/black"
                   android:textSize="28sp"
                   android:fontFamily="@font/poppins"
@@ -70,7 +70,7 @@
                   android:layout_height="wrap_content"
                   android:layout_centerHorizontal="true"
                   android:layout_centerVertical="true"
-                  android:text="Let\'s start to create some codes"
+                  android:text="@string/let_s_start_to_create_some_codes"
                   android:textColor="@color/hint"
                   android:textSize="18sp"
                   android:fontFamily="@font/poppins"/>
@@ -82,7 +82,7 @@
                   android:layout_height="wrap_content"
                   android:fontFamily="@font/poppins"
                   android:layout_margin="10sp"
-                  android:text="Create Now"
+                  android:text="@string/create_now"
                   android:textSize="16sp" />
 
        </LinearLayout>

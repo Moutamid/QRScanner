@@ -85,7 +85,7 @@
             android:layout_margin="5dp"
             android:fontFamily="@font/poppins"
             android:gravity="center"
-            android:text="Encode your WhatsApp number into a QR code and chat instantly!"
+            android:text="@string/encode_your_whatsapp_number_into_a_qr_code_and_chat_instantly"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -172,7 +172,7 @@
         android:fontFamily="@font/poppins"
         android:onClick="openWhatsapp"
         android:padding="12dp"
-        android:text="Open Whatsapp"
+        android:text="@string/open_whatsapp"
         android:textColor="@color/black"
         android:textAllCaps="false"
         android:textSize="16sp"

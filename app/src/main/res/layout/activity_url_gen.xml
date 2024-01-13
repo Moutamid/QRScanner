@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="Create a QR Code for your Website"
+            android:text="@string/create_a_qr_code_for_your_website"
             android:fontFamily="@font/poppins"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"/>
