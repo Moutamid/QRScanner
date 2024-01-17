@@ -238,9 +238,7 @@ public class CardSocial2Activity extends AppCompatActivity {
                 businessCard.setContent(text2.getText().toString());
                 businessCard.setTimestamp(System.currentTimeMillis());
                 History urlHistory = new History(businessCard.generateString(), "card", false);
-                ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
-                historyList.add(urlHistory);
-                Stash.put(Constants.CARD, historyList);
+                if (history) Stash.put(Constants.CARD_PASS, urlHistory);
             }
             text1.setBackgroundResource(0);
             text2.setBackgroundResource(0);

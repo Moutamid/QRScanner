@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.fxn.stash.Stash;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -320,6 +321,7 @@ public class CardCalendarActivity extends AppCompatActivity {
             businessCard.setContent(eventCity.getText().toString());
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card", false);
+            if (history) Stash.put(Constants.CARD_PASS, urlHistory);
             historyVM.insertHistory(urlHistory);
             eventName.setBackgroundResource(0);
             eventCity.setBackgroundResource(0);

@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.divyanshu.colorseekbar.ColorSeekBar;
+import com.fxn.stash.Stash;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -261,6 +262,7 @@ public class CardEmailActivity extends AppCompatActivity {
             businessCard.setContent(subject.getText().toString());
             businessCard.setTimestamp(System.currentTimeMillis());
             History urlHistory = new History(businessCard.generateString(), "card", false);
+            if (history) Stash.put(Constants.CARD_PASS, urlHistory);
             historyVM.insertHistory(urlHistory);
             email.setBackgroundResource(0);
             subject.setBackgroundResource(0);

@@ -33,6 +33,7 @@ import com.moutamid.qr.scanner.generator.Activities.MainActivity;
 import com.moutamid.qr.scanner.generator.Activities.QRScanFragment;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
 import com.moutamid.qr.scanner.generator.Constants;
+import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.adapter.CardHistoryAdapter;
 import com.moutamid.qr.scanner.generator.adapter.HistoryAdapter;
@@ -148,9 +149,8 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
 
     }
-    List<History> historyList = new ArrayList<>();
     private void getHistoryData() {
-        ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+        ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
         if (historyList.size() ==0 ){
             tvIsEmpty.setVisibility(View.VISIBLE);
             recyclerLayout.setVisibility(View.GONE);
@@ -287,8 +287,8 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
         adb.setTitle("Delete History");
         adb.setMessage("Are you sure you want to delete?");
         adb.setPositiveButton("Yes", (dialog, which) -> {
-            ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
-            historyList.remove(history);
+            ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
+            historyList.remove(i);
             Stash.put(Constants.CARD, historyList);
             adapter.notifyItemRemoved(i);
             if (historyList.size() ==0 ){
@@ -300,8 +300,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
                 ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
             }
         });
-        adb.setNegativeButton("No", (dialog, which) -> {
-        });
+        adb.setNegativeButton("No", (dialog, which) -> {});
         adb.show();
 
     }
@@ -323,7 +322,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
             adb.setTitle("Delete History");
             adb.setMessage("Are you sure you want to delete all the history?");
             adb.setPositiveButton("Yes", (dialog, which) -> {
-                ArrayList<History> historyList = Stash.getArrayList(Constants.CARD, History.class);
+                ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
                 historyList.clear();
                 Stash.put(Constants.CARD, historyList);
 //                historyVM.deleteAllHistory();

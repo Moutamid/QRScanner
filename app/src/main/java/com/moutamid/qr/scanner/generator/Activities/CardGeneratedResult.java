@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,16 +26,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.BuildConfig;
 import com.moutamid.qr.scanner.generator.Constants;
+import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
 import com.moutamid.qr.scanner.generator.R;
+import com.moutamid.qr.scanner.generator.qrscanner.History;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Locale;
-
-import androidmads.library.qrgenearator.BuildConfig;
 
 public class CardGeneratedResult extends AppCompatActivity {
 
@@ -76,9 +80,16 @@ public class CardGeneratedResult extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         Bitmap bitmap1 = BitmapFactory.decodeByteArray(imageByte1, 0, imageByte1.length);
         imageView1.setImageBitmap(bitmap1);
+        History history = (History) Stash.getObject(Constants.CARD_PASS, History.class);
+        ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
+        historyList.add(new CardHistoryModel(history, bitmap, bitmap1));
+        Stash.put(Constants.CARD, historyList);
 
         imageView.setBackgroundColor(getResources().getColor(R.color.lightGray2));
         imageView1.setBackgroundColor(getResources().getColor(R.color.lightGray2));
+
+        combineBitmaps(bitmap, bitmap1);
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,6 +106,16 @@ public class CardGeneratedResult extends AppCompatActivity {
         getLocale();
     }
 
+    private void combineBitmaps(Bitmap bitmap1, Bitmap bitmap2) {
+        int width = Math.max(bitmap1.getWidth(), bitmap2.getWidth());
+        int height = bitmap1.getHeight() + bitmap2.getHeight();
+
+        bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bmp);
+
+        canvas.drawBitmap(bitmap1, 0, 0, null);
+        canvas.drawBitmap(bitmap2, 0, bitmap1.getHeight(), null);
+    }
 
 
     private void getLocale(){
@@ -126,7 +147,7 @@ public class CardGeneratedResult extends AppCompatActivity {
             Uri photoURI = FileProvider.getUriForFile(getApplicationContext(), BuildConfig.APPLICATION_ID + ".provider", file);
             intent.putExtra(Intent.EXTRA_STREAM, photoURI);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setType("image/PNG");
+            intent.setType("*/*");
 
             startActivity(Intent.createChooser(intent, "Share image via"));
         } catch (Exception e) {
@@ -144,16 +165,15 @@ public class CardGeneratedResult extends AppCompatActivity {
             values.put(MediaStore.Images.Media.IS_PENDING, true);
             // RELATIVE_PATH and IS_PENDING are introduced in API 29.
 
-            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    values);
+            Uri uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             if (uri != null) {
                 try {
                     saveImageToStream(bmp, getContentResolver().openOutputStream(uri));
+                    values.put(MediaStore.Images.Media.IS_PENDING, false);
+                    getContentResolver().update(uri, values, null, null);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                values.put(MediaStore.Images.Media.IS_PENDING, false);
-                getContentResolver().update(uri, values, null, null);
             }
         } else {
             File directory = new File(Environment.getExternalStorageDirectory().toString() + separator + "Photo Lab");

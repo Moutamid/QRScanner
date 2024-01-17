@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
@@ -25,9 +26,9 @@ import java.util.Locale;
 
 public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.HistoryViewHolder>  {
 
-    private final List<History> historyDataList;
+    private final List<CardHistoryModel> historyDataList;
     private final HistoryItemClickListner mListner;
-    public CardHistoryAdapter(List<History> historyDataList, HistoryItemClickListner mListner) {
+    public CardHistoryAdapter(List<CardHistoryModel> historyDataList, HistoryItemClickListner mListner) {
         this.historyDataList = historyDataList;
         this.mListner = mListner;
     }
@@ -41,11 +42,12 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
+        CardHistoryModel model = historyDataList.get(position);
 
-        String history = historyDataList.get(position).getData();
+        String history = model.getHistory().getData();
         //String lines[] = history.split("\\r?\\n");
 
-        String type= historyDataList.get(position).getType();
+        String type= model.getHistory().getType();
 
         if (type.equals("card")){
             BusinessCard card = new BusinessCard();
@@ -59,13 +61,14 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
             Log.d("date",""+card.getTimestamp());
         }
 
-        holder.cardView.setOnClickListener((View v) -> {
-            mListner.clickedItem(v, holder.getAdapterPosition(), historyDataList.get(position).getType(), history);
+        holder.imgDelete.setOnClickListener(v -> {
+            mListner.deleteSingleItem(model.getHistory(), holder.getAbsoluteAdapterPosition());
+            historyDataList.remove(holder.getAbsoluteAdapterPosition());
         });
-    }
 
-    public History getHistory(int i){
-        return historyDataList.get(i);
+        holder.cardView.setOnClickListener((View v) -> {
+            mListner.clickedItem(v, holder.getAbsoluteAdapterPosition(), model.getHistory().getType(), history);
+        });
     }
 
     @Override
@@ -77,19 +80,14 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
 
         private final TextView tv1,tv2,date;
         private final CardView cardView;
-
+        ImageView imgDelete;
         public HistoryViewHolder(@NonNull View v) {
             super(v);
             tv1 = v.findViewById(R.id.tv1);
             tv2 = v.findViewById(R.id.tv2);
             date = v.findViewById(R.id.date);
             cardView = v.findViewById(R.id.cardView_history);
-            ImageView imgDelete = v.findViewById(R.id.btn_delete_item);
-
-            imgDelete.setOnClickListener(v1 -> {
-                mListner.deleteSingleItem(getHistory(getAdapterPosition()), getAdapterPosition());
-                historyDataList.remove(getAdapterPosition());
-            });
+            imgDelete = v.findViewById(R.id.btn_delete_item);
 
         }
     }
