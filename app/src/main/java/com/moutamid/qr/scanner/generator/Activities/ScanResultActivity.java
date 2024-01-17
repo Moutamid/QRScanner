@@ -233,7 +233,6 @@ public class ScanResultActivity extends AppCompatActivity {
 //                contactBtn.setVisibility(View.VISIBLE);
                 break;
             }
-
             case "EMail": {
 
                 binding.emailLayout.setVisibility(View.VISIBLE);
@@ -700,7 +699,6 @@ public class ScanResultActivity extends AppCompatActivity {
                 copyClipboard = iEvent.getUid() + "\n" + iEvent.getStamp() + "\n" + iEvent.getStart() + "\n" + iEvent.getEnd();
                 break;
             }
-
             default:
                 Toast.makeText(this, "Not Valid type", Toast.LENGTH_SHORT).show();
                 break;

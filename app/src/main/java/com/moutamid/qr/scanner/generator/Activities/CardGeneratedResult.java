@@ -2,16 +2,8 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import static java.io.File.separator;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatButton;
-import androidx.core.content.FileProvider;
-import androidx.preference.PreferenceManager;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -25,6 +17,12 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.FileProvider;
+import androidx.preference.PreferenceManager;
 
 import com.fxn.stash.Stash;
 import com.moutamid.qr.scanner.generator.BuildConfig;
@@ -42,10 +40,10 @@ import java.util.Locale;
 
 public class CardGeneratedResult extends AppCompatActivity {
 
-    private ImageView imageView,imageView1;
-    private AppCompatButton saveBtn,shareBtn;
+    private ImageView imageView, imageView1;
+    private AppCompatButton saveBtn, shareBtn;
     private Bitmap bmp;
-    private byte[] imageByte,imageByte1;
+    private byte[] imageByte, imageByte1;
     private SharedPreferences prefs;
 
     @SuppressLint("MissingInflatedId")
@@ -59,14 +57,14 @@ public class CardGeneratedResult extends AppCompatActivity {
         saveBtn = findViewById(R.id.save);
         shareBtn = findViewById(R.id.share);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -80,10 +78,15 @@ public class CardGeneratedResult extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
         Bitmap bitmap1 = BitmapFactory.decodeByteArray(imageByte1, 0, imageByte1.length);
         imageView1.setImageBitmap(bitmap1);
-        History history = (History) Stash.getObject(Constants.CARD_PASS, History.class);
-        ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
-        historyList.add(new CardHistoryModel(history, bitmap, bitmap1));
-        Stash.put(Constants.CARD, historyList);
+        int b = getIntent().getIntExtra("saveData", 0);
+        if (b == 0) {
+            History history = (History) Stash.getObject(Constants.CARD_PASS, History.class);
+            if (history != null) {
+                ArrayList<CardHistoryModel> historyList = Stash.getArrayList(Constants.CARD, CardHistoryModel.class);
+                historyList.add(new CardHistoryModel(history, bitmap, bitmap1));
+                Stash.put(Constants.CARD, historyList);
+            }
+        }
 
         imageView.setBackgroundColor(getResources().getColor(R.color.lightGray2));
         imageView1.setBackgroundColor(getResources().getColor(R.color.lightGray2));
@@ -118,9 +121,9 @@ public class CardGeneratedResult extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
+        String lang = prefs.getString("lang", "");
         setLocale(lang);
     }
 
@@ -131,7 +134,7 @@ public class CardGeneratedResult extends AppCompatActivity {
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 
     private void shareContent() {
@@ -221,11 +224,17 @@ public class CardGeneratedResult extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        Stash.clear(Constants.CARD_PASS);
+        super.onDestroy();
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(CardGeneratedResult.this,MainActivity.class));
+        Stash.clear(Constants.CARD_PASS);
+        startActivity(new Intent(CardGeneratedResult.this, MainActivity.class));
         finish();
     }
 

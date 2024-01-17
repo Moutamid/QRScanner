@@ -159,7 +159,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
 //            Collections.reverse(historyList);
             tvIsEmpty.setVisibility(View.GONE);
             recyclerLayout.setVisibility(View.VISIBLE);
-            adapter = new CardHistoryAdapter(historyList, this);
+            adapter = new CardHistoryAdapter(requireContext(), historyList, this);
             historyRecyclerView.setAdapter(adapter);
             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             mLayoutManager.setReverseLayout(true);
@@ -170,115 +170,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
 
     @Override
     public void clickedItem(View view, int position,String type,String history) {
-        Intent intent = new Intent(getActivity(), ScanResultActivity.class);
-        switch (type) {
-            case "contact":
-                VCard vCard = new VCard();
-                vCard.parseSchema(history);
-                intent.putExtra("type", "VCard");
-                intent.putExtra("vCard", vCard);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "email":
-                EMail eMail = new EMail();
-                eMail.parseSchema(history);
-                intent.putExtra("type", "EMail");
-                intent.putExtra("eMail", eMail);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "event":
-                IEvent iEvent = new IEvent();
-                iEvent.parseSchema(history);
-                intent.putExtra("type", "Event");
-                intent.putExtra("event", iEvent);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "location":
-                GeoInfo geoInfo = new GeoInfo();
-                geoInfo.parseSchema(history);
-                intent.putExtra("type", "GeoInfo");
-                intent.putExtra("geoInfo", geoInfo);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "phone":
-                Telephone telephone = new Telephone();
-                telephone.parseSchema(history);
-                intent.putExtra("type", "telephone");
-                intent.putExtra("phone", telephone);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "sms":
-                SMS sms = new SMS();
-                sms.parseSchema(history);
-                intent.putExtra("type", "Sms");
-                intent.putExtra("sms", sms);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "text":
-                intent.putExtra("type", "Text");
-                intent.putExtra("text", history);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "url":
-                Url url = new Url();
-                url.parseSchema(history);
-                intent.putExtra("type", "url");
-                intent.putExtra("Url", url);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "wifi":
-                Wifi wifi = new Wifi();
-                wifi.parseSchema(history);
-                intent.putExtra("type", "wifi");
-                intent.putExtra("Wifi", wifi);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "social":
-                final Social social = new Social();
-                social.setUrl(history);
-                intent.putExtra("type", "Social");
-                intent.putExtra("social", social);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-            case "barcode":
-                intent.putExtra("type", "Barcode");
-                intent.putExtra("barcode", history);
-                startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
-                break;
-        }
+
     }
 
     @Override
@@ -326,7 +218,7 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
                 historyList.clear();
                 Stash.put(Constants.CARD, historyList);
 //                historyVM.deleteAllHistory();
-                adapter = new CardHistoryAdapter(historyList, this);
+                adapter = new CardHistoryAdapter(requireContext(), historyList, this);
                 historyRecyclerView.setAdapter(adapter);
                 if (historyList.size() ==0 ){
                     tvIsEmpty.setVisibility(View.VISIBLE);

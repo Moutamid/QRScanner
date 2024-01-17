@@ -151,11 +151,7 @@ public class CardCalendarActivity extends AppCompatActivity {
                 isEventCitySelected = false;
                 isEventLogoSelected = false;
 
-                if (eventName.getTypeface().getStyle() == Typeface.BOLD){
-                    bold.setChecked(true);
-                } else {
-                    bold.setChecked(false);
-                }
+                bold.setChecked(eventName.getTypeface().getStyle() == Typeface.BOLD);
 
             }
         });
@@ -169,29 +165,18 @@ public class CardCalendarActivity extends AppCompatActivity {
 
                 DatePickerdialog();
 
-                if (eventDate.getTypeface().getStyle() == Typeface.BOLD){
-                    bold.setChecked(true);
-                } else {
-                    bold.setChecked(false);
-                }
+                bold.setChecked(eventDate.getTypeface().getStyle() == Typeface.BOLD);
 
             }
         });
-        eventCity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isEventCitySelected = true;
-                isEventNameSelected = false;
-                isEventDateSelected = false;
-                isEventLogoSelected = false;
+        eventCity.setOnClickListener(view -> {
+            isEventCitySelected = true;
+            isEventNameSelected = false;
+            isEventDateSelected = false;
+            isEventLogoSelected = false;
 
-                if (eventCity.getTypeface().getStyle() == Typeface.BOLD){
-                    bold.setChecked(true);
-                } else {
-                    bold.setChecked(false);
-                }
+            bold.setChecked(eventCity.getTypeface().getStyle() == Typeface.BOLD);
 
-            }
         });
 
         bold.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -410,6 +395,7 @@ public class CardCalendarActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         exitActivity();
     }
 

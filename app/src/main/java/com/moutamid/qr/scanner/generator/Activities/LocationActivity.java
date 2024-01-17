@@ -47,7 +47,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationActivity extends AppCompatActivity{
 
     private TextInputLayout latitude,longitude,locationname;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
@@ -91,12 +91,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         longitude=findViewById(R.id.longitude);
         mapView = findViewById(R.id.mapView);
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.mapView);
-        mapFragment.getMapAsync(this);
-
         mapView.setVisibility(View.GONE);
         if (!hasLocationPermission()){
             requestLocationPermission();
@@ -112,6 +106,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         if (!isLocationEnabled()) {
             showAlert();
         } else {
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
+            mapFragment.getMapAsync(mapReady);
             mapView.setVisibility(View.VISIBLE);
         }
     }
@@ -122,7 +119,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         if (hasLocationPermission()) {
             dialog();
         }
-        mapFragment.getMapAsync(this);
     }
 
     private void showAlert() {
@@ -140,16 +136,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 .show();
     }
 
-    private void addAnnotationToMap() {
-
-    }
-
     private boolean hasLocationPermission() {
         // Check if the app has location permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return ContextCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED;
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
         }
         return true; // If targeting API level lower than 23, permissions are granted at installation time
     }
@@ -157,11 +147,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private void requestLocationPermission() {
         // Request location permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE
-            );
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -169,8 +155,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         // Check if location services are enabled on the device
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (locationManager != null) {
-            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                    || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         }
         return false;
     }
@@ -274,55 +259,57 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
+    OnMapReadyCallback mapReady = new OnMapReadyCallback() {
+        @Override
+        public void onMapReady(@NonNull GoogleMap googleMap) {
+            mMap = googleMap;
 
 
-        mMap.getUiSettings().setZoomControlsEnabled(true);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
-            return;
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            if (ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+
+            task.addOnSuccessListener(location -> {
+                if (location!=null){
+                    currentLocation = location;
+                    LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                    latitude.getEditText().setText(currentLocation.getLatitude() + "");
+                    longitude.getEditText().setText("" + currentLocation.getLongitude());
+                }
+            }).addOnFailureListener(e -> {
+                latitude.getEditText().setText("40.7128");
+                longitude.getEditText().setText("-74.0060");
+            });
+
+            mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+                @Override
+                public void onMarkerDragStart(Marker marker) {
+                }
+
+                @Override
+                public void onMarkerDrag(Marker marker) {
+                    LatLng latLng = marker.getPosition();
+                    latitude.getEditText().setText(getFormatted(latLng.latitude));
+                    longitude.getEditText().setText(getFormatted(latLng.longitude));
+                }
+
+                @Override
+                public void onMarkerDragEnd(Marker marker) {
+                    LatLng latLng = marker.getPosition();
+                    latitude.getEditText().setText(getFormatted(latLng.latitude));
+                    longitude.getEditText().setText(getFormatted(latLng.longitude));
+                }
+            });
         }
-        mMap.setMyLocationEnabled(true);
-        mMap.getUiSettings().setMyLocationButtonEnabled(true);
-
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-
-        task.addOnSuccessListener(location -> {
-            if (location!=null){
-                currentLocation = location;
-                LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-                mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                latitude.getEditText().setText(currentLocation.getLatitude() + "");
-                longitude.getEditText().setText("" + currentLocation.getLongitude());
-            }
-        }).addOnFailureListener(e -> {
-            latitude.getEditText().setText("40.7128");
-            longitude.getEditText().setText("-74.0060");
-        });
-
-        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {
-            }
-
-            @Override
-            public void onMarkerDrag(Marker marker) {
-                LatLng latLng = marker.getPosition();
-                latitude.getEditText().setText(getFormatted(latLng.latitude));
-                longitude.getEditText().setText(getFormatted(latLng.longitude));
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                LatLng latLng = marker.getPosition();
-                latitude.getEditText().setText(getFormatted(latLng.latitude));
-                longitude.getEditText().setText(getFormatted(latLng.longitude));
-            }
-        });
-    }
+    };
 
     private String getFormatted(double pos) {
         DecimalFormat df = new DecimalFormat("#.######");

@@ -1,5 +1,8 @@
 package com.moutamid.qr.scanner.generator.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,22 +16,26 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.moutamid.qr.scanner.generator.Activities.CardGeneratedResult;
 import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.HistoryViewHolder>  {
-
+    private Context context;
     private final List<CardHistoryModel> historyDataList;
     private final HistoryItemClickListner mListner;
-    public CardHistoryAdapter(List<CardHistoryModel> historyDataList, HistoryItemClickListner mListner) {
+
+    public CardHistoryAdapter(Context context, List<CardHistoryModel> historyDataList, HistoryItemClickListner mListner) {
+        this.context = context;
         this.historyDataList = historyDataList;
         this.mListner = mListner;
     }
@@ -67,8 +74,21 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
         });
 
         holder.cardView.setOnClickListener((View v) -> {
-            mListner.clickedItem(v, holder.getAbsoluteAdapterPosition(), model.getHistory().getType(), history);
+            byte[] imageByte = bitmapToByteArray(model.getBitmap());
+            byte[] imageByte2 = bitmapToByteArray(model.getBitmap2());
+
+            Intent intent = new Intent(context, CardGeneratedResult.class);
+            intent.putExtra("image1", imageByte);
+            intent.putExtra("image2", imageByte2);
+            intent.putExtra("saveData", 2);
+            context.startActivity(intent);
         });
+    }
+
+    public static byte[] bitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
     }
 
     @Override

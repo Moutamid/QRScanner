@@ -29,24 +29,23 @@ public class CardMainAdapter extends RecyclerView.Adapter<CardMainAdapter.Button
     @NonNull
     @Override
     public ButtonMainViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        View view = LayoutInflater.
-                from(mContext).inflate(R.layout.business, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.business, parent, false);
         return new CardMainAdapter.ButtonMainViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ButtonMainViewHolder holder, int position) {
-        holder.imageView.setImageResource(btMainList.get(holder.getAbsoluteAdapterPosition()));
-
-        if (holder.getAbsoluteAdapterPosition() == btMainList.size() - 1) {
+        if (holder.getAbsoluteAdapterPosition() < btMainList.size()) {
+            holder.itemView.setVisibility(View.VISIBLE);
+            holder.imageView.setImageResource(btMainList.get(holder.getAbsoluteAdapterPosition()));
+        } else {
             holder.itemView.setVisibility(View.INVISIBLE);
         }
     }
 
     @Override
     public int getItemCount() {
-        return btMainList.size();
+        return btMainList.size()+1;
     }
 
     public class ButtonMainViewHolder extends RecyclerView.ViewHolder {

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.moutamid.qr.scanner.generator.R;
@@ -64,6 +65,8 @@ public class BusinessFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         cardList = new ArrayList<>();
         loadData();
@@ -102,7 +105,6 @@ public class BusinessFragment extends Fragment {
         cardList.add(R.drawable.ic_card_social_3);
         cardList.add(R.drawable.ic_card_sms_2);
         cardList.add(R.drawable.ic_card_email_3);
-        cardList.add(0);
 
         CardMainAdapter adapter = new CardMainAdapter(cardList,getActivity());
         recyclerView.setAdapter(adapter);
