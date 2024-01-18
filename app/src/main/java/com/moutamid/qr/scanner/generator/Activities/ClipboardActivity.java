@@ -51,6 +51,7 @@ public class ClipboardActivity extends AppCompatActivity {
     SharedPreferences.Editor edit;
     private boolean copied =false;
     private boolean history;
+    String passed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,11 @@ public class ClipboardActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+        passed = getIntent().getStringExtra(Constants.passed);
 
+        if (passed != null) {
+            textedit.getEditText().setText(passed);
+        }
 /*
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CLIPBOARD) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CLIPBOARD },1);
@@ -174,14 +179,20 @@ public class ClipboardActivity extends AppCompatActivity {
     public void clipGenerate(View view) {
         String data = textedit.getEditText().getText().toString();
 
-
         if (data.equals("")) {
             textedit.setError("Please enter Text");
         } else {
             if (history) {
                 History textHistory = new History(data, "clipboard", false);
                 ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                historyList.add(textHistory);
+                if (passed != null) {
+                    for (int i = 0; i < historyList.size(); i++) {
+                        if (historyList.get(i).getData().equals(passed)){
+                            historyList.set(i, textHistory);
+                        }
+                    }
+                } else
+                    historyList.add(textHistory);
                 Stash.put(Constants.CREATE, historyList);
             }
             Intent intent = new Intent(ClipboardActivity.this, ScanResultActivity.class);

@@ -40,7 +40,7 @@ public class EventActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    IEvent passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +53,8 @@ public class EventActivity extends AppCompatActivity {
         starttime=findViewById(R.id.tv_start_time);
         enddate=findViewById(R.id.tv_end_date);
         endtime=findViewById(R.id.tv_end_time);
+
+
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
         history = prefs.getBoolean("saveHistory",true);
@@ -70,6 +72,25 @@ public class EventActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        passed = (IEvent) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed!=null){
+            eventname.getEditText().setText(passed.getUid());
+            subject.getEditText().setText(passed.getStamp());
+            String[] start = passed.getStart().split("\t\t");
+            String[] end = passed.getEnd().split("\t\t");
+
+            if (start.length > 1){
+                startdate.setText(start[0]);
+                starttime.setText(start[1]);
+            }
+            if (end.length > 1){
+                enddate.setText(end[0]);
+                endtime.setText(end[1]);
+            }
+        }
+
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EventActivity.this, mediatedBannerView);
@@ -100,7 +121,7 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void eventGenerate(View view) {
-        String data2 = subject.getEditText().getText().toString();
+        String sub = subject.getEditText().getText().toString();
         String data3 = startdate.getText().toString() + "\t\t" + starttime.getText().toString();
         String data4 = enddate.getText().toString() + "\t\t'" + endtime.getText().toString();
         if (eventname.getEditText().getText().toString().equals("")) {
@@ -115,11 +136,18 @@ public class EventActivity extends AppCompatActivity {
                 iEvent.setUid(eventname.getEditText().getText().toString());
                 iEvent.setStart(data3);
                 iEvent.setEnd(data4);
-                iEvent.setStamp(data2);
+                iEvent.setStamp(sub);
                 if (history) {
                     History eventHistory = new History(iEvent.generateString(), "event", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(eventHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, eventHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(eventHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
 

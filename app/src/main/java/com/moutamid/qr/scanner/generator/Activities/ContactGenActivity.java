@@ -43,7 +43,7 @@ public class ContactGenActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    VCard passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,12 +66,24 @@ public class ContactGenActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
         historyVM = new ViewModelProvider(ContactGenActivity.this).get(HistoryVM.class);
         name = findViewById(R.id.contact_name);
         phone = findViewById(R.id.contact_phone);
         email = findViewById(R.id.contact_email);
         org = findViewById(R.id.contact_organization);
         address = findViewById(R.id.contact_address);
+
+        passed = (VCard) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null){
+            name.getEditText().setText(passed.getName());
+            phone.getEditText().setText(passed.getPhoneNumber());
+            email.getEditText().setText(passed.getEmail());
+            org.getEditText().setText(passed.getCompany());
+            address.getEditText().setText(passed.getAddress());
+        }
+
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ContactGenActivity.this, mediatedBannerView);
@@ -226,7 +238,14 @@ public class ContactGenActivity extends AppCompatActivity {
                 if (history) {
                     History contactHistory = new History(vCard.generateString(), "contact", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(contactHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, contactHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(contactHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
 

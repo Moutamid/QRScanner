@@ -36,6 +36,7 @@ public class TextGenActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private boolean history;
 
+    String passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,13 @@ public class TextGenActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        passed = getIntent().getStringExtra(Constants.passed);
+
+        if (passed != null) {
+            textedit.getEditText().setText(passed);
+        }
+
         historyVM = new ViewModelProvider(TextGenActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -90,15 +98,20 @@ public class TextGenActivity extends AppCompatActivity {
 
     public void textgenerate(View view) {
         String data = textedit.getEditText().getText().toString();
-
-
         if (data.equals("")) {
             textedit.setError("Please enter Text");
         } else {
             if (history) {
                 History textHistory = new History(data, "text", false);
                 ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                historyList.add(textHistory);
+                if (passed != null) {
+                    for (int i = 0; i < historyList.size(); i++) {
+                        if (historyList.get(i).getData().equals(passed)){
+                            historyList.set(i, textHistory);
+                        }
+                    }
+                } else
+                    historyList.add(textHistory);
                 Stash.put(Constants.CREATE, historyList);
             }
             Intent intent = new Intent(TextGenActivity.this, ScanResultActivity.class);

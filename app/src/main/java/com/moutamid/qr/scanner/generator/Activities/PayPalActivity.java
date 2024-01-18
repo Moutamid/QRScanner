@@ -37,6 +37,7 @@ public class PayPalActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
+    Social passed;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,6 +68,12 @@ public class PayPalActivity extends AppCompatActivity {
 
         }
         link = findViewById(R.id.facebook_link);
+
+        passed = (Social) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null)
+            link.getEditText().setText(passed.getUrl());
+
         historyVM = new ViewModelProvider(PayPalActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -104,7 +111,14 @@ public class PayPalActivity extends AppCompatActivity {
                 if (history) {
                     History urlHistory = new History(social.generateString(), "paypal", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(urlHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, urlHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(urlHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

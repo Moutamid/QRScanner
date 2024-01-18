@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class Constants {
+    public static final String passed = "passed";
     public static final String SCAN = "scan";
     public static final String CREATE = "create";
     public static final String CARD = "card";

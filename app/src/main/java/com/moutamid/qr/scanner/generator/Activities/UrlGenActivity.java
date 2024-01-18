@@ -37,7 +37,7 @@ public class UrlGenActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    Url passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +67,12 @@ public class UrlGenActivity extends AppCompatActivity {
 
         }
         urledit = findViewById(R.id.url_edit);
+
+        passed = (Url) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed!=null){
+            urledit.getEditText().setText(passed.getUrl());
+        }
 
         findViewById(R.id.http).setOnClickListener(v -> {
             urledit.getEditText().setText("http://");
@@ -131,7 +137,14 @@ public class UrlGenActivity extends AppCompatActivity {
                     if (history) {
                         History urlHistory = new History(url.generateString(), "url", false);
                         ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                        historyList.add(urlHistory);
+                        if (passed != null) {
+                            for (int i = 0; i < historyList.size(); i++) {
+                                if (historyList.get(i).getData().equals(passed.generateString())){
+                                    historyList.set(i, urlHistory);
+                                }
+                            }
+                        } else
+                            historyList.add(urlHistory);
                         Stash.put(Constants.CREATE, historyList);
                     }
 

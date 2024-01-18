@@ -36,7 +36,7 @@ public class SpotifyActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    Spotify passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,17 @@ public class SpotifyActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+
+
+        passed = (Spotify) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null) {
+            name.getEditText().setText(passed.getName());
+            song.getEditText().setText(passed.getSong());
+        }
+
+
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, SpotifyActivity.this, mediatedBannerView);
@@ -102,7 +113,14 @@ public class SpotifyActivity extends AppCompatActivity {
                 if (history) {
                     History emailHistory = new History(spotify.generateString(), "spotify", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(emailHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, emailHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(emailHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

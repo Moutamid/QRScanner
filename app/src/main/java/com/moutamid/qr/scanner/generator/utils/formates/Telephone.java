@@ -14,12 +14,20 @@ public class Telephone extends Schema implements Serializable {
 
 	private static final String TEL = "tel";
 	private String telephone;
-
+	private String separate;
 	/**
 	 * Default constructor to construct new telephone object.
 	 */
 	public Telephone() {
 		super();
+	}
+
+	public String getSeparate() {
+		return separate;
+	}
+
+	public void setSeparate(String separate) {
+		this.separate = separate;
 	}
 
 	public String getTelephone() {

@@ -9,7 +9,7 @@ public class History {
     @PrimaryKey(autoGenerate = true)
     private int id=0;
 
-    private final String data;
+    public final String data;
     private final String type;
     private final boolean scan;
 
@@ -19,17 +19,19 @@ public class History {
         this.scan = scan;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getData() {
         return data;
     }
+
+
 
     public String getType() {
         return type;

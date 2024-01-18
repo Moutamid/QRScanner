@@ -35,7 +35,7 @@ public class EmailGenActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    EMail passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +61,15 @@ public class EmailGenActivity extends AppCompatActivity {
         email=findViewById(R.id.email);
         body=findViewById(R.id.email_body);
         subject=findViewById(R.id.email_subject);
+
+        passed = (EMail) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed!=null){
+            email.getEditText().setText(passed.getEmail());
+            body.getEditText().setText(passed.getMailBody());
+            subject.getEditText().setText(passed.getMailSubject());
+        }
+
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
             ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EmailGenActivity.this, mediatedBannerView);
@@ -107,7 +116,14 @@ public class EmailGenActivity extends AppCompatActivity {
                 if (history) {
                     History emailHistory = new History(eMail.generateString(), "email", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(emailHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, emailHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(emailHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

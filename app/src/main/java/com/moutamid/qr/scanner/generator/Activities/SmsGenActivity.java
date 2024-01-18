@@ -35,7 +35,7 @@ public class SmsGenActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    SMS passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +60,14 @@ public class SmsGenActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        passed = (SMS) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null) {
+            number.getEditText().setText(passed.getNumber());
+            message.getEditText().setText(passed.getSubject());
+        }
+
         historyVM = new ViewModelProvider(SmsGenActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -104,7 +112,14 @@ public class SmsGenActivity extends AppCompatActivity {
                 if (history) {
                     History smsHistory = new History(sms.generateString(), "sms", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(smsHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, smsHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(smsHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

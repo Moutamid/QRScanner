@@ -37,7 +37,7 @@ public class    WifiGenActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    Wifi passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +62,14 @@ public class    WifiGenActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        passed = (Wifi) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null) {
+            wifiname.getEditText().setText(passed.getSsid());
+            wifipassword.getEditText().setText(passed.getPsk());
+        }
+
         historyVM = new ViewModelProvider(WifiGenActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -106,7 +114,14 @@ public class    WifiGenActivity extends AppCompatActivity {
                 if (history) {
                     History wifiHistory = new History(wifi.generateString(), "wifi", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(wifiHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, wifiHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(wifiHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
 

@@ -1,15 +1,15 @@
 package com.moutamid.qr.scanner.generator.Activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.preference.PreferenceManager;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import com.consoliads.mediation.ConsoliAds;
 import com.consoliads.mediation.bannerads.CAMediatedBannerView;
@@ -30,6 +30,7 @@ public class BarCodeActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
+    String passed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +38,16 @@ public class BarCodeActivity extends AppCompatActivity {
         Constants.adjustFontScale(this);
         setContentView(R.layout.activity_bar_code);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        editText=findViewById(R.id.edit_barcode);
-        history = prefs.getBoolean("saveHistory",true);
-        boolean theme = prefs.getBoolean("theme",false);
-        if (theme){
+        editText = findViewById(R.id.edit_barcode);
+        history = prefs.getBoolean("saveHistory", true);
+        boolean theme = prefs.getBoolean("theme", false);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -54,6 +55,13 @@ public class BarCodeActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
+
+        passed = getIntent().getStringExtra(Constants.passed);
+
+        if (passed != null) {
+            editText.getEditText().setText(passed);
+        }
+
         historyVM = new ViewModelProvider(BarCodeActivity.this).get(HistoryVM.class);
         CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
         if (!getPurchaseSharedPreference()) {
@@ -64,9 +72,9 @@ public class BarCodeActivity extends AppCompatActivity {
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
+        String lang = prefs.getString("lang", "");
         setLocale(lang);
     }
 
@@ -77,7 +85,7 @@ public class BarCodeActivity extends AppCompatActivity {
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
+        getBaseContext().getResources().updateConfiguration(configuration, getBaseContext().getResources().getDisplayMetrics());
     }
 
     public void barcodeGenerate(View view) {
@@ -85,10 +93,17 @@ public class BarCodeActivity extends AppCompatActivity {
         if (barcodeText.equals("") || barcodeText.length() < 12) {
             editText.getEditText().setError(getString(R.string.please_enter_valid_barcode_text_should_be_12_or_13_digits_long));
         } else {
-            if (history){
+            if (history) {
                 History contactHistory = new History(barcodeText, "barcode", false);
                 ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                historyList.add(contactHistory);
+                if (passed != null) {
+                    for (int i = 0; i < historyList.size(); i++) {
+                        if (historyList.get(i).getData().equals(passed)){
+                            historyList.set(i, contactHistory);
+                        }
+                    }
+                } else
+                    historyList.add(contactHistory);
                 Stash.put(Constants.CREATE, historyList);
             }
             Intent intent = new Intent(this, ScanResultActivity.class);
@@ -109,7 +124,8 @@ public class BarCodeActivity extends AppCompatActivity {
         finish();
 
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
 

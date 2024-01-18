@@ -38,6 +38,7 @@ public class ViberActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
+    Telephone passed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,20 @@ public class ViberActivity extends AppCompatActivity {
         }
         phonenumber = findViewById(R.id.edit_phone);
         cpp = findViewById(R.id.cpp);
+
+        passed = (Telephone) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null) {
+            String[] num = passed.getSeparate().split("-");
+            if (num.length > 1){
+                phonenumber.getEditText().setText(num[1]);
+                try {
+                    cpp.setDefaultCountryUsingPhoneCode(Integer.parseInt(num[0]));
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
         historyVM = new ViewModelProvider(ViberActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -107,7 +122,14 @@ public class ViberActivity extends AppCompatActivity {
                 if (history) {
                     History phoneHistory = new History(telephone.generateString(), "viber", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(phoneHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, phoneHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(phoneHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);

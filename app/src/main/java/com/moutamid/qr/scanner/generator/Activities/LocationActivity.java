@@ -11,7 +11,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -47,9 +46,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class LocationActivity extends AppCompatActivity{
+public class LocationActivity extends AppCompatActivity {
 
-    private TextInputLayout latitude,longitude,locationname;
+    private TextInputLayout latitude, longitude, locationname;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1001;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
@@ -59,6 +58,8 @@ public class LocationActivity extends AppCompatActivity{
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     SupportMapFragment mapFragment;
+    GeoInfo passed;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,15 +72,15 @@ public class LocationActivity extends AppCompatActivity{
             ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean theme = prefs.getBoolean("theme",false);
-        history = prefs.getBoolean("saveHistory",true);
-        if (theme){
+        boolean theme = prefs.getBoolean("theme", false);
+        history = prefs.getBoolean("saveHistory", true);
+        if (theme) {
             AppCompatDelegate
                     .setDefaultNightMode(
                             AppCompatDelegate
                                     .MODE_NIGHT_YES);
 
-        }else {
+        } else {
 
             AppCompatDelegate
                     .setDefaultNightMode(
@@ -87,22 +88,25 @@ public class LocationActivity extends AppCompatActivity{
                                     .MODE_NIGHT_NO);
 
         }
-        latitude=findViewById(R.id.latitude);
-        longitude=findViewById(R.id.longitude);
+        latitude = findViewById(R.id.latitude);
+        longitude = findViewById(R.id.longitude);
         mapView = findViewById(R.id.mapView);
 
         mapView.setVisibility(View.GONE);
-        if (!hasLocationPermission()){
+        if (!hasLocationPermission()) {
             requestLocationPermission();
         }
 
+        locationname = findViewById(R.id.location_name);
 
-        locationname=findViewById(R.id.location_name);
+        passed = (GeoInfo) getIntent().getSerializableExtra(Constants.passed);
+
         historyVM = new ViewModelProvider(LocationActivity.this).get(HistoryVM.class);
         getLocale();
     }
 
     private void dialog() {
+
         if (!isLocationEnabled()) {
             showAlert();
         } else {
@@ -110,6 +114,18 @@ public class LocationActivity extends AppCompatActivity{
             mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
             mapFragment.getMapAsync(mapReady);
             mapView.setVisibility(View.VISIBLE);
+
+            if (passed != null) {
+                locationname.getEditText().setText(passed.getPoints().get(0));
+                latitude.getEditText().setText(passed.getPoints().get(1));
+                longitude.getEditText().setText(passed.getPoints().get(2));
+
+                if (mapView.getVisibility() == View.VISIBLE && mMap != null){
+                    LatLng sydney = new LatLng(Double.parseDouble(passed.getPoints().get(1)), Double.parseDouble(passed.getPoints().get(2)));
+                    mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
+                }
+            }
+
         }
     }
 
@@ -176,22 +192,22 @@ public class LocationActivity extends AppCompatActivity{
     }
 
 
-    private void getLocale(){
+    private void getLocale() {
 
-        String lang = prefs.getString("lang","");
-        String name = prefs.getString("lang_name","");
+        String lang = prefs.getString("lang", "");
+        String name = prefs.getString("lang_name", "");
         //   languageTxt.setText(name);
-        setLocale(lang,name);
+        setLocale(lang, name);
     }
 
-    private void setLocale(String lng,String name) {
+    private void setLocale(String lng, String name) {
 
         Locale locale = new Locale(lng);
         Locale.setDefault(locale);
 
         Configuration configuration = new Configuration();
         configuration.locale = locale;
-        getResources().updateConfiguration(configuration,getResources().getDisplayMetrics());
+        getResources().updateConfiguration(configuration, getResources().getDisplayMetrics());
 
     }
 
@@ -218,7 +234,14 @@ public class LocationActivity extends AppCompatActivity{
                 if (history) {
                     History locHistory = new History(location.generateString(), "location", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(locHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())) {
+                                historyList.set(i, locHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(locHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
 
@@ -254,7 +277,8 @@ public class LocationActivity extends AppCompatActivity{
         }
         finish();
     }
-    public boolean getPurchaseSharedPreference(){
+
+    public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }
@@ -267,7 +291,7 @@ public class LocationActivity extends AppCompatActivity{
 
             mMap.getUiSettings().setZoomControlsEnabled(true);
             if (ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION },1);
+                ActivityCompat.requestPermissions(LocationActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
                 return;
             }
             mMap.setMyLocationEnabled(true);
@@ -276,13 +300,15 @@ public class LocationActivity extends AppCompatActivity{
             Task<Location> task = fusedLocationProviderClient.getLastLocation();
 
             task.addOnSuccessListener(location -> {
-                if (location!=null){
+                if (location != null) {
                     currentLocation = location;
-                    LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                    latitude.getEditText().setText(currentLocation.getLatitude() + "");
-                    longitude.getEditText().setText("" + currentLocation.getLongitude());
+                    if (passed == null) {
+                        LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.addMarker(new MarkerOptions().position(sydney).draggable(true).title("Touch and Hold to move marker"));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+                        latitude.getEditText().setText(currentLocation.getLatitude() + "");
+                        longitude.getEditText().setText("" + currentLocation.getLongitude());
+                    }
                 }
             }).addOnFailureListener(e -> {
                 latitude.getEditText().setText("40.7128");

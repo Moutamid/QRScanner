@@ -1,9 +1,9 @@
 package com.moutamid.qr.scanner.generator.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +20,13 @@ import com.moutamid.qr.scanner.generator.Activities.CardGeneratedResult;
 import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.interfaces.HistoryItemClickListner;
-import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
-public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.HistoryViewHolder>  {
+public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.HistoryViewHolder> {
     private Context context;
     private final List<CardHistoryModel> historyDataList;
     private final HistoryItemClickListner mListner;
@@ -54,24 +51,38 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
         String history = model.getHistory().getData();
         //String lines[] = history.split("\\r?\\n");
 
-        String type= model.getHistory().getType();
+        String type = model.getHistory().getType();
 
-        if (type.equals("card")){
+        holder.cardView.setOnLongClickListener(v -> {
+            Log.d("onBindViewHolder", "onBindViewHolder: " + history);
+            new AlertDialog.Builder(context)
+                    .setMessage("Do you want to edit this item")
+                    .setCancelable(true)
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        dialog.dismiss();
+                        mListner.editItem(historyDataList.get(position).getHistory().getType(), history);
+                    }).setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .show();
+            return true;
+        });
+
+        if (type.equals("card")) {
             BusinessCard card = new BusinessCard();
             card.parseSchema(history);
             holder.tv1.setText(card.getTitle());
             holder.tv2.setText(card.getContent());
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM hh:mm");
-            String date = formatter.format(card.getTimestamp()*1000);
+            String date = formatter.format(card.getTimestamp() * 1000);
             holder.date.setText(date);
-            Log.d("date",""+card.getTimestamp());
+            Log.d("date", "" + card.getTimestamp());
         }
 
         holder.imgDelete.setOnClickListener(v -> {
             mListner.deleteSingleItem(model.getHistory(), holder.getAbsoluteAdapterPosition());
             historyDataList.remove(holder.getAbsoluteAdapterPosition());
         });
+
 
         holder.cardView.setOnClickListener((View v) -> {
             byte[] imageByte = bitmapToByteArray(model.getBitmap());
@@ -96,11 +107,12 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
         return historyDataList.size();
     }
 
-    public class HistoryViewHolder extends RecyclerView.ViewHolder{
+    public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView tv1,tv2,date;
+        private final TextView tv1, tv2, date;
         private final CardView cardView;
         ImageView imgDelete;
+
         public HistoryViewHolder(@NonNull View v) {
             super(v);
             tv1 = v.findViewById(R.id.tv1);
@@ -112,4 +124,4 @@ public class CardHistoryAdapter extends RecyclerView.Adapter<CardHistoryAdapter.
         }
     }
 
-    }
+}

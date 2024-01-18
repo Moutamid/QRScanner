@@ -169,6 +169,11 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
     }
 
     @Override
+    public void editItem(String type, String data) {
+
+    }
+
+    @Override
     public void clickedItem(View view, int position,String type,String history) {
 
     }

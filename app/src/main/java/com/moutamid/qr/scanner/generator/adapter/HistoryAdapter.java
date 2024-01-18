@@ -1,5 +1,8 @@
 package com.moutamid.qr.scanner.generator.adapter;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +30,12 @@ import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 import java.util.List;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>  {
-
+    private Context context;
     private final List<History> historyDataList;
     private final HistoryItemClickListner mListner;
-    public HistoryAdapter(List<History> historyDataList, HistoryItemClickListner mListner) {
+
+    public HistoryAdapter(Context context, List<History> historyDataList, HistoryItemClickListner mListner) {
+        this.context = context;
         this.historyDataList = historyDataList;
         this.mListner = mListner;
     }
@@ -307,6 +312,19 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                 }
                 break;
         }
+
+        holder.cardView.setOnLongClickListener(v -> {
+            Log.d("onBindViewHolder", "onBindViewHolder: " + history);
+            new AlertDialog.Builder(context)
+                    .setMessage("Do you want to edit this item")
+                    .setCancelable(true)
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        dialog.dismiss();
+                        mListner.editItem(historyDataList.get(position).getType(), history);
+                    }).setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                    .show();
+            return true;
+        });
 
         holder.cardView.setOnClickListener((View v) -> {
             mListner.clickedItem(v, holder.getAdapterPosition(), historyDataList.get(position).getType(), history);

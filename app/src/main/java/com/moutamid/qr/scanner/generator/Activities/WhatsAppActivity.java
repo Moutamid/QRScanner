@@ -38,7 +38,7 @@ public class WhatsAppActivity extends AppCompatActivity {
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-
+    Telephone passed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +69,21 @@ public class WhatsAppActivity extends AppCompatActivity {
         }
         phonenumber=findViewById(R.id.edit_phone);
         cpp=findViewById(R.id.cpp);
+
+        passed = (Telephone) getIntent().getSerializableExtra(Constants.passed);
+
+        if (passed != null) {
+            String[] num = passed.getSeparate().split("-");
+            if (num.length > 1){
+                phonenumber.getEditText().setText(num[1]);
+                try {
+                    cpp.setDefaultCountryUsingPhoneCode(Integer.parseInt(num[0]));
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }
+
         historyVM = new ViewModelProvider(WhatsAppActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -96,6 +111,7 @@ public class WhatsAppActivity extends AppCompatActivity {
     public void whatsappGenerate(View view) {
 
         String data = cpp.getSelectedCountryCode() + phonenumber.getEditText().getText().toString();
+        String separate = cpp.getSelectedCountryCode() + "-" + phonenumber.getEditText().getText().toString();
 
         if (data.equals("")) {
             phonenumber.getEditText().setError("Please enter Number");
@@ -104,10 +120,18 @@ public class WhatsAppActivity extends AppCompatActivity {
             try {
                 final Telephone telephone = new Telephone();
                 telephone.setTelephone(data);
+                telephone.setSeparate(separate);
                 if (history) {
                     History phoneHistory = new History(telephone.generateString(), "whatsapp", false);
                     ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
-                    historyList.add(phoneHistory);
+                    if (passed != null) {
+                        for (int i = 0; i < historyList.size(); i++) {
+                            if (historyList.get(i).getData().equals(passed.generateString())){
+                                historyList.set(i, phoneHistory);
+                            }
+                        }
+                    } else
+                        historyList.add(phoneHistory);
                     Stash.put(Constants.CREATE, historyList);
                 }
                 Intent intent = new Intent(this, ScanResultActivity.class);
