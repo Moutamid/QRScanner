@@ -51,7 +51,7 @@ import java.util.Locale;
 
 public class CardTxtActivity extends AppCompatActivity {
 
-    private boolean isText1Selected = false;
+    private boolean isText1Selected = true;
     private boolean isEventLogoSelected = false;
     EditText text1;
     private CardView imageLayout,imageLayout1;

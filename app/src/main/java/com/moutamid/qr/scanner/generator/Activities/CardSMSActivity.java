@@ -51,7 +51,7 @@ import java.util.Locale;
 
 public class CardSMSActivity extends AppCompatActivity {
 
-    private boolean isText1Selected = false;
+    private boolean isText1Selected = true;
     private boolean isText2Selected = false;
     private boolean isText3Selected = false;
     private boolean isText4Selected = false;

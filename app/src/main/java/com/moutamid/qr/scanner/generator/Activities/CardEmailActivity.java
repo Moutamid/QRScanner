@@ -51,7 +51,7 @@ import java.util.Locale;
 
 public class CardEmailActivity extends AppCompatActivity {
 
-    private boolean isNameSelected = false;
+    private boolean isNameSelected = true;
     private boolean isText1Selected = false;
     private boolean isEventLogoSelected = false;
     EditText email,subject, body;

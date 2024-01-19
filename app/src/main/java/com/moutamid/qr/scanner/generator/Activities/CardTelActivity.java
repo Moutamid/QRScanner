@@ -50,7 +50,7 @@ import java.util.Locale;
 
 public class CardTelActivity extends AppCompatActivity {
 
-    private boolean isNameSelected = false;
+    private boolean isNameSelected = true;
     private boolean isText1Selected = false;
     private boolean isText2Selected = false;
     private boolean isEventLogoSelected = false;

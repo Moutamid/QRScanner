@@ -47,7 +47,7 @@ import java.util.Locale;
 public class CardWiFiActivity extends AppCompatActivity {
 
 
-    private boolean isText1Selected = false;
+    private boolean isText1Selected = true;
     private boolean isText2Selected = false;
     private boolean isEventLogoSelected = false;
     EditText text1, text2;

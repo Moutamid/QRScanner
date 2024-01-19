@@ -25,6 +25,7 @@ import androidx.core.content.FileProvider;
 import androidx.preference.PreferenceManager;
 
 import com.fxn.stash.Stash;
+import com.google.android.material.card.MaterialCardView;
 import com.moutamid.qr.scanner.generator.BuildConfig;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.Model.CardHistoryModel;
@@ -41,7 +42,7 @@ import java.util.Locale;
 public class CardGeneratedResult extends AppCompatActivity {
 
     private ImageView imageView, imageView1;
-    private AppCompatButton saveBtn, shareBtn;
+    private MaterialCardView saveBtn, shareBtn;
     private Bitmap bmp;
     private byte[] imageByte, imageByte1;
     private SharedPreferences prefs;

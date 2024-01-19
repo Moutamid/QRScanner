@@ -58,7 +58,7 @@ import java.util.Locale;
 public class CardCalendarActivity extends AppCompatActivity {
 
     
-    private boolean isEventNameSelected = false;
+    private boolean isEventNameSelected = true;
     private boolean isEventDateSelected = false;
     private boolean isEventCitySelected = false;
     private boolean isEventLogoSelected = false;
@@ -109,39 +109,6 @@ public class CardCalendarActivity extends AppCompatActivity {
         historyVM = new ViewModelProvider(CardCalendarActivity.this).get(HistoryVM.class);
 
         eventName.requestFocus();
-        eventName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                eventName.clearFocus();
-            }
-        });
-
-        eventCity.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                eventCity.clearFocus();
-            }
-        });
 
         eventName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,13 +260,9 @@ public class CardCalendarActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(configuration,getBaseContext().getResources().getDisplayMetrics());
     }
 
-    public void ClearTxt(View view) {
-
-    }
-
-
     public void SaveTxt(View view) {
-
+        eventName.clearFocus();
+        eventCity.clearFocus();
         try {
             BusinessCard businessCard = new BusinessCard();
             businessCard.setTitle(eventName.getText().toString());
