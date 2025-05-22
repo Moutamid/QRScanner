@@ -272,7 +272,8 @@
                         android:textColor="@color/default_text_color"
                         android:textSize="16sp" />
 
-                    <com.divyanshu.colorseekbar.ColorSeekBar
+                                       <com.rtugeek.android.colorseekbar.ColorSeekBar
+
                         android:id="@+id/color_seek_bar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

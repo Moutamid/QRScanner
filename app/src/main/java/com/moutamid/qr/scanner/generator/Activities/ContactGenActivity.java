@@ -23,10 +23,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -84,11 +83,8 @@ public class ContactGenActivity extends AppCompatActivity {
             address.getEditText().setText(passed.getAddress());
         }
 
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ContactGenActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
-        }
+        
+
         getLocale();
 
         phone.setEndIconOnClickListener(new View.OnClickListener() {
@@ -266,7 +262,7 @@ public class ContactGenActivity extends AppCompatActivity {
                     intent.putExtra("vCard", vCard);
                     startActivity(intent);
                     if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//                        //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                     }
                     finish();
                 } else {
@@ -280,9 +276,9 @@ public class ContactGenActivity extends AppCompatActivity {
     }
 
     public void backContact(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
 

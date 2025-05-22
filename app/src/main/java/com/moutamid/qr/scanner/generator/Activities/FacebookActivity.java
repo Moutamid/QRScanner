@@ -17,10 +17,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -44,10 +43,10 @@ public class FacebookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Constants.adjustFontScale(this);
         setContentView(R.layout.activity_facebook);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+         
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, FacebookActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, FacebookActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme",false);
@@ -124,7 +123,7 @@ public class FacebookActivity extends AppCompatActivity {
                 intent.putExtra("social", social);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
@@ -145,9 +144,9 @@ public class FacebookActivity extends AppCompatActivity {
     }
 
     public void backFacebook(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
     public boolean getPurchaseSharedPreference(){

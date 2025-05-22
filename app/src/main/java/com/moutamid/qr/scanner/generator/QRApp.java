@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 import androidx.multidex.MultiDex;
 
-import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.onesignal.OneSignal;
 
 public class QRApp extends Application {

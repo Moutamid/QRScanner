@@ -2518,11 +2518,7 @@
         android:layout_height="65dp"
         android:layout_alignParentBottom="true">
 
-        <com.consoliads.mediation.bannerads.CAMediatedBannerView
-            android:id="@+id/consoli_banner_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" />
+
     </FrameLayout>
 
 </RelativeLayout>

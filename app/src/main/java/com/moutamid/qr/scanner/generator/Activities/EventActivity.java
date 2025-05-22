@@ -18,10 +18,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -91,11 +90,8 @@ public class EventActivity extends AppCompatActivity {
             }
         }
 
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EventActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
-        }
+        
+
         historyVM = new ViewModelProvider(EventActivity.this).get(HistoryVM.class);
         getLocale();
     }
@@ -156,7 +152,7 @@ public class EventActivity extends AppCompatActivity {
                 intent.putExtra("event", iEvent);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -279,9 +275,9 @@ public class EventActivity extends AppCompatActivity {
     }
 
     public void backEvent(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
     public boolean getPurchaseSharedPreference(){

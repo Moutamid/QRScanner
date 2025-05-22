@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.multidex.BuildConfig;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,11 +49,9 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.model.content.Mask;
 import com.bumptech.glide.Glide;
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
 
-import androidmads.library.qrgenearator.BuildConfig;
+
+
 
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.zxing.datamatrix.DataMatrixWriter;
@@ -99,9 +98,9 @@ import java.util.Locale;
 import static java.io.File.separator;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 
 public class ScanResultActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
@@ -144,9 +143,9 @@ public class ScanResultActivity extends AppCompatActivity {
 
         }
 
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ScanResultActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ScanResultActivity.this, mediatedBannerView);
         }
 
         binding.save.setOnClickListener(view -> saveToGallery());
@@ -601,56 +600,55 @@ public class ScanResultActivity extends AppCompatActivity {
 
                 ISBN = textBarcode;
 
-                if (getProductPreference()) {
-                    //progressDialog.show();
-
-                    String url = "https://go-upc.com/search?q=" + textBarcode;
-
-                    Log.d("HTMLCHE" , url);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Document doc = Jsoup.connect(url).get();
-                           //     Log.d("HTMLCHE", doc.html().toString());
-                                Elements name = doc.getElementsByClass("product-name");
-                                String n = name.get(0).text();
-                                Elements image = doc.getElementsByClass("product-image mobile");
-                                Element img = image.get(0).child(0);
-                                String link = img.attr("src");
-
-                                Log.d("HTMLCHE" , "LINK    " + link);
-                                Log.d("HTMLCHE" ,"NAME    " +  n);
-
-                                Elements table = doc.getElementsByClass("table-striped");
-                                Element body = table.get(0);
-                                Element tr = body.child(body.childrenSize() - 1);
-                                Element td = tr.child(tr.childrenSize() - 1);
-                                String cat = td.text().toString();
-
-                                Log.d("HTMLCHE" ,"CAT    " +  cat);
-                                runOnUiThread(() -> {
-                                    Glide.with(ScanResultActivity.this).load(link).into(binding.productImage);
-                                    binding.productName.setText(n);
-                                    binding.productISBN.setText(textBarcode);
-                                    binding.productCategory.setText(cat);
-                                    binding.productLayout.setVisibility(View.VISIBLE);
-                                });
-
-                            } catch (IOException | IndexOutOfBoundsException e) {
-                                e.printStackTrace();
-                                Log.d("HTMLCHE",  "ERROR " +  e.getMessage());
-                                runOnUiThread(() -> {
-                                   // Toast.makeText(ScanResultActivity.this, "Product detail not found", Toast.LENGTH_SHORT).show();
-                                    binding.productLayout.setVisibility(View.GONE);
-                                });
-                            }
-                        }
-                    }).start();
-
-                } else {
-                    binding.productLayout.setVisibility(View.GONE);
-                }
+//                if (getProductPreference()) {
+//                    //progressDialog.show();
+//
+//                    String url = "https://go-upc.com/search?q=" + textBarcode;
+//
+//                    Log.d("HTMLCHE" , url);
+//                    new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            try {
+//                                Document doc = Jsoup.connect(url).get();
+//                           //     Log.d("HTMLCHE", doc.html().toString());
+//                                Elements name = doc.getElementsByClass("product-name");
+//                                String n = name.get(0).text();
+//                                Elements image = doc.getElementsByClass("product-image mobile");
+//                                Element img = image.get(0).child(0);
+//                                String link = img.attr("src");
+//
+//                                Log.d("HTMLCHE" , "LINK    " + link);
+//                                Log.d("HTMLCHE" ,"NAME    " +  n);
+//
+//                                Elements table = doc.getElementsByClass("table-striped");
+//                                Element body = table.get(0);
+//                                Element tr = body.child(body.childrenSize() - 1);
+//                                Element td = tr.child(tr.childrenSize() - 1);
+//                                String cat = td.text().toString();
+//
+//                                Log.d("HTMLCHE" ,"CAT    " +  cat);
+//                                runOnUiThread(() -> {
+//                                    Glide.with(ScanResultActivity.this).load(link).into(binding.productImage);
+//                                    binding.productName.setText(n);
+//                                    binding.productISBN.setText(textBarcode);
+//                                    binding.productCategory.setText(cat);
+//                                    binding.productLayout.setVisibility(View.VISIBLE);
+//                                });
+//                            } catch (IOException | IndexOutOfBoundsException e) {
+//                                e.printStackTrace();
+//                                Log.d("HTMLCHE",  "ERROR " +  e.getMessage());
+//                                runOnUiThread(() -> {
+//                                   // Toast.makeText(ScanResultActivity.this, "Product detail not found", Toast.LENGTH_SHORT).show();
+//                                    binding.productLayout.setVisibility(View.GONE);
+//                                });
+//                            }
+//                        }
+//                    }).start();
+//
+//                } else {
+//                    binding.productLayout.setVisibility(View.GONE);
+//                }
 
                 copyClipboard = ISBN;
 //                bmp = QRCode.from(textBarcode).bitmap();

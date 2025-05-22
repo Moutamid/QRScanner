@@ -17,9 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
+
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
@@ -69,10 +68,10 @@ public class HistoryActivity extends Fragment {
         MainActivity mainActivity = (MainActivity) getActivity();
         mainActivity.transparentStatusBar(false);
 
-        CAMediatedBannerView mediatedBannerView = view.findViewById(R.id.consoli_banner_view);
+        
         if (!Constants.getPurchaseSharedPreference(requireContext())) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         boolean theme = prefs.getBoolean("theme", false);

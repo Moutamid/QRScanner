@@ -24,7 +24,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.FileProvider;
 import androidx.preference.PreferenceManager;
 
-import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.card.MaterialCardView;
 import com.moutamid.qr.scanner.generator.BuildConfig;
 import com.moutamid.qr.scanner.generator.Constants;

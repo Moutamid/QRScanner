@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,7 +11,8 @@
     <FrameLayout
         android:id="@+id/main_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/nav" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/nav"
@@ -18,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="80dp"
         app:cardBackgroundColor="@color/bottom_nav"
         app:cardCornerRadius="20dp"
         app:cardElevation="6dp">
@@ -49,24 +51,26 @@
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        app:tint="@color/icon_tint2"
-                        android:src="@drawable/imagesolid"/>
+                        android:src="@drawable/imagesolid"
+                        app:tint="@color/icon_tint2" />
 
                     <ImageView
                         android:id="@+id/modeBtn"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        app:tint="@color/icon_tint2"
-                        android:src="@drawable/barcodescanner" />
+                        android:src="@drawable/barcodescanner"
+                        android:visibility="gone"
+                        app:tint="@color/icon_tint2" />
 
                     <ImageView
                         android:id="@+id/flashBtn"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        app:tint="@color/icon_tint2"
-                        android:src="@drawable/flashon" />
+                        android:src="@drawable/flashon"
+                        android:visibility="gone"
+                        app:tint="@color/icon_tint2" />
 
 
                 </LinearLayout>
@@ -84,32 +88,32 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:tint="@color/icon_tint"
-                    android:src="@drawable/qrcodesolid" />
+                    android:src="@drawable/qrcodesolid"
+                    app:tint="@color/icon_tint" />
 
                 <ImageView
                     android:id="@+id/create"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:tint="@color/icon_tint"
-                    android:src="@drawable/squareplus" />
+                    android:src="@drawable/squareplus"
+                    app:tint="@color/icon_tint" />
 
                 <ImageView
                     android:id="@+id/history"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:tint="@color/icon_tint"
-                    android:src="@drawable/clockrotate" />
+                    android:src="@drawable/clockrotate"
+                    app:tint="@color/icon_tint" />
 
                 <ImageView
                     android:id="@+id/setting"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
-                    app:tint="@color/icon_tint"
-                    android:src="@drawable/settings" />
+                    android:src="@drawable/settings"
+                    app:tint="@color/icon_tint" />
 
 
             </LinearLayout>
@@ -118,4 +122,12 @@
 
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/admob_banner_id" />
 </RelativeLayout>

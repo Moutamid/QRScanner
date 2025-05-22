@@ -16,10 +16,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -70,10 +69,10 @@ public class EmailGenActivity extends AppCompatActivity {
             subject.getEditText().setText(passed.getMailSubject());
         }
 
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EmailGenActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, EmailGenActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         historyVM = new ViewModelProvider(EmailGenActivity.this).get(HistoryVM.class);
         getLocale();
@@ -131,7 +130,7 @@ public class EmailGenActivity extends AppCompatActivity {
                 intent.putExtra("eMail", eMail);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//                    //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
 
@@ -155,9 +154,9 @@ public class EmailGenActivity extends AppCompatActivity {
     }
 
     public void backEmail(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
     public boolean getPurchaseSharedPreference(){

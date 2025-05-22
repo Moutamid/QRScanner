@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.moutamid.qr.scanner.generator">
 
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+<!--    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />-->
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

@@ -11,8 +11,7 @@ import android.os.Looper;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
+
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 
@@ -21,11 +20,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-      if(consoliAds != null){
-          consoliAds.setConsoliAdsInterstitialListener(null);
-      }
+//      if(consoliAds != null){
+//          consoliAds.setConsoliAdsInterstitialListener(null);
+//      }
     }
-    ConsoliAds consoliAds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,17 +34,13 @@ public class SplashActivity extends AppCompatActivity {
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setStatusBarColor(getResources().getColor(R.color.white));
         setContentView(R.layout.activity_splash);
-        if(!getPurchaseSharedPreference()) {
-            consoliAds = ConsoliAds.Instance();
-            consoliAds.initialize(false, true, SplashActivity.this, getString(R.string.Signature_ads));
-            ConsoliAds.Instance().LoadInterstitial();
-        }
+
         //consoliAds.setConsoliAdsListener(this);
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (!getPurchaseSharedPreference()) {
-                    consoliAds.ShowInterstitial(NativePlaceholderName.Default, SplashActivity.this);
+//                    consoliAds.ShowInterstitial(NativePlaceholderName.Default, SplashActivity.this);
                 }
                 startActivity(new Intent(SplashActivity.this,MainActivity.class));
                 finish();

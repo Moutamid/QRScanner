@@ -30,9 +30,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
+
+
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 
@@ -95,10 +94,10 @@ public class MySettingsFragment extends Fragment {
         PACKAGE_NAME = getActivity().getPackageName();
         prefs = PreferenceManager.getDefaultSharedPreferences(requireActivity());
         edit = prefs.edit();
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CAMediatedBannerView mediatedBannerView = view.findViewById(R.id.consoli_banner_view);
+         
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, getActivity(), mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         beepSound = prefs.getBoolean("beepsound", true);
         vibration = prefs.getBoolean("vibrate", true);
@@ -367,9 +366,9 @@ public class MySettingsFragment extends Fragment {
                 adb.setMessage("Are you sure you want to delete all the previous history?");
                 adb.setPositiveButton("Yes", (dialog, which) -> {
                     historyVM.deleteAllHistory();
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                    }
+                    //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 });
                 adb.setNegativeButton("No", (dialog, which) -> {
                 });

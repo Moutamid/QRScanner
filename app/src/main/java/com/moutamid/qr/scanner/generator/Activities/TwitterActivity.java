@@ -17,10 +17,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -62,10 +61,10 @@ public class TwitterActivity extends AppCompatActivity {
                                     .MODE_NIGHT_NO);
 
         }
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+         
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, TwitterActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, TwitterActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         link = findViewById(R.id.facebook_link);
 
@@ -126,7 +125,7 @@ public class TwitterActivity extends AppCompatActivity {
                 intent.putExtra("social", social);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
                 if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
@@ -147,9 +146,9 @@ public class TwitterActivity extends AppCompatActivity {
     }
 
     public void backTwitter(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
 

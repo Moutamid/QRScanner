@@ -34,14 +34,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.divyanshu.colorseekbar.ColorSeekBar;
-import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
+import com.rtugeek.android.colorseekbar.OnColorChangeListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -188,15 +189,16 @@ public class CardSocial2Activity extends AppCompatActivity {
         });
 
 
-        colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+        colorSeekBar.setOnColorChangeListener(new OnColorChangeListener() {
             @Override
-            public void onColorChangeListener(int i) {
+            public void onColorChangeListener(int progress, int i) {
                 if (isText1Selected) {
                     text1.setTextColor(i);
                 } else if (isText2Selected) {
                     text2.setTextColor(i);
                 }
             }
+
         });
         logo.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,8 +35,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.divyanshu.colorseekbar.ColorSeekBar;
-import com.fxn.stash.Stash;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -46,6 +45,8 @@ import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
 import com.moutamid.qr.scanner.generator.utils.formates.BusinessCard;
+import com.rtugeek.android.colorseekbar.ColorSeekBar;
+import com.rtugeek.android.colorseekbar.OnColorChangeListener;
 
 
 import java.io.ByteArrayOutputStream;
@@ -191,9 +192,9 @@ public class CardCalendarActivity extends AppCompatActivity {
             }
         });
 
-        colorSeekBar.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+        colorSeekBar.setOnColorChangeListener(new OnColorChangeListener() {
             @Override
-            public void onColorChangeListener(int i) {
+            public void onColorChangeListener(int progress, int i) {
                 if (isEventNameSelected){
                     eventName.setTextColor(i);
                 }else if (isEventDateSelected){
@@ -201,8 +202,8 @@ public class CardCalendarActivity extends AppCompatActivity {
                 }else if (isEventCitySelected){
                     eventCity.setTextColor(i);
                 }
-            }
-        });
+            }});
+
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

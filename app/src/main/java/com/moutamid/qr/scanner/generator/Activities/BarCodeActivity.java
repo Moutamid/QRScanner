@@ -11,26 +11,25 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class BarCodeActivity extends AppCompatActivity {
 
+    String passed;
     private TextInputLayout editText;
     private HistoryVM historyVM;
     private SharedPreferences prefs;
     private boolean history;
-    String passed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +62,10 @@ public class BarCodeActivity extends AppCompatActivity {
         }
 
         historyVM = new ViewModelProvider(BarCodeActivity.this).get(HistoryVM.class);
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, BarCodeActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(this, BarCodeActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         getLocale();
     }
@@ -98,7 +97,7 @@ public class BarCodeActivity extends AppCompatActivity {
                 ArrayList<History> historyList = Stash.getArrayList(Constants.CREATE, History.class);
                 if (passed != null) {
                     for (int i = 0; i < historyList.size(); i++) {
-                        if (historyList.get(i).getData().equals(passed)){
+                        if (historyList.get(i).getData().equals(passed)) {
                             historyList.set(i, contactHistory);
                         }
                     }
@@ -110,17 +109,17 @@ public class BarCodeActivity extends AppCompatActivity {
             intent.putExtra("type", "Barcode");
             intent.putExtra("barcode", barcodeText);
             startActivity(intent);
-            if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-            }
+//            if (!getPurchaseSharedPreference()) {
+//                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//            }
             finish();
         }
     }
 
     public void backBarcode(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+        //    }
         finish();
 
     }

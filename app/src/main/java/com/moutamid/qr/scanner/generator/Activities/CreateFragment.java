@@ -21,9 +21,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.moutamid.qr.scanner.generator.Constants;
@@ -90,7 +89,7 @@ public class CreateFragment extends Fragment {
                 intent.putExtra("text", data);
                 startActivity(intent);
                 if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, requireActivity());
+//                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, requireActivity());
                 }
             }
         });

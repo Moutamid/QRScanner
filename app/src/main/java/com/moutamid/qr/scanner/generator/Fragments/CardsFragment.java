@@ -24,9 +24,8 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.button.MaterialButton;
 import com.moutamid.qr.scanner.generator.Activities.BusinessFragment;
 import com.moutamid.qr.scanner.generator.Activities.MainActivity;
@@ -193,9 +192,9 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
                 recyclerLayout.setVisibility(View.GONE);
                 isEmpty = true;
             }
-            if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-            }
+            //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         });
         adb.setNegativeButton("No", (dialog, which) -> {});
         adb.show();
@@ -204,7 +203,9 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
 
     public void backHistory(View view) {
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
         }
 
     }
@@ -230,9 +231,9 @@ public class CardsFragment extends Fragment implements HistoryItemClickListner {
                     recyclerLayout.setVisibility(View.GONE);
                     isEmpty = true;
                 }
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
             });
             adb.setNegativeButton("No", (dialog, which) -> {
             });

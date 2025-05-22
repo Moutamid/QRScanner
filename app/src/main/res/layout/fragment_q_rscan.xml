@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context="com.moutamid.qr.scanner.generator.Activities.QRScanFragment">
 
@@ -11,30 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview
-            android:id="@+id/preview"
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-            <com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay
-                android:id="@+id/graphicOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-            <info.androidhive.barcode.ScannerOverlay
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#54000000"
-                app:line_color="@color/active_icon"
-                app:line_speed="6"
-                app:line_width="4"
-                app:square_height="280"
-                app:square_width="280" />
-
-
-        </com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview>
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/batchCard"
@@ -68,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+
                     tools:text="12345687612235"
                     android:textColor="@color/default_text_color"
                     android:layout_below="@id/qrBar"
@@ -109,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/poppins"
+            android:visibility="gone"
             android:layout_marginTop="50dp"
             android:layout_below="@id/batchCard"
             android:text="Scan Mode: Normal Scanning"

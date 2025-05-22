@@ -1,12 +1,11 @@
 <resources>
-    <string name="our_email_id">rawdev4@gmail.com</string>
-    <string name="email_subject">I don\'t like it.</string>
-    <string name="email_body">Make some appropriate changes\!</string>
+    <string name="app_name">QR Scanner</string>
 
     <string name="admob_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_interstitial_id">ca-app-pub-3940256099942544/1033173712</string>
 
     <string name="mapbox_access_token" translatable="false">pk.eyJ1Ijoic3VsZW1hbmJhandhIiwiYSI6ImNsa2pxenk0MzBpdmszaG5lMHJqcDZyMXAifQ.2VebsAokmpQmPov3lWiz-Q</string>
-
     <string name="Signature_ads">4034a75ca5bbb9e42c0a013d8518a53f</string>
 
     <string name="per_month_subscription">free.qr.code.scanner.generator.plan1</string>
@@ -19,7 +18,7 @@
     <string name="create">Create</string>
     <string name="business">Business</string>
     <string name="privacy_policy">https://whatsappwebapp.blogspot.com/2019/08/privacy-policy-whatscan-for-whatsapp-web.html</string>
-    <string name="app_name">QR Scanner</string>
+
 
     <string name="dialog_message">Are you sure you want to discard your changes?</string>
     <string name="dialog_title">Discard Changes</string>
@@ -34,6 +33,9 @@
     <string name="type4">Others</string>
 
     <string name="feedback_details">Please tell us more details so that we can locate and solve your problem faster (atleast 6 characters)</string>
+    <string name="our_email_id">rawdev4@gmail.com</string>
+    <string name="email_subject">I don\'t like it.</string>
+    <string name="email_body">Make some appropriate changes\!</string>
 
     <string name="event_date">02 March To 13 March</string>
     <string name="event_city">City address,street\nhome location goes here</string>

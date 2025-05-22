@@ -199,11 +199,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <com.consoliads.mediation.bannerads.CAMediatedBannerView
-            android:id="@+id/consoli_banner_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            />
+
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

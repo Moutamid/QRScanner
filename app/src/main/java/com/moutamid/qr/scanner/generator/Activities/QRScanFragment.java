@@ -2,7 +2,6 @@ package com.moutamid.qr.scanner.generator.Activities;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.VIBRATOR_SERVICE;
-import static com.unity3d.services.core.misc.Utilities.runOnUiThread;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -11,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,42 +25,39 @@ import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageProxy;
+import androidx.camera.core.Preview;
+import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
-import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic;
-import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSource;
-import com.google.android.gms.samples.vision.barcodereader.ui.camera.CameraSourcePreview;
-import com.google.android.gms.samples.vision.barcodereader.ui.camera.GraphicOverlay;
+import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.google.android.material.card.MaterialCardView;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.common.InputImage;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -79,6 +74,7 @@ import com.moutamid.qr.scanner.generator.Model.ResultModel;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.moutamid.qr.scanner.generator.utils.formates.EMail;
 import com.moutamid.qr.scanner.generator.utils.formates.GeoInfo;
 import com.moutamid.qr.scanner.generator.utils.formates.IEvent;
@@ -90,49 +86,42 @@ import com.moutamid.qr.scanner.generator.utils.formates.VCard;
 import com.moutamid.qr.scanner.generator.utils.formates.Wifi;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class QRScanFragment extends Fragment {
 
     //  private static ZXingScannerView mScannerView;
     public static final String TAG = "QRScanFragment";
-    private Context context;
-    private HistoryVM historyVM;
-    ImageView flashBtn, modeBtn, galleryBtn;
-    TextView qrBar, result, itemCount;
-    private int zoomProgress = 0;
-    private SharedPreferences prefs;
+    private static final int RC_HANDLE_GMS = 9001;
+    private static final int REQUEST_CAMERA_PERMISSION = 1001;
     static String contents;
     static Uri picUri;
-    private Camera.Parameters parameters;
     private final int REQUEST_CODE_PERMISSIONS = 101;
     private final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.CAMERA};
-    private BarcodeCapture barcodeCapture;
+    ImageView flashBtn, modeBtn, galleryBtn;
+    TextView qrBar, result, itemCount;
     MaterialCardView batchCard;
+    CameraSource.Builder builder;
+    // helper objects for detecting taps and pinches.
+    BarcodeDetector barcodeDetector;
+    Bitmap bitmap = null;
+    private Context context;
+    private HistoryVM historyVM;
+    private int zoomProgress = 0;
+    private SharedPreferences prefs;
+    private Camera.Parameters parameters;
+    private PreviewView previewView;
     private boolean isFlash = false;
-    private static final int RC_HANDLE_GMS = 9001;
     private TextView modeTxt;
     private boolean shouldShowText, multipleScan, showDrawRect, touchAsCallback, shouldFocus, showFlash = false;
-    CameraSource.Builder builder;
     private boolean autoFocus = true;
     private boolean useFlash = false;
     private byte[] imgByte = null;
-    private boolean cameraSwitch = false;
-
     private Integer[] rectColors;
-
     private int barcodeFormat, cameraFacing;
 
-    private CameraSource mCameraSource;
-    private CameraSourcePreview mPreview;
-    private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
-
-    // helper objects for detecting taps and pinches.
-    BarcodeDetector barcodeDetector;
-    private String cameraMode;
     private String textBarcode = "";
 
     @Override
@@ -158,18 +147,12 @@ public class QRScanFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         assert container != null;
         context = container.getContext();
 
         View view = inflater.inflate(R.layout.fragment_q_rscan, container, false);
-
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().LoadInterstitial();
-        }
-
         ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
         list.clear();
         Stash.put(Constants.RESULT_BATCH, list);
@@ -187,7 +170,6 @@ public class QRScanFragment extends Fragment {
             modeBtn = activity.modeBtn;
             galleryBtn = activity.galleryBtn;
 
-            flashBtn.setOnClickListener(v -> flashButton());
             modeBtn.setOnClickListener(v -> btnMode());
             galleryBtn.setOnClickListener(v -> btnGallery());
         }
@@ -199,7 +181,6 @@ public class QRScanFragment extends Fragment {
 
         return view;
     }
-
 
     @Override
     public void onInflate(@NonNull Context context, @NonNull AttributeSet attrs, @Nullable Bundle savedInstanceState) {
@@ -229,13 +210,15 @@ public class QRScanFragment extends Fragment {
             barcodeCapture.setRetrieval(QRScanFragment.this);
         }*/
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        mPreview = (CameraSourcePreview) view.findViewById(R.id.preview);
-        cameraMode = prefs.getString("cameraMode", "normal");
-        cameraSwitch = prefs.getBoolean("camera", Boolean.FALSE);
-        mGraphicOverlay = (GraphicOverlay<BarcodeGraphic>) view.findViewById(R.id.graphicOverlay);
-        mGraphicOverlay.setShowText(isShouldShowText());
-        mGraphicOverlay.setRectColors(getRectColors());
-        mGraphicOverlay.setDrawRect(isShowDrawRect());
+        previewView = view.findViewById(R.id.previewView);
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            startCamera();
+        } else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+
+
         //barcodeGraphic = new com.moutamid.qr.scanner.generator.Activities.BarcodeGraphic(mGraphicOverlay);
         //BarcodeGraphicTracker tracker = new BarcodeGraphicTracker(mGraphicOverlay,barcodeGraphic,getActivity());
 
@@ -243,16 +226,10 @@ public class QRScanFragment extends Fragment {
 
 
         historyVM = new ViewModelProvider(getActivity()).get(HistoryVM.class);
-        if (cameraPermissionGranted()) {
-            createCameraSource(autoFocus, useFlash, cameraSwitch, cameraMode);
-        } else {
-            checkPermissions();
-        }
 
         //mScannerView.startCamera();
 
     }
-
 
     public boolean isShouldShowText() {
         return this.shouldShowText;
@@ -275,31 +252,68 @@ public class QRScanFragment extends Fragment {
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.d("CAMRA", "PERMISSION");
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            // createCameraSource(autoFocus, useFlash, cameraSwitch,cameraMode);
-            if (cameraPermissionGranted()) {
-                Log.d("CAMRA", "GRANTED");
-                // barcodeCapture.setSupportMultipleScan(false).setShowDrawRect(true).shouldAutoFocus(true);
-                createCameraSource(autoFocus, useFlash, cameraSwitch, cameraMode);
-            } else {
-                Toast.makeText(getActivity(), "Permission not granted", Toast.LENGTH_SHORT).show();
+
+    private void startCamera() {
+        Context context = requireContext(); // safer than getContext(), will throw if null (and help debugging early)
+        ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(context);
+
+        cameraProviderFuture.addListener(() -> {
+            try {
+                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+
+                Preview preview = new Preview.Builder().build();
+                CameraSelector cameraSelector = new CameraSelector.Builder()
+                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                        .build();
+
+                ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
+                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                        .build();
+
+                BarcodeScanner scanner = BarcodeScanning.getClient();
+
+                imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(context), imageProxy -> {
+                    processImageProxy(scanner, imageProxy);
+                });
+
+                cameraProvider.unbindAll();
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
+                preview.setSurfaceProvider(previewView.getSurfaceProvider());
+
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
-        }
+        }, ContextCompat.getMainExecutor(context));
     }
 
-    public void flashButton() {
-        if (isFlash) {
-            mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            flashBtn.setImageResource(R.drawable.flashon);
-            isFlash = false;
+    @SuppressLint("UnsafeOptInUsageError")
+    private void processImageProxy(BarcodeScanner scanner, ImageProxy imageProxy) {
+        if (imageProxy == null || imageProxy.getImage() == null) {
+            return;
+        }
+
+        InputImage image = InputImage.fromMediaImage(imageProxy.getImage(), imageProxy.getImageInfo().getRotationDegrees());
+        scanner.process(image)
+                .addOnSuccessListener(barcodes -> {
+                    for (com.google.mlkit.vision.barcode.common.Barcode barcode : barcodes) {
+                        String rawValue = barcode.getRawValue();
+                        Log.d("Barcode", "Scanned: " + rawValue);
+                        result.setText(rawValue);
+                    }
+                })
+                .addOnFailureListener(Throwable::printStackTrace)
+                .addOnCompleteListener(task -> imageProxy.close());
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_CAMERA_PERMISSION &&
+                grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startCamera();
         } else {
-            mCameraSource.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            isFlash = true;
-            flashBtn.setImageResource(R.drawable.flashoff);
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
@@ -309,7 +323,6 @@ public class QRScanFragment extends Fragment {
     }
 
     public void btnMode() {
-        mPreview.stop();
         if (checkSoundPreferences()) {
             ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
             toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
@@ -322,30 +335,9 @@ public class QRScanFragment extends Fragment {
                 v.vibrate(100);
             }
         }
-        if (cameraMode.equals("normal")) {
-            cameraMode = "batch";
-            createCameraSource(true, false, false, cameraMode);
-            modeTxt.setText(R.string.mode1);
-        } else {
-            cameraMode = "normal";
-            createCameraSource(true, false, false, cameraMode);
-            modeTxt.setText(R.string.mode3);
-        }
+
     }
 
-
-    @SuppressLint("WrongConstant")
-    private void btnSwitch() {
-        mPreview.stop();
-
-        if (cameraSwitch) {
-            createCameraSource(true, false, false, cameraMode);
-            cameraSwitch = false;
-        } else {
-            createCameraSource(true, false, true, cameraMode);
-            cameraSwitch = true;
-        }
-    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -400,13 +392,6 @@ public class QRScanFragment extends Fragment {
         }
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mCameraSource != null) mCameraSource.stop();
-        if (mPreview != null) mPreview.stop();
-    }
 
     /* @Override
      public void handleResult(Result result) {
@@ -465,9 +450,9 @@ public class QRScanFragment extends Fragment {
             intent.putExtra("barcodeFormat", barcodeFormat);
             intent.putExtra("barcode", text);
             //intent.putExtra("image", savedBitmapFromViewToFile());
-            if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-            }
+            //if (!getPurchaseSharedPreference()) {
+            //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+            //    }
 
         } catch (Exception t) {
             Toast.makeText(context, "not scan", Toast.LENGTH_SHORT).show();
@@ -500,9 +485,9 @@ public class QRScanFragment extends Fragment {
             //    historyVM.insertHistory(contactHistory);
             intent.putExtra("type", "VCard");
             intent.putExtra("vCard", vCard);
-            if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-            }
+            //if (!getPurchaseSharedPreference()) {
+            //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+            //    }
         } catch (IllegalArgumentException vcard) {
             try {
                 EMail eMail = new EMail();
@@ -526,9 +511,9 @@ public class QRScanFragment extends Fragment {
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);
 
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+                //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //    }
             } catch (IllegalArgumentException email) {
                 try {
                     Wifi wifi = new Wifi();
@@ -550,9 +535,9 @@ public class QRScanFragment extends Fragment {
                     intent.putExtra("type", "wifi");
                     intent.putExtra("Wifi", wifi);
 
-                    if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                    }
+                    //if (!getPurchaseSharedPreference()) {
+                    //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    //    }
                 } catch (IllegalArgumentException wifi) {
                     try {
                         Telephone telephone = new Telephone();
@@ -574,9 +559,9 @@ public class QRScanFragment extends Fragment {
                         intent.putExtra("type", "telephone");
                         intent.putExtra("phone", telephone);
 
-                        if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                        }
+                        //if (!getPurchaseSharedPreference()) {
+                        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                        //    }
                     } catch (IllegalArgumentException telephone) {
                         try {
                             Url url = new Url();
@@ -599,7 +584,9 @@ public class QRScanFragment extends Fragment {
                             intent.putExtra("Url", url);
 
                             if (!getPurchaseSharedPreference()) {
-                                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                             }
                         } catch (IllegalArgumentException url) {
                             try {
@@ -623,7 +610,9 @@ public class QRScanFragment extends Fragment {
                                 intent.putExtra("social", social);
 
                                 if (!getPurchaseSharedPreference()) {
-                                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                    //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                 }
                             } catch (IllegalArgumentException youtube) {
                                 try {
@@ -647,7 +636,9 @@ public class QRScanFragment extends Fragment {
                                     intent.putExtra("geoInfo", geoInfo);
 
                                     if (!getPurchaseSharedPreference()) {
-                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                     }
                                 } catch (IllegalArgumentException geoinfo) {
                                     try {
@@ -671,7 +662,9 @@ public class QRScanFragment extends Fragment {
                                         intent.putExtra("sms", sms);
 
                                         if (!getPurchaseSharedPreference()) {
-                                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                            //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                         }
                                     } catch (IllegalArgumentException sms) {
                                         try {
@@ -695,7 +688,9 @@ public class QRScanFragment extends Fragment {
                                             intent.putExtra("event", iEvent);
 
                                             if (!getPurchaseSharedPreference()) {
-                                                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                                //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                             }
                                         } catch (IllegalArgumentException event) {
                                             try {
@@ -720,7 +715,9 @@ public class QRScanFragment extends Fragment {
                                                     intent.putExtra("barcode", text);
                                                     //intent.putExtra("image", savedBitmapFromViewToFile());
                                                     if (!getPurchaseSharedPreference()) {
-                                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                                        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                                     }
                                                 } catch (NumberFormatException e) {
                                                     Log.d("EMAILCHEC", "Error  " + e.toString());
@@ -741,7 +738,9 @@ public class QRScanFragment extends Fragment {
                                                     intent.putExtra("type", "Text");
                                                     intent.putExtra("text", text);
                                                     if (!getPurchaseSharedPreference()) {
-                                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+
+                                                        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
                                                     }
                                                 }
                                             } catch (Exception txt) {
@@ -769,19 +768,19 @@ public class QRScanFragment extends Fragment {
 //            //intent.putExtra("image", savedBitmapFromViewToFile());
 //            startActivity(intent);
 //            if (!getPurchaseSharedPreference()) {
-//                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+//                
+        //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
 //            }
 //        } catch (IllegalArgumentException t) {
 //
 //        }
     }
 
-
     public boolean getPurchaseSharedPreference() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         return prefs.getBoolean(this.getString(R.string.adsubscribed), false);
     }
-
 
     private boolean checkSoundPreferences() {
 
@@ -805,14 +804,6 @@ public class QRScanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (cameraPermissionGranted()) {
-            createCameraSource(true, false, false, cameraMode);
-        } else {
-            checkPermissions();
-        }
-        isFlash = false;
-        batchCard.setVisibility(View.GONE);
-        flashBtn.setImageResource(R.drawable.flashon);
     }
 
     private void checkPermissions() {
@@ -849,10 +840,8 @@ public class QRScanFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (mCameraSource != null) mCameraSource.stop();
-        if (mPreview != null) mPreview.stop();
-    }
 
+    }
 
     @SuppressLint("InlinedApi")
     private void createCameraSource(boolean autoFocus, boolean useFlash, boolean b, String mode) {
@@ -878,11 +867,6 @@ public class QRScanFragment extends Fragment {
         builder = builder.setFocusMode(autoFocus ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null);
         modeTxt.setText(R.string.mode3);
 
-        mCameraSource = builder.setFlashMode(useFlash ? Camera.Parameters.FLASH_MODE_TORCH : null).build();
-
-
-        Log.d("CAMRA", "mode  " + mode);
-        Log.d("CAMRA", String.valueOf(mCameraSource == null));
 
         if (mode.equals("batch")) {
             Log.d("CAMRA", "Batch");
@@ -897,67 +881,6 @@ public class QRScanFragment extends Fragment {
                     final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                     if (processingBarcode[0]) {
                         if (barcodes.size() > 0) {
-                            runOnUiThread(() -> {
-                                mPreview.stop();
-                                batchCard.setVisibility(View.VISIBLE);
-                                Barcode barcode = barcodes.valueAt(barcodes.size() - 1);
-                                String barcodeValue = barcode.rawValue;
-                                int format = barcode.format;
-                                String rawData = barcodes.valueAt(barcodes.size() - 1).rawValue;
-                                ArrayList<ResultModel> list = Stash.getArrayList(Constants.RESULT_BATCH, ResultModel.class);
-
-                                if (checkSoundPreferences()) {
-                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                                }
-                                if (checkVibratePreferences()) {
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                                    if (Build.VERSION.SDK_INT >= 26) {
-                                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                                    } else {
-                                        v.vibrate(100);
-                                    }
-                                }
-
-                                if (format == Barcode.CODE_128 || format == Barcode.CODE_93 ||
-                                        format == Barcode.EAN_8 || format == Barcode.EAN_13 ||
-                                        format == Barcode.UPC_A || format == Barcode.UPC_E) {
-                                    qrBar.setText("Barcode");
-
-                                    boolean check = false;
-                                    ResultModel resultModel = new ResultModel(format, rawData);
-                                    for (ResultModel model : list) {
-                                        if (model.getRawData().equals(resultModel.getRawData())) {
-                                            check = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!check) {
-                                        list.add(resultModel);
-                                    }
-                                    Stash.put(Constants.RESULT_BATCH, list);
-                                } else {
-                                    qrBar.setText("QR Code");
-                                    ResultModel resultModel = new ResultModel(-1, rawData);
-                                    boolean check = false;
-                                    for (ResultModel model : list) {
-                                        if (model.getRawData().equals(resultModel.getRawData())) {
-                                            check = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (!check) {
-                                        list.add(resultModel);
-                                    }
-                                    Stash.put(Constants.RESULT_BATCH, list);
-                                }
-                                int size = list.size(); // - (list.size()/2)
-                                itemCount.setText(size + "");
-                                result.setText(rawData);
-                                startCameraSource();
-                            });
 
 /*                            runOnUiThread(() -> {
                                // mPreview.stop();
@@ -1009,30 +932,6 @@ public class QRScanFragment extends Fragment {
                             Barcode barcode = barcodes.valueAt(0);
                             int format = barcode.format;
                             Log.d("CAMRA", "format " + format);
-                            runOnUiThread(() -> {
-                                mPreview.stop();
-                                if (checkSoundPreferences()) {
-                                    ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 300);
-                                    toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
-                                }
-                                if (checkVibratePreferences()) {
-                                    Vibrator v = (Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
-                                    if (Build.VERSION.SDK_INT >= 26) {
-                                        v.vibrate(VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE));
-                                    } else {
-                                        v.vibrate(100);
-                                    }
-                                }
-                                String rawData = barcodes.valueAt(0).rawValue;
-                                if (format == Barcode.CODE_128 || format == Barcode.CODE_93 ||
-                                        format == Barcode.EAN_8 || format == Barcode.EAN_13 ||
-                                        format == Barcode.UPC_A || format == Barcode.UPC_E) {
-                                    processResultBarcode(rawData, format);
-                                } else {
-                                    processRawResult(rawData);
-                                }
-
-                            });
                             processingBarcode[0] = false;
                         }
                     }
@@ -1058,9 +957,6 @@ public class QRScanFragment extends Fragment {
 
     }
 
-    Bitmap bitmap = null;
-
-
     /**
      * Starts or restarts the camera source, if it exists.  If the camera source doesn't exist yet
      * (e.g., because onResume was called before the camera source was created), this will be called
@@ -1074,19 +970,7 @@ public class QRScanFragment extends Fragment {
             dlg.show();
         }
 
-        if (mCameraSource != null) {
-            try {
-                mPreview.start(mCameraSource, mGraphicOverlay);
-//                mCameraSource.start();
-                Log.d("CAMRA", "Started");
-            } catch (IOException e) {
-                Log.d("CAMRA", e.getMessage());
-                mCameraSource.release();
-                mCameraSource = null;
-            }
-        } else {
-            Log.d("CAMRA", "CamraSource is null");
-        }
+
     }
 
 }

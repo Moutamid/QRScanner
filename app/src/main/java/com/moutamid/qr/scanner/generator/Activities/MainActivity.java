@@ -20,10 +20,9 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -35,10 +34,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.core.view.WindowCompat;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
-import androidx.viewpager.widget.ViewPager;
 
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
@@ -47,19 +44,19 @@ import com.android.billingclient.api.BillingResult;
 import com.android.billingclient.api.Purchase;
 import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.android.billingclient.api.SkuDetailsParams;
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.card.MaterialCardView;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.Fragments.CardsFragment;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.qrscanner.History;
 import com.moutamid.qr.scanner.generator.qrscanner.HistoryVM;
+import com.moutamid.qr.scanner.generator.utils.Stash;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,12 +64,19 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements CardsFragment.OnButtonClickListener {
 
+    private static final int MY_REQUEST_CODE = 1000; // You can choose any code you like
     //    private RelativeLayout cardViewHide;
     static Uri picUri;
-    private HistoryVM historyVM;
     static String contents;
+    private final String TAG = "AdMobDemo";
+    public CardView cardView;
+    public CardView parentCard;
+    ImageView flashBtn, modeBtn, galleryBtn;
+    ImageView scan, create, history, setting;
+    private HistoryVM historyVM;
     private BottomSheetDialog bottomSheetDialog;
-
+    private AdView adView; // For Banner
+    private InterstitialAd interstitialAd; // For Interstitial
     private List<String> skuList;
     private BottomSheetDialog bottomSheetSubscription;
     private int selectSubscription = 1;
@@ -80,25 +84,19 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
     private ImageView imgRemoveAd;
     private RadioButton radioButton2;
     private RadioGroup radioGroup;
-//    private CAMediatedBannerView mediatedBannerView;
+    //    private CAMediatedBannerView mediatedBannerView;
     private SharedPreferences prefs;
-    private static final int MY_REQUEST_CODE = 1000; // You can choose any code you like
-    public CardView cardView;
-    public CardView parentCard;
-    ImageView flashBtn, modeBtn, galleryBtn;
-    ImageView scan, create, history, setting;
     private AppUpdateManager appUpdateManager;
     private int lastBackStackEntryCount = 0;
 
-    @SuppressLint({"ResourceAsColor", "MissingInflatedId", "WrongViewCast"})
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Constants.adjustFontScale(MainActivity.this);
+//        Constants.adjustFontScale(MainActivity.this);
         setContentView(R.layout.activity_main);
         Constants.checkApp(this);
         prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-
         // RecyclerView recyclerViewMain = findViewById(R.id.recycler_main_btn);
         // cardViewHide = findViewById(R.id.cardView_seekbar);
 
@@ -122,17 +120,23 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
         bottomSheetSubscription.setContentView(R.layout.subscription_layout);
         radioGroup = bottomSheetSubscription.findViewById(R.id.rgRight);
         radioButton2 = bottomSheetSubscription.findViewById(R.id.radio2);
-        //mediatedBannerView = findViewById(R.id.consoli_banner_view);
-//        if (!getPurchaseSharedPreference()) {
-//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, MainActivity.this, mediatedBannerView);
-//            ConsoliAds.Instance().LoadInterstitial();
-//        }
+// Initialize AdMob SDK
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+
+        // Load Banner Ad
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
+        // Load Interstitial Ad
+        loadInterstitialAd();
         getLocale();
         historyVM = new ViewModelProvider(this).get(HistoryVM.class);
-        inAppPurchases();
+//        inAppPurchases();
         //checkPermissions();
         Stash.put("ONBACKPRESS", 0);
-        
+
         flashBtn = findViewById(R.id.flashBtn);
         modeBtn = findViewById(R.id.modeBtn);
         galleryBtn = findViewById(R.id.galleryBtn);
@@ -153,14 +157,17 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
             scan();
         });
         create.setOnClickListener(v -> {
+            interstitialAd.show(MainActivity.this);
             create();
 
         });
         setting.setOnClickListener(v -> {
+            interstitialAd.show(MainActivity.this);
             setting();
 
         });
         history.setOnClickListener(v -> {
+            interstitialAd.show(MainActivity.this);
             history();
 
         });
@@ -320,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
             intent.putExtra("barcode", text);
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
         } catch (Exception t) {
             Toast.makeText(this, "not scan", Toast.LENGTH_SHORT).show();
@@ -440,13 +447,13 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
     public void clickedItem(View view, int position) {
         if (position == 0) {
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
             loadQRfragment();
 
         } else if (position == 1) {
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
             loadMenuFragment();
         } else if (position == 2) {
@@ -454,14 +461,14 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
             Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
         } else if (position == 3) {
 
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
         }
     }
@@ -699,7 +706,7 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putBoolean(MainActivity.this.getString(R.string.adsubscribed), Boolean.TRUE);
                 edit.apply();
-           //     mediatedBannerView.setVisibility(View.INVISIBLE);
+                //     mediatedBannerView.setVisibility(View.INVISIBLE);
             }
         };
         ///create client billing
@@ -797,4 +804,33 @@ public class MainActivity extends AppCompatActivity implements CardsFragment.OnB
         Stash.put(Constants.TAB_INDEX, 1);
         create();
     }
+
+    private void loadInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        InterstitialAd.load(this, getString(R.string.admob_interstitial_id), adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(InterstitialAd ad) {
+                        interstitialAd = ad;
+                        Log.d(TAG, "Interstitial Ad Loaded");
+
+                        interstitialAd.setFullScreenContentCallback(new com.google.android.gms.ads.FullScreenContentCallback() {
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                // Reload ad if needed
+                                loadInterstitialAd();
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(com.google.android.gms.ads.LoadAdError adError) {
+                        interstitialAd = null;
+                        Log.e(TAG, "Interstitial Ad failed to load: " + adError.getMessage());
+                    }
+                });
+    }
+
 }

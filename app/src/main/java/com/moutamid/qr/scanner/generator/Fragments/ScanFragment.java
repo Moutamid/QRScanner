@@ -22,9 +22,8 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.button.MaterialButton;
 import com.moutamid.qr.scanner.generator.Activities.MainActivity;
 import com.moutamid.qr.scanner.generator.Activities.ScanResultActivity;
@@ -176,9 +175,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "VCard");
                 intent.putExtra("vCard", vCard);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "email": {
@@ -187,9 +186,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "EMail");
                 intent.putExtra("eMail", eMail);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "event": {
@@ -198,9 +197,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "Event");
                 intent.putExtra("event", iEvent);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "location": {
@@ -209,9 +208,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "GeoInfo");
                 intent.putExtra("geoInfo", geoInfo);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "phone": {
@@ -220,9 +219,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "telephone");
                 intent.putExtra("phone", telephone);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "sms": {
@@ -231,9 +230,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "Sms");
                 intent.putExtra("sms", sms);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "whatsapp": {
@@ -242,9 +241,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "whatsapp");
                 intent.putExtra("phone", telephone);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "spotify": {
@@ -253,9 +252,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "spotify");
                 intent.putExtra("spotify", telephone);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "viber": {
@@ -264,34 +263,34 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "viber");
                 intent.putExtra("phone", telephone);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "barcode":
                 intent.putExtra("type", "Barcode");
                 intent.putExtra("barcode", history);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "text":
                 intent.putExtra("type", "Text");
                 intent.putExtra("text", history);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "clipboard":
                 intent.putExtra("type", "clipboard");
                 intent.putExtra("text", history);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "url": {
                 Url url = new Url();
@@ -299,9 +298,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "url");
                 intent.putExtra("Url", url);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "wifi": {
@@ -310,9 +309,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "wifi");
                 intent.putExtra("Wifi", wifi);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             }
             case "youtube":
@@ -321,9 +320,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "youtube");
                 intent.putExtra("social", social);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "insta":
                 Social social1 = new Social();
@@ -331,9 +330,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "insta");
                 intent.putExtra("social", social1);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "paypal":
                 Social social2 = new Social();
@@ -341,9 +340,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "paypal");
                 intent.putExtra("social", social2);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "facebook":
                 Social social3 = new Social();
@@ -351,9 +350,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "facebook");
                 intent.putExtra("social", social3);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
             case "twitter":
                 Social social4 = new Social();
@@ -361,9 +360,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 intent.putExtra("type", "twitter");
                 intent.putExtra("social", social4);
                 startActivity(intent);
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
                 break;
         }
     }
@@ -384,9 +383,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                 recyclerLayout.setVisibility(View.GONE);
                 isEmpty = true;
             }
-            if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-            }
+            //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         });
         adb.setNegativeButton("No", (dialog, which) -> {
         });
@@ -396,7 +395,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
 
     public void backHistory(View view) {
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+            
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
         }
 
     }
@@ -422,9 +423,9 @@ public class ScanFragment extends Fragment implements HistoryItemClickListner {
                     isEmpty = true;
                 }
                 //historyVM.deleteAllHistory();
-                if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
-                }
+                //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
             });
             adb.setNegativeButton("No", (dialog, which) -> {
             });

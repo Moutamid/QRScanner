@@ -12,9 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.Model.ResultModel;
@@ -82,7 +81,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
             intent.putExtra("barcode", text);
             //intent.putExtra("image", savedBitmapFromViewToFile());
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
 
         } catch (Exception t) {
@@ -114,7 +113,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
             intent.putExtra("type", "VCard");
             intent.putExtra("vCard", vCard);
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
         } catch (IllegalArgumentException vcard) {
             try {
@@ -129,7 +128,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                 intent.putExtra("eMail", eMail);
 
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                    ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
             } catch (IllegalArgumentException email) {
                 try {
@@ -144,7 +143,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                     intent.putExtra("Wifi", wifi);
 
                     if (!getPurchaseSharedPreference()) {
-                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                        ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                     }
                 } catch (IllegalArgumentException wifi) {
                     try {
@@ -159,7 +158,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                         intent.putExtra("phone", telephone);
 
                         if (!getPurchaseSharedPreference()) {
-                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                            ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                         }
                     } catch (IllegalArgumentException telephone) {
                         try {
@@ -174,7 +173,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                             intent.putExtra("Url", url);
 
                             if (!getPurchaseSharedPreference()) {
-                                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                             }
                         } catch (IllegalArgumentException url) {
                             try {
@@ -189,7 +188,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                 intent.putExtra("social", social);
 
                                 if (!getPurchaseSharedPreference()) {
-                                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                    ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                 }
                             } catch (IllegalArgumentException youtube) {
                                 try {
@@ -204,7 +203,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                     intent.putExtra("geoInfo", geoInfo);
 
                                     if (!getPurchaseSharedPreference()) {
-                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                        ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                     }
                                 } catch (IllegalArgumentException geoinfo) {
                                     try {
@@ -219,7 +218,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                         intent.putExtra("sms", sms);
 
                                         if (!getPurchaseSharedPreference()) {
-                                            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                            ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                         }
                                     } catch (IllegalArgumentException sms) {
                                         try {
@@ -234,7 +233,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                             intent.putExtra("event", iEvent);
 
                                             if (!getPurchaseSharedPreference()) {
-                                                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                                ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                             }
                                         } catch (IllegalArgumentException event) {
                                             try {
@@ -250,7 +249,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                                     intent.putExtra("barcode", text);
                                                     //intent.putExtra("image", savedBitmapFromViewToFile());
                                                     if (!getPurchaseSharedPreference()) {
-                                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                                        ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                                     }
                                                 } catch (NumberFormatException e) {
                                                     Log.d("EMAILCHEC", "Error  " + e.toString());
@@ -262,7 +261,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
                                                     intent.putExtra("type", "Text");
                                                     intent.putExtra("text", text);
                                                     if (!getPurchaseSharedPreference()) {
-                                                        ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+                                                        ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                                                     }
                                                 }
                                             } catch (Exception txt) {
@@ -290,7 +289,7 @@ public class BatchScanResultActivity extends AppCompatActivity {
 //            //intent.putExtra("image", savedBitmapFromViewToFile());
 //            startActivity(intent);
 //            if (!getPurchaseSharedPreference()) {
-//                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//                ////ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
 //            }
 //        } catch (IllegalArgumentException t) {
 //

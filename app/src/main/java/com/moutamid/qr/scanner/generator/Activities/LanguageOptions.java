@@ -13,8 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
+
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
 import com.moutamid.qr.scanner.generator.adapter.ButtonMainAdapter;
@@ -237,7 +236,7 @@ public class LanguageOptions extends AppCompatActivity {
 
     public void backButton(View view) {
         if (!Constants.getPurchaseSharedPreference(LanguageOptions.this)) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//            //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
         }
         finish();
     }

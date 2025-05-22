@@ -21,9 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.moutamid.qr.scanner.generator.Constants;
 import com.moutamid.qr.scanner.generator.R;
@@ -97,9 +96,7 @@ public class MenuFragment extends Fragment {
         spotifyBt=view.findViewById(R.id.spotify_icon);
 
 
-        if (!Constants.getPurchaseSharedPreference(requireContext())) {
-            ConsoliAds.Instance().LoadInterstitial();
-        }
+
 
         businessCard.setOnClickListener(v -> {
             requireActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, new BusinessFragment()).commit();
@@ -110,7 +107,9 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),BarCodeActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
 
@@ -118,7 +117,9 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),UrlGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
 
@@ -126,7 +127,9 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),TextGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
 
@@ -134,7 +137,9 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),WifiGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
 
@@ -142,56 +147,72 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),EmailGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         contactBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),ContactGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         locationBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),LocationActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         smsBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),SmsGenActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         youtubeBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),YouTubeActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         phoneBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),PhoneActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         eventBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),EventActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         twitterBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),TwitterActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
 
@@ -199,49 +220,63 @@ public class MenuFragment extends Fragment {
             Intent intent=new Intent(getActivity(),FacebookActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         viberBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),ViberActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         clipBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),ClipboardActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         instaBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),InstagramActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         whatsappBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),WhatsAppActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         spotifyBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),SpotifyActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         paypalBt.setOnClickListener(v -> {
             Intent intent=new Intent(getActivity(),PayPalActivity.class);
             startActivity(intent);
             if (!Constants.getPurchaseSharedPreference(requireContext())) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, getActivity());
+                
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+
             }
         });
         getLocale();

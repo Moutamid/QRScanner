@@ -21,10 +21,9 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -66,10 +65,10 @@ public class LocationActivity extends AppCompatActivity {
         Constants.adjustFontScale(this);
 //        Plugin.Mapbox.getInstance(this, getString(R.string.mapbox_access_token));
         setContentView(R.layout.activity_location);
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, LocationActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, LocationActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         boolean theme = prefs.getBoolean("theme", false);
@@ -250,7 +249,7 @@ public class LocationActivity extends AppCompatActivity {
                 intent.putExtra("geoInfo", location);
                 startActivity(intent);
                 if (!getPurchaseSharedPreference()) {
-                    ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//                    //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
                 }
                 finish();
 
@@ -272,9 +271,9 @@ public class LocationActivity extends AppCompatActivity {
     }
 
     public void backLocation(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
 

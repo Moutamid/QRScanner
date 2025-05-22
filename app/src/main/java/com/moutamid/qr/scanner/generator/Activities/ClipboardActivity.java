@@ -25,10 +25,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.consoliads.mediation.ConsoliAds;
-import com.consoliads.mediation.bannerads.CAMediatedBannerView;
-import com.consoliads.mediation.constants.NativePlaceholderName;
-import com.fxn.stash.Stash;
+
+
+import com.moutamid.qr.scanner.generator.utils.Stash;
 import com.google.android.material.textfield.TextInputLayout;
 import com.moutamid.qr.scanner.generator.BuildConfig;
 import com.moutamid.qr.scanner.generator.Constants;
@@ -105,10 +104,10 @@ public class ClipboardActivity extends AppCompatActivity {
         edit = prefs.edit();
         copied = prefs.getBoolean("copy",false);
         historyVM = new ViewModelProvider(ClipboardActivity.this).get(HistoryVM.class);
-        CAMediatedBannerView mediatedBannerView = findViewById(R.id.consoli_banner_view);
+        
         if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ClipboardActivity.this, mediatedBannerView);
-            ConsoliAds.Instance().LoadInterstitial();
+//            ConsoliAds.Instance().ShowBanner(NativePlaceholderName.Activity1, ClipboardActivity.this, mediatedBannerView);
+//            ConsoliAds.Instance().LoadInterstitial();
         }
         getLocale();
     }
@@ -200,7 +199,7 @@ public class ClipboardActivity extends AppCompatActivity {
             intent.putExtra("text", data);
             startActivity(intent);
             if (!getPurchaseSharedPreference()) {
-                ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+//                //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
             }
 
             if (copied){
@@ -223,9 +222,9 @@ public class ClipboardActivity extends AppCompatActivity {
 
 
     public void backClipboard(View view) {
-        if (!getPurchaseSharedPreference()) {
-            ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
-        }
+        //if (!getPurchaseSharedPreference()) {
+  //          //ConsoliAds.Instance().ShowInterstitial(NativePlaceholderName.Activity1, this);
+    //    }
         finish();
     }
     public boolean getPurchaseSharedPreference(){
